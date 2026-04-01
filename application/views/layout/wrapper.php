@@ -332,16 +332,106 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #c8d8c8; border-radius: 4px; }
 
+        /* ─── FLOATING IOS NAVBAR (MOBILE ONLY) ─── */
+        .ios-navbar {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(27, 59, 37, 0.85); /* Green main glassmorphism */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 10px 24px;
+            border-radius: 35px;
+            z-index: 9999;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: fit-content;
+            min-width: 280px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 15px;
+        }
+        .ios-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .ios-nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+        }
+        .ios-nav-item.active {
+            color: #fff;
+        }
+        .ios-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .topbar { left: 0; }
+            .sidebar { display: none !important; }
+            .topbar { display: none !important; }
+            .main-content { 
+                margin-left: 0; 
+                margin-top: 20px; 
+                padding: 15px;
+                padding-bottom: 100px; /* Space for floating bar */
+            }
+            .ios-navbar { display: flex; }
+            .page-header-mobile {
+                display: block !important;
+                margin-bottom: 20px;
+                padding: 10px 5px;
+            }
         }
+        .page-header-mobile { display: none; }
     </style>
 </head>
 <body>
+
+    <!-- IOS FLOATING BAR (MOBILE) -->
+    <nav class="ios-navbar">
+        <a href="<?= site_url('dashboard') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'dashboard') ? 'active' : '' ?>">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Home</span>
+        </a>
+        <a href="<?= site_url('order') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
+            <i class="bi bi-bag-check-fill"></i>
+            <span>Order</span>
+            <?php if($pending_count > 0): ?>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 5px; right: -5px; font-size: 0.5rem; padding: 3px 5px;">
+                    <?= $pending_count ?>
+                </span>
+            <?php endif; ?>
+        </a>
+        <a href="<?= site_url('product') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
+            <i class="bi bi-box-seam-fill"></i>
+            <span>Produk</span>
+        </a>
+        <a href="<?= site_url('report') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'report') ? 'active' : '' ?>">
+            <i class="bi bi-pie-chart-fill"></i>
+            <span>Laporan</span>
+        </a>
+        <a href="<?= site_url('order/history') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
+            <i class="bi bi-clock-history"></i>
+            <span>Riwayat</span>
+        </a>
+    </nav>
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
@@ -383,13 +473,18 @@
 
                 <div class="nav-section">Transaksi</div>
                 <li class="nav-item">
-                    <a href="<?= site_url('order') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
-                        <i class="bi bi-bag-heart-fill"></i> Pesanan Online
+                    <a href="<?= site_url('order') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
+                        <i class="bi bi-bag-heart-fill"></i> Pesanan Hari Ini
                         <?php
                             $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
                             if ($pending_count > 0): ?>
                             <span class="nav-badge"><?= $pending_count ?></span>
                         <?php endif; ?>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('order/history') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
+                        <i class="bi bi-clock-history"></i> Riwayat Order
                     </a>
                 </li>
 
@@ -457,6 +552,10 @@
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
+        <div class="page-header-mobile">
+            <h4 class="fw-bold mb-0 text-success"><?= $title ?></h4>
+            <div class="small text-muted opacity-75">MariMacha Admin Panel</div>
+        </div>
         <?php if(isset($content)) $this->load->view($content); ?>
     </main>
 
