@@ -1,55 +1,92 @@
-🌿 MariMacha
+# 🌿 MariMacha - Premium Matcha Experience
 
-Premium Cinematic Landing Page for Matcha Artisans
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?q=80&w=800&auto=format&fit=crop" width="600" alt="MariMacha Hero">
+  <p align="center">
+    <strong>Experience the ritual of peace in every sip.</strong>
+  </p>
+  <p align="center">
+    <img src="https://img.shields.io/badge/CI-3.x-E34F26?style=flat-square&logo=codeigniter&logoColor=white" alt="CodeIgniter">
+    <img src="https://img.shields.io/badge/Animation-GSAP-88CE02?style=flat-square&logo=greensock&logoColor=white" alt="GSAP">
+    <img src="https://img.shields.io/badge/CSS-Premium-38B2AC?style=flat-square&logo=bootstrap&logoColor=white" alt="Bootstrap">
+  </p>
+</div>
 
-MariMacha adalah sebuah high-end e-commerce landing page yang dirancang khusus untuk UMKM minuman Matcha premium. Proyek ini menggabungkan estetika desain modern dengan interaksi sinematik untuk menciptakan pengalaman belanja yang imersif dan berkelas.
+---
 
-Demo Video | Report Bug | Request Feature
+## 🍵 About MariMacha
 
-✨ Key Highlights
+**MariMacha** is a high-end, cinematic e-commerce landing page specifically designed for premium Matcha products. It's not just a shop; it's a digital experience that guides the user through the journey of matcha—from its origin in high-altitude tea gardens to the slow-grinding process and finally into your cup.
 
-Cinematic Preloader: Pengalaman loading interaktif dengan real-time progress tracking yang elegan.
+## ✨ Premium Features
 
-Advanced GSAP Motion: Animasi kelas dunia termasuk magnetic buttons, 3D tilt effects, dan staggered reveals.
+- **🚀 Cinematic Preloader**: An elegant full-screen loading sequence with progress bar.
+- **📜 Horizontal Scroll-Telling**: A pinned horizontal section that tells the brand's story as you scroll.
+- **🧲 Magnetic Button Interactions**: Modern UI effects that pull your cursor toward CTA buttons.
+- **🍃 Floating Matcha Particles**: Subtle, physics-based leaf animations for a dynamic atmosphere.
+- **🧊 3D Perspective Cards**: Interactive product cards that tilt and react to your mouse movement.
+- **🌊 Liquid Background**: Smooth body background color transitions between sections.
+- **✨ GSAP ScrollTrigger**: Highly optimized entrance reveals with staggered timing for a professional feel.
 
-Horizontal Scroll-Telling: Teknik storytelling produk melalui navigasi horizontal yang mulus dan intuitif.
+---
 
-Liquid Transitions: Perpindahan antar section yang dinamis dengan transisi warna latar belakang yang halus.
+## 🛠️ Technology Stack
 
-Fully Responsive: Optimalisasi menyeluruh untuk pengalaman terbaik di perangkat mobile, tablet, maupun desktop.
+| Tech | Description |
+| :--- | :--- |
+| **CodeIgniter 3** | Robust PHP framework for the backend. |
+| **GSAP 3** | Industry-standard animation platform. |
+| **ScrollTrigger** | Advanced scroll-based animation engine. |
+| **Lenis** | Ultra-smooth scrolling experience. |
+| **Bootstrap 5** | Responsive layout foundation. |
+| **FontAwesome** | Premium vector icons. |
 
-🛠️ Tech Stack
+---
 
-Komponen
+## 🚀 Getting Started
 
-Teknologi
+Follow these steps to set up the project on your local machine:
 
-Backend
+### 1. Prerequisites
+- **Web Server**: Laragon (Recommended), XAMPP, or MAMP.
+- **PHP**: Version 7.2 or higher.
+- **Database**: MySQL.
 
-CodeIgniter 3 (PHP 7.4+)
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/FikriBintangx/Macha.git
 
-Database
+# Move to your server root (e.g., C:/laragon/www/macha)
+```
 
-MySQL (mysqli)
+### 3. Database Setup
+1. Create a new database named `db_macha_umkm`.
+2. Import the `db_macha_umkm.sql` file (found in the root directory).
+3. Update your database configuration in:
+   `application/config/database.php`
 
-Styling
+### 4. Configure Base URL
+Open `application/config/config.php` and set the following:
+```php
+$config['base_url'] = 'http://localhost/macha/';
+```
 
-Bootstrap 5 + Custom Premium CSS
+---
 
-Animations
+## 📁 Project Structure
 
-GSAP (ScrollTrigger, Flip, Observer)
+```text
+macha/
+├── application/         # CodeIgniter Application files
+├── assets/              # Premium images, CSS, and JS
+├── db_macha_umkm.sql    # Database export
+├── README.md            # You are here!
+└── .gitignore           # Git ignore rules
+```
 
-Smooth Scroll
+---
 
-Lenis
-
-📸 Tampilan Preview
-
-(Tips: Tambahkan screenshot landing page terbaikmu di sini untuk menarik perhatian pengunjung repository!)
-
-📄 Lisensi
-
-Didistribusikan di bawah MIT License. Lihat file LICENSE untuk informasi lebih mendalam.
-
-Dibuat dengan penuh 🍵 oleh FikriBintangx
+<p align="center">
+  Made with 💚 by MariMacha Developer
+</p>
