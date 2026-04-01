@@ -73,6 +73,45 @@
         @keyframes fadeOverlay{from{opacity:0;}to{opacity:1;}}
         .spinner-macha{width:50px;height:50px;border:4px solid var(--cream);border-top:4px solid var(--gm);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px;}
         @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+        /* --- RESPONSIVE FIXES --- */
+        @media (max-width: 768px) {
+            body{padding-top: 60px;}
+            .navbar-macha{padding: 8px 0;}
+            .btn-ol{padding: 6px 12px; font-size: 0.8rem;}
+            .btn-ol span{display:none;} /* Hilangkan teks "Lanjut Belanja" jika terlalu sempit */
+
+            .cart-header{padding: 16px 20px;}
+            .cart-header h4{font-size: 1.1rem;}
+            
+            .cart-item{padding: 15px; flex-direction: column; align-items: flex-start;}
+            .cart-item-main{flex-direction: row !important; align-items: flex-start !important; width: 100%;}
+            .cart-img{width: 80px; height: 80px; border-radius: 12px;}
+            
+            .item-info{padding-right: 0;}
+            .item-name{font-size: 0.9rem; white-space: normal; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical;}
+            .item-subtotal{text-align: left; margin-top: 10px; font-size: 0.95rem; display: block;}
+            
+            .item-drawer{
+                height: auto; 
+                opacity: 1; 
+                margin: 10px 0 0 0; 
+                padding: 15px; 
+                border-radius: 15px;
+                border-top: 1px solid #eee;
+                display: flex;
+            }
+            .opt-chip{padding: 5px 10px; font-size: 0.7rem;}
+            
+            .summary-card{margin-top: 20px; position: static; padding: 20px;}
+        }
+
+        @media (max-width: 480px) {
+            .cart-img{width: 65px; height: 65px;}
+            .qty-num{min-width: 20px; font-size: 0.9rem;}
+            .qty-btn{width: 24px; height: 24px; font-size: 0.8rem;}
+            .btn-checkout{padding: 14px; font-size: 0.95rem;}
+        }
     </style>
 </head>
 <body>
@@ -84,7 +123,7 @@
     <nav class="navbar navbar-macha fixed-top">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>"><i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>MariMacha</a>
-            <a href="<?= base_url('shop') ?>" class="btn-ol"><i class="fa-solid fa-arrow-left"></i>Lanjut Belanja</a>
+            <a href="<?= base_url('shop') ?>" class="btn-ol"><i class="fa-solid fa-arrow-left"></i><span>Lanjut Belanja</span></a>
         </div>
     </nav>
 
@@ -115,7 +154,7 @@
                         <?php foreach($cart as $id => $item): ?>
                         <div class="cart-item" data-id="<?= $id ?>">
                             <?php $img = !empty($item['image']) ? base_url('uploads/'.$item['image']) : 'https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?q=80&w=200&auto=format&fit=crop'; ?>
-                            <div class="d-flex align-items-center w-100 gap-3">
+                            <div class="d-flex align-items-center w-100 gap-3 cart-item-main">
                                 <img src="<?= $img ?>" class="cart-img" alt="<?= htmlspecialchars($item['name']) ?>"
                                      onerror="this.src='https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?q=80&w=200&auto=format&fit=crop'">
                                 <div class="item-info">
