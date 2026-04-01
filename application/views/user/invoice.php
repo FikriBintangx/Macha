@@ -261,7 +261,7 @@
                     <?php 
                         $wa_msg = urlencode("Halo MariMacha! Saya ingin konfirmasi pembayaran untuk:\n\n📌 No Invoice: " . $order['invoice_no'] . "\n💰 Total: Rp " . number_format($order['total_price'],0,',','.') . "\n\nTerima kasih!");
                     ?>
-                    <a href="https://wa.me/6281234567890?text=<?= $wa_msg ?>" target="_blank" class="btn-wa-confirm">
+                    <a href="https://wa.me/6285881705459?text=<?= $wa_msg ?>" target="_blank" class="btn-wa-confirm">
                         <i class="fa-brands fa-whatsapp"></i> Konfirmasi via WhatsApp
                     </a>
                 </div>
@@ -288,7 +288,7 @@
 
             <div class="nota-footer">
                 <p>Terima kasih telah berbelanja di <strong>MariMacha</strong> 🌿 | Citra Raya, Tangerang, Banten</p>
-                <p>WA: 0812-3456-7890 | IG: @marimacha.id</p>
+                <p>WA: 0858-8170-5459 | IG: @marimatcha_panongan</p>
             </div>
         </div>
     </div>
@@ -304,7 +304,7 @@
             setTimeout(function(){ btn.innerHTML = original; }, 2000);
         });
     }
-    <?php if(($order['status']??'')=='pending'):?>
+    <?php if((($order['status']??'') == 'pending') || (($order['status']??'') == 'paid')):?>
     // Payment countdown (24 hours from created_at)
     var deadline=new Date('<?=date('Y-m-d\TH:i:s',strtotime($order['created_at']??'now')+86400)?>').getTime();
     function tick(){
@@ -317,6 +317,36 @@
     }
     tick();
     <?php endif;?>
+
+    // --- AUTO REDIRECT WA JIKA BARU CHECKOUT ---
+    <?php if($this->session->flashdata('success')): ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Rangkai rincian produk
+        let itemsCode = "";
+        <?php foreach($details as $index => $d): ?>
+            itemsCode += "- <?= htmlspecialchars($d['product_name']) ?> (<?= $d['qty'] ?>x)\n";
+        <?php endforeach; ?>
+
+        // Setup Template Pesan
+        let msg = "Halo MariMacha! Saya ingin Konfirmasi Pesanan Baru:\n\n";
+        msg += "📌 *No Invoice:* <?= $order['invoice_no'] ?>\n";
+        msg += "👤 *Nama:* <?= htmlspecialchars($order['customer_name']) ?>\n";
+        msg += "🛍️ *Pesanan:*\n" + itemsCode + "\n";
+        msg += "💰 *Total Harga:* Rp <?= number_format($order['total_price'],0,',','.') ?>\n";
+        msg += "📍 *Alamat:* <?= htmlspecialchars($order['address']) ?>\n";
+        msg += "💳 *Metode:* <?= htmlspecialchars($order['payment_method']) ?>\n\n";
+        msg += "Mohon segera diproses ya, terima kasih! ✨";
+
+        // Encode URI
+        let encodedMsg = encodeURIComponent(msg);
+        let waLink = "https://wa.me/6285881705459?text=" + encodedMsg;
+
+        // Beri delay 2 detik agar user sempat baca nota sebentar
+        setTimeout(function() {
+            window.open(waLink, '_blank');
+        }, 2500);
+    });
+    <?php endif; ?>
     </script>
 </body>
 </html>
