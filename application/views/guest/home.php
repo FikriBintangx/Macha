@@ -156,7 +156,7 @@
       justify-content: center;
       color: var(--tertiary);
     }
-    
+
     .preloader-logo {
       font-size: 3rem;
       font-weight: 900;
@@ -165,16 +165,16 @@
       align-items: center;
       gap: 15px;
     }
-    
+
     .preloader-bar-wrap {
       width: 200px;
       height: 2px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
       border-radius: 10px;
     }
-    
+
     .preloader-bar {
       position: absolute;
       top: 0;
@@ -202,7 +202,7 @@
       overflow: hidden;
       display: block;
     }
-    
+
     .reveal-item {
       display: block;
     }
@@ -214,7 +214,7 @@
       mix-blend-mode: difference;
       border: none;
     }
-    
+
     .follower-text {
       position: absolute;
       top: 50%;
@@ -227,14 +227,14 @@
       white-space: nowrap;
       transition: transform 0.3s ease;
     }
-    
+
     .m-follower.view-more {
       width: 80px;
       height: 80px;
       background: var(--tertiary);
       border: none;
     }
-    
+
     .m-follower.view-more .follower-text {
       transform: translate(-50%, -50%) scale(1);
       font-size: 10px;
@@ -304,7 +304,8 @@
 
     .invisible-init {
       opacity: 0;
-      pointer-events: none; /* Disable interaction while hidden */
+      pointer-events: none;
+      /* Disable interaction while hidden */
     }
 
     .btn-hdr {
@@ -773,7 +774,7 @@
     .prod-card:hover .prod-card-inner {
       box-shadow: var(--shadow-lg);
     }
-    
+
     /* ─── SHIMMER EFFECT ─── */
     .shimmer-btn {
       position: relative;
@@ -781,7 +782,7 @@
       background: var(--green-main) !important;
       color: #fff !important;
     }
-    
+
     .shimmer-btn::after {
       content: '';
       position: absolute;
@@ -789,22 +790,25 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 40%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      background: linear-gradient(to bottom right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0) 40%,
+          rgba(255, 255, 255, 0.4) 50%,
+          rgba(255, 255, 255, 0) 60%,
+          rgba(255, 255, 255, 0) 100%);
       transform: rotate(45deg);
       transition: all 0.3s;
       animation: shimmer 3s infinite;
     }
-    
+
     @keyframes shimmer {
-      0% { transform: translateX(-150%) rotate(45deg); }
-      100% { transform: translateX(150%) rotate(45deg); }
+      0% {
+        transform: translateX(-150%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(150%) rotate(45deg);
+      }
     }
 
     .prod-img-wrap {
@@ -958,14 +962,15 @@
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
     }
 
-    .map-curve, .map-curve-dot {
+    .map-curve,
+    .map-curve-dot {
       fill: transparent;
       stroke: var(--green-light);
       stroke-width: 1.5;
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    
+
     .map-curve-dot {
       fill: var(--green-light);
       stroke: none;
@@ -1007,13 +1012,20 @@
     }
 
     @keyframes gentlePulse {
-      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
-      100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
     }
 
     .location-card {
       position: absolute;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.95);
       padding: 12px 20px;
       border-radius: 12px;
       box-shadow: var(--shadow-lg);
@@ -1023,7 +1035,7 @@
       text-align: center;
       min-width: 150px;
     }
-    
+
     .location-card::after {
       content: '';
       position: absolute;
@@ -1032,7 +1044,7 @@
       transform: translateX(-50%) rotate(45deg);
       width: 10px;
       height: 10px;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255, 255, 255, 0.95);
     }
 
     .loc-title {
@@ -1371,7 +1383,8 @@
 
     /* ─── FOOTER PREMIUM DESIGN ─── */
     footer {
-      background: #0a1f1f; /* Deep dark green */
+      background: #0a1f1f;
+      /* Deep dark green */
       color: rgba(255, 255, 255, 0.6);
       padding: 100px 0 40px;
       position: relative;
@@ -1451,9 +1464,20 @@
     }
 
     @keyframes statusPulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.2); }
-      100% { opacity: 1; transform: scale(1); }
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .footer-location-img-wrap {
@@ -1465,7 +1489,7 @@
       max-width: 250px;
       aspect-ratio: 16/10;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       transition: all 0.4s ease;
       display: block;
     }
@@ -1487,7 +1511,7 @@
       left: 0;
       width: 100%;
       padding: 10px;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
       color: #fff;
       font-size: 0.75rem;
       font-weight: 600;
@@ -1539,7 +1563,7 @@
       transition: background 0.3s ease;
       cursor: pointer;
     }
-    
+
     .floating-cart::before {
       content: '';
       position: absolute;
@@ -1549,10 +1573,17 @@
       opacity: 0;
       animation: cartPulse 2s infinite;
     }
-    
+
     @keyframes cartPulse {
-      0% { transform: scale(0.9); opacity: 0.8; }
-      100% { transform: scale(1.3); opacity: 0; }
+      0% {
+        transform: scale(0.9);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
     }
 
     .floating-cart:hover {
@@ -1587,36 +1618,36 @@
         background: #fff;
         padding: 30px 20px;
         border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         margin-top: 15px;
-        border: 1px solid rgba(0,0,0,0.05);
+        border: 1px solid rgba(0, 0, 0, 0.05);
       }
-      
+
       .nav-link {
         font-size: 1.1rem;
         padding: 12px 0 !important;
         text-align: center;
       }
-      
+
       .hero {
         padding-top: 120px;
         text-align: center;
       }
-      
+
       .hero-desc {
         margin-left: auto;
         margin-right: auto;
       }
-      
+
       .hero-cta {
         justify-content: center;
       }
-      
+
       .hero-stats {
         justify-content: center;
         gap: 20px;
       }
-      
+
       .hero-img-wrap {
         margin-top: 20px;
       }
@@ -1639,8 +1670,15 @@
     }
 
     @keyframes heroContentFadeIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero h1 {
@@ -1683,7 +1721,7 @@
       font-weight: 700;
       font-size: 0.8rem;
       color: var(--green-main);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(52, 132, 74, 0.1);
       margin-bottom: 25px;
     }
@@ -1693,7 +1731,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 15px;
       padding-top: 30px;
-      border-top: 1px solid rgba(0,0,0,0.05);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .hero-img-wrap {
@@ -1702,15 +1740,22 @@
     }
 
     @keyframes heroImageAppear {
-      0% { opacity: 0; transform: translateX(50px) rotate(5deg); }
-      100% { opacity: 1; transform: translateX(0) rotate(0); }
+      0% {
+        opacity: 0;
+        transform: translateX(50px) rotate(5deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0) rotate(0);
+      }
     }
 
     .hero-img-wrap img {
       width: 100%;
       max-width: 550px;
       border-radius: 40px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
       transition: all 0.5s ease;
     }
 
@@ -1719,18 +1764,22 @@
         padding-top: 120px;
         text-align: center;
       }
+
       .hero-text-col {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
+
       .hero-cta {
         justify-content: center;
       }
+
       .hero-desc {
         margin-left: auto;
         margin-right: auto;
       }
+
       .hero-stats {
         width: 100%;
         max-width: 450px;
@@ -1741,12 +1790,15 @@
       .hero h1 {
         font-size: 2.2rem;
       }
+
       .hero-stats {
         grid-template-columns: 1fr;
         gap: 20px;
         text-align: center;
       }
-      .btn-hero-primary, .btn-hero-wa {
+
+      .btn-hero-primary,
+      .btn-hero-wa {
         width: 100%;
         justify-content: center;
       }
@@ -1756,46 +1808,47 @@
       .hero h1 {
         font-size: 2.2rem;
       }
-      
-      .btn-hero-primary, .btn-hero-wa {
+
+      .btn-hero-primary,
+      .btn-hero-wa {
         width: 100%;
         justify-content: center;
       }
-      
+
       .prod-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
-      
+
       .prod-img-wrap {
         height: 160px;
       }
-      
+
       .prod-name {
         font-size: 0.95rem;
       }
-      
+
       .prod-price {
         font-size: 1rem;
       }
-      
+
       .btn-add-cart {
         padding: 10px;
         font-size: 0.8rem;
       }
-      
+
       .stat-num {
         font-size: 1.6rem;
       }
-      
+
       .stat-label {
         font-size: 0.75rem;
       }
     }
 
     /* Force clickable state after animation */
-    .site-ready .invisible-init, 
-    .site-ready a, 
+    .site-ready .invisible-init,
+    .site-ready a,
     .site-ready button {
       pointer-events: auto !important;
       visibility: visible !important;
@@ -1803,7 +1856,9 @@
 
     /* Disable custom cursor on touch devices */
     @media (hover: none) and (pointer: coarse) {
-      .m-cursor, .m-follower {
+
+      .m-cursor,
+      .m-follower {
         display: none !important;
       }
     }
@@ -1893,18 +1948,19 @@
             <i class="fa-solid fa-location-dot"></i> UMKM Tangerang · Banten
           </div>
           <h1>Nikmati Segar <br>Minuman <span class="highlight">Matcha</span> <br>Terbaik Kami</h1>
-          <p class="hero-desc">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok untuk harimu yang penuh semangat dan rasa!</p>
-          
+          <p class="hero-desc">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok untuk harimu
+            yang penuh semangat dan rasa!</p>
+
           <div class="hero-cta">
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
-            <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank" rel="noopener noreferrer"
-              class="btn-hero-wa">
+            <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank"
+              rel="noopener noreferrer" class="btn-hero-wa">
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
           </div>
-          
+
           <div class="hero-stats">
             <div class="stat-item">
               <span class="stat-num">500+</span>
@@ -1923,8 +1979,7 @@
         <div class="col-lg-6 hero-img-col">
           <div class="hero-img-wrap">
             <div class="hero-img-bg"></div>
-            <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?q=80&w=600&auto=format&fit=crop"
-              alt="Matcha Segar MariMacha" loading="eager">
+            <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Matcha Segar MariMacha" loading="eager">
             <div class="hero-badge-float b1">
               <div class="float-icon"><i class="fa-solid fa-star"></i></div>
               <div>
@@ -1950,7 +2005,7 @@
     <div class="story-bg-text-wrapper">
       <div class="story-bg-text">CRAFTED WITH PASSION</div>
     </div>
-    
+
     <div class="story-track">
       <!-- Story Panel 1: Origin -->
       <div class="story-slide slide-1">
@@ -1958,18 +2013,19 @@
           <div class="glass-content-wrap">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <div class="story-label">PHASE 01: ORIGIN</div>
-                <h2 class="story-h2">Daun Teh <span class="highlight">Terpilih</span></h2>
-                <p class="story-p">Kami memanen hanya kuncup teh termuda dari pegunungan sejuk yang diselimuti kabut, memastikan setiap gram matcha membawa kesegaran alam yang murni.</p>
+                <div class="story-label">PHASE 01: QUALITY</div>
+                <h2 class="story-h2">Umkm Matcha yg harganya terjangkau tetapi rasanya <span class="highlight">berkelas</span></h2>
+                <p class="story-p">matcha yg terbilang harganya murah tetapi rasanya tidak murahan. mulai dari 13K - 15K</p>
                 <div class="story-stats-row">
-                  <div class="s-stat"><span>100%</span> Organic</div>
-                  <div class="s-stat"><span>High</span> Altitudes</div>
+                  <div class="s-stat"><span>Premium</span> Grade</div>
+                  <div class="s-stat"><span>Affordable</span> Price</div>
                 </div>
               </div>
               <div class="col-lg-6 text-center">
                 <div class="floating-img-frame">
-                  <img src="https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?w=800&q=80" alt="Tea Origin" class="img-fluid">
-                  <div class="floating-badge">Grade A</div>
+                  <img src="<?= base_url('assets/img/KONTEN01.jpeg'); ?>" alt="Quality Matcha"
+                    class="img-fluid">
+                  <div class="floating-badge">Laris Manis</div>
                 </div>
               </div>
             </div>
@@ -1983,15 +2039,16 @@
           <div class="glass-content-wrap inverse">
             <div class="row align-items-center">
               <div class="col-lg-6 order-lg-2">
-                <div class="story-label">PHASE 02: PROCESS</div>
-                <h2 class="story-h2">Gilingan <span class="highlight">Batu Alam</span></h2>
-                <p class="story-p">Menggunakan teknik penggilingan tradisional secara perlahan untuk mencegah panas berlebih yang dapat merusak aroma dan nutrisi matcha.</p>
-                <div class="process-tag">Slow Grinding • 30g per Hour</div>
+                <div class="story-label">PHASE 02: MENU</div>
+                <h2 class="story-h2">Matcha yang segar, manis dan <span class="highlight">banyak menu-nya</span></h2>
+                <p class="story-p">menyediakan banyak menu blend dan tidak cuma matcha aja!</p>
+                <div class="process-tag">Freshly Bold • Many Selections</div>
               </div>
               <div class="col-lg-6 order-lg-1 text-center">
                 <div class="floating-img-frame s2">
-                  <img src="https://images.unsplash.com/photo-1613143213508-251f4c7f0d06?w=800&q=80" alt="Process" class="img-fluid">
-                  <div class="floating-badge">Tradisional</div>
+                  <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Process"
+                    class="img-fluid">
+                  <div class="floating-badge">Sehat & Nikmat</div>
                 </div>
               </div>
             </div>
@@ -2004,15 +2061,11 @@
         <div class="container">
           <div class="final-reveal-wrap">
             <div class="story-label">PHASE 03: EXPERIENCE</div>
-            <h2 class="story-h2 lg">Ritual <br>Kedamaian</h2>
-            <p class="story-p center">Nikmati momen tenang dan fokus dalam setiap tegukan MariMacha.</p>
+            <h2 class="story-h2 lg">PESAN <br><span class="highlight">SEKARANG</span></h2>
+            <p class="story-p center">MATCHA YG BERKELAZ</p>
             <div class="final-cta-wrap">
-              <a href="<?= base_url('shop') ?>" class="btn-macha-white">Experience Now <i class="fa-solid fa-arrow-right ms-2"></i></a>
-            </div>
-            <div class="floating-elements">
-              <span class="f-leaf l1">🍃</span>
-              <span class="f-leaf l2">🌿</span>
-              <span class="f-leaf l3">🍵</span>
+              <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
+                  class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
           </div>
         </div>
@@ -2091,7 +2144,8 @@
                   <div class="prod-price">Rp 45k</div>
                 </div>
                 <div class="prod-desc">Uji Grade A + Oat Milk. Perpaduan matcha premium dengan susu segar.</div>
-                <a href="#" class="btn-add-cart shimmer-btn"><i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang</a>
+                <a href="#" class="btn-add-cart shimmer-btn"><i class="fa-solid fa-cart-shopping me-1"></i> Tambah
+                  Keranjang</a>
               </div>
             </div>
           </div>
@@ -2108,7 +2162,8 @@
                   <div class="prod-price">Rp 42k</div>
                 </div>
                 <div class="prod-desc">Pure whisked tradition. Pilihan autentik yang menenangkan.</div>
-                <a href="#" class="btn-add-cart shimmer-btn"><i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang</a>
+                <a href="#" class="btn-add-cart shimmer-btn"><i class="fa-solid fa-cart-shopping me-1"></i> Tambah
+                  Keranjang</a>
               </div>
             </div>
           </div>
@@ -2248,8 +2303,8 @@
           style="font-size:4rem; margin-bottom:20px; display:block; position:relative; z-index:1;"></i>
         <h3>Ada Pertanyaan atau Custom Order?</h3>
         <p>Jangan ragu untuk bertanya! Tim CS kami siap membantu kelancaran pesanan kamu dengan respon yang cepat.</p>
-        <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank" rel="noopener noreferrer"
-          class="btn-wa-big">
+        <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank"
+          rel="noopener noreferrer" class="btn-wa-big">
           <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Chat WhatsApp Sekarang
         </a>
       </div>
@@ -2262,26 +2317,33 @@
     <div class="container reveal-up">
       <div class="text-center mb-5">
         <h2 class="section-h2 text-white">Dikirim ke <span style="color: var(--tertiary);">Seluruh Indonesia</span></h2>
-        <p style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Dari jantung Tangerang, kami memastikan setiap produk MariMacha sampai di tangan Anda dalam kondisi segar dan sempurna.</p>
+        <p style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Dari jantung
+          Tangerang, kami memastikan setiap produk MariMacha sampai di tangan Anda dalam kondisi segar dan sempurna.</p>
       </div>
 
       <div class="premium-map-container">
         <!-- Elegant Minimalist Map of Indonesia SVG -->
-        <svg class="id-map-organic-svg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <svg class="id-map-organic-svg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid meet">
           <!-- Flowing elegant paths instead of rigid polygons -->
-          <path class="map-curve" d="M120,80 Q180,120 220,180 Q180,240 100,200 Q80,140 120,80 Z" /> <!-- Sumatra (organic) -->
-          <path class="map-curve" d="M230,280 Q350,320 500,340 Q580,350 450,360 Q300,340 230,280 Z" /> <!-- Jawa (organic) -->
-          <path class="map-curve" d="M380,80 Q450,50 500,120 Q550,220 450,240 Q350,220 380,80 Z" /> <!-- Kalimantan (organic) -->
-          <path class="map-curve" d="M580,100 Q630,80 650,150 Q600,200 560,240 Q520,200 560,150 Z" /> <!-- Sulawesi (organic) -->
-          <path class="map-curve" d="M780,150 Q900,160 960,240 Q900,320 820,300 Q760,240 780,150 Z" /> <!-- Papua (organic) -->
-          
+          <path class="map-curve" d="M120,80 Q180,120 220,180 Q180,240 100,200 Q80,140 120,80 Z" />
+          <!-- Sumatra (organic) -->
+          <path class="map-curve" d="M230,280 Q350,320 500,340 Q580,350 450,360 Q300,340 230,280 Z" />
+          <!-- Jawa (organic) -->
+          <path class="map-curve" d="M380,80 Q450,50 500,120 Q550,220 450,240 Q350,220 380,80 Z" />
+          <!-- Kalimantan (organic) -->
+          <path class="map-curve" d="M580,100 Q630,80 650,150 Q600,200 560,240 Q520,200 560,150 Z" />
+          <!-- Sulawesi (organic) -->
+          <path class="map-curve" d="M780,150 Q900,160 960,240 Q900,320 820,300 Q760,240 780,150 Z" />
+          <!-- Papua (organic) -->
+
           <!-- Smaller Islands as elegant curves -->
           <circle cx="500" cy="360" r="4" class="map-curve-dot" />
           <circle cx="530" cy="365" r="5" class="map-curve-dot" />
           <circle cx="560" cy="368" r="4" class="map-curve-dot" />
           <circle cx="600" cy="370" r="6" class="map-curve-dot" />
           <path class="map-curve" d="M650,370 Q700,380 750,360 Q700,365 650,370 Z" /> <!-- Maluku / Nusa Tenggara -->
-          
+
           <!-- Connection Lines radiating from Tangerang -->
           <path class="map-connection c1" d="M260,290 Q180,220 150,150" /> <!-- To Sumatra -->
           <path class="map-connection c2" d="M260,290 Q350,200 420,160" /> <!-- To Kalimantan -->
@@ -2294,10 +2356,10 @@
           <div class="marker-pulse"></div>
           <div class="marker-core"></div>
         </div>
-        
+
         <!-- Hover Location Card -->
         <div class="location-card" style="top: 55%; left: 23%;">
-          <div class="loc-title">MariMacha HQ</div>
+          <div class="loc-title">MariMacha</div>
           <div class="loc-desc"><i class="fa-solid fa-location-dot me-1"></i> Tangerang, Banten</div>
         </div>
 
@@ -2335,7 +2397,8 @@
 
     .story-track {
       display: flex;
-      width: 300%; /* For 3 horizontal panels */
+      width: 300%;
+      /* For 3 horizontal panels */
       height: 100%;
       position: relative;
       z-index: 2;
@@ -2376,7 +2439,10 @@
       line-height: 1.1;
     }
 
-    .story-h2.lg { font-size: 6rem; text-align: center; }
+    .story-h2.lg {
+      font-size: 6rem;
+      text-align: center;
+    }
 
     .story-h2 .highlight {
       display: block;
@@ -2391,7 +2457,11 @@
       margin-bottom: 30px;
     }
 
-    .story-p.center { margin: 0 auto 40px; text-align: center; max-width: 600px; }
+    .story-p.center {
+      margin: 0 auto 40px;
+      text-align: center;
+      max-width: 600px;
+    }
 
     .story-stats-row {
       display: flex;
@@ -2424,10 +2494,12 @@
       object-fit: cover;
       border-radius: 40px;
       transform: rotate(-3deg);
-      box-shadow: 0 50px 80px rgba(0,0,0,0.5);
+      box-shadow: 0 50px 80px rgba(0, 0, 0, 0.5);
     }
 
-    .floating-img-frame.s2 img { transform: rotate(3deg); }
+    .floating-img-frame.s2 img {
+      transform: rotate(3deg);
+    }
 
     .floating-badge {
       position: absolute;
@@ -2438,7 +2510,7 @@
       padding: 20px 30px;
       font-weight: 900;
       border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
       transform: rotate(10deg);
       font-size: 1.1rem;
     }
@@ -2459,7 +2531,7 @@
       font-size: 1.2rem;
       text-decoration: none;
       transition: all 0.4s ease;
-      box-shadow: 0 15px 40px rgba(255,255,255,0.2);
+      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
     }
 
     .btn-macha-white:hover {
@@ -2483,14 +2555,34 @@
       filter: blur(2px);
     }
 
-    .f-leaf.l1 { top: -50px; left: 10%; }
-    .f-leaf.l2 { bottom: -80px; right: 15%; }
-    .f-leaf.l3 { top: 40%; right: 5%; font-size: 5rem; }
+    .f-leaf.l1 {
+      top: -50px;
+      left: 10%;
+    }
+
+    .f-leaf.l2 {
+      bottom: -80px;
+      right: 15%;
+    }
+
+    .f-leaf.l3 {
+      top: 40%;
+      right: 5%;
+      font-size: 5rem;
+    }
 
     @media (max-width: 991px) {
-      .story-h2 { font-size: 3rem; }
-      .glass-content-wrap { padding: 30px; }
-      .story-slide { padding: 0 15px; }
+      .story-h2 {
+        font-size: 3rem;
+      }
+
+      .glass-content-wrap {
+        padding: 30px;
+      }
+
+      .story-slide {
+        padding: 0 15px;
+      }
     }
   </style>
 
@@ -2503,7 +2595,8 @@
             <div class="footer-brand-icon"><i class="fa-solid fa-leaf" style="color:#fff;font-size:1.1rem"></i></div>
             MariMacha
           </div>
-          <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about purity, tradition, and refreshing moments in every cup.</p>
+          <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about
+            purity, tradition, and refreshing moments in every cup.</p>
           <div class="footer-social">
             <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://wa.me/6281292870932" class="social-btn" title="WhatsApp"><i
@@ -2523,9 +2616,12 @@
         <div class="col-md-4 col-lg-2 invisible-init">
           <div class="footer-heading">Kontak</div>
           <div class="status-active-wrap">
-            <div class="status-active"><div class="active-dot"></div> ACTIVE</div>
+            <div class="status-active">
+              <div class="active-dot"></div> ACTIVE
+            </div>
           </div>
-          <a class="footer-link" href="https://wa.me/6281292870932" target="_blank" rel="noopener noreferrer" style="color: #fff; font-weight: 700;">
+          <a class="footer-link" href="https://wa.me/6281292870932" target="_blank" rel="noopener noreferrer"
+            style="color: #fff; font-weight: 700;">
             <i class="fa-brands fa-whatsapp"></i> 081292870932
           </a>
           <p class="footer-link mb-2"><i class="fa-regular fa-envelope"></i> hello@marimacha.id</p>
@@ -2534,8 +2630,10 @@
         <div class="col-md-4 col-lg-3 invisible-init">
           <div class="footer-heading">Lokasi Kami</div>
           <p class="footer-link mb-3"><i class="fa-solid fa-map-pin me-2"></i> Citra Raya, Tangerang, Banten</p>
-          <a href="https://maps.app.goo.gl/dsyGHbvKsbVAKbiJ9" target="_blank" rel="noopener noreferrer" class="footer-location-img-wrap">
-            <img src="<?= base_url('assets/img/macha_location_footer.png'); ?>" alt="Location Map Preview" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=400&auto=format&fit=crop'">
+          <a href="https://maps.app.goo.gl/dsyGHbvKsbVAKbiJ9" target="_blank" rel="noopener noreferrer"
+            class="footer-location-img-wrap">
+            <img src="<?= base_url('assets/img/macha_location_footer.png'); ?>" alt="Location Map Preview"
+              onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=400&auto=format&fit=crop'">
             <div class="map-overlay-text">
               <i class="fa-solid fa-up-right-from-square"></i> Lihat di Google Maps
             </div>
@@ -2545,7 +2643,8 @@
       <hr class="footer-divider" style="opacity: 0.1; background: #fff;">
       <div class="row align-items-center">
         <div class="col-md-6 text-center text-md-start">
-          <p class="footer-copy mb-0">© <?= date('Y') ?> <strong style="color:#fff">MariMacha Premium</strong> · Crafting Quality.</p>
+          <p class="footer-copy mb-0">© <?= date('Y') ?> <strong style="color:#fff">MariMacha Premium</strong> ·
+            Crafting Quality.</p>
         </div>
         <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
           <div class="d-flex gap-3 justify-content-center justify-content-md-end footer-copy">
@@ -2634,15 +2733,15 @@
       document.querySelectorAll('a, button, .perspective-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
           follower.classList.add('active');
-          if(el.classList.contains('perspective-card') || el.closest('.prod-card')) {
+          if (el.classList.contains('perspective-card') || el.closest('.prod-card')) {
             follower.classList.add('view-more');
-            if(followerText) followerText.style.transform = "translate(-50%, -50%) scale(1)";
+            if (followerText) followerText.style.transform = "translate(-50%, -50%) scale(1)";
           }
         });
         el.addEventListener('mouseleave', () => {
           follower.classList.remove('active');
           follower.classList.remove('view-more');
-          if(followerText) followerText.style.transform = "translate(-50%, -50%) scale(0)";
+          if (followerText) followerText.style.transform = "translate(-50%, -50%) scale(0)";
         });
       });
 
@@ -2664,11 +2763,11 @@
         tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
           .fromTo('.navbar-macha', { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "expo.out" }, "-=0.6")
           .fromTo('footer', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "-=1");
-          
-        setTimeout(() => { 
+
+        setTimeout(() => {
           document.getElementById('preloader').style.display = 'none';
           document.body.classList.add('site-ready');
-          ScrollTrigger.refresh(); 
+          ScrollTrigger.refresh();
         }, 2200);
       }
 
@@ -2676,7 +2775,7 @@
       window.addEventListener('scroll', () => {
         const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         gsap.to('#scrollProgress', { width: scrolled + "%", duration: 0.1 });
-        
+
         const nav = document.getElementById('mainNav');
         if (window.scrollY > 50) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
@@ -2689,16 +2788,16 @@
 
       // Horizontal Story Track Refined
       const storyTrack = document.querySelector('.story-track');
-      if(storyTrack) {
+      if (storyTrack) {
         gsap.to(storyTrack, {
-          xPercent: -66.66,
+          xPercent: -50,
           ease: "none",
           scrollTrigger: {
             trigger: "#storySection",
             pin: true,
             scrub: 1.2,
             start: "top top",
-            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 2),
+            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 1.5),
             invalidateOnRefresh: true
           }
         });
@@ -2725,25 +2824,25 @@
 
       // General reveals for elements with .reveal-up
       gsap.utils.toArray('.reveal-up').forEach(elem => {
-        gsap.fromTo(elem, { y: 50, autoAlpha: 0 }, { 
+        gsap.fromTo(elem, { y: 50, autoAlpha: 0 }, {
           y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "power4.out",
           scrollTrigger: commonTrigger(elem)
         });
       });
 
-      gsap.fromTo('.prod-card', { y: 60, autoAlpha: 0 }, { 
+      gsap.fromTo('.prod-card', { y: 60, autoAlpha: 0 }, {
         y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: commonTrigger('.gs-prod-grid') 
-      });
-      
-      gsap.fromTo('.step-card', { x: -40, autoAlpha: 0 }, { 
-        x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, stagger: 0.2, 
-        scrollTrigger: commonTrigger('.gs-steps-row') 
+        scrollTrigger: commonTrigger('.gs-prod-grid')
       });
 
-      gsap.fromTo('.testi-card', { scale: 0.9, autoAlpha: 0 }, { 
-        scale: 1, autoAlpha: 1, pointerEvents: "auto", duration: 0.6, stagger: 0.15, ease: "back.out(1.2)", 
-        scrollTrigger: commonTrigger('.gs-testi-row') 
+      gsap.fromTo('.step-card', { x: -40, autoAlpha: 0 }, {
+        x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, stagger: 0.2,
+        scrollTrigger: commonTrigger('.gs-steps-row')
+      });
+
+      gsap.fromTo('.testi-card', { scale: 0.9, autoAlpha: 0 }, {
+        scale: 1, autoAlpha: 1, pointerEvents: "auto", duration: 0.6, stagger: 0.15, ease: "back.out(1.2)",
+        scrollTrigger: commonTrigger('.gs-testi-row')
       });
 
       // About & Footer Animations (RE-ADDED)
@@ -2751,7 +2850,7 @@
       gsap.fromTo(".about-text-col", { x: 50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, ease: "power3.out", scrollTrigger: commonTrigger(".gs-about-row") });
       gsap.fromTo(".feature-card", { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "power3.out", scrollTrigger: commonTrigger(".gs-features") });
       gsap.fromTo(".gs-footer > div", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.2, ease: "power3.out", scrollTrigger: commonTrigger(".gs-footer") });
-      
+
       // Storytelling trigger for the Wa Section
       gsap.fromTo(".gs-wa-card", { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, scrollTrigger: commonTrigger(".wa-section") });
 
