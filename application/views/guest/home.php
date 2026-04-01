@@ -1741,7 +1741,7 @@
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
-            <a href="https://wa.me/6281234567890?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank"
+            <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank" rel="noopener noreferrer"
               class="btn-hero-wa">
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
@@ -2090,7 +2090,7 @@
           style="font-size:4rem; margin-bottom:20px; display:block; position:relative; z-index:1;"></i>
         <h3>Ada Pertanyaan atau Custom Order?</h3>
         <p>Jangan ragu untuk bertanya! Tim CS kami siap membantu kelancaran pesanan kamu dengan respon yang cepat.</p>
-        <a href="https://wa.me/6281234567890?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank"
+        <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank" rel="noopener noreferrer"
           class="btn-wa-big">
           <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Chat WhatsApp Sekarang
         </a>
@@ -2376,8 +2376,8 @@
         <div class="col-md-4 col-lg-3 invisible-init">
           <div class="footer-heading">Lokasi Kami</div>
           <p class="footer-link mb-3"><i class="fa-solid fa-map-pin me-2"></i> Citra Raya, Tangerang, Banten</p>
-          <a href="https://maps.app.goo.gl/dsyGHbvKsbVAKbiJ9" target="_blank" class="footer-location-img-wrap">
-            <img src="<?= base_url('application/views/guest/macha_location_footer_1775023405309.png'); ?>" alt="Location Map Preview" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=400&auto=format&fit=crop'">
+          <a href="https://maps.app.goo.gl/dsyGHbvKsbVAKbiJ9" target="_blank" rel="noopener noreferrer" class="footer-location-img-wrap">
+            <img src="<?= base_url('assets/img/macha_location_footer.png'); ?>" alt="Location Map Preview" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=400&auto=format&fit=crop'">
             <div class="map-overlay-text">
               <i class="fa-solid fa-up-right-from-square"></i> Lihat di Google Maps
             </div>
@@ -2516,8 +2516,9 @@
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
+          gsap.set(".invisible-init, footer, .hero-cta > *, .nav-link", { pointerEvents: "auto", visibility: "visible", clearProps: "all" }); 
           ScrollTrigger.refresh(); 
-        }, 2000);
+        }, 2200);
       }
 
       // 5. SCROLL PROGRESS
