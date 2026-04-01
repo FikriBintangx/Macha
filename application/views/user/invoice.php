@@ -177,7 +177,7 @@
                     </div>
                     <div class="info-box">
                         <label>Metode Bayar</label>
-                        <span><?= htmlspecialchars($order['payment_method']) ?></span>
+                        <span><?= htmlspecialchars($order['payment_method'] ?: 'QRIS (BCA/E-Wallet)') ?></span>
                     </div>
                     <div class="info-box">
                         <label>Nomor WhatsApp</label>

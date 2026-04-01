@@ -164,6 +164,7 @@ class Shop extends CI_Controller {
 
     // Proses checkout – simpan ke DB
     public function process_checkout() {
+        $this->_ensure_sales_columns(); // Double check columns exist
         if (!$this->session->userdata('userid')) {
             redirect('auth');
         }
