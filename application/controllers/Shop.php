@@ -2,11 +2,18 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Shop extends CI_Controller {
+    
+    // ==========================================
+    // PUSAT KENDALI NOMOR WA ADMIN (GANTI DISINI)
+    // ==========================================
+    private $admin_phone; 
+    // ==========================================
 
     public function __construct() {
         parent::__construct();
         $this->load->model('M_product');
         $this->load->model('M_sales');
+        $this->admin_phone = $this->config->item('admin_wa');
     }
 
     // Halaman toko – BEBAS, tidak perlu login
@@ -248,6 +255,7 @@ class Shop extends CI_Controller {
         }
 
         $data['details'] = $this->M_sales->get_sales_detail($sales_id);
+        $data['admin_phone'] = $this->admin_phone;
         $this->load->view('user/invoice', $data);
     }
 

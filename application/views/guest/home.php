@@ -1955,7 +1955,7 @@
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
-            <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank"
+            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank"
               rel="noopener noreferrer" class="btn-hero-wa">
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
@@ -2064,7 +2064,7 @@
             <h2 class="story-h2 lg">PESAN <br><span class="highlight">SEKARANG</span></h2>
             <p class="story-p center">MATCHA YG BERKELAZ</p>
             <div class="final-cta-wrap">
-              <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+ingin+tanya+produk" class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
+              <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk" class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
                   class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
           </div>

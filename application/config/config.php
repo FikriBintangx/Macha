@@ -29,6 +29,12 @@ $root     = $protocol."://".$_SERVER['HTTP_HOST'];
 $root    .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 $config['base_url'] = $root;
 
+// ==========================================
+// PUSAT KENDALI NOMOR WA ADMIN (GANTI DISINI)
+// ==========================================
+$config['admin_wa'] = '6285881705459'; 
+// ==========================================
+
 /*
 |--------------------------------------------------------------------------
 | Index File

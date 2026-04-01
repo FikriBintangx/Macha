@@ -259,9 +259,10 @@
                 <div class="wa-confirm-box">
                     <p>Pesanan Anda sudah kami terima! Kirim bukti transfer via WhatsApp agar admin bisa langsung memproses pesanan ✨</p>
                     <?php 
-                        $wa_msg = urlencode("Halo MariMacha! Saya ingin konfirmasi pembayaran untuk:\n\n📌 No Invoice: " . $order['invoice_no'] . "\n💰 Total: Rp " . number_format($order['total_price'],0,',','.') . "\n\nTerima kasih!");
+                        $invoice_url = base_url('shop/invoice/'.$order['id']);
+                        $wa_msg = urlencode("Halo MariMacha! Saya ingin konfirmasi pembayaran untuk:\n\n📌 No Invoice: " . $order['invoice_no'] . "\n💰 Total: Rp " . number_format($order['total_price'],0,',','.') . "\n\n🌐 Lacak Pesanan Melalui Website:\n" . $invoice_url . "\n\nTerima kasih!");
                     ?>
-                    <a href="https://wa.me/6285881705459?text=<?= $wa_msg ?>" target="_blank" class="btn-wa-confirm">
+                    <a href="https://wa.me/<?= $admin_phone ?>?text=<?= $wa_msg ?>" target="_blank" class="btn-wa-confirm">
                         <i class="fa-brands fa-whatsapp"></i> Konfirmasi via WhatsApp
                     </a>
                 </div>
@@ -288,7 +289,7 @@
 
             <div class="nota-footer">
                 <p>Terima kasih telah berbelanja di <strong>MariMacha</strong> 🌿 | Citra Raya, Tangerang, Banten</p>
-                <p>WA: 0858-8170-5459 | IG: @marimatcha_panongan</p>
+                <p>WA: <?= substr($admin_phone,0,2) ?>-<?= substr($admin_phone,2,4) ?>-<?= substr($admin_phone,6,4) ?>-<?= substr($admin_phone,10) ?> | IG: @marimatcha_panongan</p>
             </div>
         </div>
     </div>
@@ -327,7 +328,8 @@
             itemsCode += "- <?= htmlspecialchars($d['product_name']) ?> (<?= $d['qty'] ?>x)\n";
         <?php endforeach; ?>
 
-        // Setup Template Pesan
+        // 🌐 Klik buka pesan WA dengan URL pelacakan web
+        let invoiceUrl = "<?= base_url('shop/invoice/'.$order['id']) ?>";
         let msg = "Halo MariMacha! Saya ingin Konfirmasi Pesanan Baru:\n\n";
         msg += "📌 *No Invoice:* <?= $order['invoice_no'] ?>\n";
         msg += "👤 *Nama:* <?= htmlspecialchars($order['customer_name']) ?>\n";
@@ -335,11 +337,12 @@
         msg += "💰 *Total Harga:* Rp <?= number_format($order['total_price'],0,',','.') ?>\n";
         msg += "📍 *Alamat:* <?= htmlspecialchars($order['address']) ?>\n";
         msg += "💳 *Metode:* <?= htmlspecialchars($order['payment_method']) ?>\n\n";
+        msg += "🌐 *Lacak melalui website:*\n" + invoiceUrl + "\n\n";
         msg += "Mohon segera diproses ya, terima kasih! ✨";
 
         // Encode URI
         let encodedMsg = encodeURIComponent(msg);
-        let waLink = "https://wa.me/6285881705459?text=" + encodedMsg;
+        let waLink = "https://wa.me/<?= $admin_phone ?>?text=" + encodedMsg;
 
         // Beri delay 2 detik agar user sempat baca nota sebentar
         setTimeout(function() {
