@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ti2b8143/public_html/
+    - /usr/bin/rsync -avz --exclude '.git' --exclude 'node_modules' --exclude '.github' $ROOT/ $DEPLOYPATH
