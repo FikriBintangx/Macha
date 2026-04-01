@@ -2568,7 +2568,20 @@
       }, 60);
 
       function revealSite() {
-        const tl = gsap.timeline();
+        const tl = gsap.timeline({
+          onComplete: () => {
+            document.body.classList.add('site-ready');
+            // Menghapus semua inline styles/transform agar tidak bentrok dengan scroll
+            gsap.set(".hero h1, .hero-desc, .hero-tag, .hero-cta > *, .hero-badge-float", { 
+              clearProps: "all", 
+              pointerEvents: "auto", 
+              visibility: "visible", 
+              opacity: 1 
+            });
+            ScrollTrigger.refresh();
+          }
+        });
+        
         tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
           .fromTo('.navbar-macha', { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.6")
           .fromTo('.hero-tag', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.8")
@@ -2582,10 +2595,8 @@
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
-          document.body.classList.add('site-ready');
-          gsap.set(".invisible-init, footer, .hero-cta > *, .nav-link, a, button", { pointerEvents: "auto", visibility: "visible", clearProps: "all" }); 
           ScrollTrigger.refresh(); 
-        }, 2200);
+        }, 2500);
       }
 
       // 5. SCROLL PROGRESS
