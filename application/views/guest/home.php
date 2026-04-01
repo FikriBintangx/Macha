@@ -2572,12 +2572,12 @@
         tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
           .fromTo('.navbar-macha', { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.6")
           .fromTo('.hero-tag', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.8")
-          .fromTo('.hero h1', { y: 100, skewY: 7, autoAlpha: 0 }, { y: 0, skewY: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.2, ease: "expo.out" }, "-=1")
-          .fromTo('.hero-desc', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=1")
-          .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.8")
-          .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.6")
-          .fromTo('.hero-img-wrap', { x: 100, rotate: 10, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.5, ease: "power4.out" }, "-=1.5")
-          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1.2")
+          .fromTo('.hero h1', { y: 60, autoAlpha: 0, skewY: 5 }, { y: 0, autoAlpha: 1, skewY: 0, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.7")
+          .fromTo('.hero-desc', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.7 }, "-=0.8")
+          .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.1, duration: 0.7, ease: "back.out(1.7)" }, "-=0.6")
+          .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.7 }, "-=0.5")
+          .fromTo('.hero-img-wrap', { x: 50, rotate: 5, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.2, ease: "power4.out" }, "-=1.2")
+          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1")
           .fromTo('footer', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1 }, "-=1");
           
         setTimeout(() => { 
