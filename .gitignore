@@ -20,6 +20,7 @@ application/sessions/*
 
 # Vendor folder
 vendor/
+node_modules/
 
 # User uploads/assets
 assets/uploads/*
