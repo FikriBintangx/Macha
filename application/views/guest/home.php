@@ -2576,7 +2576,7 @@
 
     @media (max-width: 991px) {
       .story-h2 {
-        font-size: 3rem;
+        font-size: 2.8rem;
       }
 
       .glass-content-wrap {
@@ -2585,6 +2585,56 @@
 
       .story-slide {
         padding: 0 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .story-h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+
+      .story-h2.lg {
+        font-size: 2.5rem;
+      }
+
+      .story-p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      .glass-content-wrap {
+        padding: 25px;
+        border-radius: 25px;
+      }
+
+      .floating-img-frame {
+        max-width: 220px;
+        margin-top: 25px;
+      }
+
+      .floating-badge {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+        bottom: -10px;
+        right: -10px;
+      }
+
+      .s-stat span {
+        font-size: 1.4rem;
+      }
+
+      .btn-macha-white {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+      }
+
+      .floating-cart {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.3rem;
       }
     }
   </style>
