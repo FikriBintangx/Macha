@@ -1369,96 +1369,154 @@
       color: #075E54;
     }
 
-    /* ─── FOOTER ─── */
+    /* ─── FOOTER PREMIUM DESIGN ─── */
     footer {
-      background: var(--green-dark);
-      color: rgba(255, 255, 255, 0.8);
-      padding: 80px 0 30px;
+      background: #0a1f1f; /* Deep dark green */
+      color: rgba(255, 255, 255, 0.6);
+      padding: 100px 0 40px;
+      position: relative;
+      overflow: hidden;
     }
 
     .footer-brand {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .footer-brand-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--green-main);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: #fff !important;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 25px;
     }
 
     .footer-desc {
       font-size: 0.95rem;
       line-height: 1.8;
-      max-width: 300px;
+      max-width: 320px;
+      margin-bottom: 30px;
     }
 
     .footer-heading {
+      color: #fff;
       font-size: 0.9rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-bottom: 24px;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      opacity: 0.8;
     }
 
     .footer-link {
-      display: block;
-      color: rgba(255, 255, 255, 0.8);
-      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 15px;
       font-size: 0.95rem;
-      padding: 6px 0;
-      transition: var(--transition);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .footer-link i {
+      font-size: 0.75rem;
+      color: var(--tertiary);
     }
 
     .footer-link:hover {
       color: #fff;
-      padding-left: 8px;
+      transform: translateX(5px);
+    }
+
+    .status-active-wrap {
+      margin-bottom: 25px;
+    }
+
+    .status-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 211, 102, 0.1);
+      color: #25D366;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      border: 1px solid rgba(37, 211, 102, 0.2);
+    }
+
+    .active-dot {
+      width: 8px;
+      height: 8px;
+      background: #25D366;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #25D366;
+      animation: statusPulse 1.5s infinite;
+    }
+
+    @keyframes statusPulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .footer-location-img-wrap {
+      margin-top: 15px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 16/10;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      transition: all 0.4s ease;
+      display: block;
+    }
+
+    .footer-location-img-wrap:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer-location-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .map-overlay-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .footer-social {
       display: flex;
-      gap: 12px;
-      margin-top: 24px;
+      gap: 15px;
     }
 
     .social-btn {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
+      transition: all 0.3s ease;
       text-decoration: none;
-      font-size: 1.1rem;
-      transition: var(--transition);
     }
 
     .social-btn:hover {
-      background: var(--green-main);
-      transform: translateY(-4px);
-    }
-
-    .footer-divider {
-      border-color: rgba(255, 255, 255, 0.1);
-      margin: 40px 0 24px;
-    }
-
-    .footer-copy {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.5);
-      text-align: center;
+      background: var(--tertiary);
+      transform: translateY(-3px);
     }
 
     /* ─── FLOATING CART (PULSING & MAGNETIC) ─── */
@@ -1640,6 +1698,14 @@
       .stat-label {
         font-size: 0.75rem;
       }
+    }
+
+    /* Force clickable state after animation */
+    .site-ready .invisible-init, 
+    .site-ready a, 
+    .site-ready button {
+      pointer-events: auto !important;
+      visibility: visible !important;
     }
 
     /* Disable custom cursor on touch devices */
@@ -2355,23 +2421,23 @@
           </div>
         </div>
         <div class="col-md-4 col-lg-2 offset-lg-1 invisible-init">
-          <div class="footer-heading">Navigasi Utama</div>
-          <a class="footer-link d-block" href="<?= base_url() ?>">Beranda</a>
-          <a class="footer-link d-block" href="<?= base_url('shop') ?>">Katalog Produk</a>
-          <a class="footer-link d-block" href="#tentang">Tentang Kami</a>
-          <a class="footer-link d-block" href="#cara-pesan">Cara Pesan</a>
-          <a class="footer-link d-block" href="#lokasi-kami">Lokasi Kami</a>
+          <div class="footer-heading">Navigasi</div>
+          <a class="footer-link" href="<?= base_url() ?>"><i class="fa-solid fa-chevron-right"></i> Beranda</a>
+          <a class="footer-link" href="<?= base_url('shop') ?>"><i class="fa-solid fa-chevron-right"></i> Katalog</a>
+          <a class="footer-link" href="#tentang"><i class="fa-solid fa-chevron-right"></i> Tentang</a>
+          <a class="footer-link" href="#cara-pesan"><i class="fa-solid fa-chevron-right"></i> Pesan</a>
+          <a class="footer-link" href="#lokasi-kami"><i class="fa-solid fa-chevron-right"></i> Lokasi</a>
         </div>
         <div class="col-md-4 col-lg-2 invisible-init">
-          <div class="footer-heading">Kontak & Bisnis</div>
+          <div class="footer-heading">Kontak</div>
           <div class="status-active-wrap">
             <div class="status-active"><div class="active-dot"></div> ACTIVE</div>
           </div>
-          <a class="footer-link d-block" href="https://wa.me/6281292870932" target="_blank" style="font-weight: 800; color: #fff;">
-            <i class="fa-brands fa-whatsapp me-2"></i> 081292870932
+          <a class="footer-link" href="https://wa.me/6281292870932" target="_blank" rel="noopener noreferrer" style="color: #fff; font-weight: 700;">
+            <i class="fa-brands fa-whatsapp"></i> 081292870932
           </a>
-          <p class="footer-link d-block mb-1"><i class="fa-regular fa-envelope me-2"></i> hello@marimacha.id</p>
-          <p class="footer-link d-block"><i class="fa-solid fa-clock me-2"></i> 09:00 - 21:00 WIB</p>
+          <p class="footer-link mb-2"><i class="fa-regular fa-envelope"></i> hello@marimacha.id</p>
+          <p class="footer-link"><i class="fa-solid fa-clock"></i> 09:00 - 21:00 WIB</p>
         </div>
         <div class="col-md-4 col-lg-3 invisible-init">
           <div class="footer-heading">Lokasi Kami</div>
@@ -2516,7 +2582,8 @@
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
-          gsap.set(".invisible-init, footer, .hero-cta > *, .nav-link", { pointerEvents: "auto", visibility: "visible", clearProps: "all" }); 
+          document.body.classList.add('site-ready');
+          gsap.set(".invisible-init, footer, .hero-cta > *, .nav-link, a, button", { pointerEvents: "auto", visibility: "visible", clearProps: "all" }); 
           ScrollTrigger.refresh(); 
         }, 2200);
       }
@@ -2536,26 +2603,25 @@
 
       const commonTrigger = (el) => ({ trigger: el, start: "top 85%", toggleActions: "play none none reverse" });
 
-      // Horizontal Story Track
+      // Horizontal Story Track Refined
       const storyTrack = document.querySelector('.story-track');
       if(storyTrack) {
-        // Only vertical stack for very small screens if needed, 
-        // but pinning usually works if we adjust viewport width
         gsap.to(storyTrack, {
           xPercent: -66.66,
           ease: "none",
           scrollTrigger: {
             trigger: "#storySection",
             pin: true,
-            scrub: 1,
+            scrub: 1.2,
             start: "top top",
-            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 1.5)
+            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 2),
+            invalidateOnRefresh: true
           }
         });
 
         // Parallax background text
         gsap.to(".story-bg-text", {
-          x: '20%',
+          x: '15%',
           scrollTrigger: { trigger: "#storySection", start: "top bottom", end: "bottom top", scrub: 1 }
         });
       }
