@@ -2104,9 +2104,12 @@
                       <span class="prod-badge" style="background: rgba(229, 62, 62, 0.9); color: white;">Habis</span>
                     <?php endif; ?>
                   </div>
-                  <?php $img = (!empty($prod['image'])) ? base_url('uploads/' . $prod['image']) : 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?q=80&w=400&auto=format&fit=crop'; ?>
+                  <?php 
+                    // Search in assets/img first since user uploaded there manually
+                    $img = (!empty($prod['image'])) ? base_url('assets/img/' . $prod['image']) : base_url('assets/img/productORI.png'); 
+                  ?>
                   <img src="<?= $img ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
-                    onerror="this.src='https://images.unsplash.com/photo-1597481499750-3e6b22637e12?q=80&w=400&auto=format&fit=crop'">
+                    onerror="this.src='<?= base_url('assets/img/productORI.png'); ?>'">
                 </div>
                 <div class="prod-body">
                   <div class="prod-header">
