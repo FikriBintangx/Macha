@@ -1,5 +1,3 @@
----
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ti2b8143/public_html/macha.ti24se1.my.id/
-    - /bin/cp -a $ROOT/* $DEPLOYPATH
+    - /bin/cp -R * /home/ti2b8143/public_html/macha.ti24se1.my.id/
