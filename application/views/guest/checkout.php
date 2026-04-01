@@ -406,7 +406,11 @@
                 });
 
             }, function(error) {
-                alert("Gagal mendapatkan lokasi: " + error.message);
+                let msg = "Gagal mendapatkan lokasi: " + error.message;
+                if(error.message.includes("secure origins")) {
+                    msg = "Fitur 'Ambil Lokasi' WAJIB menggunakan HTTPS (SSL).\n\nSilakan aktifkan SSL/HTTPS (Gembok Hijau) di cPanel agar fitur ini aktif secara otomatis.";
+                }
+                alert(msg);
                 btn.innerHTML = originalHtml;
                 btn.disabled = false;
                 addressField.placeholder = originalPlaceholder;

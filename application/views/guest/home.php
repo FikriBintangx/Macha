@@ -2598,7 +2598,7 @@
           <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about
             purity, tradition, and refreshing moments in every cup.</p>
           <div class="footer-social">
-            <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/marimatcha_panongan?igsh=Y2F0NGs5YjMwa3N4" class="social-btn" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://wa.me/6281292870932" class="social-btn" title="WhatsApp"><i
                 class="fa-brands fa-whatsapp"></i></a>
             <a href="#" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
@@ -2790,14 +2790,14 @@
       const storyTrack = document.querySelector('.story-track');
       if (storyTrack) {
         gsap.to(storyTrack, {
-          xPercent: -50,
+          xPercent: -66.66,
           ease: "none",
           scrollTrigger: {
             trigger: "#storySection",
             pin: true,
             scrub: 1.2,
             start: "top top",
-            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 1.5),
+            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 2),
             invalidateOnRefresh: true
           }
         });
