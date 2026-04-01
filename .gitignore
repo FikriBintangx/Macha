@@ -1,0 +1,34 @@
+# CodeIgniter gitignore
+index.php
+license.txt
+user_guide/
+
+# Log files
+application/logs/*.html
+application/logs/log-*.php
+
+# Cache files
+application/cache/*
+!application/cache/index.html
+
+# Database config (comment this if you want to push DB credentials)
+# application/config/database.php
+
+# Session storage
+application/sessions/*
+!application/sessions/index.html
+
+# Vendor folder
+vendor/
+
+# User uploads/assets
+assets/uploads/*
+!assets/uploads/index.html
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
