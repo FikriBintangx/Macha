@@ -2003,7 +2003,9 @@
   <!-- ══════════ PREMIUM STORYTELLING SECTION ══════════ -->
   <section class="premium-story-section" id="storySection">
     <div class="story-bg-text-wrapper">
-      <div class="story-bg-text">CRAFTED WITH PASSION</div>
+      <div class="story-bg-text">MATCHA MATCHA MATCHA MATCHA MATCHA</div>
+      <div class="story-bg-text">MATCHA MATCHA MATCHA MATCHA MATCHA</div>
+      <div class="story-bg-text">MATCHA MATCHA MATCHA MATCHA MATCHA</div>
     </div>
 
     <div class="story-track">
@@ -2306,7 +2308,7 @@
           style="font-size:4rem; margin-bottom:20px; display:block; position:relative; z-index:1;"></i>
         <h3>Ada Pertanyaan atau Custom Order?</h3>
         <p>Jangan ragu untuk bertanya! Tim CS kami siap membantu kelancaran pesanan kamu dengan respon yang cepat.</p>
-        <a href="https://wa.me/6281292870932?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank"
+        <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank"
           rel="noopener noreferrer" class="btn-wa-big">
           <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Chat WhatsApp Sekarang
         </a>
@@ -2381,21 +2383,29 @@
 
     .story-bg-text-wrapper {
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 0;
       width: 100%;
-      transform: translateY(-50%);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       pointer-events: none;
       z-index: 1;
       opacity: 0.04;
+      overflow: hidden;
     }
 
     .story-bg-text {
-      font-size: 25vw;
+      font-size: clamp(8rem, 22vw, 25rem);
       font-weight: 950;
       color: #fff;
       white-space: nowrap;
-      letter-spacing: -1.5vw;
+      line-height: 0.82;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      user-select: none;
     }
 
     .story-track {
@@ -2652,7 +2662,7 @@
             purity, tradition, and refreshing moments in every cup.</p>
           <div class="footer-social">
             <a href="https://www.instagram.com/marimatcha_panongan?igsh=Y2F0NGs5YjMwa3N4" class="social-btn" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/6281292870932" class="social-btn" title="WhatsApp"><i
+            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>" class="social-btn" title="WhatsApp"><i
                 class="fa-brands fa-whatsapp"></i></a>
             <a href="#" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
@@ -2673,9 +2683,9 @@
               <div class="active-dot"></div> ACTIVE
             </div>
           </div>
-          <a class="footer-link" href="https://wa.me/6281292870932" target="_blank" rel="noopener noreferrer"
+          <a class="footer-link" href="https://wa.me/<?= $this->config->item('admin_wa') ?>" target="_blank" rel="noopener noreferrer"
             style="color: #fff; font-weight: 700;">
-            <i class="fa-brands fa-whatsapp"></i> 081292870932
+            <i class="fa-brands fa-whatsapp"></i> 0<?= substr($this->config->item('admin_wa'), 2) ?>
           </a>
           <p class="footer-link mb-2"><i class="fa-regular fa-envelope"></i> hello@marimacha.id</p>
           <p class="footer-link"><i class="fa-solid fa-clock"></i> 09:00 - 21:00 WIB</p>
