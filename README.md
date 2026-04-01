@@ -1,7 +1,7 @@
 # 🌿 MariMacha - Premium Matcha Experience
 
 <div align="center">
-  <img src="u-back/assets/img/productORI.png" width="600" alt="MariMacha Hero">
+  <img src="u-back/assets/img/logo.png" width="600" alt="MariMacha Hero">
   <p align="center">
     <strong>Experience the ritual of peace in every sip.</strong>
   </p>

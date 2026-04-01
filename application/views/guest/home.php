@@ -1524,21 +1524,43 @@
       visibility: hidden;
     }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 991px) {
       .navbar-collapse {
         background: #fff;
-        padding: 20px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-lg);
+        padding: 30px 20px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         margin-top: 15px;
-        position: absolute;
-        width: calc(100% - 24px);
-        left: 12px;
+        border: 1px solid rgba(0,0,0,0.05);
       }
-
+      
+      .nav-link {
+        font-size: 1.1rem;
+        padding: 12px 0 !important;
+        text-align: center;
+      }
+      
+      .hero {
+        padding-top: 120px;
+        text-align: center;
+      }
+      
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero-cta {
+        justify-content: center;
+      }
+      
+      .hero-stats {
+        justify-content: center;
+        gap: 20px;
+      }
+      
       .hero-img-wrap {
-        margin-top: 40px;
+        margin-top: 20px;
       }
     }
 
@@ -1546,85 +1568,84 @@
       section {
         padding: 60px 0;
       }
-
-      .hero {
-        padding-top: 120px;
+      
+      .hero h1 {
+        font-size: 2.8rem;
       }
-
+      
       .hero-badge-float {
-        display: none;
+        display: none !important;
       }
-
-      .hero-stats {
-        gap: 24px;
-        justify-content: center;
-        text-align: center;
-        border-top: none;
-        padding-top: 0;
+      
+      .story-bg-text {
+        font-size: 10vw;
       }
-
-      .step-connector {
-        display: none;
+      
+      .story-slide {
+        padding: 40px 10px;
       }
-
-      .wa-card {
-        padding: 50px 24px;
+      
+      .story-h2 {
+        font-size: 1.8rem;
       }
-
-      .about-badge {
-        position: relative;
-        bottom: 0;
-        right: 0;
-        margin-top: -30px;
-        text-align: center;
-        z-index: 2;
+      
+      .glass-content-wrap {
+        padding: 30px 20px;
       }
-
-      footer {
-        padding: 60px 0 30px;
+      
+      .floating-cart {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
       }
     }
 
     @media (max-width: 576px) {
-      .prod-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+      .hero h1 {
+        font-size: 2.2rem;
       }
-
-      .prod-body {
-        padding: 16px;
-      }
-
-      .prod-name {
-        font-size: 1rem;
-      }
-
-      .prod-price {
-        font-size: 1.1rem;
-      }
-
-      .prod-img-wrap {
-        height: 180px;
-      }
-
-      .btn-add-cart {
-        font-size: 0.85rem;
-        padding: 10px;
-      }
-
-      .btn-add-cart i {
-        display: none;
-      }
-
-      /* Hide icon on mobile for space */
-      .hero-cta {
-        justify-content: center;
-      }
-
-      .btn-hero-primary,
-      .btn-hero-wa {
+      
+      .btn-hero-primary, .btn-hero-wa {
         width: 100%;
         justify-content: center;
+      }
+      
+      .prod-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      
+      .prod-img-wrap {
+        height: 160px;
+      }
+      
+      .prod-name {
+        font-size: 0.95rem;
+      }
+      
+      .prod-price {
+        font-size: 1rem;
+      }
+      
+      .btn-add-cart {
+        padding: 10px;
+        font-size: 0.8rem;
+      }
+      
+      .stat-num {
+        font-size: 1.6rem;
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Disable custom cursor on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .m-cursor, .m-follower {
+        display: none !important;
       }
     }
   </style>
@@ -2407,24 +2428,26 @@
       });
       gsap.ticker.lagSmoothing(0);
 
-      // 2. MAGNETIC BUTTONS LOGIC
-      const magneticTargets = document.querySelectorAll('.btn-hdr, .btn-hero-primary, .btn-hero-wa, .btn-add-cart, .btn-view-all, .social-btn, .navbar-brand');
-      magneticTargets.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-          const rect = btn.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          gsap.to(btn, {
-            x: x * 0.35,
-            y: y * 0.35,
-            duration: 0.4,
-            ease: "power2.out"
+      // 2. MAGNETIC BUTTONS LOGIC (Only Desktop)
+      if (!('ontouchstart' in window)) {
+        const magneticTargets = document.querySelectorAll('.btn-hdr, .btn-hero-primary, .btn-hero-wa, .btn-add-cart, .btn-view-all, .social-btn, .navbar-brand');
+        magneticTargets.forEach(btn => {
+          btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(btn, {
+              x: x * 0.35,
+              y: y * 0.35,
+              duration: 0.4,
+              ease: "power2.out"
+            });
+          });
+          btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
           });
         });
-        btn.addEventListener('mouseleave', () => {
-          gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
-        });
-      });
+      }
 
       // 3. CURSOR REFINED FOLLOW
       const cursor = document.getElementById('cursor');
@@ -2500,6 +2523,8 @@
       // Horizontal Story Track
       const storyTrack = document.querySelector('.story-track');
       if(storyTrack) {
+        // Only vertical stack for very small screens if needed, 
+        // but pinning usually works if we adjust viewport width
         gsap.to(storyTrack, {
           xPercent: -66.66,
           ease: "none",
@@ -2508,7 +2533,7 @@
             pin: true,
             scrub: 1,
             start: "top top",
-            end: () => "+=" + storyTrack.offsetWidth
+            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 1.5)
           }
         });
 
