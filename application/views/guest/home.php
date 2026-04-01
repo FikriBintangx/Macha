@@ -1622,41 +1622,91 @@
       }
     }
 
-    @media (max-width: 768px) {
-      section {
-        padding: 60px 0;
-      }
-      
-      .hero h1 {
-        font-size: 2.8rem;
-      }
-      
-      .hero-badge-float {
-        display: none !important;
-      }
-      
-      .story-bg-text {
-        font-size: 10vw;
-      }
-      
-      .story-slide {
-        padding: 40px 10px;
-      }
-      
-      .story-h2 {
-        font-size: 1.8rem;
-      }
-      
-      .glass-content-wrap {
-        padding: 30px 20px;
-      }
-      
-      .floating-cart {
-        width: 60px;
-        height: 60px;
-        bottom: 20px;
-        right: 20px;
-      }
+    /* ─── STABLE HERO REDESIGN ─── */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding-top: 140px;
+      padding-bottom: 80px;
+      background: linear-gradient(135deg, #fdfdfb 0%, #f4f7f2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-text-col {
+      animation: heroContentFadeIn 1s ease-out forwards;
+    }
+
+    @keyframes heroContentFadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-weight: 900;
+      color: var(--green-dark);
+      line-height: 1.05;
+      margin-bottom: 25px;
+      letter-spacing: -2px;
+    }
+
+    .hero h1 .highlight {
+      color: var(--green-main);
+      display: inline-block;
+      position: relative;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: #556b5c;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--green-main);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      border: 1px solid rgba(52, 132, 74, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      animation: heroImageAppear 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    }
+
+    @keyframes heroImageAppear {
+      0% { opacity: 0; transform: translateX(50px) rotate(5deg); }
+      100% { opacity: 1; transform: translateX(0) rotate(0); }
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      max-width: 550px;
+      border-radius: 40px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+      transition: all 0.5s ease;
+    }
+
+    .hero-img-wrap:hover img {
+      transform: translateY(-10px) scale(1.02);
     }
 
     @media (max-width: 576px) {
@@ -1796,14 +1846,13 @@
     <div class="container position-relative" style="z-index:1">
       <div class="row align-items-center gy-5">
         <div class="col-lg-6 hero-text-col">
-          <div class="hero-tag invisible-init">
+          <div class="hero-tag">
             <i class="fa-solid fa-location-dot"></i> UMKM Tangerang · Banten
           </div>
-          <h1 class="invisible-init">Nikmati Segar <br>Minuman <span class="highlight">Matcha</span> <br>Terbaik Kami
-          </h1>
-          <p class="hero-desc invisible-init">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok
-            untuk kamu yang suka hidup sehat dan penuh rasa!</p>
-          <div class="hero-cta invisible-init">
+          <h1>Nikmati Segar <br>Minuman <span class="highlight">Matcha</span> <br>Terbaik Kami</h1>
+          <p class="hero-desc">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok untuk harimu yang penuh semangat dan rasa!</p>
+          
+          <div class="hero-cta">
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
@@ -1812,7 +1861,8 @@
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
           </div>
-          <div class="hero-stats invisible-init">
+          
+          <div class="hero-stats">
             <div class="stat-item">
               <span class="stat-num">500+</span>
               <span class="stat-label">Pelanggan Puas</span>
@@ -1828,19 +1878,18 @@
           </div>
         </div>
         <div class="col-lg-6 hero-img-col">
-          <div class="hero-img-wrap invisible-init">
+          <div class="hero-img-wrap">
             <div class="hero-img-bg"></div>
-            <!-- Menggunakan aspect-ratio css agar gambar terlihat konsisten -->
             <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?q=80&w=600&auto=format&fit=crop"
               alt="Matcha Segar MariMacha" loading="eager">
-            <div class="hero-badge-float b1 invisible-init">
+            <div class="hero-badge-float b1">
               <div class="float-icon"><i class="fa-solid fa-star"></i></div>
               <div>
                 <div class="float-label">Kualitas Terjamin</div>
                 <div class="float-val">100% Premium</div>
               </div>
             </div>
-            <div class="hero-badge-float b2 invisible-init">
+            <div class="hero-badge-float b2">
               <div class="float-icon"><i class="fa-solid fa-truck-fast"></i></div>
               <div>
                 <div class="float-label">Pengiriman Aman</div>
@@ -2568,35 +2617,16 @@
       }, 60);
 
       function revealSite() {
-        const tl = gsap.timeline({
-          onComplete: () => {
-            document.body.classList.add('site-ready');
-            // Menghapus semua inline styles/transform agar tidak bentrok dengan scroll
-            gsap.set(".hero h1, .hero-desc, .hero-tag, .hero-cta > *, .hero-badge-float", { 
-              clearProps: "all", 
-              pointerEvents: "auto", 
-              visibility: "visible", 
-              opacity: 1 
-            });
-            ScrollTrigger.refresh();
-          }
-        });
-        
+        const tl = gsap.timeline();
         tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
-          .fromTo('.navbar-macha', { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.6")
-          .fromTo('.hero-tag', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.8")
-          .fromTo('.hero h1', { y: 60, autoAlpha: 0, skewY: 5 }, { y: 0, autoAlpha: 1, skewY: 0, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.7")
-          .fromTo('.hero-desc', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.7 }, "-=0.8")
-          .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.1, duration: 0.7, ease: "back.out(1.7)" }, "-=0.6")
-          .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.7 }, "-=0.5")
-          .fromTo('.hero-img-wrap', { x: 50, rotate: 5, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.2, ease: "power4.out" }, "-=1.2")
-          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1")
-          .fromTo('footer', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1 }, "-=1");
+          .fromTo('.navbar-macha', { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "expo.out" }, "-=0.6")
+          .fromTo('footer', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "-=1");
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
+          document.body.classList.add('site-ready');
           ScrollTrigger.refresh(); 
-        }, 2500);
+        }, 2200);
       }
 
       // 5. SCROLL PROGRESS
