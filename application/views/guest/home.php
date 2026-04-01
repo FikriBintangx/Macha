@@ -68,8 +68,15 @@
       font-family: 'Outfit', sans-serif;
       background: var(--cream);
       color: var(--text);
-      overflow-x: hidden;
+      overflow-x: hidden !important;
+      width: 100%;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
     html.lenis {
@@ -306,6 +313,46 @@
       color: var(--green-main) !important;
       font-weight: 800;
       background: transparent !important;
+    }
+
+    /* ─── IOS FLOATING BAR (GUEST) ─── */
+    .ios-navbar-guest {
+        display: none;
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 8px 20px;
+        border-radius: 40px;
+        z-index: 10000;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
+        width: 90%;
+        max-width: 360px;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .ios-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--green-light);
+        text-decoration: none;
+        font-size: 0.65rem;
+        font-weight: 700;
+        gap: 2px;
+    }
+    .ios-nav-item i { font-size: 1.3rem; }
+    .ios-nav-item.active { color: var(--green-main); }
+    
+    @media (max-width: 768px) {
+        .navbar-macha .navbar-nav, .navbar-macha .btn-hdr-out { display: none !important; }
+        .ios-navbar-guest { display: flex; }
+        .navbar-macha { padding: 10px 0; }
+        .navbar-brand { font-size: 1.4rem; }
     }
 
     .invisible-init {
@@ -2765,6 +2812,31 @@
       </div>
     </div>
   </footer>
+
+    <!-- IOS FLOATING NAVBAR (GUEST) -->
+    <nav class="ios-navbar-guest">
+        <a href="<?= base_url() ?>" class="ios-nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="<?= base_url('shop') ?>" class="ios-nav-item">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Menu</span>
+        </a>
+        <a href="#cara-pesan" class="ios-nav-item">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>Bantuan</span>
+        </a>
+        <a href="<?= base_url('shop/cart') ?>" class="ios-nav-item position-relative">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Cart</span>
+            <?php if($cart_count > 0): ?>
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 5px; right: -5px; font-size: 0.6rem;">
+                    <?= $cart_count ?>
+                </span>
+            <?php endif; ?>
+        </a>
+    </nav>
 
   <!-- ══════════ FLOATING CART ══════════ -->
   <?php if ($cart_count > 0): ?>
