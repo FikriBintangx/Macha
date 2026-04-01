@@ -1644,12 +1644,12 @@
     }
 
     .hero h1 {
-      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
       font-weight: 900;
       color: var(--green-dark);
-      line-height: 1.05;
-      margin-bottom: 25px;
-      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
     }
 
     .hero h1 .highlight {
@@ -1659,17 +1659,18 @@
     }
 
     .hero-desc {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: #556b5c;
       max-width: 520px;
-      line-height: 1.8;
-      margin-bottom: 40px;
+      line-height: 1.7;
+      margin-bottom: 35px;
     }
 
     .hero-cta {
       display: flex;
-      gap: 20px;
-      margin-bottom: 50px;
+      gap: 15px;
+      margin-bottom: 45px;
+      flex-wrap: wrap;
     }
 
     .hero-tag {
@@ -1677,14 +1678,22 @@
       align-items: center;
       gap: 10px;
       background: #fff;
-      padding: 8px 20px;
+      padding: 8px 18px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--green-main);
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
       border: 1px solid rgba(52, 132, 74, 0.1);
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
 
     .hero-img-wrap {
@@ -1705,8 +1714,42 @@
       transition: all 0.5s ease;
     }
 
-    .hero-img-wrap:hover img {
-      transform: translateY(-10px) scale(1.02);
+    @media (max-width: 991px) {
+      .hero {
+        padding-top: 120px;
+        text-align: center;
+      }
+      .hero-text-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-cta {
+        justify-content: center;
+      }
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-stats {
+        width: 100%;
+        max-width: 450px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+      }
+      .btn-hero-primary, .btn-hero-wa {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 576px) {
