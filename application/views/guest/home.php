@@ -2337,51 +2337,65 @@
   </style>
 
   <!-- ══════════ FOOTER ══════════ -->
-  <footer>
+  <footer class="reveal-up invisible-init">
     <div class="container">
-      <div class="row g-5 mb-4 gs-footer">
+      <div class="row g-5 mb-5 gs-footer">
         <div class="col-lg-4 invisible-init">
-          <div class="footer-brand">
+          <div class="footer-brand mb-4">
             <div class="footer-brand-icon"><i class="fa-solid fa-leaf" style="color:#fff;font-size:1.1rem"></i></div>
             MariMacha
           </div>
-          <p class="footer-desc">Minuman matcha premium kebanggaan UMKM Tangerang. Dibuat segar setiap hari dengan bahan
-            pilihan terbaik untuk harimu.</p>
+          <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about purity, tradition, and refreshing moments in every cup.</p>
           <div class="footer-social">
             <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/6281234567890" class="social-btn" title="WhatsApp"><i
+            <a href="https://wa.me/6281292870932" class="social-btn" title="WhatsApp"><i
                 class="fa-brands fa-whatsapp"></i></a>
             <a href="#" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
           </div>
         </div>
-        <div class="col-6 col-md-4 col-lg-2 offset-lg-2 invisible-init">
-          <div class="footer-heading">Navigasi</div>
-          <a class="footer-link" href="<?= base_url() ?>">Beranda</a>
-          <a class="footer-link" href="<?= base_url('shop') ?>">Katalog Produk</a>
-          <a class="footer-link" href="#tentang">Tentang Kami</a>
-          <a class="footer-link" href="#cara-pesan">Cara Pesan</a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2 invisible-init">
-          <div class="footer-heading">Akun & Bantuan</div>
-          <a class="footer-link" href="<?= base_url('auth') ?>">Masuk</a>
-          <a class="footer-link" href="<?= base_url('auth/register') ?>">Daftar Akun</a>
-          <a class="footer-link" href="<?= base_url('user') ?>">Pesanan Saya</a>
-          <a class="footer-link" href="<?= base_url('shop/cart') ?>">Keranjang</a>
+        <div class="col-md-4 col-lg-2 offset-lg-1 invisible-init">
+          <div class="footer-heading">Navigasi Utama</div>
+          <a class="footer-link d-block" href="<?= base_url() ?>">Beranda</a>
+          <a class="footer-link d-block" href="<?= base_url('shop') ?>">Katalog Produk</a>
+          <a class="footer-link d-block" href="#tentang">Tentang Kami</a>
+          <a class="footer-link d-block" href="#cara-pesan">Cara Pesan</a>
+          <a class="footer-link d-block" href="#lokasi-kami">Lokasi Kami</a>
         </div>
         <div class="col-md-4 col-lg-2 invisible-init">
-          <div class="footer-heading">Kontak Kami</div>
-          <a class="footer-link" href="https://wa.me/6281234567890" target="_blank"><i
-              class="fa-brands fa-whatsapp me-2"></i> 0812-3456-7890</a>
-          <p class="footer-link" style="cursor:default; margin:0;"><i class="fa-solid fa-map-pin me-2"></i> Citra Raya,
-            Tangerang</p>
-          <p class="footer-link" style="cursor:default; margin:0;"><i class="fa-regular fa-envelope me-2"></i>
-            hello@marimacha.id</p>
+          <div class="footer-heading">Kontak & Bisnis</div>
+          <div class="status-active-wrap">
+            <div class="status-active"><div class="active-dot"></div> ACTIVE</div>
+          </div>
+          <a class="footer-link d-block" href="https://wa.me/6281292870932" target="_blank" style="font-weight: 800; color: #fff;">
+            <i class="fa-brands fa-whatsapp me-2"></i> 081292870932
+          </a>
+          <p class="footer-link d-block mb-1"><i class="fa-regular fa-envelope me-2"></i> hello@marimacha.id</p>
+          <p class="footer-link d-block"><i class="fa-solid fa-clock me-2"></i> 09:00 - 21:00 WIB</p>
+        </div>
+        <div class="col-md-4 col-lg-3 invisible-init">
+          <div class="footer-heading">Lokasi Kami</div>
+          <p class="footer-link mb-3"><i class="fa-solid fa-map-pin me-2"></i> Citra Raya, Tangerang, Banten</p>
+          <a href="https://maps.app.goo.gl/dsyGHbvKsbVAKbiJ9" target="_blank" class="footer-location-img-wrap">
+            <img src="<?= base_url('application/views/guest/macha_location_footer_1775023405309.png'); ?>" alt="Location Map Preview" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=400&auto=format&fit=crop'">
+            <div class="map-overlay-text">
+              <i class="fa-solid fa-up-right-from-square"></i> Lihat di Google Maps
+            </div>
+          </a>
         </div>
       </div>
-      <hr class="footer-divider">
-      <p class="footer-copy">© <?= date('Y') ?> <strong style="color:#fff">MariMacha Premium</strong> · All Rights
-        Reserved · Tangerang, Banten 🌿</p>
+      <hr class="footer-divider" style="opacity: 0.1; background: #fff;">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="footer-copy mb-0">© <?= date('Y') ?> <strong style="color:#fff">MariMacha Premium</strong> · Crafting Quality.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+          <div class="d-flex gap-3 justify-content-center justify-content-md-end footer-copy">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -2497,7 +2511,8 @@
           .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.8")
           .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.6")
           .fromTo('.hero-img-wrap', { x: 100, rotate: 10, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.5, ease: "power4.out" }, "-=1.5")
-          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1.2");
+          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1.2")
+          .fromTo('footer', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1 }, "-=1");
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
