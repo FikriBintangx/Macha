@@ -333,6 +333,15 @@
     function selectPay(el,key){
         document.querySelectorAll('.pay-option').forEach(function(o){o.classList.remove('selected');});
         el.classList.add('selected');
+        
+        // EXPLICITLY CHECK THE RADIO BUTTON (FIX BUG)
+        const radio = el.querySelector('input[type="radio"]');
+        if(radio) {
+            radio.checked = true;
+            // Trigger change event if needed
+            radio.dispatchEvent(new Event('change'));
+        }
+
         const qris = document.getElementById('qrisInfo');
         const cash = document.getElementById('cashInfo');
         

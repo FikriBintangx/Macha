@@ -176,8 +176,8 @@
                         <span><?= htmlspecialchars($order['customer_name']) ?></span>
                     </div>
                     <div class="info-box">
-                        <label>Metode Bayar</label>
-                        <span><?= htmlspecialchars($order['payment_method'] ?: 'QRIS (BCA/E-Wallet)') ?></span>
+                        <label>Metode Pembayaran</label>
+                        <span class="text-success" style="font-size: 1.1rem;"><i class="fa-solid fa-credit-card me-1"></i> <?= htmlspecialchars($order['payment_method'] ?: 'QRIS (BCA/E-Wallet)') ?></span>
                     </div>
                     <div class="info-box">
                         <label>Nomor WhatsApp</label>

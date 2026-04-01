@@ -251,6 +251,12 @@
       border-bottom: none;
     }
 
+    .navbar-macha.scrolled {
+      padding: 8px 0;
+      background: rgba(255, 255, 255, 0.99);
+      box-shadow: 0 10px 30px rgba(45, 90, 39, 0.12);
+    }
+
     .navbar-brand {
       font-weight: 900;
       font-size: 1.62rem;
@@ -1034,6 +1040,7 @@
       z-index: 20;
       text-align: center;
       min-width: 150px;
+      white-space: nowrap;
     }
 
     .location-card::after {
@@ -1862,6 +1869,44 @@
         display: none !important;
       }
     }
+
+    /* ─── UI & PERFORMANCE OPTIMIZATIONS ─── */
+    .hero-img-wrap img, .prod-card-inner, .step-card, .testi-card, .feature-card, .f-leaf, .story-bg-text-wrapper, .story-track {
+      will-change: transform, opacity;
+    }
+
+    /* CTA Popping Enhancements */
+    .btn-hero-primary { box-shadow: 0 12px 28px rgba(37, 211, 102, 0.2); }
+    .btn-hero-primary:hover { box-shadow: 0 16px 36px rgba(37, 211, 102, 0.4); }
+    .btn-hero-wa { box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05); border-color: #25d366; }
+
+    @media (max-width: 768px) {
+      /* Disable heavy animations & effects */
+      .f-leaf, .marker-pulse, .hero-decorative { display: none !important; }
+      .glass-content-wrap, .premium-map-container { 
+        backdrop-filter: none !important; 
+      }
+      .navbar-macha { background: rgba(255, 255, 255, 0.99) !important; backdrop-filter: none !important; }
+      .glass-content-wrap { background: rgba(16, 36, 22, 0.95) !important; border-radius: 20px; }
+      
+      /* Make Floating Cart easier to tap on mobile */
+      .floating-cart {
+        width: auto !important;
+        padding: 0 24px;
+        height: 56px;
+        border-radius: 28px;
+        font-size: 1.1rem;
+        gap: 12px;
+        bottom: 20px;
+        right: 20px;
+        box-shadow: 0 10px 25px rgba(16, 36, 22, 0.5);
+      }
+      .floating-cart::after {
+        content: 'Lihat Keranjang';
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 
@@ -1955,8 +2000,8 @@
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
-            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk" target="_blank"
-              rel="noopener noreferrer" class="btn-hero-wa">
+            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk"
+              target="_blank" rel="noopener noreferrer" class="btn-hero-wa">
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
           </div>
@@ -2016,8 +2061,10 @@
             <div class="row align-items-center">
               <div class="col-lg-6">
                 <div class="story-label">PHASE 01: QUALITY</div>
-                <h2 class="story-h2">Umkm Matcha yg harganya terjangkau tetapi rasanya <span class="highlight">berkelas</span></h2>
-                <p class="story-p">matcha yg terbilang harganya murah tetapi rasanya tidak murahan. mulai dari 13K - 15K</p>
+                <h2 class="story-h2">Umkm Matcha yg harganya terjangkau tetapi rasanya <span
+                    class="highlight">berkelas</span></h2>
+                <p class="story-p">matcha yg terbilang harganya murah tetapi rasanya tidak murahan. mulai dari 13K - 15K
+                </p>
                 <div class="story-stats-row">
                   <div class="s-stat"><span>Premium</span> Grade</div>
                   <div class="s-stat"><span>Affordable</span> Price</div>
@@ -2025,8 +2072,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <div class="floating-img-frame">
-                  <img src="<?= base_url('assets/img/KONTEN01.jpeg'); ?>" alt="Quality Matcha"
-                    class="img-fluid">
+                  <img src="<?= base_url('assets/img/KONTEN01.jpeg'); ?>" alt="Quality Matcha" class="img-fluid">
                   <div class="floating-badge">Laris Manis</div>
                 </div>
               </div>
@@ -2048,8 +2094,7 @@
               </div>
               <div class="col-lg-6 order-lg-1 text-center">
                 <div class="floating-img-frame s2">
-                  <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Process"
-                    class="img-fluid">
+                  <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Process" class="img-fluid">
                   <div class="floating-badge">Sehat & Nikmat</div>
                 </div>
               </div>
@@ -2066,7 +2111,8 @@
             <h2 class="story-h2 lg">PESAN <br><span class="highlight">SEKARANG</span></h2>
             <p class="story-p center">MATCHA YG BERKELAZ</p>
             <div class="final-cta-wrap">
-              <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk" class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
+              <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk"
+                class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
                   class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
           </div>
@@ -2106,9 +2152,9 @@
                       <span class="prod-badge" style="background: rgba(229, 62, 62, 0.9); color: white;">Habis</span>
                     <?php endif; ?>
                   </div>
-                  <?php 
-                    // Search in assets/img first since user uploaded there manually
-                    $img = (!empty($prod['image'])) ? base_url('assets/img/' . $prod['image']) : base_url('assets/img/productORI.png'); 
+                  <?php
+                  // Search in assets/img first since user uploaded there manually
+                  $img = (!empty($prod['image'])) ? base_url('assets/img/' . $prod['image']) : base_url('assets/img/productORI.png');
                   ?>
                   <img src="<?= $img ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
                     onerror="this.src='<?= base_url('assets/img/productORI.png'); ?>'">
@@ -2308,8 +2354,8 @@
           style="font-size:4rem; margin-bottom:20px; display:block; position:relative; z-index:1;"></i>
         <h3>Ada Pertanyaan atau Custom Order?</h3>
         <p>Jangan ragu untuk bertanya! Tim CS kami siap membantu kelancaran pesanan kamu dengan respon yang cepat.</p>
-        <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+mau+tanya+pesanan" target="_blank"
-          rel="noopener noreferrer" class="btn-wa-big">
+        <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+mau+tanya+pesanan"
+          target="_blank" rel="noopener noreferrer" class="btn-wa-big">
           <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Chat WhatsApp Sekarang
         </a>
       </div>
@@ -2497,7 +2543,7 @@
     .floating-img-frame {
       position: relative;
       width: 100%;
-      max-width: 450px;
+      max-width: 320px;
       margin: 0 auto;
     }
 
@@ -2661,7 +2707,8 @@
           <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about
             purity, tradition, and refreshing moments in every cup.</p>
           <div class="footer-social">
-            <a href="https://www.instagram.com/marimatcha_panongan?igsh=Y2F0NGs5YjMwa3N4" class="social-btn" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/marimatcha_panongan?igsh=Y2F0NGs5YjMwa3N4" class="social-btn"
+              title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>" class="social-btn" title="WhatsApp"><i
                 class="fa-brands fa-whatsapp"></i></a>
             <a href="#" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
@@ -2683,8 +2730,8 @@
               <div class="active-dot"></div> ACTIVE
             </div>
           </div>
-          <a class="footer-link" href="https://wa.me/<?= $this->config->item('admin_wa') ?>" target="_blank" rel="noopener noreferrer"
-            style="color: #fff; font-weight: 700;">
+          <a class="footer-link" href="https://wa.me/<?= $this->config->item('admin_wa') ?>" target="_blank"
+            rel="noopener noreferrer" style="color: #fff; font-weight: 700;">
             <i class="fa-brands fa-whatsapp"></i> 0<?= substr($this->config->item('admin_wa'), 2) ?>
           </a>
           <p class="footer-link mb-2"><i class="fa-regular fa-envelope"></i> hello@marimacha.id</p>
@@ -2834,7 +2881,7 @@
         }, 2200);
       }
 
-      // 5. SCROLL PROGRESS
+      // 5. SCROLL PROGRESS & RESPONSIVE MENU
       window.addEventListener('scroll', () => {
         const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         gsap.to('#scrollProgress', { width: scrolled + "%", duration: 0.1 });
@@ -2842,6 +2889,17 @@
         const nav = document.getElementById('mainNav');
         if (window.scrollY > 50) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
+      });
+
+      const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+      const navbarCollapse = document.getElementById('navMain');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (navbarCollapse.classList.contains('show')) {
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, {toggle: false});
+            bsCollapse.hide();
+          }
+        });
       });
 
       // 6. SCROLL TRIGGER ANIMATIONS & UTILS
@@ -2872,18 +2930,20 @@
         });
       }
 
-      // Floating particles in story section
-      gsap.utils.toArray('.f-leaf').forEach(leaf => {
-        gsap.to(leaf, {
-          y: "random(-50, 50)",
-          x: "random(-30, 30)",
-          rotation: "random(-90, 90)",
-          duration: "random(3, 6)",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
+      // Floating particles in story section (Disabled on mobile for performance)
+      if (window.innerWidth > 768) {
+        gsap.utils.toArray('.f-leaf').forEach(leaf => {
+          gsap.to(leaf, {
+            y: "random(-50, 50)",
+            x: "random(-30, 30)",
+            rotation: "random(-90, 90)",
+            duration: "random(3, 6)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+          });
         });
-      });
+      }
 
       // General reveals for elements with .reveal-up
       gsap.utils.toArray('.reveal-up').forEach(elem => {

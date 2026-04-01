@@ -392,11 +392,7 @@
                         <?php endif; ?>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= site_url('sales') ?>" class="nav-link <?= ($this->uri->segment(1) == 'sales') ? 'active' : '' ?>">
-                        <i class="bi bi-cart-check-fill"></i> Kasir (POS)
-                    </a>
-                </li>
+
 
                 <div class="nav-section">Laporan</div>
                 <li class="nav-item">
