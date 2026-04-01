@@ -2467,14 +2467,14 @@
       function revealSite() {
         const tl = gsap.timeline();
         tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
-          .fromTo('.navbar-macha', { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: "expo.out" }, "-=0.6")
-          .fromTo('.hero-tag', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, "-=0.8")
-          .fromTo('.hero h1', { y: 100, skewY: 7, autoAlpha: 0 }, { y: 0, skewY: 0, autoAlpha: 1, duration: 1.2, ease: "expo.out" }, "-=1")
-          .fromTo('.hero-desc', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, "-=1")
-          .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, stagger: 0.1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.8")
-          .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, "-=0.6")
-          .fromTo('.hero-img-wrap', { x: 100, rotate: 10, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, duration: 1.5, ease: "power4.out" }, "-=1.5")
-          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1.2");
+          .fromTo('.navbar-macha', { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "expo.out" }, "-=0.6")
+          .fromTo('.hero-tag', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.8")
+          .fromTo('.hero h1', { y: 100, skewY: 7, autoAlpha: 0 }, { y: 0, skewY: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.2, ease: "expo.out" }, "-=1")
+          .fromTo('.hero-desc', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=1")
+          .fromTo('.hero-cta > *', { scale: 0.5, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.8")
+          .fromTo('.hero-stats', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8 }, "-=0.6")
+          .fromTo('.hero-img-wrap', { x: 100, rotate: 10, autoAlpha: 0 }, { x: 0, rotate: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1.5, ease: "power4.out" }, "-=1.5")
+          .fromTo('.hero-badge-float', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, pointerEvents: "auto", stagger: 0.2, duration: 0.8, ease: "back.out(2)" }, "-=1.2");
           
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
@@ -2535,29 +2535,29 @@
       // General reveals for elements with .reveal-up
       gsap.utils.toArray('.reveal-up').forEach(elem => {
         gsap.fromTo(elem, { y: 50, autoAlpha: 0 }, { 
-          y: 0, autoAlpha: 1, duration: 1, ease: "power4.out",
+          y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 1, ease: "power4.out",
           scrollTrigger: commonTrigger(elem)
         });
       });
 
       gsap.fromTo('.prod-card', { y: 60, autoAlpha: 0 }, { 
-        y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.15, ease: "power3.out",
+        y: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, stagger: 0.15, ease: "power3.out",
         scrollTrigger: commonTrigger('.gs-prod-grid') 
       });
       
       gsap.fromTo('.step-card', { x: -40, autoAlpha: 0 }, { 
-        x: 0, autoAlpha: 1, duration: 0.8, stagger: 0.2, 
+        x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, stagger: 0.2, 
         scrollTrigger: commonTrigger('.gs-steps-row') 
       });
 
       gsap.fromTo('.testi-card', { scale: 0.9, autoAlpha: 0 }, { 
-        scale: 1, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "back.out(1.2)", 
+        scale: 1, autoAlpha: 1, pointerEvents: "auto", duration: 0.6, stagger: 0.15, ease: "back.out(1.2)", 
         scrollTrigger: commonTrigger('.gs-testi-row') 
       });
 
       // About & Footer Animations (RE-ADDED)
-      gsap.fromTo(".about-img-col", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out", scrollTrigger: commonTrigger(".gs-about-row") });
-      gsap.fromTo(".about-text-col", { x: 50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out", scrollTrigger: commonTrigger(".gs-about-row") });
+      gsap.fromTo(".about-img-col", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, ease: "power3.out", scrollTrigger: commonTrigger(".gs-about-row") });
+      gsap.fromTo(".about-text-col", { x: 50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, pointerEvents: "auto", duration: 0.8, ease: "power3.out", scrollTrigger: commonTrigger(".gs-about-row") });
       gsap.fromTo(".feature-card", { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.15, ease: "power3.out", scrollTrigger: commonTrigger(".gs-features") });
       gsap.fromTo(".gs-footer > div", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.2, ease: "power3.out", scrollTrigger: commonTrigger(".gs-footer") });
       
