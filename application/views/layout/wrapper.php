@@ -366,10 +366,15 @@
             border: 1px solid rgba(255,255,255,0.1);
             width: auto;
             min-width: 300px;
-            display: flex;
             justify-content: space-around;
             align-items: center;
             gap: 5px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        .ios-navbar.hide-nav {
+            transform: translateX(-50%) translateY(120px);
+            opacity: 0;
+            pointer-events: none;
         }
         .ios-nav-item {
             display: flex;
@@ -624,7 +629,7 @@
                 <div class="nav-section">Transaksi</div>
                 <li class="nav-item">
                     <a href="<?= site_url('order') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
-                        <i class="bi bi-bag-heart-fill"></i> Pesanan Hari Ini
+                        <i class="bi bi-pc-display-horizontal"></i> Kasir Online
                         <?php if ($pending_count > 0): ?>
                             <span class="nav-badge"><?= $pending_count ?></span>
                         <?php endif; ?>
@@ -714,16 +719,39 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
+            const iosNav = document.querySelector('.ios-navbar');
             
             sidebar.classList.toggle('open');
             if (sidebar.classList.contains('open')) {
                 overlay.classList.add('show');
                 document.body.style.overflow = 'hidden'; // Stop scrolling
+                if(iosNav) iosNav.classList.add('hide-nav'); // Hide pill bar when sidebar open
             } else {
                 overlay.classList.remove('show');
                 document.body.style.overflow = ''; // Resume scrolling
+                if(iosNav) iosNav.classList.remove('hide-nav');
             }
         }
+
+        // Auto-hide Pill Bar on Scroll
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const iosNav = document.querySelector('.ios-navbar');
+            if(!iosNav) return;
+
+            // Only trigger if sidebar is not open
+            const sidebar = document.getElementById('sidebar');
+            if(sidebar && sidebar.classList.contains('open')) return;
+
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                // Scrolling Down -> Hide
+                iosNav.classList.add('hide-nav');
+            } else {
+                // Scrolling Up -> Show
+                iosNav.classList.remove('hide-nav');
+            }
+            lastScrollY = window.scrollY;
+        });
     </script>
 </body>
 </html>

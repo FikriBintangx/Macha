@@ -78,7 +78,32 @@ class Order extends CI_Controller {
         if(isset($_SERVER['HTTP_REFERER'])) {
             redirect($_SERVER['HTTP_REFERER']);
         } else {
-            redirect('order');
         }
+    }
+    // Update Status Pesanan via AJAX
+    public function ajax_update_status() {
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+
+        $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
+        if(in_array($status, $valid_status)) {
+            $this->db->where('id', $id);
+            $this->db->update('sales', ['status' => $status]);
+            
+            // Get updated status badges or just return success
+            $response = [
+                'success' => true,
+                'message' => 'Status pesanan berhasil diperbarui menjadi: ' . strtoupper($status),
+                'new_status' => $status
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'Status tidak valid.'
+            ];
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 }

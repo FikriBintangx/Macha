@@ -7,6 +7,26 @@
             </div>
         <?php endif; ?>
 
+        <!-- MONITORING HEADER & QUICK ACTIONS -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+            <div>
+                <h4 class="fw-bold text-success mb-1"><i class="bi bi-pc-display-horizontal me-2"></i>Kasir Online monitoring</h4>
+                <p class="text-muted small mb-0">Pemantauan orderan masuk secara real-time.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="<?= site_url('product') ?>" class="btn btn-sm btn-white border shadow-sm px-3 rounded-pill fw-semibold">
+                    <i class="bi bi-pencil-square me-1 text-primary"></i> Ubah Produk
+                </a>
+                <a href="<?= site_url('product') ?>" class="btn btn-sm btn-white border shadow-sm px-3 rounded-pill fw-semibold">
+                    <i class="bi bi-box-seam me-1 text-warning"></i> Edit Stok
+                </a>
+                <div class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill d-flex align-items-center">
+                    <span class="spinner-grow spinner-grow-sm me-2" role="status"></span>
+                    Live Monitoring
+                </div>
+            </div>
+        </div>
+
         <?php
         $uniqueCustomers = [];
         if (!empty($orders)) {
@@ -47,8 +67,8 @@
                         </div>
                     </div>
                     <div class="col-md-2 col-12 ms-auto">
-                        <button onclick="applyDateFilter()" class="btn btn-success btn-sm w-100 rounded-pill shadow-sm py-2">
-                            Tampilkan
+                        <button onclick="location.reload()" class="btn btn-success btn-sm w-100 rounded-pill shadow-sm py-2">
+                            Refresh Data
                         </button>
                     </div>
                 </div>
@@ -78,7 +98,7 @@
                         <tbody class="border-top-0" id="orderTbody">
                             <?php if(!empty($orders)): ?>
                                 <?php foreach($orders as $o): ?>
-                                    <tr class="order-row" style="transition: all 0.2s;">
+                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
                                         <td class="px-4 py-3 fw-bold text-dark" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
                                         <td class="py-3" data-label="INVOICE">
                                             <span class="badge bg-light text-dark border px-2 py-1 shadow-sm"><?= $o['invoice_no'] ?></span>
@@ -99,12 +119,12 @@
                                         </td>
                                         <td class="py-3" data-label="BUKTI">
                                             <?php if(!empty($o['payment_proof'])): ?>
-                                                <a href="<?= base_url('uploads/payments/'.$o['payment_proof']) ?>" target="_blank" class="btn btn-xs btn-outline-info p-1"><i class="bi bi-image"></i></a>
+                                                <button type="button" onclick="viewProof('<?= base_url('uploads/payments/'.$o['payment_proof']) ?>')" class="btn btn-xs btn-outline-info p-1"><i class="bi bi-image"></i></button>
                                             <?php else: ?>
                                                 <small class="text-muted italic">None</small>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="text-center py-3" data-label="STATUS">
+                                        <td class="text-center py-3" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
                                             <?php 
                                             $class = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
                                             $text = ucfirst($o['status']);
@@ -121,11 +141,11 @@
                                                     <i class="bi bi-gear"></i> Manage
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: 12px; font-size: 0.85rem;">
-                                                    <li><a class="dropdown-item py-2" href="<?= site_url('order/update_status/'.$o['id'].'/paid') ?>"><i class="bi bi-check-circle text-warning me-2"></i>Validasi Bayar</a></li>
-                                                    <li><a class="dropdown-item py-2" href="<?= site_url('order/update_status/'.$o['id'].'/shipped') ?>"><i class="bi bi-truck text-primary me-2"></i>Sedang Dikirim</a></li>
-                                                    <li><a class="dropdown-item py-2" href="<?= site_url('order/update_status/'.$o['id'].'/completed') ?>"><i class="bi bi-check2-all text-success me-2"></i>Pesanan Selesai</a></li>
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Validasi Bayar</a></li>
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i>Sedang Dikirim</a></li>
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Pesanan Selesai</a></li>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger py-2" href="<?= site_url('order/update_status/'.$o['id'].'/canceled') ?>"><i class="bi bi-x-circle me-2"></i>Batalkan</a></li>
+                                                    <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -147,7 +167,73 @@
     </div>
 </div>
 
+<!-- Modal Bukti Bayar -->
+<div class="modal fade" id="modalProof" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            <div class="modal-header border-0 bg-light p-3">
+                <h6 class="modal-title fw-bold text-success"><i class="bi bi-image me-2"></i>Bukti Pembayaran</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 text-center bg-dark">
+                <img id="imageProofDisplay" src="" class="img-fluid" style="max-height: 80vh; object-fit: contain;">
+            </div>
+            <div class="modal-footer border-0 p-2 justify-content-center">
+                <button type="button" class="btn btn-sm btn-white border px-4 rounded-pill" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Image View
+    function viewProof(url) {
+        document.getElementById('imageProofDisplay').src = url;
+        new bootstrap.Modal(document.getElementById('modalProof')).show();
+    }
+
+    // AJAX Update Status
+    function updateStatus(id, status) {
+        if (!confirm('Apakah Anda yakin ingin mengubah status pesanan ini?')) return;
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('status', status);
+
+        fetch('<?= site_url('order/ajax_update_status') ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update specific row status cell with new badge
+                const cell = document.getElementById('status-cell-' + id);
+                let badgeClass = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
+                let statusText = data.new_status.charAt(0).toUpperCase() + data.new_status.slice(1);
+
+                if (data.new_status === 'pending') { badgeClass = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; statusText = 'Menunggu'; }
+                if (data.new_status === 'paid') { badgeClass = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; statusText = 'Sudah Bayar'; }
+                if (data.new_status === 'shipped') { badgeClass = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; statusText = 'Dikirim'; }
+                if (data.new_status === 'completed') { badgeClass = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; statusText = 'Selesai'; }
+                if (data.new_status === 'canceled') { badgeClass = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; statusText = 'Dibatalkan'; }
+
+                cell.innerHTML = `<span class="badge ${badgeClass} rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">${statusText}</span>`;
+                
+                // Optional: Flash the row
+                const row = document.getElementById('row-' + id);
+                row.style.backgroundColor = '#e8f5e9';
+                setTimeout(() => row.style.backgroundColor = '', 1000);
+            } else {
+                alert('Gagal memperbarui status: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan jaringan.');
+        });
+    }
+
     const userFilter = document.getElementById('userFilter');
     const smartFilter = document.getElementById('smartFilter');
     const orderRows = document.querySelectorAll('.order-row');

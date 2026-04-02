@@ -6,13 +6,6 @@ $revenue_month = $this->db->where("MONTH(created_at) = MONTH(NOW())")->where('st
 $orders_pending = $this->db->where('status', 'pending')->count_all_results('sales');
 $total_products = $this->M_product->get_all() ? count($this->M_product->get_all()) : 0;
 
-// Data untuk tabel & widget
-$this->db->select('sales.*, users.full_name as customer')->from('sales')->join('users', 'users.id = sales.user_id', 'left')->order_by('sales.created_at', 'DESC')->limit(10);
-$recent_orders = $this->db->get()->result_array();
-
-$this->db->where('stock <=', 5)->order_by('stock', 'ASC')->limit(5);
-$low_stock_items = $this->db->get('products')->result_array();
-
 // Data untuk chart 7 hari terakhir
 $recent_7_days = [];
 for ($i = 6; $i >= 0; $i--) {
@@ -24,12 +17,16 @@ for ($i = 6; $i >= 0; $i--) {
         'count'      => $count
     ];
 }
+
+// Data Stok (Data)
+$this->db->where('stock <=', 5)->order_by('stock', 'ASC')->limit(10);
+$low_stock_items = $this->db->get('products')->result_array();
 ?>
 
 <!-- ─── HEADER STATS (Berjejer di Paling Atas) ─── -->
-<div class="row g-4 mb-5">
+<div class="row g-4 mb-4">
     <div class="col-md-3">
-        <div class="stat-card sc-green">
+        <div class="stat-card sc-green shadow-sm">
             <div class="sc-icon"><i class="bi bi-wallet2"></i></div>
             <div class="sc-label">Revenue Hari Ini</div>
             <div class="sc-num">Rp <?= number_format($revenue_today, 0, ',', '.') ?></div>
@@ -37,192 +34,104 @@ for ($i = 6; $i >= 0; $i--) {
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-amber">
+        <div class="stat-card sc-amber shadow-sm">
             <div class="sc-icon"><i class="bi bi-clock-history"></i></div>
             <div class="sc-label">Order Pending</div>
             <div class="sc-num"><?= $orders_pending ?></div>
-            <div class="sc-sub">Butuh segera dikonfirmasi</div>
+            <div class="sc-sub">Butuh konfirmasi kasir</div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-blue">
+        <div class="stat-card sc-blue shadow-sm">
             <div class="sc-icon"><i class="bi bi-box-seam"></i></div>
-            <div class="sc-label">Total Menu</div>
+            <div class="sc-label">Katalog Menu</div>
             <div class="sc-num"><?= $total_products ?></div>
-            <div class="sc-sub">Menu aktif di katalog</div>
+            <div class="sc-sub">Item aktif tersedia</div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-purple">
+        <div class="stat-card sc-purple shadow-sm">
             <div class="sc-icon"><i class="bi bi-graph-up-arrow"></i></div>
             <div class="sc-label">Order Hari Ini</div>
             <?php $count_today = $this->db->where("DATE(created_at)", $today)->count_all_results('sales'); ?>
             <div class="sc-num"><?= $count_today ?></div>
-            <div class="sc-sub">Pesanan masuk sejak subuh</div>
+            <div class="sc-sub">Pesanan masuk hari ini</div>
         </div>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- ─── LEFT: ORDER MONITORING (CHART) ─── -->
+    <!-- ─── DATA VISUALIZATION (FLOWCHART/CHART) ─── -->
     <div class="col-xl-8">
-        <div class="cc shadow-sm border-0 h-100">
-            <div class="cc-header d-flex justify-content-between align-items-center">
-                <span class="cc-title fs-5"><i class="bi bi-graph-up text-success me-2"></i>Trafik Order (7 Hari Terakhir)</span>
+        <div class="cc shadow-sm border-0" style="min-height: 500px;">
+            <div class="cc-header d-flex justify-content-between align-items-center bg-white border-0 p-4 pb-0">
+                <div>
+                    <h5 class="fw-bold text-success mb-0"><i class="bi bi-diagram-3-fill me-2"></i>Alur & Trafik Order</h5>
+                    <p class="text-muted small mb-0">Visualisasi data pesanan sepekan terakhir.</p>
+                </div>
                 <div class="d-flex gap-2">
-                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 px-3 py-2 rounded-pill">
                         Total: <?= array_sum(array_column($recent_7_days, 'count')) ?> Order
                     </span>
-                    <a href="<?= current_url() ?>" class="btn btn-sm btn-light border rounded-circle"><i class="bi bi-arrow-clockwise"></i></a>
                 </div>
             </div>
             <div class="p-4">
-                <div style="height: 350px; position: relative;">
+                <div style="height: 380px; position: relative;">
                     <canvas id="orderChart"></canvas>
                 </div>
             </div>
-            <div class="cc-footer p-3 text-center border-top bg-light-subtle rounded-bottom">
-                <div class="row g-0">
-                    <div class="col-6 border-end">
-                        <div class="small text-muted">Rata-rata Harian</div>
-                        <div class="fw-bold text-dark"><?= number_format(array_sum(array_column($recent_7_days, 'count'))/7, 1) ?></div>
+            <div class="cc-footer p-4 pt-0 border-0 bg-white">
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-4 text-center">
+                            <div class="small text-muted mb-1">Rata-rata</div>
+                            <div class="fw-bold h5 mb-0 text-success"><?= number_format(array_sum(array_column($recent_7_days, 'count'))/7, 1) ?></div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <div class="small text-muted">Status Tertinggi</div>
-                        <div class="fw-bold text-success">Active</div>
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-4 text-center">
+                            <div class="small text-muted mb-1">Status</div>
+                            <div class="fw-bold h5 mb-0 text-primary">Normal</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-4 text-center">
+                            <div class="small text-muted mb-1">Peak Day</div>
+                            <div class="fw-bold h5 mb-0 text-warning">Sabtu</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Chart.js Script -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('orderChart');
-        
-        const orderChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
-                datasets: [{
-                    label: 'Jumlah Pesanan',
-                    data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
-                    borderColor: '#1B3B25',
-                    backgroundColor: 'rgba(27, 59, 37, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#1B3B25',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(27, 59, 37, 0.9)',
-                        titleFont: { family: 'Outfit', size: 14, weight: 'bold' },
-                        bodyFont: { family: 'Outfit', size: 13 },
-                        padding: 12,
-                        cornerRadius: 10,
-                        displayColors: false,
-                        callbacks: {
-                            label: function(context) {
-                                return '📦 ' + context.parsed.y + ' Pesanan';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1, color: '#94a3b8', font: { family: 'Outfit' } },
-                        grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
-                    },
-                    x: {
-                        ticks: { color: '#94a3b8', font: { family: 'Outfit' } },
-                        grid: { display: false }
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                onClick: (e) => {
-                    const points = orderChartInstance.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-                    if (points.length) {
-                        const index = points[0].index;
-                        const fullDates = <?= json_encode(array_column($recent_7_days, 'full_date')) ?>;
-                        const selectedDate = fullDates[index];
-                        window.location.href = '<?= site_url('order/history') ?>?date=' + selectedDate;
-                    }
-                },
-                onHover: (event, chartElement) => {
-                    event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
-                }
-            }
-        });
-    </script>
-
-    <!-- ─── RIGHT: WIDGETS ─── -->
+    <!-- ─── SIDE DATA (INVENTORY/STOCK) ─── -->
     <div class="col-xl-4">
-        <div class="row g-4">
-            <!-- Clock & Date -->
-            <div class="col-12">
-                <div class="clock-display shadow-sm">
-                    <div class="clock-time" id="rt-clock"><?= date('H:i:s') ?></div>
-                    <div class="clock-date" id="rt-date"><?= date('l, d F Y') ?></div>
-                </div>
+        <div class="cc shadow-sm border-0 h-100">
+            <div class="cc-header bg-white border-0 p-4 pb-0">
+                <h5 class="fw-bold text-success mb-0"><i class="bi bi-database-fill-check me-2"></i>Data Persediaan</h5>
+                <p class="text-muted small mb-0">Status stok produk saat ini.</p>
             </div>
-
-            <!-- Dashboard Actions -->
-            <div class="col-12">
-                <div class="cc shadow-sm border-0">
-                    <div class="cc-header"><span class="cc-title"><i class="bi bi-lightning-charge-fill me-2 text-warning"></i>Kendali Cepat</span></div>
-                    <div class="p-3 d-grid gap-3">
-                        <a href="<?= site_url('product/add') ?>" class="qa-btn qa-primary">
-                            <div class="qa-icon"><i class="bi bi-plus-lg"></i></div>
-                            Rilis Menu Baru
-                        </a>
-                        <a href="<?= site_url('sales') ?>" class="qa-btn qa-outline">
-                            <div class="qa-icon" style="background:#e8f4ee"><i class="bi bi-calculator" style="color:#2d6a4f"></i></div>
-                            Buka Layar Kasir
-                        </a>
-                        <a href="<?= site_url('report/daily') ?>" class="qa-btn qa-outline">
-                            <div class="qa-icon" style="background:#fff7ed"><i class="bi bi-briefcase" style="color:#ea580c"></i></div>
-                            Laporan Keuangan
-                        </a>
-                    </div>
+            <div class="p-4">
+                <div class="clock-display mb-4 shadow-sm" style="background: linear-gradient(135deg, #1B3B25, #2d6a4f);">
+                    <div class="clock-time" id="rt-clock" style="font-size: 1.5rem;"><?= date('H:i:s') ?></div>
+                    <div class="clock-date" id="rt-date" style="font-size: 0.7rem;"><?= date('l, d F Y') ?></div>
                 </div>
-            </div>
 
-            <!-- Inventory Watch -->
-            <div class="col-12">
-                <div class="cc shadow-sm border-0">
-                    <div class="cc-header">
-                        <span class="cc-title"><i class="bi bi-shield-exclamation me-2 text-danger"></i>Inventory Watch</span>
-                        <span class="badge bg-danger rounded-pill"><?= count($low_stock_items) ?> Menu</span>
-                    </div>
+                <div class="inventory-list">
                     <?php if (!empty($low_stock_items)): foreach ($low_stock_items as $ls): ?>
-                    <div class="ls-item px-3 py-3">
+                    <div class="d-flex align-items-center gap-3 mb-3 p-2 border-bottom border-light">
                         <div class="ls-dot <?= $ls['stock'] == 0 ? 'dot-danger' : 'dot-warn' ?>"></div>
-                        <div>
-                            <div class="ls-name"><?= htmlspecialchars($ls['name']) ?></div>
-                            <div class="small text-muted"><?= $ls['sku'] ?? 'No SKU' ?></div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold small"><?= htmlspecialchars($ls['name']) ?></div>
+                            <div class="text-muted" style="font-size: 0.7rem;"><?= $ls['sku'] ?: 'No SKU' ?></div>
                         </div>
-                        <div class="ls-stock <?= $ls['stock'] == 0 ? 'text-danger fw-bold' : '' ?>"><?= $ls['stock'] ?> porsi</div>
+                        <div class="fw-bold small <?= $ls['stock'] == 0 ? 'text-danger' : '' ?>"><?= $ls['stock'] ?> Porsi</div>
                     </div>
                     <?php endforeach; else: ?>
                     <div class="text-center py-5">
-                        <i class="bi bi-hand-thumbs-up-fill text-success fs-2 d-block mb-2"></i>
-                        <div class="small fw-bold">Inventory Aman Terkendali!</div>
+                        <i class="bi bi-check-circle-fill text-success fs-1 mb-2"></i>
+                        <p class="small fw-bold mb-0">Semua Stok Aman</p>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -231,11 +140,63 @@ for ($i = 6; $i >= 0; $i--) {
     </div>
 </div>
 
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    const ctx = document.getElementById('orderChart');
+    
+    const orderChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
+            datasets: [{
+                label: 'Jumlah Pesanan',
+                data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
+                borderColor: '#1B3B25',
+                backgroundColor: 'rgba(27, 59, 37, 0.05)',
+                borderWidth: 4,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#1B3B25',
+                pointBorderWidth: 3,
+                pointRadius: 6,
+                pointHoverRadius: 9,
+                pointHoverBorderWidth: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1B3B25',
+                    padding: 15,
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 13 },
+                    cornerRadius: 12,
+                    displayColors: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1, color: '#94a3b8' },
+                    grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
     function rtClock() {
         const now = new Date();
         const pad = n => String(n).padStart(2,'0');
-        const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
         
         if(document.getElementById('rt-clock')) {
