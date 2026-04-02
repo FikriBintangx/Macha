@@ -352,23 +352,23 @@
         .ios-navbar {
             display: none;
             position: fixed;
-            bottom: 25px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(27, 59, 37, 0.9); /* Stronger Green main glassmorphism */
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            padding: 12px 20px;
-            border-radius: 40px;
-            z-index: 10001; /* Highest to remain sharp above overlay and sidebar */
-            box-shadow: 0 15px 45px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.15);
-            width: 92%;
-            max-width: 420px;
+            background: rgba(20, 41, 26, 0.9); /* Darker green glassmorphism */
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 8px 14px;
+            border-radius: 30px;
+            z-index: 10001;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 90%;
+            max-width: 360px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 5px;
+            gap: 2px;
         }
         .ios-nav-item {
             display: flex;
@@ -376,7 +376,7 @@
             align-items: center;
             color: rgba(255,255,255,0.5);
             text-decoration: none;
-            font-size: 0.72rem; /* Increased from 0.65 */
+            font-size: 0.65rem;
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -384,13 +384,13 @@
             padding: 5px 0;
         }
         .ios-nav-item i {
-            font-size: 1.55rem; /* Increased from 1.4 */
-            margin-bottom: 3px;
+            font-size: 1.25rem;
+            margin-bottom: 2px;
             display: block;
         }
         .ios-nav-item.active {
             color: #fff;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         .ios-nav-item.active i {
             color: #52b788;
@@ -415,13 +415,12 @@
             .sidebar.open {
                 transform: translateX(0);
             }
-            .topbar { display: none !important; }
             .main-content { 
-                margin-left: 0; 
-                margin-top: 10px; 
-                padding: 20px 18px; /* Slightly more padding */
-                padding-bottom: 120px; /* Space for larger floating bar */
-            }
+            margin-left: 0; 
+            margin-top: 10px; 
+            padding: 20px 18px; 
+            padding-bottom: 90px; /* Reduced for smaller floating bar */
+        }
             .ios-navbar { display: flex; }
             .page-header-mobile {
                 display: block !important;
@@ -455,7 +454,7 @@
             <i class="bi bi-receipt"></i>
             <span>Order</span>
             <?php if(isset($pending_count) && $pending_count > 0): ?>
-                <span class="position-absolute border border-light rounded-pill bg-danger" style="top: 2px; right: 2px; font-size: 0.55rem; padding: 2px 5px;">
+                <span class="position-absolute border border-light rounded-pill bg-danger" style="top: 0px; right: 8px; font-size: 0.5rem; padding: 1px 4px;">
                     <?= $pending_count ?>
                 </span>
             <?php endif; ?>
