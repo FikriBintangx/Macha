@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <?php 
+        $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
+    ?>
     <style>
         :root {
             --sidebar-w: 260px;
@@ -37,8 +40,8 @@
             position: fixed;
             top: 0; left: 0;
             height: 100vh;
-            z-index: 1000;
-            transition: width .3s ease;
+            z-index: 10000; /* Must be higher than overlay (9990) */
+            transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
         .sidebar-brand {
@@ -115,6 +118,19 @@
         }
         .nav-link.logout { color: rgba(239,68,68,.8) !important; }
         .nav-link.logout:hover { background: rgba(239,68,68,.12); color: #ef4444 !important; }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9990; /* High, but lower than sidebar (10000) and ios-navbar (10001) */
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.show { display: block; opacity: 1; }
 
         /* ─── TOPBAR ─── */
         .topbar {
@@ -336,23 +352,23 @@
         .ios-navbar {
             display: none;
             position: fixed;
-            bottom: 24px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(27, 59, 37, 0.85); /* Green main glassmorphism */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 10px 24px;
-            border-radius: 35px;
-            z-index: 9999;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            width: fit-content;
-            min-width: 280px;
+            background: rgba(27, 59, 37, 0.9); /* Stronger Green main glassmorphism */
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            padding: 12px 20px;
+            border-radius: 40px;
+            z-index: 10001; /* Highest to remain sharp above overlay and sidebar */
+            box-shadow: 0 15px 45px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.15);
+            width: 92%;
+            max-width: 420px;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
+            gap: 5px;
         }
         .ios-nav-item {
             display: flex;
@@ -360,76 +376,97 @@
             align-items: center;
             color: rgba(255,255,255,0.5);
             text-decoration: none;
-            font-size: 0.65rem;
+            font-size: 0.72rem; /* Increased from 0.65 */
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            flex: 1;
+            padding: 5px 0;
         }
         .ios-nav-item i {
-            font-size: 1.4rem;
-            margin-bottom: 2px;
+            font-size: 1.55rem; /* Increased from 1.4 */
+            margin-bottom: 3px;
+            display: block;
         }
         .ios-nav-item.active {
             color: #fff;
+            transform: translateY(-2px);
+        }
+        .ios-nav-item.active i {
+            color: #52b788;
+            filter: drop-shadow(0 0 8px rgba(82,183,136,0.5));
         }
         .ios-nav-item.active::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            top: -2px;
             width: 4px;
             height: 4px;
-            background: #fff;
+            background: #52b788;
             border-radius: 50%;
         }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
-            .sidebar { display: none !important; }
+            .sidebar { 
+                transform: translateX(-100%);
+                box-shadow: 20px 0 50px rgba(0,0,0,0.3);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
             .topbar { display: none !important; }
             .main-content { 
                 margin-left: 0; 
-                margin-top: 20px; 
-                padding: 15px;
-                padding-bottom: 100px; /* Space for floating bar */
+                margin-top: 10px; 
+                padding: 20px 18px; /* Slightly more padding */
+                padding-bottom: 120px; /* Space for larger floating bar */
             }
             .ios-navbar { display: flex; }
             .page-header-mobile {
                 display: block !important;
-                margin-bottom: 20px;
-                padding: 10px 5px;
+                margin-bottom: 25px;
+                padding: 10px 0;
             }
+            .page-header-mobile h4 { font-size: 1.5rem; } /* Larger title */
+            
+            /* UI SCALE FIXES */
+            .stat-card .sc-num { font-size: 1.8rem; }
+            .stat-card { padding: 20px; margin-bottom: 0; }
+            .cc-header { padding: 15px 18px; }
+            .cc-title { font-size: 1rem; }
+            .qa-btn { padding: 16px; font-size: 1rem; }
         }
         .page-header-mobile { display: none; }
     </style>
 </head>
 <body>
 
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
     <!-- IOS FLOATING BAR (MOBILE) -->
     <nav class="ios-navbar">
         <a href="<?= site_url('dashboard') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'dashboard') ? 'active' : '' ?>">
-            <i class="bi bi-house-door-fill"></i>
-            <span>Home</span>
+            <i class="bi bi-grid-fill"></i>
+            <span>Beranda</span>
         </a>
         <a href="<?= site_url('order') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
-            <i class="bi bi-bag-check-fill"></i>
+            <i class="bi bi-receipt"></i>
             <span>Order</span>
-            <?php if($pending_count > 0): ?>
-                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 5px; right: -5px; font-size: 0.5rem; padding: 3px 5px;">
+            <?php if(isset($pending_count) && $pending_count > 0): ?>
+                <span class="position-absolute border border-light rounded-pill bg-danger" style="top: 2px; right: 2px; font-size: 0.55rem; padding: 2px 5px;">
                     <?= $pending_count ?>
                 </span>
             <?php endif; ?>
         </a>
         <a href="<?= site_url('product') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
-            <i class="bi bi-box-seam-fill"></i>
+            <i class="bi bi-cup-straw"></i>
             <span>Produk</span>
         </a>
-        <a href="<?= site_url('report') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'report') ? 'active' : '' ?>">
-            <i class="bi bi-pie-chart-fill"></i>
-            <span>Laporan</span>
-        </a>
-        <a href="<?= site_url('order/history') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
-            <i class="bi bi-clock-history"></i>
-            <span>Riwayat</span>
+        <a href="<?= site_url('settings') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'settings') ? 'active' : '' ?>">
+            <i class="bi bi-gear-fill"></i>
+            <span>Sistem</span>
         </a>
     </nav>
 
@@ -475,9 +512,7 @@
                 <li class="nav-item">
                     <a href="<?= site_url('order') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
                         <i class="bi bi-bag-heart-fill"></i> Pesanan Hari Ini
-                        <?php
-                            $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
-                            if ($pending_count > 0): ?>
+                        <?php if ($pending_count > 0): ?>
                             <span class="nav-badge"><?= $pending_count ?></span>
                         <?php endif; ?>
                     </a>
@@ -563,7 +598,17 @@
     <script>
         // Mobile sidebar toggle
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('open');
+            if (sidebar.classList.contains('open')) {
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Stop scrolling
+            } else {
+                overlay.classList.remove('show');
+                document.body.style.overflow = ''; // Resume scrolling
+            }
         }
     </script>
 </body>

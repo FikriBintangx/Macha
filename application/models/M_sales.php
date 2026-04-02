@@ -1,8 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ */
 class M_sales extends CI_Model
 {
+    private $_last_id;
 
     /**
      * Simpan transaksi + detail + potong stok

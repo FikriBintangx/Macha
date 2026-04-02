@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Loader $load
+ */
 class User extends CI_Controller {
 
     public function __construct() {
@@ -43,7 +49,7 @@ class User extends CI_Controller {
     public function index() {
         $user_id = $this->session->userdata('userid');
         
-        $data['user'] = $this->db->get_where('users', ['id' => $user_id])->row_array();
+        $data['user'] = $this->db->where('id', $user_id)->get('users')->row_array();
 
         // Ambil riwayat pesanan khusus user ini
         $this->db->where('user_id', $user_id);
@@ -56,7 +62,7 @@ class User extends CI_Controller {
     // Formulir Upload Bukti Bayar
     public function payment($sales_id) {
         $user_id = $this->session->userdata('userid');
-        $data['order'] = $this->db->get_where('sales', ['id' => $sales_id, 'user_id' => $user_id])->row_array();
+        $data['order'] = $this->db->where(['id' => $sales_id, 'user_id' => $user_id])->get('sales')->row_array();
         
         if(!$data['order']) {
             redirect('user');
@@ -73,7 +79,7 @@ class User extends CI_Controller {
         $nominal_input = $this->input->post('nominal');
 
         // Pastikan order milik user
-        $order = $this->db->get_where('sales', ['id' => $sales_id, 'user_id' => $user_id])->row();
+        $order = $this->db->where(['id' => $sales_id, 'user_id' => $user_id])->get('sales')->row();
         if(!$order) redirect('user');
 
         // VALIDASI AUTOMATIS (Sesuai Permintaan User)
@@ -125,7 +131,7 @@ class User extends CI_Controller {
     // Tampilkan Profil
     public function profile() {
         $user_id = $this->session->userdata('userid');
-        $data['user'] = $this->db->get_where('users', ['id' => $user_id])->row_array();
+        $data['user'] = $this->db->where('id', $user_id)->get('users')->row_array();
         $this->load->view('user/profile', $data);
     }
 

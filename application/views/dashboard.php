@@ -12,6 +12,17 @@ $recent_orders = $this->db->get()->result_array();
 
 $this->db->where('stock <=', 5)->order_by('stock', 'ASC')->limit(5);
 $low_stock_items = $this->db->get('products')->result_array();
+
+// Data untuk chart 7 hari terakhir
+$recent_7_days = [];
+for ($i = 6; $i >= 0; $i--) {
+    $date = date('Y-m-d', strtotime("-$i days"));
+    $count = $this->db->where("DATE(created_at)", $date)->count_all_results('sales');
+    $recent_7_days[] = [
+        'date'  => date('d M', strtotime($date)),
+        'count' => $count
+    ];
+}
 ?>
 
 <!-- ─── HEADER STATS (Berjejer di Paling Atas) ─── -->
@@ -52,67 +63,100 @@ $low_stock_items = $this->db->get('products')->result_array();
 </div>
 
 <div class="row g-4">
-    <!-- ─── LEFT: ORDER MONITORING ─── -->
+    <!-- ─── LEFT: ORDER MONITORING (CHART) ─── -->
     <div class="col-xl-8">
-        <div class="cc h-100 shadow-sm border-0">
-            <div class="cc-header">
-                <span class="cc-title fs-5"><i class="bi bi-kanban me-2 text-success"></i>Trafik Order Terakhir</span>
-                <a href="<?= current_url() ?>" class="btn btn-sm btn-light border"><i class="bi bi-arrow-clockwise"></i></a>
+        <div class="cc shadow-sm border-0 h-100">
+            <div class="cc-header d-flex justify-content-between align-items-center">
+                <span class="cc-title fs-5"><i class="bi bi-graph-up text-success me-2"></i>Trafik Order (7 Hari Terakhir)</span>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
+                        Total: <?= array_sum(array_column($recent_7_days, 'count')) ?> Order
+                    </span>
+                    <a href="<?= current_url() ?>" class="btn btn-sm btn-light border rounded-circle"><i class="bi bi-arrow-clockwise"></i></a>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead>
-                        <tr>
-                            <th>No. Order</th>
-                            <th>Pelanggan</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($recent_orders)): foreach ($recent_orders as $o): 
-                            $status_map = [
-                                'pending'   => ['sb-pending',   'Dipesan'],
-                                'paid'      => ['sb-paid',      'Dibayar'],
-                                'shipped'   => ['sb-shipped',   'Dikirim'],
-                                'completed' => ['sb-completed', 'Selesai'],
-                                'canceled'  => ['sb-canceled',  'Batal'],
-                            ];
-                            $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status'])]; 
-                        ?>
-                        <tr>
-                            <td>
-                                <div class="fw-bold text-dark"><?= $o['invoice_no'] ?></div>
-                                <div class="small text-muted"><?= date('H:i', strtotime($o['created_at'])) ?> WIB</div>
-                            </td>
-                            <td>
-                                <div class="fw-semibold"><?= htmlspecialchars($o['customer'] ?? 'Guest') ?></div>
-                                <div class="small text-muted"><?= $o['phone'] ?></div>
-                            </td>
-                            <td class="fw-bold text-success">Rp <?= number_format($o['total_price'], 0, ',', '.') ?></td>
-                            <td><span class="sbadge <?= $sm[0] ?>"><?= $sm[1] ?></span></td>
-                            <td>
-                                <?php if($o['status'] == 'pending'): ?>
-                                    <a href="<?= site_url('order/update_status/'.$o['id'].'/paid') ?>" class="btn btn-sm btn-outline-success"><i class="bi bi-check-lg"></i></a>
-                                <?php elseif($o['status'] == 'paid'): ?>
-                                    <a href="<?= site_url('order/update_status/'.$o['id'].'/shipped') ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-send"></i></a>
-                                <?php else: ?>
-                                    <i class="bi bi-check-all text-success fs-5"></i>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; else: ?>
-                        <tr><td colspan="5" class="text-center py-5 text-muted">Belum ada aktivitas transaksi...</td></tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+            <div class="p-4">
+                <div style="height: 350px; position: relative;">
+                    <canvas id="orderChart"></canvas>
+                </div>
             </div>
-            <div class="cc-footer p-3 text-center border-top">
-                <a href="<?= site_url('order') ?>" class="small text-success text-decoration-none fw-bold">Buka Semua Pesanan <i class="bi bi-arrow-right"></i></a>
+            <div class="cc-footer p-3 text-center border-top bg-light-subtle rounded-bottom">
+                <div class="row g-0">
+                    <div class="col-6 border-end">
+                        <div class="small text-muted">Rata-rata Harian</div>
+                        <div class="fw-bold text-dark"><?= number_format(array_sum(array_column($recent_7_days, 'count'))/7, 1) ?></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="small text-muted">Status Tertinggi</div>
+                        <div class="fw-bold text-success">Active</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('orderChart');
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: <?= json_encode(array_column($recent_7_days, 'date')) ?>,
+                datasets: [{
+                    label: 'Jumlah Pesanan',
+                    data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
+                    borderColor: '#1B3B25',
+                    backgroundColor: 'rgba(27, 59, 37, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#1B3B25',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(27, 59, 37, 0.9)',
+                        titleFont: { family: 'Outfit', size: 14, weight: 'bold' },
+                        bodyFont: { family: 'Outfit', size: 13 },
+                        padding: 12,
+                        cornerRadius: 10,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '📦 ' + context.parsed.y + ' Pesanan';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1, color: '#94a3b8', font: { family: 'Outfit' } },
+                        grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8', font: { family: 'Outfit' } },
+                        grid: { display: false }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                }
+            }
+        });
+    </script>
 
     <!-- ─── RIGHT: WIDGETS ─── -->
     <div class="col-xl-4">

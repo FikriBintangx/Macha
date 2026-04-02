@@ -23,6 +23,12 @@
         <div class="card border-0 shadow-sm mb-4 bg-white" style="border-radius: 16px;">
             <div class="card-body p-3">
                 <div class="row g-3 align-items-center">
+                    <div class="col-md-3 col-lg-2">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light text-secondary border-secondary-subtle"><i class="bi bi-calendar-event"></i></span>
+                            <input type="date" id="dateFilter" class="form-control border-secondary-subtle fw-semibold text-secondary" value="<?= $date_filter ?>">
+                        </div>
+                    </div>
                     <div class="col-md-4 col-lg-3">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text bg-light text-secondary border-secondary-subtle"><i class="bi bi-person-lines-fill"></i></span>
@@ -34,7 +40,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-8 col-lg-9">
+                    <div class="col-md-5 col-lg-7">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text bg-light text-secondary border-end-0 border-secondary-subtle"><i class="bi bi-search"></i></span>
                             <input type="text" id="smartFilter" class="form-control border-start-0 ps-0 border-secondary-subtle fw-semibold" placeholder="Ketik invoice, alamat, atau status...">
@@ -145,6 +151,12 @@
             }
         });
     }
+
+    const dateFilter = document.getElementById('dateFilter');
+    
+    dateFilter.addEventListener('change', function() {
+        window.location.href = "<?= site_url('order/history') ?>?date=" + this.value;
+    });
 
     userFilter.addEventListener('change', applyFilters);
     smartFilter.addEventListener('input', applyFilters);

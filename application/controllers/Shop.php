@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Loader $load
+ */
 class Shop extends CI_Controller {
     
     // ==========================================
@@ -148,7 +154,7 @@ class Shop extends CI_Controller {
             $data['total'] += $item['subtotal'];
         }
         $user_id = $this->session->userdata('userid');
-        $data['user'] = $this->db->get_where('users', ['id' => $user_id])->row_array();
+        $data['user'] = $this->db->where('id', $user_id)->get('users')->row_array();
 
         $this->load->view('guest/checkout', $data);
     }
@@ -188,7 +194,7 @@ class Shop extends CI_Controller {
         }
 
         $user_id = $this->session->userdata('userid');
-        $user_data = $this->db->get_where('users', ['id' => $user_id])->row_array();
+        $user_data = $this->db->where('id', $user_id)->get('users')->row_array();
 
         $payment_method    = $this->input->post('payment_method', TRUE) ?: 'Transfer';
         $customer_name     = $this->input->post('customer_name', TRUE) ?: ($user_data['full_name'] ?? $this->session->userdata('full_name'));
@@ -244,10 +250,10 @@ class Shop extends CI_Controller {
         }
 
         $user_id = $this->session->userdata('userid');
-        $data['order'] = $this->db->get_where('sales', [
+        $data['order'] = $this->db->where([
             'id'      => $sales_id,
             'user_id' => $user_id
-        ])->row_array();
+        ])->get('sales')->row_array();
 
         if (!$data['order']) {
             $this->session->set_flashdata('error', 'Pesanan tidak ditemukan.');

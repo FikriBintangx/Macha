@@ -1,12 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Loader $load
+ */
 class Home extends CI_Controller {
 
     public function index() {
-        // Pastikan kolom featured ada; jika belum, auto-migrasi
+        // Pastikan tabel & kolom yang dibutuhkan ada (auto-migrasi)
         $this->_ensure_featured_columns();
+        $this->_ensure_testimonials_table();
 
+        // Ambil data testimonial dari database
+        $this->db->where('is_visible', 1);
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->limit(6);
+        $data['testimonials'] = $this->db->get('testimonials')->result_array();
         // Featured products untuk scroll storytelling
         $this->db->select('products.*, categories.category_name');
         $this->db->from('products');
@@ -73,6 +85,78 @@ class Home extends CI_Controller {
                 $this->db->query($sql);
             }
         }
+    }
+
+    /**
+     * Pastikan tabel testimonials ada
+     */
+    private function _ensure_testimonials_table() {
+        $db_name = $this->db->database;
+        $table   = 'testimonials';
+
+        // Cek apakah tabel sudah ada
+        $check = $this->db->query("SHOW TABLES LIKE '{$table}'")->num_rows();
+
+        if ($check == 0) {
+            $sql = "CREATE TABLE `{$table}` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(100) NOT NULL,
+                `location` VARCHAR(100) DEFAULT NULL,
+                `stars` INT DEFAULT 5,
+                `quote` TEXT NOT NULL,
+                `is_visible` TINYINT(1) DEFAULT 1,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+            $this->db->query($sql);
+
+            // Dummy data awal
+            $this->db->insert_batch($table, [
+                [
+                    'name' => 'Rina Kusuma',
+                    'location' => 'Jakarta Selatan',
+                    'stars' => 5,
+                    'quote' => 'Matchanya enak banget! Seger, nggak terlalu manis. Udah langganan setiap minggu. Recommended banget buat matcha lovers!!'
+                ],
+                [
+                    'name' => 'Dimas Prasetyo',
+                    'location' => 'Bekasi',
+                    'stars' => 5,
+                    'quote' => 'Pelayanan ramah, pengiriman cepat. Packaging juga rapi dan tebal, jadi aman di jalan. Puas banget belanja di MariMacha!'
+                ],
+                [
+                    'name' => 'Sari Dewi',
+                    'location' => 'Tangerang',
+                    'stars' => 5,
+                    'quote' => 'Udah coba beberapa varian dan semuanya juara. Signature iced matcha jadi favorit di kantor sekarang. Makasih ya!'
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * Simpan ulasan baru dari pemirsa
+     */
+    public function submit_review() {
+        $name     = $this->input->post('name', TRUE);
+        $location = $this->input->post('location', TRUE);
+        $stars    = $this->input->post('stars', TRUE);
+        $quote    = $this->input->post('quote', TRUE);
+
+        if ($name && $quote) {
+            $data = [
+                'name'     => $name,
+                'location' => $location,
+                'stars'    => (int)$stars,
+                'quote'    => $quote,
+                'is_visible' => 1 // Langsung tampil, atau bisa set 0 untuk moderasi
+            ];
+            $this->db->insert('testimonials', $data);
+            $this->session->set_flashdata('success', 'Terima kasih atas ulasannya! ❤️');
+        } else {
+            $this->session->set_flashdata('error', 'Mohon isi nama dan pesan ulasan Anda.');
+        }
+
+        redirect(base_url('#testi-kami'));
     }
 
     public function tentang() {

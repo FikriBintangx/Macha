@@ -1355,6 +1355,35 @@
       margin-top: 4px;
     }
 
+    .review-form-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .review-form-card .form-control {
+      border-radius: 12px;
+      border: 2px solid #f0f4f0;
+      font-family: 'Outfit', sans-serif;
+      padding: 12px 16px;
+    }
+    .review-form-card .form-control:focus {
+      border-color: var(--green-main);
+      box-shadow: 0 0 0 4px rgba(27, 59, 37, 0.05);
+    }
+    .star-rating-input label {
+      cursor: pointer;
+      font-size: 1.2rem;
+      filter: grayscale(1);
+      transition: 0.2s;
+    }
+    .star-rating-input input:checked + label {
+      filter: grayscale(0);
+      transform: scale(1.2);
+    }
+    .star-rating-input input { display: none; }
+
     /* ─── WA BANNER ─── */
     .wa-section {
       background: #fff;
@@ -2200,10 +2229,16 @@
                     <?php endif; ?>
                   </div>
                   <?php
-                  // Search in assets/img first since user uploaded there manually
-                  $img = (!empty($prod['image'])) ? base_url('assets/img/' . $prod['image']) : base_url('assets/img/productORI.png');
+                  $img_link = base_url('assets/img/productORI.png'); // Default fallback
+                  if (!empty($prod['image'])) {
+                      if (file_exists(FCPATH . 'uploads/' . $prod['image'])) {
+                          $img_link = base_url('uploads/' . $prod['image']);
+                      } elseif (file_exists(FCPATH . 'assets/img/' . $prod['image'])) {
+                          $img_link = base_url('assets/img/' . $prod['image']);
+                      }
+                  }
                   ?>
-                  <img src="<?= $img ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
+                  <img src="<?= $img_link ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
                     onerror="this.src='<?= base_url('assets/img/productORI.png'); ?>'">
                 </div>
                 <div class="prod-body">
@@ -2359,36 +2394,74 @@
   </section>
 
   <!-- ══════════ TESTIMONIAL ══════════ -->
-  <section class="testi-section">
+  <section class="testi-section" id="testi-kami">
     <div class="container">
       <div class="text-center mb-5 reveal-up invisible-init">
         <div class="section-label"><i class="fa-solid fa-star"></i> Ulasan Pelanggan</div>
         <h2 class="section-h2">Kata Mereka Tentang Kami</h2>
         <p class="section-sub mx-auto">Lebih dari ratusan pelanggan puas setiap bulannya. Ini yang mereka katakan.</p>
       </div>
-      <div class="row g-4 gs-testi-row">
-        <?php
-        $testimonials = [
-          ['name' => 'Rina Kusuma', 'loc' => 'Jakarta Selatan', 'stars' => 5, 'quote' => 'Matchanya enak banget! Seger, nggak terlalu manis. Udah langganan setiap minggu. Recommended banget buat matcha lovers!!'],
-          ['name' => 'Dimas Prasetyo', 'loc' => 'Bekasi', 'stars' => 5, 'quote' => 'Pelayanan ramah, pengiriman cepat. Packaging juga rapi dan tebal, jadi aman di jalan. Puas banget belanja di MariMacha!'],
-          ['name' => 'Sari Dewi', 'loc' => 'Tangerang', 'stars' => 5, 'quote' => 'Udah coba beberapa varian dan semuanya juara. Signature iced matcha jadi favorit di kantor sekarang. Makasih ya!'],
-        ];
-        foreach ($testimonials as $t):
-          ?>
+      <div class="row g-4 gs-testi-row mb-5">
+        <?php if(!empty($testimonials)): foreach ($testimonials as $t): ?>
           <div class="col-md-4">
             <div class="testi-card invisible-init">
               <div class="testi-stars"><?= str_repeat('<i class="fa-solid fa-star"></i>', $t['stars']) ?></div>
-              <p class="testi-quote">"<?= $t['quote'] ?>"</p>
+              <p class="testi-quote">"<?= htmlspecialchars($t['quote']) ?>"</p>
               <div class="testi-user">
-                <div class="testi-avatar"><?= strtoupper(substr($t['name'], 0, 1)) ?></div>
+                <div class="testi-avatar"><?= strtoupper(substr($t['name'] ?? 'M', 0, 1)) ?></div>
                 <div>
-                  <div class="testi-name"><?= $t['name'] ?></div>
-                  <div class="testi-loc"><i class="fa-solid fa-location-dot me-1"></i><?= $t['loc'] ?></div>
+                  <div class="testi-name"><?= htmlspecialchars($t['name'] ?? 'Pelanggan') ?></div>
+                  <div class="testi-loc"><i class="fa-solid fa-location-dot me-1"></i><?= htmlspecialchars($t['location'] ?? 'Indonesia') ?></div>
                 </div>
               </div>
             </div>
           </div>
-        <?php endforeach; ?>
+        <?php endforeach; else: ?>
+          <div class="col-12 text-center text-muted py-4">Belum ada ulasan yang ditampilkan.</div>
+        <?php endif; ?>
+      </div>
+
+      <!-- PREMIUM REVIEW FORM -->
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="review-form-card reveal-up invisible-init">
+            <h4 class="mb-4 text-center">Beri Ulasan Kamu <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i></h4>
+            <form action="<?= base_url('home/submit_review') ?>" method="POST">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" name="name" class="form-control" id="revName" placeholder="Nama Lengkap" required>
+                    <label for="revName">Nama Lengkap</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" name="location" class="form-control" id="revLoc" placeholder="Lokasi (Contoh: Bekasi)">
+                    <label for="revLoc">Lokasi</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                   <div class="star-rating-input d-flex justify-content-center gap-3 mb-3">
+                      <input type="radio" name="stars" value="5" id="s5" checked><label for="s5">⭐⭐⭐⭐⭐</label>
+                      <input type="radio" name="stars" value="4" id="s4"><label for="s4">⭐⭐⭐⭐</label>
+                      <input type="radio" name="stars" value="3" id="s3"><label for="s3">⭐⭐⭐</label>
+                   </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating">
+                    <textarea name="quote" class="form-control" id="revQuote" placeholder="Ceritakan pengalamanmu..." style="height: 120px" required></textarea>
+                    <label for="revQuote">Ulasan / Pesan Kamu</label>
+                  </div>
+                </div>
+                <div class="col-12 text-center mt-4">
+                  <button type="submit" class="btn-hero-primary" style="padding: 14px 40px; border-radius: 50px; font-size: 1rem;">
+                    Kirim Ulasan Sekarang <i class="fa-solid fa-paper-plane ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
