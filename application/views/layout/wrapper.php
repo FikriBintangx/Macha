@@ -348,62 +348,75 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #c8d8c8; border-radius: 4px; }
 
-        /* ─── FLOATING IOS NAVBAR (MOBILE ONLY) ─── */
+        /* ─── FLOATING CAPSULE NAVBAR (MOBILE) ─── */
         .ios-navbar {
             display: none;
             position: fixed;
-            bottom: 15px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(20, 41, 26, 0.9); /* Darker green glassmorphism */
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            padding: 8px 14px;
-            border-radius: 30px;
+            background: rgba(27, 59, 37, 0.95);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            padding: 10px 14px;
+            border-radius: 100px; /* Full Capsule */
             z-index: 10001;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.1);
-            width: 90%;
-            max-width: 360px;
+            width: auto;
+            min-width: 250px;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            gap: 2px;
+            gap: 15px;
         }
         .ios-nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: rgba(255,255,255,0.5);
+            justify-content: center;
+            color: rgba(255,255,255,0.4);
             text-decoration: none;
-            font-size: 0.65rem;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            flex: 1;
-            padding: 5px 0;
+            padding: 2px 8px;
+            border-radius: 20px;
         }
         .ios-nav-item i {
-            font-size: 1.25rem;
-            margin-bottom: 2px;
+            font-size: 1.4rem;
             display: block;
+            transition: transform 0.3s ease;
         }
-        .ios-nav-item.active {
+        .ios-nav-item span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: none; /* Hidden by default */
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        /* Reveal labels on hover OR active */
+        .ios-nav-item:hover, .ios-nav-item.active {
             color: #fff;
-            transform: translateY(-1px);
+            background: rgba(255,255,255,0.08);
+        }
+        .ios-nav-item:hover span, .ios-nav-item.active span {
+            display: block;
         }
         .ios-nav-item.active i {
             color: #52b788;
-            filter: drop-shadow(0 0 8px rgba(82,183,136,0.5));
+            filter: drop-shadow(0 0 5px rgba(82,183,136,0.5));
+            transform: scale(1.1);
         }
         .ios-nav-item.active::after {
             content: '';
             position: absolute;
-            top: -2px;
+            top: -5px;
             width: 4px;
             height: 4px;
             background: #52b788;
             border-radius: 50%;
+            box-shadow: 0 0 8px #52b788;
         }
 
         /* ─── RESPONSIVE ─── */
