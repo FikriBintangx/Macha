@@ -21,7 +21,7 @@ class Report extends CI_Controller {
     // Laporan semua transaksi
     public function index() {
         $data = [
-            'title'   => 'Laporan Penjualan Keseluruhan',
+            'title'   => 'Laporan Penjualan (Berdasarkan User)',
             'content' => 'reports/index.php', // Explicitly add .php just in case the server environment requires it
             'reports' => $this->M_sales->get_report()
         ];

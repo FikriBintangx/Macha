@@ -517,22 +517,23 @@
                         <?php endif; ?>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="<?= site_url('order/history') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
-                        <i class="bi bi-clock-history"></i> Riwayat Order
-                    </a>
-                </li>
+
 
 
                 <div class="nav-section">Laporan</div>
                 <li class="nav-item">
-                    <a href="<?= site_url('report') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
-                        <i class="bi bi-bar-chart-line-fill"></i> Laporan Semua
+                    <a href="<?= site_url('report/daily') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == 'daily') ? 'active' : '' ?>">
+                        <i class="bi bi-calendar-check-fill"></i> Laporan Hari Ini
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= site_url('report/daily') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == 'daily') ? 'active' : '' ?>">
-                        <i class="bi bi-calendar-check-fill"></i> Laporan Hari Ini
+                    <a href="<?= site_url('report') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
+                        <i class="bi bi-person-badge-fill"></i> Laporan User
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('order/history') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
+                        <i class="bi bi-file-earmark-text-fill"></i> Laporan Order
                     </a>
                 </li>
 
