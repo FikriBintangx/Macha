@@ -349,26 +349,27 @@
         ::-webkit-scrollbar-thumb { background: #c8d8c8; border-radius: 4px; }
 
         /* ─── FLOATING CAPSULE NAVBAR (MOBILE) ─── */
+        /* ─── FLOATING CAPSULE NAVBAR (MOBILE) ─── */
         .ios-navbar {
             display: none;
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(27, 59, 37, 0.95);
+            background: rgba(20, 41, 26, 0.95);
             backdrop-filter: blur(25px) saturate(200%);
             -webkit-backdrop-filter: blur(25px) saturate(200%);
-            padding: 10px 14px;
-            border-radius: 100px; /* Full Capsule */
+            padding: 8px 12px;
+            border-radius: 100px;
             z-index: 10001;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.1);
             width: auto;
-            min-width: 250px;
+            min-width: 260px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         .ios-nav-item {
             display: flex;
@@ -377,46 +378,72 @@
             justify-content: center;
             color: rgba(255,255,255,0.4);
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             position: relative;
-            padding: 2px 8px;
-            border-radius: 20px;
+            padding: 10px 15px;
+            border-radius: 50px;
         }
         .ios-nav-item i {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             display: block;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
+        /* Floating label above the pill */
         .ios-nav-item span {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(45, 106, 79, 0.9);
+            color: #fff;
             font-size: 0.65rem;
             font-weight: 700;
-            display: none; /* Hidden by default */
-            margin-top: 2px;
-            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        /* Reveal labels on hover OR active */
-        .ios-nav-item:hover, .ios-nav-item.active {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
+        .ios-nav-item span::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(45, 106, 79, 0.9);
         }
+
+        /* Hover & Active Tooltip */
         .ios-nav-item:hover span, .ios-nav-item.active span {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Selected / Active State */
+        .ios-nav-item.active {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
         }
         .ios-nav-item.active i {
             color: #52b788;
-            filter: drop-shadow(0 0 5px rgba(82,183,136,0.5));
             transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(82,183,136,0.6));
         }
         .ios-nav-item.active::after {
             content: '';
             position: absolute;
-            top: -5px;
-            width: 4px;
-            height: 4px;
+            bottom: 4px;
+            width: 5px;
+            height: 5px;
             background: #52b788;
             border-radius: 50%;
-            box-shadow: 0 0 8px #52b788;
+            box-shadow: 0 0 10px #52b788;
         }
 
         /* ─── RESPONSIVE ─── */
