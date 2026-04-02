@@ -365,11 +365,11 @@
             box-shadow: 0 15px 45px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.1);
             width: auto;
-            min-width: 260px;
+            min-width: 300px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
         .ios-nav-item {
             display: flex;
@@ -502,6 +502,10 @@
         <a href="<?= site_url('product') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
             <i class="bi bi-cup-straw"></i>
             <span>Produk</span>
+        </a>
+        <a href="<?= site_url('report') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'report') ? 'active' : '' ?>">
+            <i class="bi bi-bar-chart-fill"></i>
+            <span>Laporan</span>
         </a>
         <a href="<?= site_url('settings') ?>" class="ios-nav-item <?= ($this->uri->segment(1) == 'settings') ? 'active' : '' ?>">
             <i class="bi bi-gear-fill"></i>
