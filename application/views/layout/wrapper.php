@@ -446,35 +446,105 @@
             box-shadow: 0 0 10px #52b788;
         }
 
-        /* ─── RESPONSIVE ─── */
+        /* ─── RESPONSIVE OVERHAUL ─── */
         @media (max-width: 768px) {
+            :root { --sidebar-w: 0px; }
             .sidebar { 
                 transform: translateX(-100%);
                 box-shadow: 20px 0 50px rgba(0,0,0,0.3);
             }
-            .sidebar.open {
-                transform: translateX(0);
+            .sidebar.open { transform: translateX(0); }
+            
+            .topbar {
+                left: 0;
+                padding: 0 15px;
+                height: 60px;
+                background: rgba(255,255,255,0.98);
+                backdrop-filter: blur(10px);
             }
+            .topbar .page-title, .topbar .user-info, .topbar .avatar { display: none; }
+            .topbar-actions { margin-left: auto; gap: 8px; }
+            .topbar-btn { width: 42px; height: 42px; background: #f8fbf8; }
+
             .main-content { 
-            margin-left: 0; 
-            margin-top: 10px; 
-            padding: 20px 18px; 
-            padding-bottom: 90px; /* Reduced for smaller floating bar */
-        }
+                margin-left: 0; 
+                margin-top: 60px; 
+                padding: 20px 15px; 
+                padding-bottom: 110px; 
+            }
+
             .ios-navbar { display: flex; }
             .page-header-mobile {
                 display: block !important;
                 margin-bottom: 25px;
                 padding: 10px 0;
             }
-            .page-header-mobile h4 { font-size: 1.5rem; } /* Larger title */
+            .page-header-mobile h4 { font-size: 1.6rem; letter-spacing: -0.5px; }
             
             /* UI SCALE FIXES */
-            .stat-card .sc-num { font-size: 1.8rem; }
-            .stat-card { padding: 20px; margin-bottom: 0; }
-            .cc-header { padding: 15px 18px; }
-            .cc-title { font-size: 1rem; }
-            .qa-btn { padding: 16px; font-size: 1rem; }
+            .stat-card .sc-num { font-size: 1.6rem; }
+            .stat-card { padding: 18px; margin-bottom: 12px; }
+            .stat-card .sc-label { font-size: 0.75rem; }
+            .stat-card .sc-sub { font-size: 0.7rem; }
+            
+            .row.g-4 > [class*="col-"] { margin-bottom: 0; }
+            .row.mb-5 .col-md-3 { width: 50%; } /* 2x2 Grid for stat cards */
+
+            .cc-header { padding: 18px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+            .cc-title { font-size: 1.1rem; }
+            .qa-btn { padding: 18px; font-size: 1rem; }
+
+            /* ─── RESPONSIVE CARD TABLE PATTERN ─── */
+            .responsive-card-table table, 
+            .responsive-card-table thead, 
+            .responsive-card-table tbody, 
+            .responsive-card-table th, 
+            .responsive-card-table td, 
+            .responsive-card-table tr { 
+                display: block; 
+            }
+            .responsive-card-table thead tr { 
+                position: absolute; 
+                top: -9999px; 
+                left: -9999px; 
+            }
+            .responsive-card-table tr { 
+                border: 1px solid #edf2ed;
+                border-radius: 16px;
+                margin-bottom: 15px;
+                padding: 15px;
+                background: #fff;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            }
+            .responsive-card-table td { 
+                border: none !important;
+                padding: 10px 0 !important;
+                position: relative;
+                padding-left: 45% !important;
+                text-align: right;
+                min-height: 40px;
+                font-size: 0.9rem;
+            }
+            .responsive-card-table td:before { 
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 40%;
+                text-align: left;
+                font-weight: 700;
+                color: #8aa898;
+                text-transform: uppercase;
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+            .responsive-card-table td:last-child {
+                border-top: 1px solid #f5faf5 !important;
+                margin-top: 10px;
+                padding-top: 15px !important;
+                text-align: center;
+                padding-left: 0 !important;
+            }
+            .responsive-card-table td:last-child:before { display: none; }
         }
         .page-header-mobile { display: none; }
     </style>

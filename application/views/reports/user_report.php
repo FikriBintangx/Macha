@@ -1,20 +1,16 @@
-<?php if($this->session->flashdata('notif_struk')): ?>
-    <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        <strong>Berhasil!</strong> <?= $this->session->flashdata('notif_struk'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="row align-items-center mb-4 g-3">
+    <div class="col-md-auto col-12 text-center text-md-start">
+        <h4 class="text-success fw-bold m-0"><i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan Penjualan</h4>
     </div>
-<?php endif; ?>
-
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
-    <h4 class="text-success fw-bold m-0"><i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan Penjualan</h4>
-    <div class="d-flex gap-2 mt-3 mt-md-0">
-        <button onclick="exportToExcel()" class="btn btn-success btn-sm shadow-sm px-3 d-flex align-items-center">
-            <i class="bi bi-file-earmark-spreadsheet me-2"></i> Export Excel
-        </button>
-        <button onclick="window.print()" class="btn btn-danger btn-sm shadow-sm px-3 d-flex align-items-center">
-            <i class="bi bi-file-earmark-pdf me-2"></i> Export PDF
-        </button>
+    <div class="col-md-auto col-12 ms-md-auto text-center">
+        <div class="d-flex gap-2 justify-content-center">
+            <button onclick="exportToExcel()" class="btn btn-success btn-sm shadow-sm px-3 d-flex align-items-center">
+                <i class="bi bi-file-earmark-spreadsheet me-2"></i> Excel
+            </button>
+            <button onclick="window.print()" class="btn btn-danger btn-sm shadow-sm px-3 d-flex align-items-center">
+                <i class="bi bi-file-earmark-pdf me-2"></i> PDF
+            </button>
+        </div>
     </div>
 </div>
 
@@ -29,19 +25,19 @@ if (!empty($reports)) {
     ksort($uniqueCustomers);
 }
 ?>
-<div class="card border-0 shadow-sm mb-4 bg-white" style="border-radius: 12px;">
+<div class="card border-0 shadow-sm mb-4 bg-white" style="border-radius: 16px;">
     <div class="card-body p-3">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-8 col-lg-5">
-                <div class="input-group input-group-sm h-100">
-                    <span class="input-group-text bg-light text-secondary border-secondary-subtle px-2"><i class="bi bi-calendar-event me-1"></i> Dari</span>
-                    <input type="date" id="startDate" class="form-control border-secondary-subtle text-secondary fw-semibold px-2">
-                    <span class="input-group-text bg-light text-secondary border-secondary-subtle border-start-0 border-end-0">Sd</span>
-                    <input type="date" id="endDate" class="form-control border-secondary-subtle text-secondary fw-semibold px-2">
+        <div class="row g-2">
+            <div class="col-md-6 col-lg-5">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light text-secondary border-secondary-subtle px-2">Periode</span>
+                    <input type="date" id="startDate" class="form-control border-secondary-subtle text-secondary fw-semibold">
+                    <span class="input-group-text bg-light text-secondary border-secondary-subtle">Sd</span>
+                    <input type="date" id="endDate" class="form-control border-secondary-subtle text-secondary fw-semibold">
                 </div>
             </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="input-group input-group-sm h-100">
+            <div class="col-md-6 col-lg-3">
+                <div class="input-group input-group-sm">
                     <span class="input-group-text bg-light text-secondary border-secondary-subtle"><i class="bi bi-person-lines-fill"></i></span>
                     <select id="userFilter" class="form-select border-secondary-subtle fw-semibold text-secondary">
                         <option value="">Semua Pelanggan</option>
@@ -51,20 +47,20 @@ if (!empty($reports)) {
                     </select>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-4">
-                <div class="input-group input-group-sm h-100">
+            <div class="col-12 col-lg-4">
+                <div class="input-group input-group-sm">
                     <span class="input-group-text bg-light text-secondary border-end-0 border-secondary-subtle"><i class="bi bi-search"></i></span>
-                    <input type="text" id="smartFilter" class="form-control border-start-0 ps-0 border-secondary-subtle fw-semibold" placeholder="Ketik invoice, nama pelanggan...">
+                    <input type="text" id="smartFilter" class="form-control border-start-0 ps-0 border-secondary-subtle fw-semibold" placeholder="Invoice atau nama...">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card border-0 shadow-sm">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+    <div class="card-body p-0">
+        <div class="table-responsive responsive-card-table">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>Waktu Transaksi</th>
@@ -94,7 +90,7 @@ if (!empty($reports)) {
                             $totalSemua += $groupTotal;
                     ?>
                     <!-- Baris Header Grup -->
-                    <tr class="group-header cursor-pointer collapsed-group" style="background-color: #f8f9fc; cursor: pointer; border-left: 4px solid #198754;" data-group-id="<?= $gId ?>">
+                    <tr class="group-header cursor-pointer collapsed-group" style="background-color: #f8fbf8; cursor: pointer; border-left: 4px solid #198754;" data-group-id="<?= $gId ?>">
                         <td colspan="4" class="py-3 border-bottom-0">
                             <i class="bi bi-chevron-down me-2 toggle-icon d-inline-block text-success fw-bold" style="transition: transform 0.2s; transform: rotate(-90deg);"></i>
                             <strong class="text-dark fs-6 customer-group-name"><?= htmlspecialchars($cname) ?></strong> 
@@ -107,24 +103,24 @@ if (!empty($reports)) {
                     <!-- Baris Isi Transaksi Detail -->
                     <?php foreach($transactions as $r): ?>
                     <tr class="trx-row group-child-<?= $gId ?> bg-white" data-group-id="<?= $gId ?>" style="display: none;">
-                        <td class="small ps-5 align-middle text-muted">
+                        <td class="small ps-md-5 align-middle text-muted" data-label="WAKTU">
                             <i class="bi bi-clock me-1 opacity-50"></i> <?= date('d/m/Y • H:i', strtotime($r['created_at'])) ?>
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle" data-label="INVOICE">
                             <span class="badge bg-light text-dark border px-2 py-1"><i class="bi bi-receipt text-muted me-1"></i><?= $r['invoice_no'] ?></span>
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle" data-label="PELANGGAN">
                             <span class="text-secondary small customer-name-item"><i class="bi bi-person text-muted me-1"></i> <?= htmlspecialchars($r['customer_name'] ?: 'Pelanggan Anonim') ?></span>
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle" data-label="METODE">
                             <span class="badge <?= $r['payment_method'] == 'QRIS' ? 'bg-primary' : 'bg-success' ?> bg-opacity-10 <?= $r['payment_method'] == 'QRIS' ? 'text-primary' : 'text-success' ?> border-0 rounded-pill px-3 py-2">
                                 <?= $r['payment_method'] == 'QRIS' ? '<i class="bi bi-qr-code-scan me-1"></i>' : '<i class="bi bi-cash me-1"></i>' ?> <?= $r['payment_method'] ?>
                             </span>
                         </td>
-                        <td class="text-end fw-semibold align-middle text-dark trx-price" data-price="<?= $r['total_price'] ?>">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
-                        <td class="text-center align-middle">
-                            <button onclick="window.open('<?= site_url('report/print_struk/'.$r['invoice_no']) ?>', '_blank', 'width=340,height=600')" class="btn btn-sm btn-white border shadow-sm text-primary rounded-pill px-3">
-                                <i class="bi bi-printer me-1"></i> Struk
+                        <td class="text-end fw-semibold align-middle text-dark trx-price" data-label="TOTAL" data-price="<?= $r['total_price'] ?>">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
+                        <td class="text-center align-middle" data-label="AKSI">
+                            <button onclick="window.open('<?= site_url('report/print_struk/'.$r['invoice_no']) ?>', '_blank', 'width=340,height=600')" class="btn btn-sm btn-white border shadow-sm text-primary rounded-pill px-4 py-2">
+                                <i class="bi bi-printer me-1"></i> Cetak Struk
                             </button>
                         </td>
                     </tr>
@@ -132,11 +128,14 @@ if (!empty($reports)) {
                     
                     <?php endforeach; else: ?>
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-4">Belum ada data transaksi tersimpan.</td>
+                        <td colspan="6" class="text-center text-muted py-5 cards-empty">
+                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                            Belum ada data transaksi.
+                        </td>
                     </tr>
                     <?php endif; ?>
                 </tbody>
-                <tfoot class="table-dark">
+                <tfoot class="table-dark d-none d-md-table-footer">
                     <tr>
                         <td colspan="4" class="text-center fw-bold">TOTAL OMZET KESELURUHAN</td>
                         <td class="text-end fw-bold" id="totalFilter">Rp <?= number_format($totalSemua, 0, ',', '.') ?></td>

@@ -1,22 +1,24 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
+<div class="row align-items-center mb-4 g-3">
+    <div class="col-md-auto col-12 text-center text-md-start">
         <h3 class="fw-bold text-success mb-0">Daftar Menu Macha</h3>
-        <p class="text-muted small">Kelola produk, harga, dan stok inventaris Anda di sini.</p>
+        <p class="text-muted small mb-0">Kelola produk, harga, dan stok inventaris Anda di sini.</p>
     </div>
-    <a href="<?= site_url('product/add') ?>" class="btn btn-success rounded-pill px-4 shadow-sm">
-        <i class="bi bi-plus-lg me-1"></i> Tambah Produk Baru
-    </a>
+    <div class="col-md-auto col-12 ms-md-auto text-center">
+        <a href="<?= site_url('product/add') ?>" class="btn btn-success rounded-pill px-4 shadow-sm w-100 w-md-auto">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Produk Baru
+        </a>
+    </div>
 </div>
 
 <?php if($this->session->flashdata('success')): ?>
-    <div class="alert alert-success border-0 shadow-sm rounded-3">
+    <div class="alert alert-success border-0 shadow-sm rounded-4 mb-4">
         <i class="bi bi-check-circle-fill me-2"></i> <?= $this->session->flashdata('success'); ?>
     </div>
 <?php endif; ?>
 
-<div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
     <div class="card-body p-0">
-        <div class="table-responsive">
+        <div class="table-responsive responsive-card-table">
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
@@ -32,32 +34,32 @@
                     <?php if (!empty($products)) : ?>
                         <?php foreach ($products as $p) : ?>
                             <tr>
-                                <td class="ps-4">
+                                <td class="ps-4" data-label="GAMBAR">
                                     <img src="<?= base_url('uploads/' . $p['image']) ?>" 
                                          alt="img" class="rounded-3 shadow-sm" 
                                          style="width: 50px; height: 50px; object-fit: cover;"
                                          onerror="this.src='https://placehold.co/100x100?text=No+Img'">
                                 </td>
-                                <td>
+                                <td data-label="PRODUK & SKU">
                                     <div class="fw-bold text-dark"><?= $p['name'] ?></div>
                                     <div class="text-muted small">SKU: <?= $p['sku'] ?></div>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center" data-label="KATEGORI">
                                     <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">
                                         <?= $p['category_name'] ?>
                                     </span>
                                 </td>
-                                <td class="text-end fw-bold text-success">
+                                <td class="text-end fw-bold text-success" data-label="HARGA JUAL">
                                     Rp <?= number_format($p['price'], 0, ',', '.') ?>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center" data-label="STOK">
                                     <?php if($p['stock'] <= 5): ?>
                                         <span class="badge bg-danger rounded-pill px-3">Tersisa <?= $p['stock'] ?></span>
                                     <?php else: ?>
-                                        <span class="text-dark"><?= $p['stock'] ?></span>
+                                        <span class="text-dark fw-bold"><?= $p['stock'] ?></span>
                                     <?php endif; ?>
                                 </td>
-                                <td class="text-center pe-4">
+                                <td class="text-center pe-4" data-label="AKSI">
                                     <div class="btn-group shadow-sm rounded-3">
                                         <a href="<?= site_url('product/edit/' . $p['id']) ?>" 
                                            class="btn btn-white btn-sm border-end" title="Edit Data">
