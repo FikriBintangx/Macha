@@ -19,8 +19,9 @@ for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
     $count = $this->db->where("DATE(created_at)", $date)->count_all_results('sales');
     $recent_7_days[] = [
-        'date'  => date('d M', strtotime($date)),
-        'count' => $count
+        'label'      => date('d M', strtotime($date)),
+        'full_date'  => $date,
+        'count'      => $count
     ];
 }
 ?>
@@ -103,7 +104,7 @@ for ($i = 6; $i >= 0; $i--) {
         const orderChartInstance = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: <?= json_encode(array_column($recent_7_days, 'date')) ?>,
+                labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
                 datasets: [{
                     label: 'Jumlah Pesanan',
                     data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
@@ -157,7 +158,10 @@ for ($i = 6; $i >= 0; $i--) {
                 onClick: (e) => {
                     const points = orderChartInstance.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                     if (points.length) {
-                        window.location.href = '<?= site_url('report') ?>';
+                        const index = points[0].index;
+                        const fullDates = <?= json_encode(array_column($recent_7_days, 'full_date')) ?>;
+                        const selectedDate = fullDates[index];
+                        window.location.href = '<?= site_url('order/history') ?>?date=' + selectedDate;
                     }
                 },
                 onHover: (event, chartElement) => {
