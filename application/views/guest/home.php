@@ -2401,61 +2401,76 @@
         <h2 class="section-h2">Kata Mereka Tentang Kami</h2>
         <p class="section-sub mx-auto">Lebih dari ratusan pelanggan puas setiap bulannya. Ini yang mereka katakan.</p>
       </div>
-      <div class="row g-4 gs-testi-row mb-5">
-        <?php if(!empty($testimonials)): foreach ($testimonials as $t): ?>
-          <div class="col-md-4">
-            <div class="testi-card invisible-init">
-              <div class="testi-stars"><?= str_repeat('<i class="fa-solid fa-star"></i>', $t['stars']) ?></div>
-              <p class="testi-quote">"<?= htmlspecialchars($t['quote']) ?>"</p>
-              <div class="testi-user">
-                <div class="testi-avatar"><?= strtoupper(substr($t['name'] ?? 'M', 0, 1)) ?></div>
-                <div>
-                  <div class="testi-name"><?= htmlspecialchars($t['name'] ?? 'Pelanggan') ?></div>
-                  <div class="testi-loc"><i class="fa-solid fa-location-dot me-1"></i><?= htmlspecialchars($t['location'] ?? 'Indonesia') ?></div>
+      <div class="testi-slider-container reveal-up invisible-init">
+        <div class="testi-slider" id="testiSlider">
+          <?php if(!empty($testimonials)): foreach ($testimonials as $t): ?>
+            <div class="testi-item">
+              <div class="testi-card">
+                <div class="testi-stars"><?= str_repeat('<i class="fa-solid fa-star"></i>', $t['stars']) ?></div>
+                <p class="testi-quote" style="min-height: 100px;">"<?= htmlspecialchars($t['quote']) ?>"</p>
+                <div class="testi-user mt-4">
+                  <div class="testi-avatar" style="background-color: var(--tertiary-light); color: var(--green-dark); font-weight: bold;">
+                    <?= strtoupper(substr($t['name'] ?? 'M', 0, 1)) ?>
+                  </div>
+                  <div>
+                    <div class="testi-name"><?= htmlspecialchars($t['name'] ?? 'Pelanggan') ?></div>
+                    <div class="testi-loc" style="font-size: 0.8rem;"><i class="fa-solid fa-location-dot me-1"></i><?= htmlspecialchars($t['location'] ?? 'Indonesia') ?></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <?php endforeach; else: ?>
-          <div class="col-12 text-center text-muted py-4">Belum ada ulasan yang ditampilkan.</div>
-        <?php endif; ?>
+          <?php endforeach; else: ?>
+            <div class="col-12 text-center text-muted py-4 w-100">Belum ada ulasan yang ditampilkan.</div>
+          <?php endif; ?>
+        </div>
+
+        <div class="testi-nav">
+          <div class="testi-btn" onclick="slideTesti('left')"><i class="fa-solid fa-chevron-left"></i></div>
+          <div class="testi-btn" onclick="slideTesti('right')"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
       </div>
 
       <!-- PREMIUM REVIEW FORM -->
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="review-form-card reveal-up invisible-init">
-            <h4 class="mb-4 text-center">Beri Ulasan Kamu <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i></h4>
+            <h4 class="mb-4 text-center">
+              <?= !empty($my_review) ? 'Edit Ulasan Kamu' : 'Beri Ulasan Kamu' ?> 
+              <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i>
+            </h4>
             <form action="<?= base_url('home/submit_review') ?>" method="POST">
               <div class="row g-3">
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" name="name" class="form-control" id="revName" placeholder="Nama Lengkap" required>
+                    <input type="text" name="name" class="form-control" id="revName" placeholder="Nama Lengkap" 
+                      value="<?= htmlspecialchars($my_review['name'] ?? $this->session->userdata('fullname') ?? '') ?>" required>
                     <label for="revName">Nama Lengkap</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" name="location" class="form-control" id="revLoc" placeholder="Lokasi (Contoh: Bekasi)">
+                    <input type="text" name="location" class="form-control" id="revLoc" placeholder="Lokasi (Contoh: Bekasi)"
+                      value="<?= htmlspecialchars($my_review['location'] ?? '') ?>">
                     <label for="revLoc">Lokasi</label>
                   </div>
                 </div>
                 <div class="col-12">
                    <div class="star-rating-input d-flex justify-content-center gap-3 mb-3">
-                      <input type="radio" name="stars" value="5" id="s5" checked><label for="s5">⭐⭐⭐⭐⭐</label>
-                      <input type="radio" name="stars" value="4" id="s4"><label for="s4">⭐⭐⭐⭐</label>
-                      <input type="radio" name="stars" value="3" id="s3"><label for="s3">⭐⭐⭐</label>
+                      <?php $currStars = $my_review['stars'] ?? 5; ?>
+                      <input type="radio" name="stars" value="5" id="s5" <?= ($currStars == 5) ? 'checked' : '' ?>><label for="s5">⭐⭐⭐⭐⭐</label>
+                      <input type="radio" name="stars" value="4" id="s4" <?= ($currStars == 4) ? 'checked' : '' ?>><label for="s4">⭐⭐⭐⭐</label>
+                      <input type="radio" name="stars" value="3" id="s3" <?= ($currStars == 3) ? 'checked' : '' ?>><label for="s3">⭐⭐⭐</label>
                    </div>
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea name="quote" class="form-control" id="revQuote" placeholder="Ceritakan pengalamanmu..." style="height: 120px" required></textarea>
+                    <textarea name="quote" class="form-control" id="revQuote" placeholder="Ceritakan pengalamanmu..." style="height: 120px" required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
                     <label for="revQuote">Ulasan / Pesan Kamu</label>
                   </div>
                 </div>
                 <div class="col-12 text-center mt-4">
                   <button type="submit" class="btn-hero-primary" style="padding: 14px 40px; border-radius: 50px; font-size: 1rem;">
-                    Kirim Ulasan Sekarang <i class="fa-solid fa-paper-plane ms-2"></i>
+                    <?= !empty($my_review) ? 'Update Ulasan' : 'Kirim Ulasan' ?> <i class="fa-solid fa-paper-plane ms-2"></i>
                   </button>
                 </div>
               </div>
@@ -3027,6 +3042,18 @@
       }
 
       // 5. SCROLL PROGRESS & RESPONSIVE MENU
+      // Testimonial Slider Navigation
+      function slideTesti(dir) {
+        const slider = document.getElementById('testiSlider');
+        const scrollAmount = slider.offsetWidth > 768 ? 400 : slider.offsetWidth;
+        if (dir === 'left') {
+          slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+          slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      }
+
+      // Existing parallax & logic
       window.addEventListener('scroll', () => {
         const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         gsap.to('#scrollProgress', { width: scrolled + "%", duration: 0.1 });

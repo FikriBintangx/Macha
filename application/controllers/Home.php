@@ -19,6 +19,14 @@ class Home extends CI_Controller {
         $this->db->order_by('created_at', 'DESC');
         $this->db->limit(6);
         $data['testimonials'] = $this->db->get('testimonials')->result_array();
+
+        // Cari ulasan milik user yang sedang login (jika ada)
+        $user_id = $this->session->userdata('userid');
+        $data['my_review'] = null;
+        if ($user_id) {
+            $data['my_review'] = $this->db->get_where('testimonials', ['user_id' => $user_id])->row_array();
+        }
+
         // Featured products untuk scroll storytelling
         $this->db->select('products.*, categories.category_name');
         $this->db->from('products');
@@ -88,7 +96,7 @@ class Home extends CI_Controller {
     }
 
     /**
-     * Pastikan tabel testimonials ada
+     * Pastikan tabel testimonials ada & up-to-date
      */
     private function _ensure_testimonials_table() {
         $db_name = $this->db->database;
@@ -100,6 +108,7 @@ class Home extends CI_Controller {
         if ($check == 0) {
             $sql = "CREATE TABLE `{$table}` (
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `user_id` INT DEFAULT NULL,
                 `name` VARCHAR(100) NOT NULL,
                 `location` VARCHAR(100) DEFAULT NULL,
                 `stars` INT DEFAULT 5,
@@ -130,13 +139,25 @@ class Home extends CI_Controller {
                     'quote' => 'Udah coba beberapa varian dan semuanya juara. Signature iced matcha jadi favorit di kantor sekarang. Makasih ya!'
                 ]
             ]);
+        } else {
+            // Cek apakah kolom user_id ada
+            $col_check = $this->db->query(
+                "SELECT COUNT(*) as cnt FROM INFORMATION_SCHEMA.COLUMNS
+                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME = 'user_id'",
+                [$db_name, $table]
+            )->row()->cnt;
+
+            if ($col_check == 0) {
+                $this->db->query("ALTER TABLE `{$table}` ADD COLUMN `user_id` INT DEFAULT NULL AFTER `id` ");
+            }
         }
     }
 
     /**
-     * Simpan ulasan baru dari pemirsa
+     * Simpan / Update ulasan
      */
     public function submit_review() {
+        $user_id  = $this->session->userdata('userid');
         $name     = $this->input->post('name', TRUE);
         $location = $this->input->post('location', TRUE);
         $stars    = $this->input->post('stars', TRUE);
@@ -144,14 +165,30 @@ class Home extends CI_Controller {
 
         if ($name && $quote) {
             $data = [
+                'user_id'  => $user_id,
                 'name'     => $name,
                 'location' => $location,
                 'stars'    => (int)$stars,
                 'quote'    => $quote,
-                'is_visible' => 1 // Langsung tampil, atau bisa set 0 untuk moderasi
+                'is_visible' => 1
             ];
-            $this->db->insert('testimonials', $data);
-            $this->session->set_flashdata('success', 'Terima kasih atas ulasannya! ❤️');
+
+            if ($user_id) {
+                // Cari apakah user ini sudah pernah ulasan
+                $exist = $this->db->get_where('testimonials', ['user_id' => $user_id])->row();
+                if ($exist) {
+                    $this->db->where('id', $exist->id);
+                    $this->db->update('testimonials', $data);
+                    $this->session->set_flashdata('notif_struk', 'Ulasan kamu berhasil diperbarui! ✨');
+                } else {
+                    $this->db->insert('testimonials', $data);
+                    $this->session->set_flashdata('notif_struk', 'Terima kasih atas ulasannya! ❤️');
+                }
+            } else {
+                // Guest review
+                $this->db->insert('testimonials', $data);
+                $this->session->set_flashdata('notif_struk', 'Terima kasih atas ulasannya! ❤️');
+            }
         } else {
             $this->session->set_flashdata('error', 'Mohon isi nama dan pesan ulasan Anda.');
         }
