@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <?php 
         $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
+        $notif_orders  = $this->db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
     ?>
     <style>
         :root {
@@ -183,6 +184,34 @@
         .user-info { text-align: right; }
         .user-info .name { font-weight: 700; font-size: .88rem; color: #1a2e25; }
         .user-info .role { font-size: .73rem; color: #8aa898; }
+        
+        /* ─── NOTIFICATION DROPDOWN ─── */
+        .notif-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            width: 320px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 1px solid #eef2ee;
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+            animation: slideIn .3s ease;
+        }
+        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .notif-dropdown.show { display: flex; }
+        .notif-header { padding: 15px 20px; background: #f8fbf8; border-bottom: 1px solid #edf1ed; font-weight: 700; font-size: .9rem; display: flex; justify-content: space-between; align-items: center; }
+        .notif-body { max-height: 350px; overflow-y: auto; }
+        .notif-item { padding: 12px 20px; display: flex; gap: 12px; border-bottom: 1px solid #f9fbf9; text-decoration: none; color: inherit; transition: .2s; }
+        .notif-item:hover { background: #f4faf6; }
+        .notif-icon { width: 36px; height: 36px; border-radius: 10px; background: #fff3f3; color: #e63946; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .notif-info .title { font-weight: 600; font-size: .85rem; display: block; margin-bottom: 2px; }
+        .notif-info .time { font-size: .7rem; color: #8aa898; }
+        .notif-footer { padding: 12px; text-align: center; border-top: 1px solid #edf1ed; }
+        .notif-footer a { font-size: .75rem; font-weight: 700; color: var(--green-main); text-decoration: none; }
 
         /* ─── MAIN CONTENT ─── */
         .main-content {
@@ -645,6 +674,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?= site_url('report/pending') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == 'pending') ? 'active' : '' ?>">
+                        <i class="bi bi-clock-history"></i> Laporan Pending
+                        <?php if($pending_count > 0): ?>
+                            <span class="nav-badge"><?= $pending_count ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="<?= site_url('report') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
                         <i class="bi bi-person-badge-fill"></i> Laporan User
                     </a>
@@ -682,17 +719,48 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
+        <?php /*
         <button class="topbar-btn d-md-none border-0" onclick="toggleSidebar()" style="width:38px;height:38px">
             <i class="bi bi-list fs-5"></i>
         </button>
+        */ ?>
         <div class="page-title"><?= $title ?></div>
         <div class="topbar-actions">
-            <a href="<?= site_url('order') ?>" class="topbar-btn" title="Pesanan Baru">
-                <i class="bi bi-bell-fill"></i>
-                <?php if($pending_count > 0): ?>
-                <span class="notif-dot"></span>
-                <?php endif; ?>
-            </a>
+            <div class="position-relative">
+                <button onclick="toggleNotif()" class="topbar-btn" title="Notifikasi">
+                    <i class="bi bi-bell-fill"></i>
+                    <?php if($pending_count > 0): ?>
+                    <span class="notif-dot"></span>
+                    <?php endif; ?>
+                </button>
+                
+                <!-- NOTIFICATION DROPDOWN -->
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-header">
+                        Pesanan Masuk
+                        <span class="badge rounded-pill bg-danger" style="font-size: .65rem;"><?= $pending_count ?> Baru</span>
+                    </div>
+                    <div class="notif-body">
+                        <?php if(empty($notif_orders)): ?>
+                            <div class="p-4 text-center text-muted small">Tidak ada pesanan tertunda</div>
+                        <?php else: ?>
+                            <?php foreach($notif_orders as $no): ?>
+                            <a href="<?= site_url('order?date='.date('Y-m-d', strtotime($no['created_at']))) ?>" class="notif-item">
+                                <div class="notif-icon"><i class="bi bi-clock-fill"></i></div>
+                                <div class="notif-info">
+                                    <span class="title">Pesanan <?= $no['invoice_no'] ?></span>
+                                    <span class="d-block small text-dark fw-bold"><?= $no['customer_name'] ?> (Rp <?= number_format($no['total_price'], 0, ',', '.') ?>)</span>
+                                    <span class="time"><?= date('d M, H:i', strtotime($no['created_at'])) ?></span>
+                                </div>
+                            </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="notif-footer">
+                        <a href="<?= site_url('order') ?>">LIHAT SEMUA PESANAN</a>
+                    </div>
+                </div>
+            </div>
             <a href="<?= base_url('shop') ?>" class="topbar-btn" title="Lihat Toko">
                 <i class="bi bi-shop"></i>
             </a>
@@ -752,6 +820,20 @@
             }
             lastScrollY = window.scrollY;
         });
+
+        // Toggle Notifications
+        function toggleNotif() {
+            const dropdown = document.getElementById('notifDropdown');
+            dropdown.classList.toggle('show');
+            
+            // Close when clicking outside
+            document.addEventListener('click', function closeNotif(e) {
+                if (!e.target.closest('.topbar-actions')) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeNotif);
+                }
+            });
+        }
     </script>
 </body>
 </html>

@@ -43,6 +43,21 @@ class Report extends CI_Controller {
         $this->load->view('layout/wrapper', $data);
     }
 
+    // Laporan Pesanan Pending
+    public function pending() {
+        $this->db->where('status', 'pending');
+        $this->db->order_by('created_at', 'DESC');
+        $query = $this->db->get('sales');
+
+        $data = [
+            'title'   => 'Daftar Pesanan Belum Selesai (Pending)',
+            'date'    => 'Status: Pending', 
+            'content' => 'reports/daily_report', // Reuse daily report view as schema is same
+            'reports' => $query->result_array()
+        ];
+        $this->load->view('layout/wrapper', $data);
+    }
+
     // Cetak Struk per Invoice
     public function print_struk($invoice_no) {
         $this->db->select('sales.*, users.full_name as cashier');

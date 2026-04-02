@@ -88,7 +88,7 @@
                                 <th class="px-4 py-3 border-0">JAM</th>
                                 <th class="py-3 border-0">INVOICE</th>
                                 <th class="py-3 border-0">PELANGGAN</th>
-                                <th class="py-3 border-0">PENGIRIMAN</th>
+                                <th class="py-3 border-0">TIPE/BAYAR</th>
                                 <th class="py-3 border-0">TOTAL</th>
                                 <th class="py-3 border-0">BUKTI</th>
                                 <th class="py-3 text-center border-0">STATUS</th>
@@ -108,11 +108,19 @@
                                                 <?= htmlspecialchars($o['user_name'] ? $o['user_name'] : $o['customer_name']) ?>
                                             </div>
                                         </td>
-                                        <td class="py-3" data-label="PENGIRIMAN">
-                                            <a href="https://wa.me/62<?= ltrim($o['phone'], '0') ?>" target="_blank" class="text-success fw-bold small text-decoration-none">
-                                                <i class="bi bi-whatsapp"></i> <?= htmlspecialchars($o['phone']) ?>
-                                            </a>
-                                            <div class="text-secondary small text-truncate d-inline-block d-md-block ms-2 ms-md-0" style="max-width: 150px;"><?= htmlspecialchars($o['address']) ?></div>
+                                        <td class="py-3 text-nowrap" data-label="TIPE/BAYAR">
+                                            <div class="small fw-bold text-uppercase" style="font-size: 0.65rem; color: #8aa898;">
+                                                <?php if($o['order_type'] == 'delivery'): ?>
+                                                    <i class="bi bi-truck text-primary"></i> ANTAR
+                                                <?php elseif($o['order_type'] == 'dinein'): ?>
+                                                    <i class="bi bi-chair text-info"></i> MAKAN SINI
+                                                <?php else: ?>
+                                                    <i class="bi bi-bag-check text-success"></i> AMBIL
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="text-dark small fw-semibold">
+                                                <?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
+                                            </div>
                                         </td>
                                         <td class="fw-bold text-success text-nowrap py-3" data-label="TOTAL">
                                             Rp <?= number_format($o['total_price'],0,',','.') ?>
@@ -126,27 +134,38 @@
                                         </td>
                                         <td class="text-center py-3" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
                                             <?php 
+                                            $st = $o['status'];
                                             $class = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
-                                            $text = ucfirst($o['status']);
-                                            if($o['status'] == 'pending') { $class = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; $text = 'Menunggu'; }
-                                            if($o['status'] == 'paid') { $class = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; $text = 'Sudah Bayar'; }
-                                            if($o['status'] == 'shipped') { $class = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; $text = 'Dikirim'; }
-                                            if($o['status'] == 'completed') { $class = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; $text = 'Selesai'; }
+                                            $text = ucfirst($st);
+                                            
+                                            if($st == 'pending') { $class = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; $text = 'Menunggu'; }
+                                            if($st == 'paid') { $class = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; $text = 'Dibayar'; }
+                                            if($st == 'shipped') { 
+                                                $class = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; 
+                                                $text = ($o['order_type'] == 'delivery') ? 'Dikirim' : 'Siap Ambil'; 
+                                            }
+                                            if($st == 'completed') { $class = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; $text = 'Selesai'; }
+                                            if($st == 'canceled') { $class = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; $text = 'Batal'; }
                                             ?>
                                             <span class="badge <?= $class ?> rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;"><?= $text ?></span>
                                         </td>
                                         <td class="pe-4 py-3 text-center" data-label="AKSI">
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-light border dropdown-toggle fw-medium p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="bi bi-gear"></i> Manage
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-semibold">
+                                                    Detail
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: 12px; font-size: 0.85rem;">
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Validasi Bayar</a></li>
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i>Sedang Dikirim</a></li>
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Pesanan Selesai</a></li>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm btn-light border dropdown-toggle fw-medium p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.75rem;">
+                                                        Manage
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: 12px; font-size: 0.85rem;">
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Konfirmasi Bayar</a></li>
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i><?= ($o['order_type'] == 'delivery') ? 'Update: Sedang Diantar' : 'Update: Siap Diambil' ?></a></li>
+                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Selesaikan Pesanan</a></li>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan</a></li>
-                                                </ul>
+                                                    <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan Pesanan</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -162,6 +181,39 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detail Order -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 bg-success bg-opacity-10 p-4 pb-3">
+                <div>
+                    <h5 class="modal-title fw-bold text-success mb-1" id="detailInvoice">#INV-000000</h5>
+                    <p class="text-muted small mb-0" id="detailTime">00:00 | 01 Jan 2026</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-4">
+                    <h6 class="fw-bold small text-secondary text-uppercase mb-3">Item Pesanan</h6>
+                    <div id="detailItems">
+                        <!-- Items injected here -->
+                    </div>
+                </div>
+                
+                <div class="border-top pt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-secondary">Total Bayar</span>
+                        <h4 class="fw-bold text-success mb-0" id="detailTotal">Rp 0</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0">
+                <button type="button" class="btn btn-light w-100 rounded-pill fw-bold" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -186,6 +238,42 @@
 </div>
 
 <script>
+    // Show Order Detail
+    function showDetail(id) {
+        fetch('<?= site_url('order/get_details/') ?>' + id)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const o = data.order;
+                document.getElementById('detailInvoice').innerText = '#' + o.invoice_no;
+                
+                // Format date manually or use PHP-like format
+                const date = new Date(o.created_at);
+                const timeStr = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const dateStr = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+                document.getElementById('detailTime').innerText = `${timeStr} | ${dateStr}`;
+                
+                document.getElementById('detailTotal').innerText = 'Rp ' + parseInt(o.total_price).toLocaleString('id-ID');
+                
+                let itemsHtml = '';
+                data.details.forEach(item => {
+                    itemsHtml += `
+                        <div class="d-flex justify-content-between align-items-center mb-2 border-bottom border-light pb-2">
+                            <div>
+                                <span class="fw-bold d-block">${item.product_name}</span>
+                                <small class="text-muted">${item.qty} x Rp ${parseInt(item.price).toLocaleString('id-ID')}</small>
+                            </div>
+                            <span class="fw-bold text-dark">Rp ${parseInt(item.subtotal).toLocaleString('id-ID')}</span>
+                        </div>
+                    `;
+                });
+                document.getElementById('detailItems').innerHTML = itemsHtml;
+                
+                new bootstrap.Modal(document.getElementById('modalDetail')).show();
+            }
+        });
+    }
+
     // Image View
     function viewProof(url) {
         document.getElementById('imageProofDisplay').src = url;
@@ -209,19 +297,24 @@
             if (data.success) {
                 // Update specific row status cell with new badge
                 const cell = document.getElementById('status-cell-' + id);
+                const row = document.getElementById('row-' + id);
+                const orderType = row.querySelector('[data-label="TIPE/BAYAR"]').innerText.toLowerCase();
+                
                 let badgeClass = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
                 let statusText = data.new_status.charAt(0).toUpperCase() + data.new_status.slice(1);
 
                 if (data.new_status === 'pending') { badgeClass = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; statusText = 'Menunggu'; }
-                if (data.new_status === 'paid') { badgeClass = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; statusText = 'Sudah Bayar'; }
-                if (data.new_status === 'shipped') { badgeClass = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; statusText = 'Dikirim'; }
+                if (data.new_status === 'paid') { badgeClass = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; statusText = 'Dibayar'; }
+                if (data.new_status === 'shipped') { 
+                    badgeClass = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; 
+                    statusText = orderType.includes('antar') ? 'Dikirim' : 'Siap Ambil'; 
+                }
                 if (data.new_status === 'completed') { badgeClass = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; statusText = 'Selesai'; }
-                if (data.new_status === 'canceled') { badgeClass = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; statusText = 'Dibatalkan'; }
+                if (data.new_status === 'canceled') { badgeClass = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; statusText = 'Batal'; }
 
                 cell.innerHTML = `<span class="badge ${badgeClass} rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">${statusText}</span>`;
                 
-                // Optional: Flash the row
-                const row = document.getElementById('row-' + id);
+                // Flash the row
                 row.style.backgroundColor = '#e8f5e9';
                 setTimeout(() => row.style.backgroundColor = '', 1000);
             } else {

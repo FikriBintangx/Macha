@@ -19,22 +19,35 @@ class Order extends CI_Controller {
         $this->load->model('M_sales');
     }
 
-    // Menampilkan daftar pesanan online (HARI INI)
+    // Menampilkan daftar pesanan online (Monitoring Aktif)
     public function index() {
-        $date_filter = $this->input->get('date') ?: date('Y-m-d');
+        $date_filter = $this->input->get('date');
         
         $this->db->select('sales.*, users.full_name as user_name');
         $this->db->from('sales');
         $this->db->join('users', 'users.id = sales.user_id', 'left');
-        $this->db->where_not_in('sales.payment_method', ['Cash', 'Debit']);
-        $this->db->where('DATE(sales.created_at)', $date_filter);
+        
+        // Hanya tampilkan pesanan online (bukan tunai/debit lokal)
+        $this->db->where_not_in('sales.payment_method', ['Cash', 'Debit', 'Tunai']);
+        
+        if($date_filter) {
+            $this->db->where('DATE(sales.created_at)', $date_filter);
+        } else {
+            // Jika tidak ada filter tanggal, tampilkan SEMUA yang pending ATAU yang masuk hari ini
+            $this->db->group_start();
+                $this->db->where('sales.status', 'pending');
+                $this->db->or_where('DATE(sales.created_at)', date('Y-m-d'));
+            $this->db->group_end();
+        }
+        
+        $this->db->order_by('sales.status', 'ASC'); // Pending di atas
         $this->db->order_by('sales.created_at', 'DESC');
         $orders = $this->db->get()->result_array();
 
         $data = [
-            'title'        => 'Daftar Pesanan Online',
+            'title'        => 'Kasir Online Monitoring',
             'orders'       => $orders,
-            'date_filter'  => $date_filter,
+            'date_filter'  => $date_filter ?: date('Y-m-d'),
             'content'      => 'admin/order_list'
         ];
         $this->load->view('layout/wrapper', $data);
@@ -105,5 +118,24 @@ class Order extends CI_Controller {
         
         header('Content-Type: application/json');
         echo json_encode($response);
+    }
+
+    // Get order details via AJAX
+    public function get_details($id) {
+        $this->db->select('sales_detail.*, products.name as product_name');
+        $this->db->from('sales_detail');
+        $this->db->join('products', 'products.id = sales_detail.product_id');
+        $this->db->where('sales_detail.sales_id', $id);
+        $details = $this->db->get()->result_array();
+
+        $this->db->where('id', $id);
+        $order = $this->db->get('sales')->row_array();
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'order'   => $order,
+            'details' => $details
+        ]);
     }
 }

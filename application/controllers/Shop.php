@@ -1,223 +1,196 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * @property CI_DB_query_builder $db
- * @property CI_Input $input
- * @property CI_Session $session
- * @property CI_Loader $load
- */
-class Shop extends CI_Controller {
-    
-    // ==========================================
-    // PUSAT KENDALI NOMOR WA ADMIN (GANTI DISINI)
-    // ==========================================
-    private $admin_phone; 
-    // ==========================================
-
-    public function __construct() {
+class Shop extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('M_product');
-        $this->load->model('M_sales');
-        $this->admin_phone = $this->config->item('admin_wa');
+        $this->load->model('M_settings');
+        $this->load->library('user_agent', NULL, 'agent');
     }
 
-    // Halaman toko – BEBAS, tidak perlu login
-    public function index() {
-        $data['products'] = $this->M_product->get_all();
+    public function index()
+    {
+        $data = [
+            'title'        => 'Menu Macha',
+            'products'     => $this->M_product->get_all(),
+            'categories'   => $this->M_product->get_categories(),
+            'shop_logo'    => $this->M_settings->get_setting('shop_logo'),
+            'shop_address' => $this->M_settings->get_setting('shop_address')
+        ];
         $this->load->view('guest/shop', $data);
     }
 
-    // Tambah ke keranjang – WAJIB LOGIN
-    public function add_to_cart($id) {
-        if (!$this->session->userdata('userid')) {
-            $this->session->set_flashdata('error', 'Silakan login dulu untuk menambahkan ke keranjang.');
-            // Simpan halaman tujuan agar setelah login kembali ke sini
-            $this->session->set_userdata('redirect_after_login', base_url('shop/add_to_cart/'.$id));
-            redirect('auth');
+    public function cart()
+    {
+        $cart = $this->session->userdata('cart') ?: [];
+        $total = 0;
+        foreach($cart as &$item) {
+            $item['subtotal'] = $item['price'] * $item['qty'];
+            $total += $item['subtotal'];
         }
+        
+        $data = [
+            'title'        => 'Keranjang Belanja',
+            'cart'         => $cart,
+            'total'        => $total,
+            'products'     => $this->M_product->get_all(),
+            'shop_logo'    => $this->M_settings->get_setting('shop_logo'),
+            'shop_address' => $this->M_settings->get_setting('shop_address')
+        ];
+        $this->load->view('guest/cart', $data);
+    }
 
-        if ($this->session->userdata('role') === 'admin') {
-            $this->session->set_flashdata('error', 'Ops! Akun Admin hanya diizinkan untuk melihat pratinjau toko (Preview) dan tidak bisa berbelanja.');
-            redirect('shop');
-        }
-
-        $product = $this->M_product->get_by_id($id);
+    public function add_to_cart($product_id)
+    {
+        $product = $this->M_product->get_by_id($product_id);
         if (!$product) {
             $this->session->set_flashdata('error', 'Produk tidak ditemukan.');
             redirect('shop');
         }
 
-        if ($product['stock'] < 1) {
-            $this->session->set_flashdata('error', 'Maaf, stok produk ini habis.');
-            redirect('shop');
+        $preferences = $this->input->post('preferences') ?: ''; 
+
+        $cart = $this->session->userdata('cart') ?: [];
+        $found = false;
+
+        foreach ($cart as &$item) {
+            if ($item['id'] == $product_id && ($item['preferences'] ?? '') == $preferences) {
+                $item['qty']++;
+                $item['subtotal'] = $item['price'] * $item['qty'];
+                $found = true;
+                break;
+            }
         }
 
-        $cart = $this->session->userdata('cart') ?? [];
-
-        if (isset($cart[$id])) {
-            if ($cart[$id]['qty'] < $product['stock']) {
-                $cart[$id]['qty']     += 1;
-                $cart[$id]['subtotal'] = $cart[$id]['qty'] * $product['price'];
-            } else {
-                $this->session->set_flashdata('error', 'Qty sudah mencapai batas stok tersedia.');
-                redirect('shop/cart');
-            }
-        } else {
-            $cart[$id] = [
-                'id'       => $product['id'],
-                'name'     => $product['name'],
-                'price'    => $product['price'],
-                'qty'      => 1,
-                'subtotal' => $product['price'],
-                'image'    => $product['image'] ?? ''
+        if (!$found) {
+            $cart[] = [
+                'id'          => $product['id'],
+                'name'        => $product['name'],
+                'price'       => $product['price'],
+                'image'       => $product['image'],
+                'qty'         => 1,
+                'subtotal'    => $product['price'],
+                'preferences' => $preferences
             ];
         }
 
         $this->session->set_userdata('cart', $cart);
-        $this->session->set_flashdata('success', htmlspecialchars($product['name']) . ' ditambahkan ke keranjang!');
-        
-        redirect('shop/cart');
+        $this->session->set_flashdata('success', 'Berhasil ditambahkan ke keranjang!');
+        redirect($this->agent->is_referral() ? $this->agent->referrer() : 'shop');
     }
 
-    // Kurangi qty 1 dari keranjang
-    public function decrease_cart($id) {
-        $cart = $this->session->userdata('cart') ?? [];
-        if (isset($cart[$id])) {
-            $cart[$id]['qty'] -= 1;
-            if ($cart[$id]['qty'] <= 0) {
-                unset($cart[$id]);
+    public function decrease_cart($index) {
+        $cart = $this->session->userdata('cart') ?: [];
+        if (isset($cart[$index])) {
+            if ($cart[$index]['qty'] > 1) {
+                $cart[$index]['qty']--;
+                $cart[$index]['subtotal'] = $cart[$index]['price'] * $cart[$index]['qty'];
             } else {
-                $cart[$id]['subtotal'] = $cart[$id]['qty'] * $cart[$id]['price'];
+                unset($cart[$index]);
             }
         }
+        $this->session->set_userdata('cart', array_values($cart));
+        redirect('shop/cart');
+    }
+
+    public function remove_cart($index) {
+        $cart = $this->session->userdata('cart') ?: [];
+        if (isset($cart[$index])) {
+            unset($cart[$index]);
+        }
+        $this->session->set_userdata('cart', array_values($cart));
+        redirect('shop/cart');
+    }
+
+    public function remove_from_cart($id)
+    {
+        $cart = $this->session->userdata('cart') ?: [];
+        // Since we can have same product with different prefs, removing by index or exact match
+        // For simplicity here, removing by key index if passed as such, or first match
+        foreach ($cart as $index => $item) {
+            if ($item['id'] == $id) {
+                unset($cart[$index]);
+                break;
+            }
+        }
+        $this->session->set_userdata('cart', array_values($cart));
+        redirect('shop/cart');
+    }
+
+    public function update_cart()
+    {
+        $qtys = $this->input->post('qty');
+        $cart = $this->session->userdata('cart') ?: [];
+
+        if (!empty($qtys)) {
+            foreach ($qtys as $index => $qty) {
+                if (isset($cart[$index])) {
+                    $cart[$index]['qty'] = max(1, (int) $qty);
+                }
+            }
+        }
+
         $this->session->set_userdata('cart', $cart);
         redirect('shop/cart');
     }
 
-    // Tampilkan keranjang – WAJIB LOGIN
-    public function cart() {
-        if (!$this->session->userdata('userid')) {
-            $this->session->set_flashdata('error', 'Silakan login dulu untuk melihat keranjang.');
-            redirect('auth');
-        }
-
-        if ($this->session->userdata('role') === 'admin') {
-            $this->session->set_flashdata('error', 'Akun admin tidak memiliki akses ke keranjang belanja.');
-            redirect('shop');
-        }
-
-        $data['cart']  = $this->session->userdata('cart') ?? [];
-        $data['total'] = 0;
-        foreach ($data['cart'] as $item) {
-            $data['total'] += $item['subtotal'];
-        }
-        
-        // Ambil semua produk untuk ditampilkan langsung di bawah keranjang
-        $data['products'] = $this->M_product->get_all();
-        
-        $this->load->view('guest/cart', $data);
-    }
-
-    // Hapus item dari keranjang
-    public function remove_cart($id) {
-        $cart = $this->session->userdata('cart') ?? [];
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-        }
-        $this->session->set_userdata('cart', $cart);
-        redirect('shop/cart');
-    }
-
-    // Halaman checkout – harus login
-    public function checkout() {
-        if (!$this->session->userdata('userid')) {
-            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk checkout.');
-            redirect('auth');
-        }
-
-        if ($this->session->userdata('role') === 'admin') {
-            $this->session->set_flashdata('error', 'Akun admin tidak memiliki akses untuk checkout belanja.');
-            redirect('shop');
-        }
-
-        // AUTO-MIGRASI KOLOM SALES (ANTI-ERROR)
-        $this->_ensure_sales_columns();
-
-        $data['cart'] = $this->session->userdata('cart') ?? [];
-        if (empty($data['cart'])) {
-            redirect('shop');
-        }
-
-        $data['total'] = 0;
-        foreach ($data['cart'] as $item) {
-            $data['total'] += $item['subtotal'];
-        }
-        $user_id = $this->session->userdata('userid');
-        $data['user'] = $this->db->where('id', $user_id)->get('users')->row_array();
-
-        $this->load->view('guest/checkout', $data);
-    }
-
-    private function _ensure_sales_columns() {
-        $fields = $this->db->list_fields('sales');
-        $needed = [
-            'phone'          => 'VARCHAR(20) AFTER customer_name',
-            'address'        => 'TEXT AFTER phone',
-            'google_maps_link' => 'TEXT AFTER address',
-            'notes'          => 'TEXT AFTER google_maps_link',
-            'payment_method' => 'VARCHAR(50) AFTER notes'
-        ];
-        foreach ($needed as $col => $def) {
-            if (!in_array($col, $fields)) {
-                $this->db->query("ALTER TABLE sales ADD $col $def");
-            }
-        }
-    }
-
-    // Proses checkout – simpan ke DB
-    public function process_checkout() {
-        $this->_ensure_sales_columns(); // Double check columns exist
-        if (!$this->session->userdata('userid')) {
-            redirect('auth');
-        }
-
-        // Ambil data form
-        $cart = $this->session->userdata('cart') ?? [];
+    public function checkout()
+    {
+        $cart = $this->session->userdata('cart') ?: [];
         if (empty($cart)) {
+            $this->session->set_flashdata('error', 'Keranjang Anda masih kosong.');
             redirect('shop');
         }
 
         $total = 0;
-        foreach ($cart as $item) {
+        foreach($cart as &$item) {
+            $item['subtotal'] = $item['price'] * $item['qty'];
             $total += $item['subtotal'];
         }
 
-        $user_id = $this->session->userdata('userid');
-        $user_data = $this->db->where('id', $user_id)->get('users')->row_array();
+        $data = [
+            'title'           => 'Checkout Pesanan',
+            'cart'            => $cart,
+            'total'           => $total,
+            'order_types'     => $this->M_settings->get_order_types(true),
+            'payment_methods' => $this->M_settings->get_payment_methods(true),
+            'shop_logo'       => $this->M_settings->get_setting('shop_logo'),
+            'shop_address'    => $this->M_settings->get_setting('shop_address')
+        ];
+        $this->load->view('guest/checkout', $data);
+    }
 
-        $payment_method    = $this->input->post('payment_method', TRUE) ?: 'Transfer';
-        $customer_name     = $this->input->post('customer_name', TRUE) ?: ($user_data['full_name'] ?? $this->session->userdata('full_name'));
-        $phone             = $this->input->post('phone', TRUE) ?: ($user_data['phone'] ?? '');
-        $address           = $this->input->post('address', TRUE) ?: ($user_data['address'] ?? '');
-        $google_maps_link  = $this->input->post('google_maps_link', TRUE) ?: '';
-        $notes             = $this->input->post('notes', TRUE) ?: '';
+    public function process_checkout()
+    {
+        $this->_ensure_sales_columns();
+        $this->load->model('M_sales');
 
+        $cart = $this->session->userdata('cart');
+        if (empty($cart)) {
+            redirect('shop');
+        }
 
-        $invoice_no = 'INV-' . date('Ymd') . '-' . strtoupper(substr(md5(uniqid(rand(), true)), 0, 5));
+        $total_price = 0;
+        foreach ($cart as $item) {
+            $total_price += $item['price'] * $item['qty'];
+        }
 
         $data_sales = [
-            'invoice_no'     => $invoice_no,
-            'total_price'    => $total,
-            'customer_name'  => $customer_name,
-            'phone'          => $phone,
-            'address'        => $address,
-            'google_maps_link' => $google_maps_link,
-            'notes'          => $notes,
-            'payment_method' => $payment_method,
-            'status'         => 'pending',
-            'created_at'     => date('Y-m-d H:i:s'),
-            'user_id'        => $this->session->userdata('userid')
+            'invoice_no'      => 'INV-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -5)),
+            'customer_name'   => $this->input->post('name'),
+            'phone'           => $this->input->post('phone'),
+            'address'         => $this->input->post('address'),
+            'google_maps_link'=> $this->input->post('maps_link'),
+            'notes'           => $this->input->post('notes'),
+            'total_price'     => $total_price,
+            'status'          => 'pending',
+            'order_type'      => $this->input->post('order_type'),
+            'payment_method'  => $this->input->post('payment_method'),
+            'user_id'         => $this->session->userdata('userid') ?: 0,
+            'created_at'      => date('Y-m-d H:i:s')
         ];
 
         $details = [];
@@ -226,62 +199,85 @@ class Shop extends CI_Controller {
                 'product_id' => $item['id'],
                 'qty'        => $item['qty'],
                 'price'      => $item['price'],
-                'subtotal'   => $item['subtotal']
+                'subtotal'   => $item['price'] * $item['qty'],
+                'item_notes' => $item['preferences'] ?? '' 
             ];
         }
 
-        $save = $this->M_sales->save_transaction($data_sales, $details);
-
-        if ($save) {
-            $sales_id = $this->M_sales->last_sales_id();
-            $this->session->unset_userdata('cart');
-            $this->session->set_flashdata('success', 'Pesanan berhasil! Segera lakukan pembayaran.');
-            redirect('shop/invoice/' . $sales_id);
+        if ($this->M_sales->save_transaction($data_sales, $details)) {
+            $last_id = $this->M_sales->last_sales_id();
+            $this->session->set_userdata('cart', []);
+            $this->session->set_flashdata('success', 'Pesanan Anda berhasil dikirim!');
+            redirect('shop/invoice/' . $last_id);
         } else {
-            $this->session->set_flashdata('error', 'Gagal memproses pesanan. Stok mungkin tidak mencukupi, coba lagi.');
-            redirect('shop/cart');
+            $this->session->set_flashdata('error', 'Terjadi kesalahan sistem.');
+            redirect('shop/checkout');
         }
     }
 
-    // Halaman nota / invoice
-    public function invoice($sales_id) {
-        if (!$this->session->userdata('userid')) {
-            redirect('auth');
+    public function invoice($id)
+    {
+        $this->load->model('M_sales');
+        $this->load->model('M_settings');
+        
+        $sales = $this->M_sales->get_sales_by_id($id);
+        if (!$sales) {
+            redirect('shop');
         }
 
-        $user_id = $this->session->userdata('userid');
-        $data['order'] = $this->db->where([
-            'id'      => $sales_id,
-            'user_id' => $user_id
-        ])->get('sales')->row_array();
-
-        if (!$data['order']) {
-            $this->session->set_flashdata('error', 'Pesanan tidak ditemukan.');
-            redirect('user');
-        }
-
-        $data['details'] = $this->M_sales->get_sales_detail($sales_id);
-        $data['admin_phone'] = $this->admin_phone;
-        $this->load->view('user/invoice', $data);
+        $data = [
+            'title'           => 'Invoice Pesanan #' . $sales['invoice_no'],
+            'sales'           => $sales,
+            'details'         => $this->M_sales->get_sales_detail($id),
+            'shop_logo'       => $this->M_settings->get_setting('shop_logo'),
+            'shop_address'    => $this->M_settings->get_setting('shop_address'),
+            'payment_methods' => $this->M_settings->get_payment_methods(true)
+        ];
+        $this->load->view('guest/nota', $data);
     }
 
-    public function update_item_preference() {
+    public function update_item_preference()
+    {
         $id = $this->input->post('id');
         $pref = $this->input->post('preference');
         $cart = $this->session->userdata('cart') ?: [];
 
         if (isset($cart[$id])) {
-            $current_prefs = isset($cart[$id]['preferences']) ? explode(', ', $cart[$id]['preferences']) : [];
-            if (in_array($pref, $current_prefs)) {
-                $current_prefs = array_diff($current_prefs, [$pref]);
+            $current_prefs = !empty($cart[$id]['preferences']) ? explode(', ', $cart[$id]['preferences']) : [];
+            
+            if (($key = array_search($pref, $current_prefs)) !== false) {
+                unset($current_prefs[$key]);
             } else {
                 $current_prefs[] = $pref;
             }
-            $cart[$id]['preferences'] = implode(', ', array_filter($current_prefs));
+            
+            $cart[$id]['preferences'] = implode(', ', $current_prefs);
             $this->session->set_userdata('cart', $cart);
-            echo json_encode(['status' => 'success', 'preferences' => $cart[$id]['preferences']]);
+            
+            echo json_encode([
+                'status' => 'success',
+                'preferences' => $cart[$id]['preferences']
+            ]);
         } else {
-            echo json_encode(['status' => 'error']);
+            echo json_encode(['status' => 'error', 'message' => 'Item not found']);
+        }
+    }
+
+    private function _ensure_sales_columns()
+    {
+        $this->load->dbforge();
+        if (!$this->db->table_exists('sales')) return;
+        
+        if (!$this->db->field_exists('order_type', 'sales')) {
+            $this->dbforge->add_column('sales', [
+                'order_type' => ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE],
+                'payment_method' => ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE]
+            ]);
+        }
+        if (!$this->db->field_exists('item_notes', 'sales_detail')) {
+            $this->dbforge->add_column('sales_detail', [
+                'item_notes' => ['type' => 'TEXT', 'null' => TRUE]
+            ]);
         }
     }
 }

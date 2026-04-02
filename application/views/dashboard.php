@@ -11,10 +11,12 @@ $recent_7_days = [];
 for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
     $count = $this->db->where("DATE(created_at)", $date)->count_all_results('sales');
+    $revenue = $this->db->where("DATE(created_at)", $date)->where('status !=', 'canceled')->select_sum('total_price')->get('sales')->row()->total_price ?? 0;
     $recent_7_days[] = [
         'label'      => date('d M', strtotime($date)),
         'full_date'  => $date,
-        'count'      => $count
+        'count'      => $count,
+        'revenue'    => $revenue
     ];
 }
 
@@ -149,7 +151,8 @@ $low_stock_items = $this->db->get('products')->result_array();
         type: 'line',
         data: {
             labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
-            datasets: [{
+            datasets: [
+            {
                 label: 'Jumlah Pesanan',
                 data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
                 borderColor: '#1B3B25',
@@ -157,38 +160,99 @@ $low_stock_items = $this->db->get('products')->result_array();
                 borderWidth: 4,
                 fill: true,
                 tension: 0.4,
+                yAxisID: 'y',
                 pointBackgroundColor: '#fff',
                 pointBorderColor: '#1B3B25',
                 pointBorderWidth: 3,
-                pointRadius: 6,
-                pointHoverRadius: 9,
-                pointHoverBorderWidth: 4
+                pointRadius: 6
+            },
+            {
+                label: 'Omset (Rp)',
+                data: <?= json_encode(array_column($recent_7_days, 'revenue')) ?>,
+                borderColor: '#fbbf24',
+                backgroundColor: 'rgba(251, 191, 36, 0.05)',
+                borderWidth: 4,
+                fill: true,
+                tension: 0.4,
+                yAxisID: 'y1',
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#fbbf24',
+                pointBorderWidth: 3,
+                pointRadius: 6
             }]
         },
         options: {
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const fullDates = <?= json_encode(array_column($recent_7_days, 'full_date')) ?>;
+                    const selectedDate = fullDates[index];
+                    window.location.href = `<?= site_url('order/history') ?>?date=${selectedDate}`;
+                }
+            },
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
             plugins: {
-                legend: { display: false },
+                legend: { position: 'top', align: 'end', labels: { usePointStyle: true, font: { weight: 'bold' } } },
                 tooltip: {
-                    backgroundColor: '#1B3B25',
+                    backgroundColor: '#1a2e25',
                     padding: 15,
                     titleFont: { size: 14, weight: 'bold' },
                     bodyFont: { size: 13 },
                     cornerRadius: 12,
-                    displayColors: false
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) label += ': ';
+                            if (context.datasetIndex === 1) {
+                                label += 'Rp ' + context.parsed.y.toLocaleString('id-ID');
+                            } else {
+                                label += context.parsed.y;
+                            }
+                            return label;
+                        },
+                        footer: function() {
+                            return '(Klik untuk detail)';
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
                     beginAtZero: true,
-                    ticks: { stepSize: 1, color: '#94a3b8' },
-                    grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
+                    ticks: { color: '#1B3B25', font: { weight: 'bold' } },
+                    grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' },
+                    title: { display: true, text: 'Pesanan' }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: { drawOnChartArea: false },
+                    ticks: {
+                        color: '#fbbf24',
+                        font: { weight: 'bold' },
+                        callback: function(value) {
+                            return 'Rp ' + (value/1000) + 'k';
+                        }
+                    },
+                    title: { display: true, text: 'Omset' }
                 },
                 x: {
                     ticks: { color: '#94a3b8' },
                     grid: { display: false }
                 }
+            },
+            onHover: (event, elements) => {
+                event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
             }
         }
     });

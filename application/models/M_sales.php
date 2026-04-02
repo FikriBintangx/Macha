@@ -74,4 +74,9 @@ class M_sales extends CI_Model
         $this->db->where('sales_id', $sales_id);
         return $this->db->get()->result_array();
     }
+
+    public function get_sales_by_id($id)
+    {
+        return $this->db->get_where('sales', ['id' => $id])->row_array();
+    }
 }

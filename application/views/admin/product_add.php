@@ -16,54 +16,88 @@
                         
                         <input type="hidden" name="image_preset" id="imagePreset" value="">
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold text-secondary">Nama Produk</label>
-                                    <input type="text" name="name" class="form-control rounded-3 py-2" placeholder="Contoh: Matcha Berry" required>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <label class="form-label fw-bold text-secondary">Harga (Rp)</label>
-                                        <input type="number" name="price" class="form-control rounded-3 py-2" placeholder="0" required>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <label class="form-label fw-bold text-secondary">Stok</label>
-                                        <input type="number" name="stock" class="form-control rounded-3 py-2" placeholder="0" required>
-                                    </div>
-                                </div>
-
-                                <label class="form-label fw-bold text-success"><i class="fa-solid fa-images me-1"></i> Koleksi Tersedia:</label>
-                                <div class="d-flex gap-3 p-3 border rounded-4 bg-light shadow-sm mb-3">
+                        <div class="row g-4">
+                            <!-- Left Column: Product Details -->
+                            <div class="col-md-6">
+                                <div class="card border border-light-subtle rounded-4 p-4 h-100 shadow-none bg-light bg-opacity-10">
+                                    <h6 class="fw-bold mb-4 text-secondary border-bottom pb-2">Detail Produk</h6>
                                     
-                                    <div class="preset-option text-center" onclick="selectPreset('maca1.jpg', this)" style="min-width: 100px; cursor: pointer;">
-                                        <div class="img-wrapper rounded-3 border bg-white p-1 mb-1 shadow-sm">
-                                            <img src="<?= base_url('uploads/maca1.jpg'); ?>" 
-                                                 class="img-fluid rounded-2" 
-                                                 style="height: 80px; width: 100%; object-fit: cover;"
-                                                 onerror="this.src='https://placehold.co/80x80?text=GAMBAR+TIDAK+ADA';">
-                                        </div>
-                                        <small class="fw-bold text-muted">maca1.jpg</small>
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">SKU / KODE PRODUK</label>
+                                        <input type="text" name="sku" class="form-control rounded-3 py-2 border-light-subtle" placeholder="Contoh: MC-001">
                                     </div>
 
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">NAMA PRODUK</label>
+                                        <input type="text" name="name" class="form-control rounded-3 py-2 border-light-subtle" placeholder="Masukkan nama varian" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">KATEGORI</label>
+                                        <select name="category_id" class="form-select rounded-3 py-2 border-light-subtle" required>
+                                            <option value="">-- Pilih Kategori --</option>
+                                            <?php foreach($categories as $cat): ?>
+                                                <option value="<?= $cat['id'] ?>"><?= $cat['category_name'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">HARGA (RP)</label>
+                                            <input type="number" name="price" class="form-control rounded-3 py-2 border-light-subtle" placeholder="0" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">STOK AWAL</label>
+                                            <input type="number" name="stock" class="form-control rounded-3 py-2 border-light-subtle" placeholder="0" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-4">
-                                <label class="form-label fw-bold text-secondary">Atau Unggah Foto Baru</label>
-                                <input type="file" name="image" id="imageInput" class="form-control rounded-3 mb-3" accept="image/*">
-                                
-                                <div id="previewArea" class="preview-container p-3 border rounded-4 text-center" 
-                                     style="background: #fdfdfd; border-style: dashed !important; border-width: 2px; min-height: 250px; display: flex; align-items: center; justify-content: center;">
+                            <!-- Right Column: Image Selection -->
+                            <div class="col-md-6">
+                                <div class="card border border-light-subtle rounded-4 p-4 h-100 shadow-none bg-light bg-opacity-10">
+                                    <h6 class="fw-bold mb-4 text-success border-bottom border-success border-opacity-25 pb-2">
+                                        <i class="fa-solid fa-folder-open me-2"></i>KOLEKSI DARI FOLDER UPLOADS
+                                    </h6>
                                     
-                                    <img id="imagePreview" src="#" alt="Preview" 
-                                         style="display: none; max-width: 100%; max-height: 220px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
-                                    
-                                    <div id="placeholderText" class="text-muted">
-                                        <i class="fa-solid fa-camera-retro fs-1 d-block mb-2" style="color: #cbd5e0;"></i>
-                                        <p class="mb-0 small fw-bold">Pratinjau Gambar</p>
-                                        <span class="small text-secondary">Pilih dari koleksi atau file</span>
+                                    <div class="preset-grid mb-4" id="presetGrid">
+                                        <?php 
+                                        $upload_path = FCPATH . 'uploads/';
+                                        $files = array_diff(scandir($upload_path), array('.', '..'));
+                                        $image_files = array_filter($files, function($f) use ($upload_path) {
+                                            return is_file($upload_path . $f) && preg_match('/\.(jpg|jpeg|png|webp)$/i', $f);
+                                        });
+                                        // Take latest 12 images
+                                        $image_files = array_reverse(array_slice($image_files, -12));
+                                        
+                                        foreach($image_files as $img):
+                                        ?>
+                                        <div class="preset-item" onclick="selectPreset('<?= $img ?>', this)" title="<?= $img ?>">
+                                            <div class="preset-img-box shadow-sm">
+                                                <img src="<?= base_url('uploads/'.$img) ?>" alt="Preset">
+                                            </div>
+                                            <div class="preset-name"><?= $img ?></div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">ATAU UNGGAH BARU</label>
+                                        <input type="file" name="image" id="imageInput" class="form-control rounded-3 border-light-subtle" accept="image/*">
+                                    </div>
+
+                                    <div id="previewArea" class="preview-container p-3 border rounded-4 text-center bg-white" 
+                                         style="border-style: dashed !important; border-width: 2px; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                                        
+                                        <img id="imagePreview" src="#" alt="Preview" 
+                                             style="display: none; max-width: 100%; max-height: 160px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                        
+                                        <div id="placeholderText" class="text-muted">
+                                            <i class="fa-solid fa-image fs-1 d-block mb-2" style="color: #cbd5e0;"></i>
+                                            <p class="mb-0 small fw-bold">Pratinjau Foto</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,11 +117,57 @@
 </div>
 
 <style>
-    .preset-option .img-wrapper { transition: all 0.3s ease; border: 2px solid transparent !important; }
-    .preset-option.active .img-wrapper { border-color: #588157 !important; background: #e8f5e9; transform: translateY(-5px); }
-    .preset-option.active small { color: #588157 !important; font-weight: 800; }
-    .btn-macha { background: #588157; color: white; border: none; }
-    .btn-macha:hover { background: #3a5a40; color: white; }
+    .preset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 12px;
+        max-height: 280px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 5px;
+        scrollbar-width: thin;
+    }
+    .preset-item {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+    }
+    .preset-img-box {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #fff;
+    }
+    .preset-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .preset-item .preset-name {
+        font-size: 0.65rem;
+        color: #888;
+        margin-top: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .preset-item:hover .preset-img-box {
+        transform: translateY(-3px);
+        border-color: rgba(40, 90, 72, 0.2);
+    }
+    .preset-item.active .preset-img-box {
+        border-color: #285A48;
+        box-shadow: 0 4px 12px rgba(40, 90, 72, 0.2);
+    }
+    .preset-item.active .preset-name {
+        color: #285A48;
+        font-weight: 700;
+    }
+    .btn-macha { background: #285A48; color: white; border: none; }
+    .btn-macha:hover { background: #1B3B25; color: white; }
+    .tracking-wider { letter-spacing: 0.05em; }
 </style>
 
 <script>
@@ -97,7 +177,7 @@
     const imagePreset = document.getElementById('imagePreset');
 
     function selectPreset(filename, element) {
-        document.querySelectorAll('.preset-option').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
         element.classList.add('active');
         
         imagePreset.value = filename;
@@ -112,7 +192,7 @@
     imageInput.onchange = evt => {
         const [file] = imageInput.files;
         if (file) {
-            document.querySelectorAll('.preset-option').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
             imagePreset.value = "";
 
             imagePreview.src = URL.createObjectURL(file);

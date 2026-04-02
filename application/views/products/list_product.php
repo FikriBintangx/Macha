@@ -16,6 +16,12 @@
     </div>
 <?php endif; ?>
 
+<?php if($this->session->flashdata('error')): ?>
+    <div class="alert alert-danger border-0 shadow-sm rounded-4 mb-4">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= $this->session->flashdata('error'); ?>
+    </div>
+<?php endif; ?>
+
 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
     <div class="card-body p-0">
         <div class="table-responsive responsive-card-table">
@@ -67,7 +73,7 @@
                                         </a>
                                         <a href="<?= site_url('product/delete/' . $p['id']) ?>" 
                                            class="btn btn-white btn-sm" 
-                                           onclick="return confirm('Hapus produk <?= $p['name'] ?> dari sistem?')" 
+                                           onclick="return confirm('PERHATIAN: Produk tidak bisa dihapus jika ada pesanan pending.\n\nHapus produk <?= $p['name'] ?> sekarang?')" 
                                            title="Hapus Produk">
                                             <i class="bi bi-trash3-fill text-danger"></i>
                                         </a>

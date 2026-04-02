@@ -235,10 +235,28 @@
                 <div class="summary-card">
                     <h4><i class="fa-solid fa-receipt me-2"></i>Ringkasan</h4>
                     <?php if(!empty($cart)): ?>
-                        <?php foreach($cart as $item): ?>
-                        <div class="summary-row">
-                            <span><?= htmlspecialchars($item['name']) ?> x<?= $item['qty'] ?></span>
-                            <span>Rp <?= number_format($item['subtotal'],0,',','.') ?></span>
+                        <?php foreach($cart as $id => $item): ?>
+                        <div class="summary-row" id="summary-row-<?= $id ?>">
+                            <div class="d-flex flex-column" style="flex:1;">
+                                <span class="fw-bold"><?= htmlspecialchars($item['name']) ?> x<?= $item['qty'] ?></span>
+                                <span id="summary-pref-<?= $id ?>" class="small text-white opacity-75" style="font-size:0.7rem; line-height:1.2;">
+                                    <?php 
+                                    if(!empty($item['preferences'])) {
+                                        $p_list = explode(', ', $item['preferences']);
+                                        $iconMap = [
+                                            'Less Ice' => 'snowflake', 'Extra Ice' => 'cube', 'No Ice' => 'ban',
+                                            'Less Sugar' => 'cubes-stacked', 'Extra Sugar' => 'plus', 'No Sugar' => 'droplet-slash',
+                                            'Extra Creamy' => 'cloud', 'Less Creamy' => 'water', 'Hot Only' => 'mug-hot', 'Pisah Es' => 'box-open'
+                                        ];
+                                        foreach($p_list as $pl) {
+                                            $icon = $iconMap[$pl] ?? 'check';
+                                            echo '<i class="fa-solid fa-'.$icon.' me-1"></i>'.$pl.' ';
+                                        }
+                                    }
+                                    ?>
+                                </span>
+                            </div>
+                            <span class="text-end fw-bold text-white-50">Rp <?= number_format($item['subtotal'],0,',','.') ?></span>
                         </div>
                         <?php endforeach; ?>
                         <div class="summary-total">
@@ -330,8 +348,30 @@
             .then(response => response.json())
             .then(data => {
                 if(data.status === 'success') {
+                    // Update main list
                     const prefDisplay = document.getElementById('pref-' + itemId);
                     prefDisplay.innerHTML = data.preferences ? '<i class="fa-solid fa-check-double me-1"></i>' + data.preferences : '';
+                    
+                    // Update Summary Card with icons
+                    const summaryPref = document.getElementById('summary-pref-' + itemId);
+                    if(summaryPref) {
+                        if(!data.preferences) {
+                            summaryPref.innerHTML = '';
+                        } else {
+                            const iconMap = {
+                                'Less Ice': 'snowflake', 'Extra Ice': 'cube', 'No Ice': 'ban',
+                                'Less Sugar': 'cubes-stacked', 'Extra Sugar': 'plus', 'No Sugar': 'droplet-slash',
+                                'Extra Creamy': 'cloud', 'Less Creamy': 'water', 'Hot Only': 'mug-hot', 'Pisah Es': 'box-open'
+                            };
+                            const prefs = data.preferences.split(', ');
+                            let html = '';
+                            prefs.forEach(p => {
+                                const icon = iconMap[p] || 'check';
+                                html += `<i class="fa-solid fa-${icon} me-1"></i>${p} `;
+                            });
+                            summaryPref.innerHTML = html;
+                        }
+                    }
                 }
             })
             .catch(error => console.error('Error:', error));

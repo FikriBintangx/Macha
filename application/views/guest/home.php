@@ -349,7 +349,7 @@
     .ios-nav-item.active { color: var(--green-main); }
     
     @media (max-width: 768px) {
-        .navbar-macha .navbar-nav, .navbar-macha .btn-hdr-out { display: none !important; }
+        .navbar-macha .navbar-nav, .navbar-macha .navbar-toggler { display: none !important; }
         .ios-navbar-guest { display: flex; }
         .navbar-macha { padding: 10px 0; }
         .navbar-brand { font-size: 1.4rem; }
@@ -3242,6 +3242,48 @@
       });
 
       ScrollTrigger.refresh();
+    });
+  </script>
+  <!-- ══════════ IOS FLOATING BAR (GUEST) ══════════ -->
+  <nav class="ios-navbar-guest" id="iosNavGuest">
+    <a href="<?= base_url(); ?>" class="ios-nav-item <?= (current_url() == base_url()) ? 'active' : '' ?>">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="<?= base_url('shop'); ?>" class="ios-nav-item <?= (strpos(current_url(), 'shop') !== false && strpos(current_url(), 'cart') === false) ? 'active' : '' ?>">
+      <i class="fa-solid fa-mug-hot"></i>
+      <span>Menu</span>
+    </a>
+    <a href="<?= base_url('shop/cart'); ?>" class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Cart</span>
+    </a>
+    <?php if ($this->session->userdata('userid')): ?>
+      <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>" class="ios-nav-item">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>Akun</span>
+      </a>
+    <?php else: ?>
+      <a href="<?= base_url('auth'); ?>" class="ios-nav-item">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>Masuk</span>
+      </a>
+    <?php endif; ?>
+  </nav>
+
+  <script>
+    // Auto-hide Guest Pill Bar on Scroll
+    let lastScrollYGuest = window.scrollY;
+    window.addEventListener('scroll', () => {
+        const iosNav = document.getElementById('iosNavGuest');
+        if(!iosNav) return;
+
+        if (window.scrollY > lastScrollYGuest && window.scrollY > 100) {
+            gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
+        } else {
+            gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
+        }
+        lastScrollYGuest = window.scrollY;
     });
   </script>
 </body>

@@ -25,7 +25,18 @@
                             <td><?= date('H:i', strtotime($r['created_at'])) ?> WIB</td>
                             <td><?= $r['invoice_no'] ?></td>
                             <td class="fw-bold">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
-                            <td><span class="badge bg-success">Selesai</span></td>
+                            <td>
+                                <?php 
+                                $st = $r['status'];
+                                $class = 'bg-secondary';
+                                $text = ucfirst($st);
+                                if($st == 'pending') { $class = 'bg-danger'; $text = 'Pending'; }
+                                if($st == 'paid') { $class = 'bg-warning text-dark'; $text = 'Dibayar'; }
+                                if($st == 'shipped') { $class = 'bg-primary'; $text = 'Dikirim'; }
+                                if($st == 'completed') { $class = 'bg-success'; $text = 'Selesai'; }
+                                ?>
+                                <span class="badge <?= $class ?>"><?= $text ?></span>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

@@ -182,6 +182,20 @@ class Product extends CI_Controller {
     public function delete($id = null) {
         if ($id == null) { redirect('product'); }
 
+        // Cek apakah ada pesanan pending yang berisi produk ini
+        $this->db->select('sales.id');
+        $this->db->from('sales');
+        $this->db->join('sales_detail', 'sales.id = sales_detail.sales_id');
+        $this->db->where('sales_detail.product_id', $id);
+        $this->db->where('sales.status', 'pending');
+        $pending_orders = $this->db->get()->num_rows();
+
+        if ($pending_orders > 0) {
+            $this->session->set_flashdata('error', 'Produk tidak bisa dihapus karena masih ada pesanan yang pending!');
+            redirect('product');
+            return;
+        }
+
         $product = $this->db->get_where('products', ['id' => $id])->row();
         if ($product) {
             $image_path = './uploads/' . $product->image;
