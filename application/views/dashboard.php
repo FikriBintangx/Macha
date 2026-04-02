@@ -100,7 +100,7 @@ for ($i = 6; $i >= 0; $i--) {
     <script>
         const ctx = document.getElementById('orderChart');
         
-        new Chart(ctx, {
+        const orderChartInstance = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: <?= json_encode(array_column($recent_7_days, 'date')) ?>,
@@ -153,6 +153,15 @@ for ($i = 6; $i >= 0; $i--) {
                 interaction: {
                     intersect: false,
                     mode: 'index',
+                },
+                onClick: (e) => {
+                    const points = orderChartInstance.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+                    if (points.length) {
+                        window.location.href = '<?= site_url('report') ?>';
+                    }
+                },
+                onHover: (event, chartElement) => {
+                    event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
                 }
             }
         });
