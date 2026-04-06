@@ -326,24 +326,26 @@ else:?>
 
                             <!-- Rating Action Section (Hanya untuk yang sudah login) -->
                             <?php if($this->session->userdata('userid')): ?>
-                            <div class="rating-box p-3 rounded-4 mb-4" style="background:#f8faf8; border:1px solid #edf2ed;">
-                                <h6 class="fw-bold small mb-2">Beri Penilaian Rasa</h6>
-                                <div class="star-rating mb-2" id="starInput">
-                                    <i class="fa-star fa-regular star-btn" data-rate="1"></i>
-                                    <i class="fa-star fa-regular star-btn" data-rate="2"></i>
-                                    <i class="fa-star fa-regular star-btn" data-rate="3"></i>
-                                    <i class="fa-star fa-regular star-btn" data-rate="4"></i>
-                                    <i class="fa-star fa-regular star-btn" data-rate="5"></i>
+                                <?php if($this->session->userdata('role') != 'admin'): ?>
+                                <div class="rating-box p-3 rounded-4 mb-4" style="background:#f8faf8; border:1px solid #edf2ed;">
+                                    <h6 class="fw-bold small mb-2">Beri Penilaian Rasa</h6>
+                                    <div class="star-rating mb-2" id="starInput">
+                                        <i class="fa-star fa-regular star-btn" data-rate="1"></i>
+                                        <i class="fa-star fa-regular star-btn" data-rate="2"></i>
+                                        <i class="fa-star fa-regular star-btn" data-rate="3"></i>
+                                        <i class="fa-star fa-regular star-btn" data-rate="4"></i>
+                                        <i class="fa-star fa-regular star-btn" data-rate="5"></i>
+                                    </div>
+                                    <input type="hidden" id="rateValue" value="0">
+                                    <textarea id="rateComment" class="form-control form-control-sm border-0 mb-2" rows="2" placeholder="Tulis komentar kamu..." style="background:#fff; border-radius:12px;"></textarea>
+                                    <button type="button" onclick="submitRating()" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">Kirim Rating</button>
                                 </div>
-                                <input type="hidden" id="rateValue" value="0">
-                                <textarea id="rateComment" class="form-control form-control-sm border-0 mb-2" rows="2" placeholder="Tulis komentar kamu..." style="background:#fff; border-radius:12px;"></textarea>
-                                <button type="button" onclick="submitRating()" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">Kirim Rating</button>
-                            </div>
+                                <?php endif; ?>
                             <?php else: ?>
-                            <div class="rating-box p-3 rounded-4 mb-4 text-center" style="background:#fff7ed; border:1px solid #ffedd5;">
-                                <p class="small text-secondary mb-2"><i class="fa-solid fa-lock me-1"></i> Suka dengan rasa produk ini? Login untuk memberikan penilaian.</p>
-                                <a href="<?= base_url('auth') ?>" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold">Login Sekarang</a>
-                            </div>
+                                <div class="rating-box p-3 rounded-4 mb-4 text-center" style="background:#fff7ed; border:1px solid #ffedd5;">
+                                    <p class="small text-secondary mb-2"><i class="fa-solid fa-lock me-1"></i> Suka dengan rasa produk ini? Login untuk memberikan penilaian.</p>
+                                    <a href="<?= base_url('auth') ?>" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold">Login Sekarang</a>
+                                </div>
                             <?php endif; ?>
 
                             <div class="d-grid">
@@ -461,7 +463,9 @@ function showDetail(id) {
                 document.getElementById('modalDesc').textContent = d.description;
                 document.getElementById('modalPrice').textContent = 'Rp ' + d.price;
                 document.getElementById('modalStock').textContent = 'Stok: ' + d.stock;
-                document.getElementById('modalCartLink').href = '<?= base_url("shop/add_to_cart/") ?>' + d.id;
+                
+                let cartBtn = document.getElementById('modalCartLink');
+                if(cartBtn) cartBtn.href = '<?= base_url("shop/add_to_cart/") ?>' + d.id;
                 
                 // Show Image
                 if(d.image !== 'default') {
