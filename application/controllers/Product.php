@@ -84,6 +84,7 @@ class Product extends CI_Controller {
             'sku'         => $post['sku'],
             'category_id' => $post['category_id'],
             'name'        => $post['name'], 
+            'description' => $post['description'] ?? '', 
             'price'       => $price, 
             'stock'       => $stock, 
             'image'       => $gambar 
@@ -140,6 +141,7 @@ class Product extends CI_Controller {
         $data = [
             'category_id'     => $post['category_id'],
             'name'            => $post['name'],
+            'description'     => $post['description'] ?? '',
             'price'           => $price,
             'stock'           => $stock,
             'is_featured'     => isset($post['is_featured']) ? 1 : 0,

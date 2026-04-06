@@ -9,6 +9,7 @@ class Shop extends CI_Controller
         $this->load->model('M_product');
         $this->load->model('M_settings');
         $this->load->library('user_agent', NULL, 'agent');
+        $this->_ensure_product_columns();
     }
 
     public function index()
@@ -225,6 +226,49 @@ class Shop extends CI_Controller
         }
     }
 
+    public function reorder($sales_id)
+    {
+        $this->load->model('M_sales');
+        $this->load->model('M_product');
+        
+        $sales = $this->M_sales->get_sales_by_id($sales_id);
+        if (!$sales) {
+            $this->session->set_flashdata('error', 'Pesanan tidak ditemukan.');
+            redirect('shop');
+        }
+
+        // Opsional: Cek jika pesanan milik user
+        $user_id = $this->session->userdata('userid');
+        if($sales['user_id'] != 0 && $sales['user_id'] != $user_id) {
+            $this->session->set_flashdata('error', 'Akses ditolak.');
+            redirect('shop');
+        }
+
+        $details = $this->M_sales->get_sales_detail($sales_id);
+        $cart = $this->session->userdata('cart') ?: [];
+
+        foreach($details as $d) {
+            // Ambil info produk terbaru (takut harga atau stok berubah)
+            $p = $this->M_product->get_by_id($d['product_id']);
+            if($p && $p['stock'] > 0) {
+                // Tambahkan ke keranjang
+                $cart[] = [
+                    'id'          => $p['id'],
+                    'name'        => $p['name'],
+                    'price'       => $p['price'],
+                    'image'       => $p['image'],
+                    'qty'         => $d['qty'],
+                    'subtotal'    => $p['price'] * $d['qty'],
+                    'preferences' => $d['item_notes'] ?? ''
+                ];
+            }
+        }
+
+        $this->session->set_userdata('cart', $cart);
+        $this->session->set_flashdata('success', 'Menu pesanan lama telah dimasukkan kembali ke keranjang.');
+        redirect('shop/cart');
+    }
+
     public function invoice($id)
     {
         $this->load->model('M_sales');
@@ -273,6 +317,52 @@ class Shop extends CI_Controller
         }
     }
 
+    public function get_product_details($id)
+    {
+        $this->load->model('M_product');
+        $p = $this->M_product->get_by_id($id);
+        if ($p) {
+            $rating = $this->M_product->get_average_rating($id);
+            $recent_ratings = $this->M_product->get_ratings($id, 5);
+            
+            echo json_encode([
+                'status' => 'success',
+                'data' => [
+                    'id'          => $p['id'],
+                    'name'        => $p['name'],
+                    'description' => $p['description'] ?: 'Tidak ada deskripsi.',
+                    'price'       => number_format($p['price'], 0, ',', '.'),
+                    'stock'       => $p['stock'],
+                    'image'       => !empty($p['image']) ? base_url('uploads/'.$p['image']) : 'default',
+                    'avg_rating'  => round($rating['average'] ?? 0, 1),
+                    'total_rating'=> $rating['total'] ?? 0,
+                    'is_featured' => $p['is_featured'],
+                    'recent_reviews' => $recent_ratings
+                ]
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Produk tidak ditemukan.']);
+        }
+    }
+
+    public function submit_rating()
+    {
+        $this->load->model('M_product');
+        $data = [
+            'product_id' => $this->input->post('product_id'),
+            'full_name'  => $this->input->post('full_name') ?: 'Guest',
+            'rating'     => $this->input->post('rating'),
+            'comment'    => $this->input->post('comment'),
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+
+        if ($this->M_product->submit_rating($data)) {
+            echo json_encode(['status' => 'success', 'message' => 'Terima kasih atas penilaian Anda!']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Gagal mengirim penilaian.']);
+        }
+    }
+
     private function _ensure_sales_columns()
     {
         $this->load->dbforge();
@@ -289,5 +379,25 @@ class Shop extends CI_Controller
                 'item_notes' => ['type' => 'TEXT', 'null' => TRUE]
             ]);
         }
+    }
+
+    private function _ensure_product_columns()
+    {
+        $this->load->dbforge();
+        if (!$this->db->field_exists('description', 'products')) {
+            $this->dbforge->add_column('products', [
+                'description' => ['type' => 'TEXT', 'null' => TRUE, 'after' => 'name']
+            ]);
+        }
+
+        $query = "CREATE TABLE IF NOT EXISTS product_ratings (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            product_id INT,
+            full_name VARCHAR(100),
+            rating INT,
+            comment TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )";
+        $this->db->query($query);
     }
 }

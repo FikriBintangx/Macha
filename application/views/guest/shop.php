@@ -256,16 +256,21 @@ $is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
 <div class="prod-stock-txt"><?=$p['stock']<=5&&$p['stock']>0?'⚠️ Sisa '.$p['stock'].' pcs':'Stok: '.$p['stock'].' pcs'?></div>
 </div>
 <?php if($p['stock']>0):?>
-<?php if($this->session->userdata('userid')):?>
-<a href="<?= base_url('shop/add_to_cart/'.$p['id']) ?>" class="btn-cart" onclick="this.classList.add('is-loading');" style="height: 44px;">
-    <i class="fa-solid fa-cart-plus normal-icon"></i>
-    <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
-    <span class="txt-normal">Tambah</span>
-    <span class="txt-loading" style="display:none;">Memproses...</span>
-</a>
-<?php else:?>
-<a href="<?= base_url('auth') ?>" class="btn-cart-out"><i class="fa-solid fa-lock"></i><span>Login untuk pesan</span></a>
-<?php endif;?>
+<div class="d-flex flex-column gap-2 mt-auto">
+    <button type="button" class="btn-cart-out w-100" onclick="showDetail(<?= $p['id'] ?>)">
+        <i class="fa-solid fa-eye"></i><span>Detail</span>
+    </button>
+    <?php if($this->session->userdata('userid')):?>
+    <a href="<?= base_url('shop/add_to_cart/'.$p['id']) ?>" class="btn-cart w-100" onclick="this.classList.add('is-loading');" style="height: 44px;">
+        <i class="fa-solid fa-cart-plus normal-icon"></i>
+        <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
+        <span class="txt-normal">Tambah</span>
+        <span class="txt-loading" style="display:none;">Memproses...</span>
+    </a>
+    <?php else:?>
+    <a href="<?= base_url('auth') ?>" class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Login untuk pesan</span></a>
+    <?php endif;?>
+</div>
 <?php else:?>
 <div class="btn-cart-dis"><i class="fa-solid fa-ban"></i><span>Stok Habis</span></div>
 <?php endif;?>
@@ -282,12 +287,70 @@ else:?>
 
 <footer class="text-center"><p class="mb-0" style="font-size:.85rem;color:#8aa898">© <?=date('Y')?> <strong style="color:var(--gd)">MariMacha</strong>. Dibuat dengan ❤️</p></footer>
 
-<?php if($cc>0):?>
-<a href="<?= base_url('shop/cart') ?>" class="floating-cart">
-<i class="fa-solid fa-cart-shopping"></i>
-<div class="fc-badge"><?=$cc?></div>
-</a>
-<?php endif;?>
+<!-- MODAL DETAIL PRODUK -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0" style="border-radius:28px; overflow:hidden;">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <div id="modalImgWrap" style="height:100%; min-height:300px; background:#eef3eb; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                            <img id="modalImg" src="" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="p-4 p-lg-5">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 id="modalName" class="fw-black mb-0" style="font-weight:900; color:var(--gd);">Produk</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="mb-3">
+                                <span id="modalPrice" class="h4 fw-bold text-success">Rp 0</span>
+                                <span class="ms-2 text-muted small" id="modalStock">Stok: 0</span>
+                            </div>
+                            
+                            <!-- Average Rating Display -->
+                            <div class="d-flex align-items-center mb-4 gap-2">
+                                <div id="modalStars" class="text-warning"></div>
+                                <span id="modalAvgText" class="fw-bold" style="font-size:.9rem; color:var(--gl);">0 (0 Penilaian)</span>
+                            </div>
+
+                            <h6 class="fw-bold small text-uppercase letter-spacing-1 mb-2" style="color:var(--gl);">Deskripsi</h6>
+                            <p id="modalDesc" class="text-secondary small mb-4" style="line-height:1.6;">Deskripsi...</p>
+
+                            <!-- Rating Action Section -->
+                            <div class="rating-box p-3 rounded-4 mb-4" style="background:#f8faf8; border:1px solid #edf2ed;">
+                                <h6 class="fw-bold small mb-2">Beri Penilaian Rasa</h6>
+                                <div class="star-rating mb-2" id="starInput">
+                                    <i class="fa-star fa-regular star-btn" data-rate="1"></i>
+                                    <i class="fa-star fa-regular star-btn" data-rate="2"></i>
+                                    <i class="fa-star fa-regular star-btn" data-rate="3"></i>
+                                    <i class="fa-star fa-regular star-btn" data-rate="4"></i>
+                                    <i class="fa-star fa-regular star-btn" data-rate="5"></i>
+                                </div>
+                                <input type="hidden" id="rateValue" value="0">
+                                <textarea id="rateComment" class="form-control form-control-sm border-0 mb-2" rows="2" placeholder="Tulis komentar kamu..." style="background:#fff; border-radius:12px;"></textarea>
+                                <button type="button" onclick="submitRating()" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">Kirim Rating</button>
+                            </div>
+
+                            <div class="d-grid">
+                                <a id="modalCartLink" href="#" class="btn-cart py-3">
+                                    <i class="fa-solid fa-cart-plus me-2"></i> Tambah ke Keranjang
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.star-btn { cursor:pointer; font-size:1.5rem; transition:.2s; color:#ccc; }
+.star-btn.active, .star-btn:hover { color:#f59e0b; }
+.star-btn.fa-solid { color:#f59e0b; }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -317,7 +380,7 @@ document.querySelectorAll('.btn-cart,.btn-cart-out').forEach(function(btn){
   });
 });
 
-// SEARCH
+// SEARCH & FILTER
 var items=document.querySelectorAll('.prod-item');
 var ri=document.getElementById('resultInfo');
 var ng=document.getElementById('noResults');
@@ -357,6 +420,93 @@ document.querySelectorAll('.filter-chip').forEach(function(c){
     filterProducts();
   });
 });
+
+// DETAIL MODAL LOGIC
+var pModal = new bootstrap.Modal(document.getElementById('productModal'));
+function showDetail(id) {
+    document.getElementById('modalImgWrap').innerHTML = '<div class="fa-3x"><i class="fa-solid fa-spinner fa-spin text-success"></i></div>';
+    pModal.show();
+    
+    fetch('<?= base_url("shop/get_product_details/") ?>' + id)
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success') {
+                let d = res.data;
+                document.getElementById('modalName').textContent = d.name;
+                document.getElementById('modalDesc').textContent = d.description;
+                document.getElementById('modalPrice').textContent = 'Rp ' + d.price;
+                document.getElementById('modalStock').textContent = 'Stok: ' + d.stock;
+                document.getElementById('modalCartLink').href = '<?= base_url("shop/add_to_cart/") ?>' + d.id;
+                
+                // Show Image
+                if(d.image !== 'default') {
+                    document.getElementById('modalImgWrap').innerHTML = `<img src="${d.image}" style="width:100%; height:100%; object-fit:cover;">`;
+                } else {
+                    document.getElementById('modalImgWrap').innerHTML = `<div style="font-size:6rem">🍵</div>`;
+                }
+
+                // Show Average Rating
+                let starsHtml = '';
+                for(let i=1; i<=5; i++) {
+                    starsHtml += `<i class="fa-star ${i <= Math.round(d.avg_rating) ? 'fa-solid' : 'fa-regular'}"></i>`;
+                }
+                document.getElementById('modalStars').innerHTML = starsHtml;
+                document.getElementById('modalAvgText').textContent = `${d.avg_rating} (${d.total_rating} Penilaian)`;
+                
+                // Set Product ID for rating input
+                document.getElementById('productModal').dataset.productId = d.id;
+                // Reset Star Input
+                document.querySelectorAll('.star-btn').forEach(s => s.classList.replace('fa-solid','fa-regular'));
+                document.querySelectorAll('.star-btn').forEach(s => s.classList.remove('active'));
+                document.getElementById('rateValue').value = 0;
+                document.getElementById('rateComment').value = '';
+            }
+        });
+}
+
+// STAR INPUT LOGIC
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        let rate = this.dataset.rate;
+        document.getElementById('rateValue').value = rate;
+        document.querySelectorAll('.star-btn').forEach(s => {
+            if(s.dataset.rate <= rate) {
+                s.classList.replace('fa-regular', 'fa-solid');
+                s.classList.add('active');
+            } else {
+                s.classList.replace('fa-solid', 'fa-regular');
+                s.classList.remove('active');
+            }
+        });
+    });
+});
+
+function submitRating() {
+    let pid = document.getElementById('productModal').dataset.productId;
+    let rate = document.getElementById('rateValue').value;
+    let comment = document.getElementById('rateComment').value;
+    let name = "<?= htmlspecialchars($this->session->userdata('full_name') ?: 'Guest') ?>";
+
+    if(rate == 0) { alert('Tolong pilih bintangnya dulu ya!'); return; }
+
+    const formData = new FormData();
+    formData.append('product_id', pid);
+    formData.append('rating', rate);
+    formData.append('comment', comment);
+    formData.append('full_name', name);
+
+    fetch('<?= base_url("shop/submit_rating") ?>', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert(res.message);
+        if(res.status === 'success') {
+            showDetail(pid); // Refresh details
+        }
+    });
+}
 </script>
 </body>
 </html>

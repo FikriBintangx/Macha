@@ -37,4 +37,24 @@ class M_product extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->delete('products');
     }
+
+    // Mengambil rata-rata rating produk
+    public function get_average_rating($id) {
+        $this->db->select('AVG(rating) as average, COUNT(id) as total');
+        $this->db->where('product_id', $id);
+        return $this->db->get('product_ratings')->row_array();
+    }
+
+    // Mengambil list rating terbaru
+    public function get_ratings($id, $limit = 5) {
+        $this->db->where('product_id', $id);
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get('product_ratings')->result_array();
+    }
+
+    // Simpan rating baru
+    public function submit_rating($data) {
+        return $this->db->insert('product_ratings', $data);
+    }
 }
