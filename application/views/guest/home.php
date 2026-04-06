@@ -2103,6 +2103,7 @@
           $cart = $this->session->userdata('cart') ?? [];
           $cart_count = count($cart);
           ?>
+          <?php if($this->session->userdata('role') != 'admin'): ?>
           <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative">
             <i class="fa-solid fa-cart-shopping"></i>
             Keranjang
@@ -2111,6 +2112,7 @@
                 style="font-size:0.6rem"><?= $cart_count ?></span>
             <?php endif; ?>
           </a>
+          <?php endif; ?>
           <?php if ($this->session->userdata('userid')): ?>
             <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"
               class="btn-hdr">
@@ -2330,9 +2332,15 @@
                     <?= htmlspecialchars($prod['description'] ?? 'Minuman matcha segar dengan resep rahasia.') ?>
                   </div>
                   <?php if ($prod['stock'] > 0): ?>
-                    <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart shimmer-btn">
-                      <i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang
-                    </a>
+                    <?php if($this->session->userdata('role') == 'admin'): ?>
+                        <div class="btn-add-cart shimmer-btn text-center" style="background:#eef3eb; color:#8aa898; cursor:default; box-shadow:none;">
+                          <i class="fa-solid fa-lock me-1"></i> Mode Kelola
+                        </div>
+                    <?php else: ?>
+                        <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart shimmer-btn">
+                          <i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang
+                        </a>
+                    <?php endif; ?>
                   <?php else: ?>
                     <span class="btn-add-cart sold-out">
                       <i class="fa-solid fa-ban me-1"></i> Stok Habis

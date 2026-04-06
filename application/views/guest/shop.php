@@ -169,10 +169,12 @@ document.addEventListener("DOMContentLoaded", function() {
 </ul>
 <div class="d-flex align-items-center gap-2">
 <?php $cart=$this->session->userdata('cart')??[];$cc=count($cart);?>
+<?php if($this->session->userdata('role') != 'admin'): ?>
 <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative">
 <i class="fa-solid fa-cart-shopping"></i>
 <?php if($cc>0):?><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:.6rem"><?=$cc?></span><?php endif;?>
 Keranjang</a>
+<?php endif; ?>
 <?php if($this->session->userdata('userid')):?>
 <a href="<?= ($this->session->userdata('role')=='admin')?base_url('dashboard'):base_url('user') ?>" class="btn-hdr"><i class="fa-solid fa-user"></i>Akun</a>
 <?php else:?>
@@ -261,12 +263,16 @@ $is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
         <i class="fa-solid fa-eye"></i><span>Detail</span>
     </button>
     <?php if($this->session->userdata('userid')):?>
-    <a href="<?= base_url('shop/add_to_cart/'.$p['id']) ?>" class="btn-cart w-100" onclick="this.classList.add('is-loading');" style="height: 44px;">
-        <i class="fa-solid fa-cart-plus normal-icon"></i>
-        <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
-        <span class="txt-normal">Tambah</span>
-        <span class="txt-loading" style="display:none;">Memproses...</span>
-    </a>
+        <?php if($this->session->userdata('role') == 'admin'): ?>
+            <div class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Mode Kelola Menu</span></div>
+        <?php else: ?>
+            <a href="<?= base_url('shop/add_to_cart/'.$p['id']) ?>" class="btn-cart w-100" onclick="this.classList.add('is-loading');" style="height: 44px;">
+                <i class="fa-solid fa-cart-plus normal-icon"></i>
+                <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
+                <span class="txt-normal">Tambah</span>
+                <span class="txt-loading" style="display:none;">Memproses...</span>
+            </a>
+        <?php endif; ?>
     <?php else:?>
     <a href="<?= base_url('auth') ?>" class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Login untuk pesan</span></a>
     <?php endif;?>
@@ -341,9 +347,21 @@ else:?>
                             <?php endif; ?>
 
                             <div class="d-grid">
-                                <a id="modalCartLink" href="#" class="btn-cart py-3">
-                                    <i class="fa-solid fa-cart-plus me-2"></i> Tambah ke Keranjang
-                                </a>
+                            <div id="modalOrderActions">
+                                <?php if($this->session->userdata('role') == 'admin'): ?>
+                                    <div class="btn-cart-dis py-3 text-center w-100" style="background:#eef3eb; color:#8aa898; cursor:default;">
+                                        <i class="fa-solid fa-lock me-2"></i> Mode Kelola Menu
+                                    </div>
+                                <?php elseif($this->session->userdata('userid')): ?>
+                                    <a id="modalCartLink" href="#" class="btn-cart py-3">
+                                        <i class="fa-solid fa-cart-plus me-2"></i> Tambah ke Keranjang
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?= base_url('auth') ?>" class="btn-cart-out py-3 text-center">
+                                        <i class="fa-solid fa-lock me-2"></i> Login untuk memesan
+                                    </a>
+                                <?php endif; ?>
+                            </div>
                             </div>
                         </div>
                     </div>

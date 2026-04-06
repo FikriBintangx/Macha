@@ -36,6 +36,10 @@ class Shop extends CI_Controller
 
     public function cart()
     {
+        if ($this->session->userdata('role') == 'admin') {
+            redirect('dashboard');
+            return;
+        }
         $cart = $this->session->userdata('cart') ?: [];
         $total = 0;
         foreach($cart as &$item) {
@@ -56,7 +60,15 @@ class Shop extends CI_Controller
 
     public function add_to_cart($product_id)
     {
+        // Proteksi: Admin tidak boleh belanja
+        if ($this->session->userdata('role') == 'admin') {
+            $this->session->set_flashdata('error', 'Admin tidak diperbolehkan melakukan pemesanan.');
+            redirect('shop');
+            return;
+        }
+
         $product = $this->M_product->get_by_id($product_id);
+
         if (!$product) {
             $this->session->set_flashdata('error', 'Produk tidak ditemukan.');
             redirect('shop');
@@ -160,6 +172,10 @@ class Shop extends CI_Controller
 
     public function checkout()
     {
+        if ($this->session->userdata('role') == 'admin') {
+            redirect('dashboard');
+            return;
+        }
         $cart = $this->session->userdata('cart') ?: [];
         if (empty($cart)) {
             $this->session->set_flashdata('error', 'Keranjang Anda masih kosong.');
