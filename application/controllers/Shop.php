@@ -354,16 +354,32 @@ class Shop extends CI_Controller
         }
 
         $this->load->model('M_product');
+        $product_id = $this->input->post('product_id');
+        $user_name = $this->session->userdata('full_name');
+
         $data = [
-            'product_id' => $this->input->post('product_id'),
-            'full_name'  => $this->session->userdata('full_name'), // Ambil dari session langsung
+            'product_id' => $product_id,
+            'full_name'  => $user_name,
             'rating'     => $this->input->post('rating'),
             'comment'    => $this->input->post('comment'),
             'created_at' => date('Y-m-d H:i:s')
         ];
 
-        if ($this->M_product->submit_rating($data)) {
-            echo json_encode(['status' => 'success', 'message' => 'Terima kasih atas penilaian Anda!']);
+        // Cek apakah sudah pernah rating produk ini
+        $this->db->where(['product_id' => $product_id, 'full_name' => $user_name]);
+        $existing = $this->db->get('product_ratings')->row();
+
+        if ($existing) {
+            $this->db->where('id', $existing->id);
+            $status = $this->db->update('product_ratings', $data);
+            $msg = 'Penilaian Anda berhasil diperbarui!';
+        } else {
+            $status = $this->M_product->submit_rating($data);
+            $msg = 'Terima kasih atas penilaian Anda!';
+        }
+
+        if ($status) {
+            echo json_encode(['status' => 'success', 'message' => $msg]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Gagal mengirim penilaian.']);
         }

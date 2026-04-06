@@ -135,9 +135,10 @@ class User extends CI_Controller {
         $this->load->view('user/profile', $data);
     }
 
-    // Update Profil
+    // Update Profil & Upload Foto
     public function update_profile() {
         $user_id = $this->session->userdata('userid');
+        $user = $this->db->where('id', $user_id)->get('users')->row_array();
         
         $full_name = $this->input->post('full_name');
         $phone = $this->input->post('phone');
@@ -150,20 +151,49 @@ class User extends CI_Controller {
             'address' => $address
         ];
 
-        // Update password jika diisi
+        // 1. Logika Upload Foto Profil
+        if (!empty($_FILES['image']['name'])) {
+            $config['upload_path']   = FCPATH . 'uploads/profile/';
+            $config['allowed_types'] = 'jpg|jpeg|png|webp';
+            $config['max_size']      = 2048;
+            $config['file_name']     = 'user_' . $user_id . '_' . time();
+
+            if (!is_dir($config['upload_path'])) {
+                mkdir($config['upload_path'], 0777, TRUE);
+            }
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('image')) {
+                // Hapus foto lama jika bukan default
+                if ($user['profile_image'] != 'default_user.png' && file_exists($config['upload_path'] . $user['profile_image'])) {
+                    unlink($config['upload_path'] . $user['profile_image']);
+                }
+                
+                $upload_data = $this->upload->data();
+                $update_data['profile_image'] = $upload_data['file_name'];
+                $this->session->set_userdata('profile_image', $upload_data['file_name']); // Update session
+            } else {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('user/profile');
+                return;
+            }
+        }
+
+        // 2. Update password jika diisi
         if (!empty($password)) {
             $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
         $this->db->where('id', $user_id);
         if ($this->db->update('users', $update_data)) {
-            // Update session name if changed
             $this->session->set_userdata('full_name', $full_name);
             $this->session->set_flashdata('success', 'Profil berhasil diperbarui!');
         } else {
             $this->session->set_flashdata('error', 'Gagal memperbarui profil.');
         }
 
-        redirect('user');
+        redirect('user/profile');
     }
 }

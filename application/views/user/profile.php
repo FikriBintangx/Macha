@@ -63,16 +63,38 @@
             padding-bottom: 24px;
             border-bottom: 1.5px dashed #edf1ed;
         }
+        .p-avatar-wrap {
+            position: relative;
+            width: 100px; height: 100px;
+            flex-shrink: 0;
+        }
         .p-avatar {
-            width: 72px; height: 72px;
-            border-radius: 50%;
+            width: 100%; height: 100%;
+            border-radius: 24px;
             background: var(--green-main);
             color: #fff;
             display: flex; align-items: center; justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            flex-shrink: 0;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,.1);
         }
+        .p-avatar-edit {
+            position: absolute;
+            bottom: -5px; right: -5px;
+            width: 32px; height: 32px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--green-main);
+            box-shadow: 0 4px 10px rgba(0,0,0,.15);
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: .2s;
+        }
+        .p-avatar-edit:hover { background: var(--green-main); color: #fff; transform: scale(1.1); }
+
         .p-info h4 { font-weight: 800; margin: 0; color: var(--green-ultra); }
         .p-info p { margin: 4px 0 0; color: #8aa898; font-size: .9rem; font-weight: 500; }
         
@@ -130,14 +152,25 @@
 
         <div class="profile-card">
             <div class="profile-header">
-                <div class="p-avatar"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
+                <div class="p-avatar-wrap">
+                    <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
+                        <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" class="p-avatar" id="avatarPreview">
+                    <?php else: ?>
+                        <div class="p-avatar" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
+                        <img src="" class="p-avatar d-none" id="avatarPreview">
+                    <?php endif; ?>
+                    <label for="profileInput" class="p-avatar-edit">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                </div>
                 <div class="p-info">
                     <h4>Profil Pengaturan Terpadu</h4>
                     <p>Kelola data pribadi, alamat pengiriman, dan keamanan akun Anda</p>
                 </div>
             </div>
 
-            <form action="<?= base_url('user/update_profile') ?>" method="POST">
+            <form action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
+                <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
                 <div class="row g-4">
                     <div class="col-md-6">
                         <label class="form-label">Nama Lengkap</label>
@@ -187,5 +220,25 @@
         </div>
     </div>
 
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var preview = document.getElementById('avatarPreview');
+                    var initial = document.getElementById('avatarInitial');
+                    
+                    preview.src = e.target.result;
+                    preview.classList.remove('d-none');
+                    if(initial) initial.classList.add('d-none');
+                }
+                reader.readAsDataURL(input.files[0]);
+                
+                // Animasi kecil saat ganti
+                document.querySelector('.p-avatar-wrap').style.transform = 'scale(1.05)';
+                setTimeout(() => { document.querySelector('.p-avatar-wrap').style.transform = 'scale(1)'; }, 300);
+            }
+        }
+    </script>
 </body>
 </html>

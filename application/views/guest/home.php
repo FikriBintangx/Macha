@@ -1421,32 +1421,48 @@
 
     .review-form-card {
       background: #fff;
-      padding: 40px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(0,0,0,0.05);
+      padding: 45px;
+      border-radius: 30px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.03);
+      position: relative;
     }
     .review-form-card .form-control {
-      border-radius: 12px;
-      border: 2px solid #f0f4f0;
+      border-radius: 15px;
+      border: 2px solid #f1f5f2;
       font-family: 'Outfit', sans-serif;
-      padding: 12px 16px;
+      padding: 14px 20px;
+      background: #fdfdfb;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
     .review-form-card .form-control:focus {
       border-color: var(--green-main);
-      box-shadow: 0 0 0 4px rgba(27, 59, 37, 0.05);
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(27, 59, 37, 0.08);
     }
-    .star-rating-input label {
-      cursor: pointer;
-      font-size: 1.2rem;
-      filter: grayscale(1);
-      transition: 0.2s;
-    }
-    .star-rating-input input:checked + label {
-      filter: grayscale(0);
-      transform: scale(1.2);
+    .star-rating-input {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
     }
     .star-rating-input input { display: none; }
+    .star-rating-input label {
+      font-size: 2rem;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .star-rating-input label:hover,
+    .star-rating-input label:hover ~ label,
+    .star-rating-input input:checked ~ label {
+      color: #fbbf24;
+      transform: scale(1.1);
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+    }
+    .star-rating-input label:hover { transform: scale(1.2) rotate(8deg); }
 
     /* ─── WA BANNER ─── */
     .wa-section {
@@ -2176,7 +2192,7 @@
               <div class="float-icon"><i class="fa-solid fa-truck-fast"></i></div>
               <div>
                 <div class="float-label">Pengiriman Aman</div>
-                <div class="float-val">Ke Seluruh Indonesia</div>
+                <div class="float-val">Dan Cepat</div>
               </div>
             </div>
           </div>
@@ -2503,39 +2519,48 @@
               <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i>
             </h4>
             <form action="<?= base_url('home/submit_review') ?>" method="POST">
-              <div class="row g-3">
+              <div class="row g-4">
                 <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="text" name="name" class="form-control" id="revName" placeholder="Nama Lengkap" 
-                      value="<?= htmlspecialchars($my_review['name'] ?? $this->session->userdata('fullname') ?? '') ?>" required>
-                    <label for="revName">Nama Lengkap</label>
+                  <div class="form-group">
+                    <label class="small fw-bold text-muted mb-2 ms-2">NAMA LENGKAP</label>
+                    <input type="text" name="name" class="form-control" placeholder="Tulis nama kamu..." 
+                      value="<?= htmlspecialchars($my_review['name'] ?? $this->session->userdata('full_name') ?? '') ?>" required>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="text" name="location" class="form-control" id="revLoc" placeholder="Lokasi (Contoh: Bekasi)"
+                  <div class="form-group">
+                    <label class="small fw-bold text-muted mb-2 ms-2">LOKASI (KOTA)</label>
+                    <input type="text" name="location" class="form-control" placeholder="Contoh: Bekasi, Tangerang..."
                       value="<?= htmlspecialchars($my_review['location'] ?? '') ?>">
-                    <label for="revLoc">Lokasi</label>
                   </div>
                 </div>
-                <div class="col-12">
-                   <div class="star-rating-input d-flex justify-content-center gap-3 mb-3">
+                
+                <div class="col-12 py-2">
+                   <div class="section-label d-flex justify-content-center mb-0" style="font-size: 0.7rem;">Nilai Pengalamanmu</div>
+                   <div class="star-rating-input">
                       <?php $currStars = $my_review['stars'] ?? 5; ?>
-                      <input type="radio" name="stars" value="5" id="s5" <?= ($currStars == 5) ? 'checked' : '' ?>><label for="s5">⭐⭐⭐⭐⭐</label>
-                      <input type="radio" name="stars" value="4" id="s4" <?= ($currStars == 4) ? 'checked' : '' ?>><label for="s4">⭐⭐⭐⭐</label>
-                      <input type="radio" name="stars" value="3" id="s3" <?= ($currStars == 3) ? 'checked' : '' ?>><label for="s3">⭐⭐⭐</label>
+                      <input type="radio" name="stars" value="5" id="st5" <?= ($currStars == 5) ? 'checked' : '' ?>><label for="st5"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="stars" value="4" id="st4" <?= ($currStars == 4) ? 'checked' : '' ?>><label for="st4"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="stars" value="3" id="st3" <?= ($currStars == 3) ? 'checked' : '' ?>><label for="st3"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="stars" value="2" id="st2" <?= ($currStars == 2) ? 'checked' : '' ?>><label for="st2"><i class="fa-solid fa-star"></i></label>
+                      <input type="radio" name="stars" value="1" id="st1" <?= ($currStars == 1) ? 'checked' : '' ?>><label for="st1"><i class="fa-solid fa-star"></i></label>
                    </div>
                 </div>
+
                 <div class="col-12">
-                  <div class="form-floating">
-                    <textarea name="quote" class="form-control" id="revQuote" placeholder="Ceritakan pengalamanmu..." style="height: 120px" required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
-                    <label for="revQuote">Ulasan / Pesan Kamu</label>
+                  <div class="form-group">
+                    <label class="small fw-bold text-muted mb-2 ms-2">ULASAN / PESAN KAMU</label>
+                    <textarea name="quote" class="form-control" rows="4" placeholder="Ceritakan pengalamanmu mengonsumsi produk MariMacha..." required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
                   </div>
                 </div>
+                
                 <div class="col-12 text-center mt-4">
-                  <button type="submit" class="btn-hero-primary" style="padding: 14px 40px; border-radius: 50px; font-size: 1rem;">
-                    <?= !empty($my_review) ? 'Update Ulasan' : 'Kirim Ulasan' ?> <i class="fa-solid fa-paper-plane ms-2"></i>
+                  <button type="submit" class="btn-hero-primary" style="padding: 18px 60px; border-radius: 50px; font-size: 1.1rem; width: 100%;">
+                    <?= !empty($my_review) ? 'Update Ulasan Saya' : 'Kirim Ulasan Sekarang' ?> <i class="fa-solid fa-paper-plane ms-2"></i>
                   </button>
+                  <?php if(!empty($my_review)): ?>
+                    <p class="small text-muted mt-3"><i class="fa-solid fa-info-circle me-1"></i> Kamu sudah memberikan ulasan. Mengirim ulang akan memperbarui ulasan lamamu.</p>
+                  <?php endif; ?>
                 </div>
               </div>
             </form>

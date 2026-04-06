@@ -76,15 +76,18 @@
             opacity: .12;
         }
         .uh-avatar {
-            width: 58px; height: 58px;
-            border-radius: 50%;
+            width: 70px; height: 70px;
+            border-radius: 20px;
             background: rgba(255,255,255,.25);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             border: 3px solid rgba(255,255,255,.4);
             flex-shrink: 0;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(0,0,0,.15);
         }
+
         .uh-info h4 { font-weight: 800; margin: 0; font-size: 1.35rem; }
         .uh-info p { margin: 4px 0 0; opacity: .8; font-size: .88rem; }
         .uh-left { display: flex; align-items: center; gap: 16px; }
@@ -298,7 +301,11 @@
         <!-- Profile Hero -->
         <div class="user-hero">
             <div class="uh-left">
-                <div class="uh-avatar"><?= strtoupper(substr($this->session->userdata('full_name'), 0, 1)) ?></div>
+                <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
+                    <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" class="uh-avatar">
+                <?php else: ?>
+                    <div class="uh-avatar"><?= strtoupper(substr($user['full_name'], 0, 1)) ?></div>
+                <?php endif; ?>
                 <div class="uh-info">
                     <h4>Hai, <?= htmlspecialchars($this->session->userdata('full_name')) ?>! 👋</h4>
                     <p>Semoga harimu menyenangkan dan penuh rasa matcha! ☕</p>
@@ -445,8 +452,17 @@
                 <div style="position:absolute; top:0; right:0; width:150px; height:150px; background:radial-gradient(circle, rgba(149,213,178,0.15) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
 
                 <div class="profile-header d-flex flex-column flex-md-row align-items-center gap-4" style="margin-bottom:35px; padding-bottom:30px; border-bottom:1px solid #f0f4f1;">
-                    <div class="p-avatar shadow-sm" style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--green-main), var(--green-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:800; border:4px solid #fff; box-shadow: 0 4px 12px rgba(45,90,39,0.15) !important;">
-                        <?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?>
+                    <div class="position-relative">
+                        <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
+                            <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" style="width:100px; height:100px; border-radius:24px; object-fit:cover; border:4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,.1);">
+                        <?php else: ?>
+                            <div class="p-avatar shadow-sm" style="width:100px; height:100px; border-radius:24px; background:linear-gradient(135deg, var(--green-main), var(--green-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:800; border:4px solid #fff; box-shadow: 0 4px 12px rgba(45,90,39,0.15) !important;">
+                                <?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?>
+                            </div>
+                        <?php endif; ?>
+                        <a href="<?= base_url('user/profile') ?>" class="btn btn-sm btn-light position-absolute bottom-0 end-0 rounded-circle shadow-sm" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:2px solid #fff;">
+                            <i class="fa-solid fa-camera text-success" style="font-size:12px"></i>
+                        </a>
                     </div>
                     <div class="p-info text-center text-md-start">
                         <h4 style="font-weight:800; color:var(--green-ultra); margin:0; font-size: 1.6rem; letter-spacing: -0.5px;">Pengaturan Terpadu</h4>

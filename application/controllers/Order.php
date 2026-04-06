@@ -33,11 +33,8 @@ class Order extends CI_Controller {
         if($date_filter) {
             $this->db->where('DATE(sales.created_at)', $date_filter);
         } else {
-            // Jika tidak ada filter tanggal, tampilkan SEMUA yang pending ATAU yang masuk hari ini
-            $this->db->group_start();
-                $this->db->where('sales.status', 'pending');
-                $this->db->or_where('DATE(sales.created_at)', date('Y-m-d'));
-            $this->db->group_end();
+            // Default: Hanya tampilkan pesanan yang masuk HARI INI saja agar dashboard bersih
+            $this->db->where('DATE(sales.created_at)', date('Y-m-d'));
         }
         
         $this->db->order_by('sales.status', 'ASC'); // Pending di atas
