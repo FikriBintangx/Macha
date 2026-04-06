@@ -123,6 +123,33 @@
             align-items: center;
             gap: 8px;
         }
+        @media (max-width: 576px) {
+            .btn-actions {
+                flex-direction: column !important;
+                gap: 20px !important;
+                text-align: center;
+            }
+            .btn-actions .d-flex {
+                flex-direction: column !important;
+                width: 100%;
+                gap: 12px !important;
+            }
+            .btn-print, .btn-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+                text-align: left !important;
+            }
+            .info-grid .text-end {
+                text-align: left !important;
+                margin-top: 10px;
+            }
+            .nota-body { padding: 25px; }
+            .nota-header { padding: 30px 20px; }
+            .table-nota th, .table-nota td { font-size: 0.85rem; padding: 10px 5px; }
+        }
         @media print {
             body { background: #fff; padding: 0; }
             .nota-box { box-shadow: none; border: none; max-width: 100%; border-radius: 0; }
@@ -222,14 +249,14 @@
                     <i class="fa-solid fa-arrow-left"></i> Kembali Belanja
                 </a>
                 <div class="d-flex gap-2">
-                    <button onclick="window.print()" class="btn-print">
+                    <button onclick="window.print()" class="btn-print border-0">
                         <i class="fa-solid fa-print me-2"></i> Cetak Nota
                     </button>
-                    <a href="<?= base_url('shop/reorder/'.$sales['id']) ?>" class="btn btn-outline-success rounded-pill fw-bold px-4">
+                    <a href="<?= base_url('shop/reorder/'.$sales['id']) ?>" class="btn btn-success rounded-pill fw-bold px-4 py-2 d-flex align-items-center">
                         <i class="fa-solid fa-rotate-left me-2"></i> Pesan Lagi
                     </a>
                     <?php if($this->session->userdata('userid')): ?>
-                    <a href="<?= base_url('user') ?>" class="btn btn-outline-success rounded-pill fw-bold px-4">
+                    <a href="<?= base_url('user') ?>" class="btn btn-outline-success rounded-pill fw-bold px-4 py-2 d-flex align-items-center">
                         <i class="fa-solid fa-user me-2"></i> Akun Saya
                     </a>
                     <?php endif; ?>

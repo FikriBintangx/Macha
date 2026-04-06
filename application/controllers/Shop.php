@@ -1,6 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Loader $load
+ * @property CI_User_agent $agent
+ * @property M_product $M_product
+ * @property M_settings $M_settings
+ * @property M_sales $M_sales
+ */
 class Shop extends CI_Controller
 {
     public function __construct()
