@@ -22,6 +22,7 @@ class Order extends CI_Controller {
     // Menampilkan daftar pesanan online (Monitoring Aktif)
     public function index() {
         $date_filter = $this->input->get('date');
+        $target_date = $date_filter ?: date('Y-m-d');
         
         $this->db->select('sales.*, users.full_name as user_name');
         $this->db->from('sales');
@@ -30,12 +31,8 @@ class Order extends CI_Controller {
         // Hanya tampilkan pesanan online (bukan tunai/debit lokal)
         $this->db->where_not_in('sales.payment_method', ['Cash', 'Debit', 'Tunai']);
         
-        if($date_filter) {
-            $this->db->where('DATE(sales.created_at)', $date_filter);
-        } else {
-            // Default: Hanya tampilkan pesanan yang masuk HARI INI saja agar dashboard bersih
-            $this->db->where('DATE(sales.created_at)', date('Y-m-d'));
-        }
+        // Filter Tanggal - Selalu terapkan tanggal target (default hari ini)
+        $this->db->where('DATE(sales.created_at)', $target_date);
         
         $this->db->order_by('sales.status', 'ASC'); // Pending di atas
         $this->db->order_by('sales.created_at', 'DESC');
@@ -44,7 +41,7 @@ class Order extends CI_Controller {
         $data = [
             'title'        => 'Kasir Online Monitoring',
             'orders'       => $orders,
-            'date_filter'  => $date_filter ?: date('Y-m-d'),
+            'date_filter'  => $target_date,
             'content'      => 'admin/order_list'
         ];
         $this->load->view('layout/wrapper', $data);
@@ -88,8 +85,10 @@ class Order extends CI_Controller {
         if(isset($_SERVER['HTTP_REFERER'])) {
             redirect($_SERVER['HTTP_REFERER']);
         } else {
+            redirect('order');
         }
     }
+
     // Update Status Pesanan via AJAX
     public function ajax_update_status() {
         $id = $this->input->post('id');
@@ -100,7 +99,6 @@ class Order extends CI_Controller {
             $this->db->where('id', $id);
             $this->db->update('sales', ['status' => $status]);
             
-            // Get updated status badges or just return success
             $response = [
                 'success' => true,
                 'message' => 'Status pesanan berhasil diperbarui menjadi: ' . strtoupper($status),
@@ -119,7 +117,6 @@ class Order extends CI_Controller {
 
     // Hapus pesanan (hanya pending/canceled yang boleh dihapus)
     public function delete($id) {
-        // Cek order dulu
         $order = $this->db->get_where('sales', ['id' => $id])->row_array();
         
         if (!$order) {
@@ -128,7 +125,6 @@ class Order extends CI_Controller {
             return;
         }
 
-        // Proteksi: hanya pending dan canceled yang boleh dihapus
         $deletable_status = ['pending', 'canceled'];
         if (!in_array($order['status'], $deletable_status)) {
             $this->session->set_flashdata('error', '⚠️ Pesanan dengan status "' . strtoupper($order['status']) . '" tidak dapat dihapus karena sudah menjadi transaksi resmi.');
@@ -136,7 +132,6 @@ class Order extends CI_Controller {
             return;
         }
 
-        // Kembalikan stok produk
         $details = $this->db->get_where('sales_detail', ['sales_id' => $id])->result_array();
         foreach ($details as $d) {
             $this->db->set('stock', 'stock + ' . (int)$d['qty'], FALSE);
@@ -144,11 +139,9 @@ class Order extends CI_Controller {
             $this->db->update('products');
         }
 
-        // Hapus detail + header
         $this->db->delete('sales_detail', ['sales_id' => $id]);
         $this->db->delete('sales', ['id' => $id]);
         
-        // Hapus bukti bayar jika ada
         if (!empty($order['payment_proof'])) {
             $proof_path = FCPATH . 'uploads/payments/' . $order['payment_proof'];
             if (file_exists($proof_path)) {
@@ -156,7 +149,7 @@ class Order extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('success', '✅ Pesanan #' . $order['invoice_no'] . ' berhasil dihapus dan stok telah dikembalikan.');
+        $this->session->set_flashdata('success', '✅ Pesanan #' . $order['invoice_no'] . ' berhasil dihapus.');
         
         if (isset($_SERVER['HTTP_REFERER'])) {
             redirect($_SERVER['HTTP_REFERER']);
