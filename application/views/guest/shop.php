@@ -318,7 +318,8 @@ else:?>
                             <h6 class="fw-bold small text-uppercase letter-spacing-1 mb-2" style="color:var(--gl);">Deskripsi</h6>
                             <p id="modalDesc" class="text-secondary small mb-4" style="line-height:1.6;">Deskripsi...</p>
 
-                            <!-- Rating Action Section -->
+                            <!-- Rating Action Section (Hanya untuk yang sudah login) -->
+                            <?php if($this->session->userdata('userid')): ?>
                             <div class="rating-box p-3 rounded-4 mb-4" style="background:#f8faf8; border:1px solid #edf2ed;">
                                 <h6 class="fw-bold small mb-2">Beri Penilaian Rasa</h6>
                                 <div class="star-rating mb-2" id="starInput">
@@ -332,6 +333,12 @@ else:?>
                                 <textarea id="rateComment" class="form-control form-control-sm border-0 mb-2" rows="2" placeholder="Tulis komentar kamu..." style="background:#fff; border-radius:12px;"></textarea>
                                 <button type="button" onclick="submitRating()" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">Kirim Rating</button>
                             </div>
+                            <?php else: ?>
+                            <div class="rating-box p-3 rounded-4 mb-4 text-center" style="background:#fff7ed; border:1px solid #ffedd5;">
+                                <p class="small text-secondary mb-2"><i class="fa-solid fa-lock me-1"></i> Suka dengan rasa produk ini? Login untuk memberikan penilaian.</p>
+                                <a href="<?= base_url('auth') ?>" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold">Login Sekarang</a>
+                            </div>
+                            <?php endif; ?>
 
                             <div class="d-grid">
                                 <a id="modalCartLink" href="#" class="btn-cart py-3">

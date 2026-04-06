@@ -347,10 +347,16 @@ class Shop extends CI_Controller
 
     public function submit_rating()
     {
+        // Proteksi: Hanya yang login bisa kasih rating
+        if (!$this->session->userdata('userid')) {
+            echo json_encode(['status' => 'error', 'message' => 'Silakan login terlebih dahulu untuk memberikan penilaian.']);
+            return;
+        }
+
         $this->load->model('M_product');
         $data = [
             'product_id' => $this->input->post('product_id'),
-            'full_name'  => $this->input->post('full_name') ?: 'Guest',
+            'full_name'  => $this->session->userdata('full_name'), // Ambil dari session langsung
             'rating'     => $this->input->post('rating'),
             'comment'    => $this->input->post('comment'),
             'created_at' => date('Y-m-d H:i:s')
