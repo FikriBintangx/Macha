@@ -2214,7 +2214,7 @@
       <div class="story-slide slide-1">
         <div class="container">
           <div class="glass-content-wrap">
-            <div class="row align-items-center">
+            <div class="row align-items-center gx-5">
               <div class="col-lg-6">
                 <div class="story-label">PHASE 01: QUALITY</div>
                 <h2 class="story-h2">Umkm Matcha yg harganya terjangkau tetapi rasanya <span
@@ -2241,7 +2241,7 @@
       <div class="story-slide slide-2">
         <div class="container">
           <div class="glass-content-wrap inverse">
-            <div class="row align-items-center">
+            <div class="row align-items-center gx-5">
               <div class="col-lg-6 order-lg-2">
                 <div class="story-label">PHASE 02: MENU</div>
                 <h2 class="story-h2">Matcha yang segar, manis dan <span class="highlight">banyak menu-nya</span></h2>
@@ -2663,9 +2663,11 @@
       align-items: center;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.04;
+      opacity: 0.015;
       overflow: hidden;
+      filter: blur(1px);
     }
+
 
     .story-bg-text {
       font-size: clamp(8rem, 22vw, 25rem);
@@ -2701,9 +2703,12 @@
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 40px;
-      padding: 60px;
+      padding: 60px 80px;
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+      max-width: 1100px;
+      margin: 0 auto;
     }
+
 
     .story-label {
       color: var(--tertiary);
@@ -2715,12 +2720,14 @@
     }
 
     .story-h2 {
-      font-size: 4.5rem;
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
       font-weight: 900;
       color: #fff;
       margin-bottom: 24px;
-      line-height: 1.1;
+      line-height: 1.2;
+      letter-spacing: -1.5px;
     }
+
 
     .story-h2.lg {
       font-size: 6rem;
@@ -2728,17 +2735,20 @@
     }
 
     .story-h2 .highlight {
-      display: block;
-      color: var(--green-light);
+      color: var(--tertiary);
+      position: relative;
     }
+
 
     .story-p {
       color: rgba(255, 255, 255, 0.7);
       font-size: 1.25rem;
       line-height: 1.7;
       max-width: 500px;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      font-weight: 500;
     }
+
 
     .story-p.center {
       margin: 0 auto 40px;
@@ -2776,13 +2786,16 @@
       aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 40px;
-      transform: rotate(-3deg);
-      box-shadow: 0 50px 80px rgba(0, 0, 0, 0.5);
+      transform: rotate(-1.5deg);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
+
     .floating-img-frame.s2 img {
-      transform: rotate(3deg);
+      transform: rotate(1.5deg);
     }
+
 
     .floating-badge {
       position: absolute;
