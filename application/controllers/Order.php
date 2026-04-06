@@ -120,6 +120,54 @@ class Order extends CI_Controller {
         echo json_encode($response);
     }
 
+    // Hapus pesanan (hanya pending/canceled yang boleh dihapus)
+    public function delete($id) {
+        // Cek order dulu
+        $order = $this->db->get_where('sales', ['id' => $id])->row_array();
+        
+        if (!$order) {
+            $this->session->set_flashdata('error', 'Pesanan tidak ditemukan.');
+            redirect($_SERVER['HTTP_REFERER'] ?? 'order');
+            return;
+        }
+
+        // Proteksi: hanya pending dan canceled yang boleh dihapus
+        $deletable_status = ['pending', 'canceled'];
+        if (!in_array($order['status'], $deletable_status)) {
+            $this->session->set_flashdata('error', '⚠️ Pesanan dengan status "' . strtoupper($order['status']) . '" tidak dapat dihapus karena sudah menjadi transaksi resmi.');
+            redirect($_SERVER['HTTP_REFERER'] ?? 'order');
+            return;
+        }
+
+        // Kembalikan stok produk
+        $details = $this->db->get_where('sales_detail', ['sales_id' => $id])->result_array();
+        foreach ($details as $d) {
+            $this->db->set('stock', 'stock + ' . (int)$d['qty'], FALSE);
+            $this->db->where('id', $d['product_id']);
+            $this->db->update('products');
+        }
+
+        // Hapus detail + header
+        $this->db->delete('sales_detail', ['sales_id' => $id]);
+        $this->db->delete('sales', ['id' => $id]);
+        
+        // Hapus bukti bayar jika ada
+        if (!empty($order['payment_proof'])) {
+            $proof_path = FCPATH . 'uploads/payments/' . $order['payment_proof'];
+            if (file_exists($proof_path)) {
+                unlink($proof_path);
+            }
+        }
+
+        $this->session->set_flashdata('success', '✅ Pesanan #' . $order['invoice_no'] . ' berhasil dihapus dan stok telah dikembalikan.');
+        
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            redirect('order');
+        }
+    }
+
     // Get order details via AJAX
     public function get_details($id) {
         $this->db->select('sales_detail.*, products.name as product_name');

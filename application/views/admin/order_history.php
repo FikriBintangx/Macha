@@ -111,7 +111,23 @@
                                             <span class="badge <?= $class ?> rounded-pill px-2 py-1" style="font-size: 0.7rem;"><?= ucfirst($o['status']) ?></span>
                                         </td>
                                         <td class="pe-4 py-3 text-center">
-                                            <a href="<?= site_url('order/update_status/'.$o['id'].'/completed') ?>" class="btn btn-sm btn-light border p-1" title="Selesai"><i class="bi bi-check2 text-success"></i></a>
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <?php if($o['status'] != 'completed'): ?>
+                                                    <a href="<?= site_url('order/update_status/'.$o['id'].'/completed') ?>" class="btn btn-sm btn-light border p-1" title="Tandai Selesai"><i class="bi bi-check2 text-success"></i></a>
+                                                <?php endif; ?>
+                                                <?php if(in_array($o['status'], ['pending', 'canceled'])): ?>
+                                                    <a href="<?= site_url('order/delete/'.$o['id']) ?>" 
+                                                       class="btn btn-sm btn-light border p-1" 
+                                                       title="Hapus Pesanan"
+                                                       onclick="return confirm('⚠️ Hapus pesanan #<?= $o['invoice_no'] ?>?\n\nStok produk akan dikembalikan.\nTindakan ini tidak dapat dibatalkan.')">
+                                                        <i class="bi bi-trash3-fill text-danger"></i>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <span class="btn btn-sm btn-light border p-1 disabled" title="Transaksi resmi tidak bisa dihapus" style="opacity:0.3;cursor:not-allowed;">
+                                                        <i class="bi bi-lock-fill text-muted"></i>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

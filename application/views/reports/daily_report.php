@@ -15,7 +15,7 @@
                         <th>Waktu</th>
                         <th>No. Nota</th>
                         <th>Total Bayar</th>
-                        <th>Status</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +36,20 @@
                                 if($st == 'completed') { $class = 'bg-success'; $text = 'Selesai'; }
                                 ?>
                                 <span class="badge <?= $class ?>"><?= $text ?></span>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex gap-1 justify-content-center">
+                                    <button onclick="window.open('<?= site_url('report/print_struk/'.$r['invoice_no']) ?>', '_blank', 'width=340,height=600')" class="btn btn-sm btn-outline-primary px-2 py-1">
+                                        <i class="bi bi-printer"></i>
+                                    </button>
+                                    <?php if(in_array($r['status'], ['pending', 'canceled'])): ?>
+                                        <a href="<?= site_url('order/delete/'.$r['id']) ?>" 
+                                           class="btn btn-sm btn-outline-danger px-2 py-1"
+                                           onclick="return confirm('⚠️ Hapus pesanan?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>

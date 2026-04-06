@@ -511,19 +511,23 @@
                     <div class="form-card">
                         <h5><i class="fa-solid fa-utensils me-2"></i>Jenis Pesanan</h5>
                         <div class="row g-3">
-                            <?php foreach($order_types as $index => $ot): ?>
-                            <div class="col-md-6">
-                                <label class="pay-option <?= $index === 0 ? 'selected' : '' ?> h-100" id="type_<?= $ot['type_code'] ?>" onclick="selectType(this,'<?= $ot['type_code'] ?>')">
-                                    <input type="radio" name="order_type" value="<?= $ot['type_code'] ?>" <?= $index === 0 ? 'checked' : '' ?>>
-                                    <div class="pay-icon" style="background:#1B3B2515;color:#1B3B25">
-                                        <i class="fa-solid <?= $ot['type_code'] == 'delivery' ? 'fa-truck-ramp-box' : 'fa-bag-shopping' ?>"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight:700;color:var(--green-dark)"><?= $ot['type_name'] ?></div>
-                                        <div style="font-size:.78rem;color:#7a9080">Pilihan pesanan Anda</div>
-                                    </div>
-                                </label>
-                            </div>
+                            <?php foreach ($order_types as $index => $ot): ?>
+                                <div class="col-md-6">
+                                    <label class="pay-option <?= $index === 0 ? 'selected' : '' ?> h-100"
+                                        id="type_<?= $ot['type_code'] ?>"
+                                        onclick="selectType(this,'<?= $ot['type_code'] ?>')">
+                                        <input type="radio" name="order_type" value="<?= $ot['type_code'] ?>" <?= $index === 0 ? 'checked' : '' ?>>
+                                        <div class="pay-icon" style="background:#1B3B2515;color:#1B3B25">
+                                            <i
+                                                class="fa-solid <?= $ot['type_code'] == 'delivery' ? 'fa-truck-ramp-box' : 'fa-bag-shopping' ?>"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:700;color:var(--green-dark)"><?= $ot['type_name'] ?>
+                                            </div>
+                                            <div style="font-size:.78rem;color:#7a9080">Pilihan pesanan Anda</div>
+                                        </div>
+                                    </label>
+                                </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -532,24 +536,32 @@
                     <div class="form-card mt-4">
                         <h5><i class="fa-solid fa-wallet me-2"></i>Metode Pembayaran</h5>
                         <div class="row g-3">
-                            <?php foreach($payment_methods as $index => $pm): ?>
-                            <div class="col-md-6">
-                                <label class="pay-option <?= $index === 0 ? 'selected' : '' ?> h-100" id="pay_<?= $pm['method_code'] ?>" onclick="selectPay(this,'<?= $pm['method_code'] ?>','<?= addslashes($pm['description'] ?? '') ?>')">
-                                    <input type="radio" name="payment_method" value="<?= $pm['method_name'] ?>" <?= $index === 0 ? 'checked' : '' ?>>
-                                    <div class="pay-icon" style="background:#1B3B2515;color:#1B3B25">
-                                        <i class="fa-solid <?= $pm['method_code'] == 'cod' ? 'fa-money-bill-wave' : 'fa-building-columns' ?>"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight:700;color:var(--green-dark)"><?= $pm['method_name'] ?></div>
-                                        <div style="font-size:.78rem;color:#7a9080"><?= htmlspecialchars(substr($pm['description'] ?? 'Pilih metode ini', 0, 30)) ?>...</div>
-                                    </div>
-                                </label>
-                            </div>
+                            <?php foreach ($payment_methods as $index => $pm): ?>
+                                <div class="col-md-6">
+                                    <label class="pay-option <?= $index === 0 ? 'selected' : '' ?> h-100"
+                                        id="pay_<?= $pm['method_code'] ?>"
+                                        onclick="selectPay(this,'<?= $pm['method_code'] ?>','<?= addslashes($pm['description'] ?? '') ?>')">
+                                        <input type="radio" name="payment_method" value="<?= $pm['method_name'] ?>"
+                                            <?= $index === 0 ? 'checked' : '' ?>>
+                                        <div class="pay-icon" style="background:#1B3B2515;color:#1B3B25">
+                                            <i
+                                                class="fa-solid <?= $pm['method_code'] == 'cod' ? 'fa-money-bill-wave' : 'fa-building-columns' ?>"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:700;color:var(--green-dark)"><?= $pm['method_name'] ?>
+                                            </div>
+                                            <div style="font-size:.78rem;color:#7a9080">
+                                                <?= htmlspecialchars(substr($pm['description'] ?? 'Pilih metode ini', 0, 30)) ?>...
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
                             <?php endforeach; ?>
                         </div>
 
                         <!-- Info Boxes (Dynamic) -->
-                        <div id="paymentInfoBox" class="mt-4 p-4 rounded-4 d-none" style="background:#f0faf4; border: 2px dashed var(--gl);">
+                        <div id="paymentInfoBox" class="mt-4 p-4 rounded-4 d-none"
+                            style="background:#f0faf4; border: 2px dashed var(--gl);">
                             <div class="d-flex gap-3">
                                 <div class="fs-3 text-success"><i class="fa-solid fa-circle-check"></i></div>
                                 <div>
@@ -627,57 +639,7 @@
                         </div>
                     </div>
 
-                    <!-- Metode Pembayaran -->
-                    <div class="form-card">
-                        <h5><i class="fa-solid fa-wallet me-2" style="color:var(--green-main)"></i>Metode Pembayaran
-                        </h5>
-
-                        <label class="pay-option selected" id="optQRIS" onclick="selectPay(this,'Transfer')">
-                            <input type="radio" name="payment_method" value="Transfer" checked>
-                            <div class="pay-icon" style="background:#DE000010;color:#DE0000"><i
-                                    class="fa-solid fa-university"></i></div>
-                            <div>
-                                <div style="font-weight:700;color:var(--green-dark)">Transfer Bank / QRIS</div>
-                                <div style="font-size:.82rem;color:#7a9080">Bayar dulu & upload bukti bayar</div>
-                            </div>
-                        </label>
-
-                        <label class="pay-option" id="optCash" onclick="selectPay(this,'COD')">
-                            <input type="radio" name="payment_method" value="COD">
-                            <div class="pay-icon" style="background:#53725D20;color:#53725D"><i
-                                    class="fa-solid fa-hand-holding-dollar"></i></div>
-                            <div>
-                                <div style="font-weight:700;color:var(--green-dark)">Bayar di Tempat (COD)</div>
-                                <div style="font-size:.82rem;color:#7a9080">Bayar saat ambil / Kurir sampai</div>
-                            </div>
-                        </label>
-
-                        <!-- Info Payment -->
-                        <div id="paymentInfoArea">
-                            <div class="rekening-card" id="qrisInfo"
-                                style="background:#f0fdf4; border:2.5px solid var(--gm); border-radius:18px; padding:24px; margin-top:20px; text-align:center;">
-                                <div class="mb-3">
-                                    <h6 class="fw-bold mb-1">Pembayaran Digital (QRIS)</h6>
-                                    <p class="text-muted small">Scan QR & simpan bukti bayar</p>
-                                </div>
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Marimacha_QRIS_Payment"
-                                    alt="QRIS Marimacha" class="img-fluid rounded-4 shadow-sm mb-3"
-                                    style="width:200px; border:6px solid #fff;">
-                                <div class="alert alert-warning py-2 px-3 rounded-pill d-inline-block small fw-bold">
-                                    Upload bukti di menu 'Akun Saya' setelah checkout.
-                                </div>
-                            </div>
-
-                            <div class="rekening-card d-none" id="cashInfo"
-                                style="background:#fffcf0; border:2.5px dashed #d97706; border-radius:18px; padding:24px; margin-top:20px;">
-                                <h6 class="fw-bold mb-2 d-flex align-items-center gap-2" style="color:#92400e">
-                                    <i class="fa-solid fa-circle-info"></i> Bayar di Tempat
-                                </h6>
-                                <p class="small mb-0" style="color:#92400e">Pesanan akan diproses dan pembayarannya
-                                    dilakukan secara tunai kepada Kasir atau Kurir saat pesanan diterima.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Section Metode Pembayaran hardcoded sudah dihapus, digantikan oleh section Dynamic di atas -->
 
                 </form>
             </div>
@@ -691,14 +653,16 @@
                             <div class="d-flex justify-content-between align-items-start w-100">
                                 <div>
                                     <div style="font-weight:800; font-size:1rem; color:#fff;">
-                                        <?= htmlspecialchars($item['name']) ?></div>
+                                        <?= htmlspecialchars($item['name']) ?>
+                                    </div>
                                     <div style="font-size:0.75rem; color:var(--gl); font-weight:700;">
                                         <?php if (!empty($item['preferences'])): ?>
                                             <i class="fa-solid fa-check-double me-1"></i><?= $item['preferences'] ?>
                                         <?php endif; ?>
                                     </div>
                                     <div class="mt-1" style="font-size:0.8rem; opacity:0.7;">Qty: <?= $item['qty'] ?> × Rp
-                                        <?= number_format($item['price'], 0, ',', '.') ?></div>
+                                        <?= number_format($item['price'], 0, ',', '.') ?>
+                                    </div>
                                 </div>
                                 <div style="font-weight:900; color:var(--gl); text-align:right;">
                                     Rp <?= number_format($item['subtotal'], 0, ',', '.') ?>
@@ -741,7 +705,7 @@
     <script>
         // STEP LINE ANIMATION
         setTimeout(function () { document.getElementById('line1').style.width = '100%'; }, 300);
-        
+
         // ORDER TYPE SELECTION (DYNAMIC)
         function selectType(el, type) {
             // Remove selected class from all order type options
@@ -750,7 +714,7 @@
             el.classList.add('selected');
             // Check the radio
             el.querySelector('input[type="radio"]').checked = true;
-            
+
             // Toggle Address Section
             const addressSection = document.getElementById('addressSection');
             if (type === 'delivery') {

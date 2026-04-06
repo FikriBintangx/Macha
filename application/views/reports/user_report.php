@@ -119,9 +119,22 @@ if (!empty($reports)) {
                         </td>
                         <td class="text-end fw-semibold align-middle text-dark trx-price" data-label="TOTAL" data-price="<?= $r['total_price'] ?>">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
                         <td class="text-center align-middle" data-label="AKSI">
-                            <button onclick="window.open('<?= site_url('report/print_struk/'.$r['invoice_no']) ?>', '_blank', 'width=340,height=600')" class="btn btn-sm btn-white border shadow-sm text-primary rounded-pill px-4 py-2">
-                                <i class="bi bi-printer me-1"></i> Cetak Struk
-                            </button>
+                            <div class="d-flex gap-1 justify-content-center">
+                                <button onclick="window.open('<?= site_url('report/print_struk/'.$r['invoice_no']) ?>', '_blank', 'width=340,height=600')" class="btn btn-sm btn-white border shadow-sm text-primary rounded-pill px-3 py-2">
+                                    <i class="bi bi-printer me-1"></i> Cetak
+                                </button>
+                                <?php if(in_array($r['status'], ['pending', 'canceled'])): ?>
+                                    <a href="<?= site_url('order/delete/'.$r['id']) ?>" 
+                                       class="btn btn-sm btn-white border shadow-sm text-danger rounded-pill px-3 py-2"
+                                       onclick="return confirm('⚠️ Hapus pesanan #<?= $r['invoice_no'] ?>?\n\nStok akan dikembalikan dan data akan dihapus permanen.')">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <button class="btn btn-sm btn-white border shadow-sm text-muted rounded-pill px-3 py-2" disabled title="Pesanan sukses tidak bisa dihapus">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>

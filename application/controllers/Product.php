@@ -182,16 +182,13 @@ class Product extends CI_Controller {
     public function delete($id = null) {
         if ($id == null) { redirect('product'); }
 
-        // Cek apakah ada pesanan pending yang berisi produk ini
-        $this->db->select('sales.id');
-        $this->db->from('sales');
-        $this->db->join('sales_detail', 'sales.id = sales_detail.sales_id');
-        $this->db->where('sales_detail.product_id', $id);
-        $this->db->where('sales.status', 'pending');
-        $pending_orders = $this->db->get()->num_rows();
+        // Cek apakah produk ini ada dalam riwayat transaksi (apapun statusnya)
+        // Hal ini untuk menjaga integritas data laporan penjualan
+        $this->db->where('product_id', $id);
+        $has_history = $this->db->get('sales_detail')->num_rows();
 
-        if ($pending_orders > 0) {
-            $this->session->set_flashdata('error', 'Produk tidak bisa dihapus karena masih ada pesanan yang pending!');
+        if ($has_history > 0) {
+            $this->session->set_flashdata('error', '⚠️ Produk tidak bisa dihapus karena sudah memiliki riwayat transaksi. Menghapus produk ini akan merusak data laporan penjualan masa lalu.');
             redirect('product');
             return;
         }
