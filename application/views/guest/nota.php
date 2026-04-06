@@ -225,6 +225,9 @@
                     <button onclick="window.print()" class="btn-print">
                         <i class="fa-solid fa-print me-2"></i> Cetak Nota
                     </button>
+                    <a href="<?= base_url('shop/reorder/'.$sales['id']) ?>" class="btn btn-outline-success rounded-pill fw-bold px-4">
+                        <i class="fa-solid fa-rotate-left me-2"></i> Pesan Lagi
+                    </a>
                     <?php if($this->session->userdata('userid')): ?>
                     <a href="<?= base_url('user') ?>" class="btn btn-outline-success rounded-pill fw-bold px-4">
                         <i class="fa-solid fa-user me-2"></i> Akun Saya

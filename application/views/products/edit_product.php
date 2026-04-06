@@ -112,6 +112,11 @@
                             </div>
 
                             <div class="mb-3">
+                                <label class="form-label fw-bold small">Deskripsi Produk</label>
+                                <textarea name="description" class="form-control shadow-none" rows="3" placeholder="Masukkan deskripsi produk"><?= $product['description'] ?></textarea>
+                            </div>
+
+                            <div class="mb-3">
                                 <label class="form-label fw-bold small">Kategori</label>
                                 <select name="category_id" class="form-select shadow-none" required>
                                     <?php foreach($categories as $c): ?>

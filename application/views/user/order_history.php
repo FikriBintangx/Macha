@@ -416,7 +416,7 @@
                                 <i class="fa-solid fa-upload"></i> Upload Bukti
                             </a>
                             <?php elseif ($o['status'] == 'completed'): ?>
-                            <a href="<?= base_url('shop') ?>" class="btn-act btn-act-outline">
+                            <a href="<?= site_url('shop/reorder/'.$o['id']) ?>" class="btn-act btn-act-outline">
                                 <i class="fa-solid fa-rotate-left"></i> Pesan Lagi
                             </a>
                             <?php endif; ?>

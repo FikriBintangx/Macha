@@ -48,6 +48,11 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label class="form-label small fw-bold">DESKRIPSI PRODUK</label>
+                                        <textarea name="description" class="form-control border-0 shadow-sm" rows="3" placeholder="Tuliskan detail rasa, komposisi, atau rincian lainnya..."></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label class="form-label small fw-bold">KATEGORI</label>
                                         <select name="category_id" class="form-select border-0 shadow-sm" required>
                                             <option value="">-- Pilih Kategori --</option>
