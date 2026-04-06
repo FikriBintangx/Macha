@@ -35,8 +35,9 @@ class User extends CI_Controller {
     private function _ensure_user_columns() {
         $fields = $this->db->list_fields('users');
         $needed = [
-            'phone'   => 'VARCHAR(20) NULL AFTER full_name',
-            'address' => 'TEXT NULL AFTER phone'
+            'phone'         => 'VARCHAR(20) NULL AFTER full_name',
+            'address'       => 'TEXT NULL AFTER phone',
+            'profile_image' => "VARCHAR(255) NULL DEFAULT 'default_user.png' AFTER address"
         ];
         foreach ($needed as $col => $def) {
             if (!in_array($col, $fields)) {
@@ -166,15 +167,20 @@ class User extends CI_Controller {
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('image')) {
-                // Hapus foto lama jika bukan default
-                if ($user['profile_image'] != 'default_user.png' && file_exists($config['upload_path'] . $user['profile_image'])) {
-                    unlink($config['upload_path'] . $user['profile_image']);
+                // Hapus foto lama jika bukan default dan ada filenya
+                $old_img = $user['profile_image'] ?? 'default_user.png';
+                if ($old_img != 'default_user.png' && !empty($old_img)) {
+                    $old_path = $config['upload_path'] . $old_img;
+                    if (is_file($old_path) && file_exists($old_path)) {
+                        unlink($old_path);
+                    }
                 }
                 
                 $upload_data = $this->upload->data();
                 $update_data['profile_image'] = $upload_data['file_name'];
                 $this->session->set_userdata('profile_image', $upload_data['file_name']); // Update session
-            } else {
+            }
+ else {
                 $this->session->set_flashdata('error', $this->upload->display_errors());
                 redirect('user/profile');
                 return;
