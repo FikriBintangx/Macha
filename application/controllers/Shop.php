@@ -96,6 +96,16 @@ class Shop extends CI_Controller
         redirect('shop/cart');
     }
 
+    public function increase_cart($index) {
+        $cart = $this->session->userdata('cart') ?: [];
+        if (isset($cart[$index])) {
+            $cart[$index]['qty']++;
+            $cart[$index]['subtotal'] = $cart[$index]['price'] * $cart[$index]['qty'];
+        }
+        $this->session->set_userdata('cart', $cart);
+        redirect('shop/cart');
+    }
+
     public function remove_cart($index) {
         $cart = $this->session->userdata('cart') ?: [];
         if (isset($cart[$index])) {

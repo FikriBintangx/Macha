@@ -171,7 +171,7 @@
                                         <span class="qty-btn" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">−</span>
                                         <?php endif; ?>
                                         <span class="qty-num"><?= $item['qty'] ?></span>
-                                        <a href="<?= base_url('shop/add_to_cart/'.$id) ?>" class="qty-btn" title="Tambah">+</a>
+                                        <a href="<?= base_url('shop/increase_cart/'.$id) ?>" class="qty-btn" title="Tambah">+</a>
                                     </div>
                                 </div>
                                 <div>
