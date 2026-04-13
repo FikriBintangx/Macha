@@ -66,7 +66,7 @@ class M_settings extends CI_Model {
             $this->dbforge->create_table('payment_methods');
 
             $this->db->insert_batch('payment_methods', [
-                ['method_name' => 'Transfer Bank / QRIS', 'method_code' => 'transfer', 'description' => 'BCA 1234567890 a/n MariMacha'],
+                ['method_name' => 'Transfer Bank / QRIS', 'method_code' => 'transfer', 'description' => 'BCA 1234567890 a/n MariMatcha'],
                 ['method_name' => 'Bayar di Tempat (COD)', 'method_code' => 'cod', 'description' => 'Bayar saat menerima pesanan']
             ]);
         } else {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Saya | MariMacha</title>
+    <title>Profil Saya | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,7 +132,7 @@
     <nav class="navbar navbar-macha fixed-top">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMacha
+                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
             </a>
             <div class="d-flex gap-2 align-items-center">
                 <a href="<?= base_url('user') ?>" class="nav-pill" style="border:none; color:var(--green-soft)"><i class="fa-solid fa-arrow-left me-1"></i>Kembali</a>

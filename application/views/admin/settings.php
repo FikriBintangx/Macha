@@ -394,7 +394,7 @@
                     </div>
                     <div class="mb-1 d-none" id="wrapDesc">
                         <label class="p-label">Keterangan / Nomor Rekening</label>
-                        <textarea name="desc" id="masterDesc" class="form-control p-control" rows="3" placeholder="Contoh: BCA 1234567890 a/n MariMacha"></textarea>
+                        <textarea name="desc" id="masterDesc" class="form-control p-control" rows="3" placeholder="Contoh: BCA 1234567890 a/n MariMatcha"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-0 p-4 pt-0">

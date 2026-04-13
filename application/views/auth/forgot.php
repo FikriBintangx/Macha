@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title><?= isset($mode)&&$mode==='reset'?'Reset Password':'Lupa Password' ?> | MariMacha</title>
+<title><?= isset($mode)&&$mode==='reset'?'Reset Password':'Lupa Password' ?> | MariMatcha</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -54,7 +54,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;background:linear-gradient
 <body>
 <div class="forgot-card">
 <div class="forgot-header">
-<div class="brand"><i class="fa-solid fa-leaf"></i>MariMacha</div>
+<div class="brand"><i class="fa-solid fa-leaf"></i>MariMatcha</div>
 <?php $is_reset = isset($mode) && $mode === 'reset'; ?>
 <div class="hdr-icon"><?= $is_reset ? '🔒' : '🔑' ?></div>
 <div class="hdr-title"><?= $is_reset ? 'Buat Password Baru' : 'Lupa Password?' ?></div>
@@ -75,7 +75,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;background:linear-gradient
 
 <?php if (!$is_reset): ?>
 <!-- STEP 1: CARI USERNAME -->
-<div class="info-box"><i class="fa-solid fa-circle-info"></i>Masukkan username akun MariMacha kamu. Kami akan membantu kamu mengatur ulang password.</div>
+<div class="info-box"><i class="fa-solid fa-circle-info"></i>Masukkan username akun MariMatcha kamu. Kami akan membantu kamu mengatur ulang password.</div>
 <form action="<?= base_url('auth/do_forgot') ?>" method="post" id="forgotForm">
 <div class="field-wrap">
 <label class="field-label">Username Akun</label>

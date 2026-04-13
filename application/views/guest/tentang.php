@@ -40,11 +40,11 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
                 <?php if(!empty($shop_logo)): ?>
-                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
                 <?php else: ?>
                     <i class="fa-solid fa-leaf text-success me-2"></i>
                 <?php endif; ?>
-                <span>MariMacha</span>
+                <span>MariMatcha</span>
                 
                 <?php if(isset($shop_status)): ?>
                     <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; background: #fff; border: 2px solid var(--macha-primary); color: #000; border-radius: 50px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-left: 10px;">
@@ -102,8 +102,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="p-4 rounded-4" style="background: linear-gradient(135deg, #f8faf9, #fff); border: 1px solid #eef3eb;">
-                                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-users me-2 text-success"></i>Di Balik MariMacha</h5>
-                                    <p class="text-muted mb-0">MariMacha didirikan oleh dua orang sahabat, <strong>Zaki & Teman</strong>, yang memiliki visi yang sama untuk menghadirkan kelezatan matcha premium bagi semua orang. Dengan pembagian tugas yang fleksibel dan penuh dedikasi, kami berkomitmen menjaga kualitas setiap menu yang sampai ke tangan Anda.</p>
+                                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-users me-2 text-success"></i>Di Balik MariMatcha</h5>
+                                    <p class="text-muted mb-0">MariMatcha didirikan oleh dua orang sahabat, <strong>Zaki & Teman</strong>, yang memiliki visi yang sama untuk menghadirkan kelezatan matcha premium bagi semua orang. Dengan pembagian tugas yang fleksibel dan penuh dedikasi, kami berkomitmen menjaga kualitas setiap menu yang sampai ke tangan Anda.</p>
                                 </div>
                             </div>
                         </div>

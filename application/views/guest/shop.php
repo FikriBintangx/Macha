@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Katalog Menu | MariMacha</title>
+<title>Katalog Menu | MariMatcha</title>
 <meta name="description" content="Pilih minuman matcha premium favoritmu. Berbagai varian tersedia, fresh setiap hari.">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -181,11 +181,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="container">
 <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
     <?php if(!empty($shop_logo)): ?>
-        <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+        <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
     <?php else: ?>
         <i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>
     <?php endif; ?>
-    <span>MariMacha</span>
+    <span>MariMatcha</span>
     
     <?php if(isset($shop_status)): ?>
         <div class="shop-status-pill">
@@ -328,7 +328,7 @@ else:?>
 <div id="noResults"><span style="font-size:3rem;display:block;margin-bottom:12px">🔍</span>Tidak ada produk yang cocok</div>
 </div>
 
-<footer class="text-center"><p class="mb-0" style="font-size:.85rem;color:#8aa898">© <?=date('Y')?> <strong style="color:var(--gd)">MariMacha</strong>. Dibuat dengan ❤️</p></footer>
+<footer class="text-center"><p class="mb-0" style="font-size:.85rem;color:#8aa898">© <?=date('Y')?> <strong style="color:var(--gd)">MariMatcha</strong>. Dibuat dengan ❤️</p></footer>
 
 <!-- MODAL DETAIL PRODUK -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">

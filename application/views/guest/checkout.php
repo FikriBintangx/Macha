@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | MariMacha</title>
+    <title>Checkout | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -471,11 +471,11 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
                 <?php if(!empty($shop_logo)): ?>
-                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
                 <?php else: ?>
                     <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
                 <?php endif; ?>
-                <span>MariMacha</span>
+                <span>MariMatcha</span>
             </a>
             <a href="<?= base_url('shop/cart') ?>" class="text-muted text-decoration-none" style="font-size:.9rem">
                 <i class="fa-solid fa-arrow-left me-1"></i>Kembali ke Keranjang
@@ -647,7 +647,7 @@
                     <!-- QRIS Modal Content (Embedded for easy access) -->
                     <?php if(!empty($qris_barcode)): ?>
                     <div id="qrisSection" class="d-none mt-4 text-center p-3 rounded-4" style="background:#fff; border: 2px solid #edf1ed;">
-                        <h6 class="fw-bold mb-3"><i class="bi bi-qr-code-scan me-2 text-success"></i>Scan QRIS MariMacha</h6>
+                        <h6 class="fw-bold mb-3"><i class="bi bi-qr-code-scan me-2 text-success"></i>Scan QRIS MariMatcha</h6>
                         <div class="qris-img-wrap mx-auto mb-3" style="max-width:250px; border: 10px solid #f8faf9; border-radius: 20px;">
                             <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS Barcode" class="img-fluid">
                         </div>

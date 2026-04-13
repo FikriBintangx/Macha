@@ -133,7 +133,7 @@ class Home extends CI_Controller {
                     'name' => 'Dimas Prasetyo',
                     'location' => 'Bekasi',
                     'stars' => 5,
-                    'quote' => 'Pelayanan ramah, pengiriman cepat. Packaging juga rapi dan tebal, jadi aman di jalan. Puas banget belanja di MariMacha!'
+                    'quote' => 'Pelayanan ramah, pengiriman cepat. Packaging juga rapi dan tebal, jadi aman di jalan. Puas banget belanja di MariMatcha!'
                 ],
                 [
                     'name' => 'Sari Dewi',

@@ -24,7 +24,7 @@ $old_map = <<<HTML
           <div class="node" style="top: 72%; left: 26%; width: 14px; height: 14px; background:#fff; z-index:10;">
             <div class="node-pulse" style="background:#fff"></div>
             <div class="location-card" style="top: -20px; left: 50%; opacity:1; display:flex; flex-direction:column; background:white; color:black; padding:10px; border-radius:10px;">
-               <span class="loc-title">Pusat MariMacha</span>
+               <span class="loc-title">Pusat MariMatcha</span>
                <span class="loc-desc">Tangerang, Banten</span>
             </div>
           </div>
@@ -87,7 +87,7 @@ $new_map = <<<HTML
 
         <!-- Location Tooltip for Tangerang -->
         <div style="position:absolute; top: 62%; left: 26%; transform:translateX(-50%); background:rgba(255,255,255,0.95); padding:8px 16px; border-radius:12px; text-align:center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index:10; pointer-events:none;">
-            <div style="font-weight:900; font-size:0.9rem; color:#102416;">Pusat MariMacha</div>
+            <div style="font-weight:900; font-size:0.9rem; color:#102416;">Pusat MariMatcha</div>
             <div style="font-size:0.75rem; color:#53725D;"><i class="fa-solid fa-location-dot me-1"></i> Tangerang, Banten</div>
             <div style="position:absolute; top:-6px; left:50%; width:12px; height:12px; background:rgba(255,255,255,0.95); transform:translateX(-50%) rotate(45deg);"></div>
         </div>

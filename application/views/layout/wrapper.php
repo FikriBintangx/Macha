@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title><?= $title ?> | MariMacha</title>
+    <title><?= $title ?> | MariMatcha</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -56,11 +56,11 @@
         }
         .sidebar-brand:hover { color: #fff; }
         .brand-icon {
-            width: 40px; height: 40px;
+            width: 50px; height: 50px;
             background: #fff;
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--green-main);
             flex-shrink: 0;
             overflow: hidden;
@@ -629,7 +629,7 @@
                 <?php endif; ?>
             </div>
             <div class="brand-text">
-                <h5>MariMacha</h5>
+                <h5>MariMatcha</h5>
                 <small>Admin Panel</small>
             </div>
         </a>
@@ -776,7 +776,7 @@
     <main class="main-content">
         <div class="page-header-mobile">
             <h4 class="fw-bold mb-0 text-success"><?= $title ?></h4>
-            <div class="small text-muted opacity-75">MariMacha Admin Panel</div>
+            <div class="small text-muted opacity-75">MariMatcha Admin Panel</div>
         </div>
         <?php if(isset($content)) $this->load->view($content); ?>
     </main>

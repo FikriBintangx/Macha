@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Bukti Bayar | MariMacha</title>
+    <title>Upload Bukti Bayar | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -55,7 +55,7 @@
     <nav class="navbar navbar-macha fixed-top">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMacha
+                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
             </a>
             <a href="<?= base_url('user') ?>" class="btn-back"><i class="fa-solid fa-arrow-left me-1"></i>Kembali</a>
         </div>
@@ -90,7 +90,7 @@
                                 <div class="rek-info flex-grow-1">
                                     <div class="bank-name">BCA</div>
                                     <div class="rek-no" id="bca-no">1234567890</div>
-                                    <div class="atas-nama">A.N MariMacha</div>
+                                    <div class="atas-nama">A.N MariMatcha</div>
                                 </div>
                                 <button class="copy-btn" onclick="copyNo('bca-no', this)">Salin</button>
                             </div>
@@ -99,7 +99,7 @@
                                 <div class="rek-info flex-grow-1">
                                     <div class="bank-name">Mandiri</div>
                                     <div class="rek-no" id="mandiri-no">0987654321</div>
-                                    <div class="atas-nama">A.N MariMacha</div>
+                                    <div class="atas-nama">A.N MariMatcha</div>
                                 </div>
                                 <button class="copy-btn" onclick="copyNo('mandiri-no', this)">Salin</button>
                             </div>
@@ -108,7 +108,7 @@
                                 <div class="rek-info flex-grow-1">
                                     <div class="bank-name">GoPay / OVO / Dana</div>
                                     <div class="rek-no" id="gopay-no">081234567890</div>
-                                    <div class="atas-nama">A.N MariMacha</div>
+                                    <div class="atas-nama">A.N MariMatcha</div>
                                 </div>
                                 <button class="copy-btn" onclick="copyNo('gopay-no', this)">Salin</button>
                             </div>

@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Daftar Akun | MariMacha</title>
+<title>Daftar Akun | MariMatcha</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -76,7 +76,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:s
 <div class="auth-left">
 <div class="auth-left-bg"></div>
 <div class="auth-left-overlay">
-<div class="auth-brand"><i class="fa-solid fa-leaf"></i>MariMacha</div>
+<div class="auth-brand"><i class="fa-solid fa-leaf"></i>MariMatcha</div>
 <div class="auth-tagline">Bergabung dengan ribuan pelanggan setia</div>
 <div class="steps-visual">
 <div class="sv-item"><div class="sv-num">1</div><div class="sv-text"><strong>Buat akun gratis</strong><span>Isi data hanya sekali</span></div></div>
@@ -90,7 +90,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:s
 <!-- RIGHT -->
 <div class="auth-right">
 <div class="auth-card">
-<div class="auth-logo-mobile"><i class="fa-solid fa-leaf"></i>MariMacha</div>
+<div class="auth-logo-mobile"><i class="fa-solid fa-leaf"></i>MariMatcha</div>
 <a href="<?= base_url('auth') ?>" class="back-link"><i class="fa-solid fa-arrow-left"></i>Sudah punya akun? Login</a>
 <h1 class="auth-title">Buat Akun Baru 🎉</h1>
 <p class="auth-sub">Daftar gratis dan mulai belanja matcha!</p>
@@ -133,7 +133,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:s
 
 <div class="terms-row">
 <input type="checkbox" id="agreeTerms" required>
-<label for="agreeTerms">Saya setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a> MariMacha.</label>
+<label for="agreeTerms">Saya setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a> MariMatcha.</label>
 </div>
 
 <button type="submit" class="btn-auth" id="btnReg">

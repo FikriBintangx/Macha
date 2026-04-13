@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nota Pesanan | MariMacha</title>
+    <title>Nota Pesanan | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -124,7 +124,7 @@
         <div class="nota-paper">
             <!-- Header -->
             <div class="nota-header">
-                <div class="logo"><i class="fa-solid fa-leaf me-2"></i>MariMacha</div>
+                <div class="logo"><i class="fa-solid fa-leaf me-2"></i>MariMatcha</div>
                 <div class="invoice-num">Nota / Invoice Pesanan</div>
                 <?php
                     $status_map=[
@@ -241,7 +241,7 @@
                     </div>
                     <div class="rek-row">
                         <span class="label">Atas Nama</span>
-                        <span class="value">MariMacha Premium</span>
+                        <span class="value">MariMatcha Premium</span>
                     </div>
                     <div class="rek-row">
                         <span class="label">Jumlah Transfer</span>
@@ -260,7 +260,7 @@
                     <p>Pesanan Anda sudah kami terima! Kirim bukti transfer via WhatsApp agar admin bisa langsung memproses pesanan ✨</p>
                     <?php 
                         $invoice_url = base_url('shop/invoice/'.$order['id']);
-                        $wa_msg = urlencode("Halo MariMacha! Saya ingin konfirmasi pembayaran untuk:\n\n📌 No Invoice: " . $order['invoice_no'] . "\n💰 Total: Rp " . number_format($order['total_price'],0,',','.') . "\n\n🌐 Lacak Pesanan Melalui Website:\n" . $invoice_url . "\n\nTerima kasih!");
+                        $wa_msg = urlencode("Halo MariMatcha! Saya ingin konfirmasi pembayaran untuk:\n\n📌 No Invoice: " . $order['invoice_no'] . "\n💰 Total: Rp " . number_format($order['total_price'],0,',','.') . "\n\n🌐 Lacak Pesanan Melalui Website:\n" . $invoice_url . "\n\nTerima kasih!");
                     ?>
                     <a href="https://wa.me/<?= $admin_phone ?>?text=<?= $wa_msg ?>" target="_blank" class="btn-wa-confirm">
                         <i class="fa-brands fa-whatsapp"></i> Konfirmasi via WhatsApp
@@ -288,7 +288,7 @@
             </div>
 
             <div class="nota-footer">
-                <p>Terima kasih telah berbelanja di <strong>MariMacha</strong> 🌿 | Citra Raya, Tangerang, Banten</p>
+                <p>Terima kasih telah berbelanja di <strong>MariMatcha</strong> 🌿 | Citra Raya, Tangerang, Banten</p>
                 <p>WA: <?= substr($admin_phone,0,2) ?>-<?= substr($admin_phone,2,4) ?>-<?= substr($admin_phone,6,4) ?>-<?= substr($admin_phone,10) ?> | IG: @marimatcha_panongan</p>
             </div>
         </div>

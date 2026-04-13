@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akun Saya | MariMacha</title>
+    <title>Akun Saya | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -279,7 +279,7 @@
     <nav class="navbar navbar-macha fixed-top">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMacha
+                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
             </a>
             <div class="d-flex gap-2 align-items-center">
                 <a href="<?= site_url('shop') ?>" class="nav-pill"><i class="fa-solid fa-bag-shopping"></i>Belanja</a>

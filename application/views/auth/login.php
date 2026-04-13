@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login | MariMacha</title>
+<title>Login | MariMatcha</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -90,7 +90,7 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:s
 <div class="auth-left">
 <div class="auth-left-bg"></div>
 <div class="auth-left-overlay">
-<div class="auth-brand"><i class="fa-solid fa-leaf"></i>MariMacha</div>
+<div class="auth-brand"><i class="fa-solid fa-leaf"></i>MariMatcha</div>
 <div class="auth-tagline">Minuman Matcha Premium Indonesia</div>
 <div class="auth-features">
 <div class="auth-feat"><div class="feat-icon">🍵</div><div class="feat-text">100+ Varian minuman matcha premium</div></div>
@@ -106,13 +106,13 @@ body{font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:s
 <div class="auth-right">
 <div class="auth-card">
 <!-- Mobile Brand -->
-<div class="auth-logo-mobile"><i class="fa-solid fa-leaf"></i>MariMacha</div>
+<div class="auth-logo-mobile"><i class="fa-solid fa-leaf"></i>MariMatcha</div>
 
 <!-- Back to home -->
 <a href="<?= base_url() ?>" class="back-link"><i class="fa-solid fa-arrow-left"></i>Kembali ke Beranda</a>
 
 <h1 class="auth-title">Selamat Datang 👋</h1>
-<p class="auth-sub">Masuk ke akun MariMacha kamu</p>
+<p class="auth-sub">Masuk ke akun MariMatcha kamu</p>
 
 <!-- Flash -->
 <?php if($this->session->flashdata('error')):?>

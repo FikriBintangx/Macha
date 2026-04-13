@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Belanja | MariMacha</title>
+    <title>Keranjang Belanja | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -124,11 +124,11 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
                 <?php if(!empty($shop_logo)): ?>
-                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
                 <?php else: ?>
                     <i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>
                 <?php endif; ?>
-                <span>MariMacha</span>
+                <span>MariMatcha</span>
                 
                 <?php if(isset($shop_status)): ?>
                     <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; background: #fff; border: 2px solid var(--gm); color: #000; border-radius: 50px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-left:10px;">

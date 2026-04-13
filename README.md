@@ -1,7 +1,7 @@
-# 🌿 MariMacha - Premium Matcha Experience
+# 🌿 MariMatcha - Premium Matcha Experience
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/FikriBintangx/Macha/main/assets/img/logo.png" width="600" alt="MariMacha Hero">
+  <img src="https://raw.githubusercontent.com/FikriBintangx/Macha/main/assets/img/logo.png" width="600" alt="MariMatcha Hero">
   <p align="center">
     <strong>Experience the ritual of peace in every sip.</strong>
   </p>
@@ -14,9 +14,9 @@
 
 ---
 
-## 🍵 About MariMacha
+## 🍵 About MariMatcha
 
-**MariMacha** is a high-end, cinematic e-commerce landing page specifically designed for premium Matcha products. It's not just a shop; it's a digital experience that guides the user through the journey of matcha—from its origin in high-altitude tea gardens to the slow-grinding process and finally into your cup.
+**MariMatcha** is a high-end, cinematic e-commerce landing page specifically designed for premium Matcha products. It's not just a shop; it's a digital experience that guides the user through the journey of matcha—from its origin in high-altitude tea gardens to the slow-grinding process and finally into your cup.
 
 ---
 

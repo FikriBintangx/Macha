@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MariMacha – Minuman Matcha Premium UMKM</title>
+  <title>MariMatcha – Minuman Matcha Premium UMKM</title>
   <meta name="description"
     content="Minuman matcha segar berkualitas premium dari Tangerang. Pesan langsung secara online, pengiriman ke seluruh Indonesia.">
 
@@ -19,7 +19,7 @@
 
   <style>
     :root {
-      /* MariMacha Brand Palette */
+      /* MariMatcha Brand Palette */
       --green-dark: #102416;
       /* Harder dark */
       --green-main: #1B3B25;
@@ -2096,7 +2096,7 @@
   <div class="m-preloader" id="preloader">
     <div class="preloader-logo">
       <i class="fa-solid fa-leaf" id="preloaderLeaf"></i>
-      <span id="preloaderText">MariMacha</span>
+      <span id="preloaderText">MariMatcha</span>
     </div>
     <div class="preloader-bar-wrap">
       <div class="preloader-bar" id="preloaderBar"></div>
@@ -2110,11 +2110,11 @@
     <div class="container position-relative">
       <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
         <?php if(!empty($shop_logo)): ?>
-            <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 32px; width: auto; object-fit: contain; margin-right: 10px;">
+            <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
         <?php else: ?>
             <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
         <?php endif; ?>
-        <span>MariMacha</span>
+        <span>MariMatcha</span>
         
         <?php if(isset($shop_status)): ?>
             <div class="shop-status-pill">
@@ -2194,7 +2194,7 @@
             <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
               <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
             </a>
-            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk"
+            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk"
               target="_blank" rel="noopener noreferrer" class="btn-hero-wa">
               <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
             </a>
@@ -2218,7 +2218,7 @@
         <div class="col-lg-6 hero-img-col">
           <div class="hero-img-wrap">
             <div class="hero-img-bg"></div>
-            <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Matcha Segar MariMacha" loading="eager">
+            <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Matcha Segar MariMatcha" loading="eager">
             <div class="hero-badge-float b1">
               <div class="float-icon"><i class="fa-solid fa-star"></i></div>
               <div>
@@ -2305,7 +2305,7 @@
             <h2 class="story-h2 lg">PESAN <br><span class="highlight">SEKARANG</span></h2>
             <p class="story-p center">MATCHA YG BERKELAZ</p>
             <div class="final-cta-wrap">
-              <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+ingin+tanya+produk"
+              <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk"
                 class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
                   class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
@@ -2434,7 +2434,7 @@
     <div class="container">
       <div class="text-center mb-5 reveal-up invisible-init">
         <div class="section-label"><i class="fa-solid fa-map-signs"></i> Panduan Pesan</div>
-        <h2 class="section-h2">Cara Pesan di MariMacha</h2>
+        <h2 class="section-h2">Cara Pesan di MariMatcha</h2>
         <p class="section-sub mx-auto">Cuma 4 langkah mudah, pesananmu langsung diproses dan dikirim!</p>
       </div>
       <div class="row g-4 gs-steps-row">
@@ -2476,7 +2476,7 @@
             style="display:flex; align-items:center; justify-content:center; background:#f4f9f6; border-radius:24px; padding:40px;">
             <?php $shop_logo = $this->M_settings->get_setting('shop_logo'); ?>
             <?php if (!empty($shop_logo)): ?>
-              <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="MariMacha Store"
+              <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="MariMatcha Store"
                 style="width:100%; height:auto; max-height:400px; object-fit:contain; animation: float 6s ease-in-out infinite;">
             <?php else: ?>
               <i class="fa-solid fa-leaf text-success" style="font-size:120px; opacity:0.2;"></i>
@@ -2490,7 +2490,7 @@
         </div>
         <div class="col-lg-7 ps-lg-5 about-text-col invisible-init">
           <div class="section-label"><i class="fa-solid fa-leaf"></i> Tentang Kami</div>
-          <h2 class="section-h2">Kenapa Pilih <br>MariMacha?</h2>
+          <h2 class="section-h2">Kenapa Pilih <br>MariMatcha?</h2>
           <p class="section-sub mb-4">Kami UMKM asal Tangerang yang berdedikasi menghadirkan minuman berbahan matcha
             berkualitas premium. Semua produk dibuat segar setiap hari, khusus untuk kamu!</p>
 
@@ -2594,7 +2594,7 @@
                 <div class="col-12">
                   <div class="form-group">
                     <label class="small fw-bold text-muted mb-2 ms-2">ULASAN / PESAN KAMU</label>
-                    <textarea name="quote" class="form-control" rows="4" placeholder="Ceritakan pengalamanmu mengonsumsi produk MariMacha..." required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
+                    <textarea name="quote" class="form-control" rows="4" placeholder="Ceritakan pengalamanmu mengonsumsi produk MariMatcha..." required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
                   </div>
                 </div>
                 
@@ -2622,7 +2622,7 @@
           style="font-size:4rem; margin-bottom:20px; display:block; position:relative; z-index:1;"></i>
         <h3>Ada Pertanyaan atau Custom Order?</h3>
         <p>Jangan ragu untuk bertanya! Tim CS kami siap membantu kelancaran pesanan kamu dengan respon yang cepat.</p>
-        <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMacha,+saya+mau+tanya+pesanan"
+        <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+mau+tanya+pesanan"
           target="_blank" rel="noopener noreferrer" class="btn-wa-big">
           <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Chat WhatsApp Sekarang
         </a>
@@ -2637,7 +2637,7 @@
       <div class="text-center mb-5">
         <h2 class="section-h2 text-white">Dikirim ke <span style="color: var(--tertiary);">Seluruh Indonesia</span></h2>
         <p style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Dari jantung
-          Tangerang, kami memastikan setiap produk MariMacha sampai di tangan Anda dalam kondisi segar dan sempurna.</p>
+          Tangerang, kami memastikan setiap produk MariMatcha sampai di tangan Anda dalam kondisi segar dan sempurna.</p>
       </div>
 
       <div class="premium-map-container">
@@ -2678,7 +2678,7 @@
 
         <!-- Hover Location Card -->
         <div class="location-card" style="top: 55%; left: 23%;">
-          <div class="loc-title">MariMacha</div>
+          <div class="loc-title">MariMatcha</div>
           <div class="loc-desc"><i class="fa-solid fa-location-dot me-1"></i> Tangerang, Banten</div>
         </div>
 
@@ -2983,7 +2983,7 @@
         <div class="col-lg-4 invisible-init">
           <div class="footer-brand mb-4">
             <div class="footer-brand-icon"><i class="fa-solid fa-leaf" style="color:#fff;font-size:1.1rem"></i></div>
-            MariMacha
+            MariMatcha
           </div>
           <p class="footer-desc">Crafting the finest premium matcha experiences in Tangerang. Our journey is about
             purity, tradition, and refreshing moments in every cup.</p>
@@ -3034,7 +3034,7 @@
       <hr class="footer-divider" style="opacity: 0.1; background: #fff;">
       <div class="row align-items-center">
         <div class="col-md-6 text-center text-md-start">
-          <p class="footer-copy mb-0">© <?= date('Y') ?> <strong style="color:#fff">MariMacha Premium</strong> ·
+          <p class="footer-copy mb-0">© <?= date('Y') ?> <strong style="color:#fff">MariMatcha Premium</strong> ·
             Crafting Quality.</p>
         </div>
         <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">

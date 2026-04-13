@@ -38,8 +38,8 @@
             position: relative;
         }
         .nota-logo {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: #fff;
             border-radius: 20px;
             display: flex;
@@ -267,7 +267,7 @@
 
     <footer class="text-center mt-5">
         <p class="small text-muted"><?= $shop_address ?></p>
-        <p class="small text-muted opacity-50">&copy; <?= date('Y') ?> MariMacha - Terimakasih telah berlangganan!</p>
+        <p class="small text-muted opacity-50">&copy; <?= date('Y') ?> MariMatcha - Terimakasih telah berlangganan!</p>
     </footer>
 </div>
 
