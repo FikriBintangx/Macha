@@ -219,12 +219,21 @@
                         <div class="row g-4 mb-4">
                             <div class="col-md-6">
                                 <label for="shop_status" class="p-label"><i class="bi bi-shop text-success opacity-75"></i> Status Website (Buka/Tutup)</label>
-                                <select name="shop_status" id="shop_status" class="form-control p-control">
-                                    <option value="open" <?= $shop_status == 'open' ? 'selected' : '' ?>>🟢 Buka (User Bisa Pesan)</option>
-                                    <option value="closed" <?= $shop_status == 'closed' ? 'selected' : '' ?>>🔴 Tutup (Hanya Lihat Menu)</option>
+                                <select name="shop_status" id="shop_status" class="form-control p-control" onchange="toggleShopHours()">
+                                    <option value="open" <?= $shop_status == 'open' ? 'selected' : '' ?>>🟢 Buka Manual (Selalu Buka)</option>
+                                    <option value="closed" <?= $shop_status == 'closed' ? 'selected' : '' ?>>🔴 Tutup Manual (Selalu Tutup)</option>
+                                    <option value="auto" <?= $shop_status == 'auto' ? 'selected' : '' ?>>🕒 Otomatis (Ikuti Jadwal)</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="hours_wrap" style="<?= $shop_status == 'auto' ? '' : 'display:none;' ?>">
+                                <label class="p-label"><i class="bi bi-clock-history text-success opacity-75"></i> Jam Operasional (Mulai - Selesai)</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="time" name="shop_open_hour" class="form-control p-control" value="<?= $shop_open_hour ?>">
+                                    <span class="fw-bold">s/d</span>
+                                    <input type="time" name="shop_close_hour" class="form-control p-control" value="<?= $shop_close_hour ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="wa_wrap">
                                 <label for="whatsapp_number" class="p-label"><i class="bi bi-whatsapp text-success opacity-75"></i> Nomor WhatsApp Admin</label>
                                 <input type="text" name="whatsapp_number" id="whatsapp_number" class="form-control p-control" placeholder="Contoh: 628123456789" value="<?= set_value('whatsapp_number', $whatsapp_number ?? '') ?>">
                             </div>
@@ -528,6 +537,26 @@
             }
         }
     });
+
+    function toggleShopHours() {
+        const status = document.getElementById('shop_status').value;
+        const hoursWrap = document.getElementById('hours_wrap');
+        const waWrap = document.getElementById('wa_wrap');
+        
+        if (status === 'auto') {
+            hoursWrap.style.display = 'block';
+            waWrap.classList.remove('col-md-6');
+            waWrap.classList.add('col-md-12');
+            waWrap.classList.add('mt-3');
+        } else {
+            hoursWrap.style.display = 'none';
+            waWrap.classList.remove('col-md-12');
+            waWrap.classList.remove('mt-3');
+            waWrap.classList.add('col-md-6');
+        }
+    }
+    // Run on first load
+    document.addEventListener("DOMContentLoaded", toggleShopHours);
 </script>
 
     </div>

@@ -2116,12 +2116,11 @@
         <?php endif; ?>
         <span>MariMatcha</span>
         
-        <?php if(isset($shop_status)): ?>
-            <div class="shop-status-pill">
-                <div class="status-dot <?= $shop_status == 'open' ? 'open' : 'closed' ?>"></div>
-                <?= $shop_status == 'open' ? 'Buka' : 'Tutup' ?>
-            </div>
-        <?php endif; ?>
+        <?php $is_open = $this->M_settings->is_shop_open(); ?>
+        <div class="shop-status-pill">
+            <div class="status-dot <?= $is_open ? 'open' : 'closed' ?>"></div>
+            <?= $is_open ? 'Buka' : 'Tutup' ?>
+        </div>
       </a>
       <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
         aria-controls="navMain" aria-expanded="false">

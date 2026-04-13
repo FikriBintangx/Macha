@@ -31,6 +31,8 @@ class Settings extends CI_Controller {
             'shop_status'    => $this->M_settings->get_setting('shop_status') ?: 'open',
             'whatsapp_number'=> $this->M_settings->get_setting('whatsapp_number'),
             'qris_barcode'   => $this->M_settings->get_setting('qris_barcode'),
+            'shop_open_hour' => $this->M_settings->get_setting('shop_open_hour') ?: '09:00',
+            'shop_close_hour'=> $this->M_settings->get_setting('shop_close_hour') ?: '21:00',
             'categories'     => $this->M_settings->get_categories(),
             'order_types'    => $this->M_settings->get_order_types(),
             'payment_types'  => $this->M_settings->get_payment_methods()
@@ -92,6 +94,16 @@ class Settings extends CI_Controller {
         $status = $this->input->post('shop_status');
         if ($status !== null) {
             $this->M_settings->update_setting('shop_status', $status);
+        }
+
+        $open_hour = $this->input->post('shop_open_hour');
+        if ($open_hour !== null) {
+            $this->M_settings->update_setting('shop_open_hour', $open_hour);
+        }
+
+        $close_hour = $this->input->post('shop_close_hour');
+        if ($close_hour !== null) {
+            $this->M_settings->update_setting('shop_close_hour', $close_hour);
         }
 
         // Setup upload configuration

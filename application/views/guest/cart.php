@@ -130,12 +130,11 @@
                 <?php endif; ?>
                 <span>MariMatcha</span>
                 
-                <?php if(isset($shop_status)): ?>
-                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; background: #fff; border: 2px solid var(--gm); color: #000; border-radius: 50px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-left:10px;">
-                        <div style="width: 7px; height: 7px; border-radius: 50%; background: <?= $shop_status == 'open' ? '#25D366' : '#e63946' ?>; box-shadow: 0 0 8px <?= $shop_status == 'open' ? '#25D366' : '#e63946' ?>;"></div>
-                        <?= $shop_status == 'open' ? 'Buka' : 'Tutup' ?>
-                    </div>
-                <?php endif; ?>
+                <?php $is_open = $this->M_settings->is_shop_open(); ?>
+                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; background: #fff; border: 2px solid var(--gm); color: #000; border-radius: 50px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-left:10px;">
+                    <div style="width: 7px; height: 7px; border-radius: 50%; background: <?= $is_open ? '#25D366' : '#e63946' ?>; box-shadow: 0 0 8px <?= $is_open ? '#25D366' : '#e63946' ?>;"></div>
+                    <?= $is_open ? 'Buka' : 'Tutup' ?>
+                </div>
             </a>
             <a href="<?= base_url('shop') ?>" class="btn-ol"><i class="fa-solid fa-arrow-left"></i><span>Lanjut Belanja</span></a>
         </div>

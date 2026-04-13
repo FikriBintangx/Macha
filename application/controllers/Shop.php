@@ -70,6 +70,12 @@ class Shop extends CI_Controller
             return;
         }
 
+        if (!$this->M_settings->is_shop_open()) {
+            $this->session->set_flashdata('error', 'Maaf, toko sedang tutup. Silakan cek kembali nanti!');
+            redirect('shop');
+            return;
+        }
+
         $product = $this->M_product->get_by_id($product_id);
 
         if (!$product) {
@@ -111,8 +117,7 @@ class Shop extends CI_Controller
     public function add_to_cart_ajax($product_id)
     {
         // Check shop status
-        $status = $this->M_settings->get_setting('shop_status') ?: 'open';
-        if ($status == 'closed') {
+        if (!$this->M_settings->is_shop_open()) {
             echo json_encode(['status' => 'error', 'message' => 'Maaf, toko sedang tutup. Silakan cek kembali nanti!']);
             return;
         }

@@ -97,4 +97,30 @@ class M_settings extends CI_Model {
         if($id) { $this->db->where('id', $id); return $this->db->update($table, $data); }
         return $this->db->insert($table, $data);
     }
+
+    // --- FITUR JADWAL OPERASIONAL ---
+    public function is_shop_open() {
+        $status = $this->get_setting('shop_status');
+        
+        if ($status == 'open') return true;
+        if ($status == 'closed') return false;
+        
+        // Jika status = 'auto' (Jadwal)
+        if ($status == 'auto') {
+            date_default_timezone_set('Asia/Jakarta');
+            $now = date('H:i');
+            $open = $this->get_setting('shop_open_hour') ?: '09:00';
+            $close = $this->get_setting('shop_close_hour') ?: '21:00';
+            
+            // Handle cross-midnight if needed (though usually not for cafes like this)
+            if ($open < $close) {
+                return ($now >= $open && $now < $close);
+            } else {
+                // Misal buka 22:00 tutup 04:00
+                return ($now >= $open || $now < $close);
+            }
+        }
+        
+        return true; // Default open
+    }
 }
