@@ -834,6 +834,35 @@
                 }
             });
         }
+
+        // --- SIDEBAR SCROLL PERSISTENCE ---
+        const sidebarScroll = document.querySelector('.sidebar-scroll');
+        if (sidebarScroll) {
+            // Restore position
+            const savedScrollPos = sessionStorage.getItem('sidebarScrollPos');
+            if (savedScrollPos) {
+                sidebarScroll.scrollTop = savedScrollPos;
+            }
+
+            // Save position on scroll (throttled)
+            let scrollTimeout;
+            sidebarScroll.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    sessionStorage.setItem('sidebarScrollPos', sidebarScroll.scrollTop);
+                }, 100);
+            });
+
+            // Ensure active link is visible on load
+            const activeLink = sidebarScroll.querySelector('.nav-link.active');
+            if (activeLink) {
+                const rect = activeLink.getBoundingClientRect();
+                const containerRect = sidebarScroll.getBoundingClientRect();
+                if (rect.top < containerRect.top || rect.bottom > containerRect.bottom) {
+                    activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
     </script>
 </body>
 </html>

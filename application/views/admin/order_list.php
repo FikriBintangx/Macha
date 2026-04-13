@@ -82,34 +82,34 @@
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive responsive-card-table">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="bg-light">
+                    <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
+                        <thead class="" style="background: #f8faf9;">
                             <tr>
-                                <th class="px-4 py-3 border-0">JAM</th>
-                                <th class="py-3 border-0">INVOICE</th>
-                                <th class="py-3 border-0">PELANGGAN</th>
-                                <th class="py-3 border-0">TIPE/BAYAR</th>
-                                <th class="py-3 border-0">TOTAL</th>
-                                <th class="py-3 border-0">BUKTI</th>
-                                <th class="py-3 text-center border-0">STATUS</th>
-                                <th class="py-3 text-center border-0 pe-4">AKSI</th>
+                                <th class="ps-4 py-3 border-0 text-muted small fw-bold">JAM</th>
+                                <th class="py-3 border-0 text-muted small fw-bold">INVOICE</th>
+                                <th class="py-3 border-0 text-muted small fw-bold">PELANGGAN</th>
+                                <th class="py-3 border-0 text-muted small fw-bold">TIPE/BAYAR</th>
+                                <th class="py-3 border-0 text-muted small fw-bold">TOTAL</th>
+                                <th class="py-3 border-0 text-muted small fw-bold">BUKTI</th>
+                                <th class="py-3 text-center border-0 text-muted small fw-bold">STATUS</th>
+                                <th class="pe-4 py-3 text-center border-0 text-muted small fw-bold">AKSI</th>
                             </tr>
                         </thead>
                         <tbody class="border-top-0" id="orderTbody">
                             <?php if(!empty($orders)): ?>
                                 <?php foreach($orders as $o): ?>
                                     <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
-                                        <td class="px-4 py-3 fw-bold text-dark" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
-                                        <td class="py-3" data-label="INVOICE">
-                                            <span class="badge bg-light text-dark border px-2 py-1 shadow-sm"><?= $o['invoice_no'] ?></span>
+                                        <td class="ps-4 py-4 fw-bold text-dark" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
+                                        <td class="py-4" data-label="INVOICE">
+                                            <span class="badge bg-white text-dark border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace;"><?= $o['invoice_no'] ?></span>
                                         </td>
-                                        <td class="py-3" data-label="PELANGGAN">
-                                            <div class="text-dark fw-medium customer-name-item" style="font-size: 0.95rem;">
+                                        <td class="py-4" data-label="PELANGGAN">
+                                            <div class="text-dark fw-bold customer-name-item" style="font-size: 0.95rem;">
                                                 <?= htmlspecialchars($o['user_name'] ? $o['user_name'] : $o['customer_name']) ?>
                                             </div>
                                         </td>
-                                        <td class="py-3 text-nowrap" data-label="TIPE/BAYAR">
-                                            <div class="small fw-bold text-uppercase" style="font-size: 0.65rem; color: #8aa898;">
+                                        <td class="py-4 text-nowrap" data-label="TIPE/BAYAR">
+                                            <div class="small fw-bold text-uppercase d-flex align-items-center gap-1 mb-1" style="font-size: 0.65rem; color: #8aa898;">
                                                 <?php if($o['order_type'] == 'delivery'): ?>
                                                     <i class="bi bi-truck text-primary"></i> ANTAR
                                                 <?php elseif($o['order_type'] == 'dinein'): ?>
@@ -119,20 +119,20 @@
                                                 <?php endif; ?>
                                             </div>
                                             <div class="text-dark small fw-semibold">
-                                                <?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
+                                                <i class="bi bi-credit-card-2-back me-1 opacity-50"></i><?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
                                             </div>
                                         </td>
-                                        <td class="fw-bold text-success text-nowrap py-3" data-label="TOTAL">
+                                        <td class="fw-bold text-success text-nowrap py-4" style="font-size: 1rem;" data-label="TOTAL">
                                             Rp <?= number_format($o['total_price'],0,',','.') ?>
                                         </td>
-                                        <td class="py-3" data-label="BUKTI">
+                                        <td class="py-4 text-center" data-label="BUKTI">
                                             <?php if(!empty($o['payment_proof'])): ?>
-                                                <button type="button" onclick="viewProof('<?= base_url('uploads/payments/'.$o['payment_proof']) ?>')" class="btn btn-xs btn-outline-info p-1"><i class="bi bi-image"></i></button>
+                                                <button type="button" onclick="viewProof('<?= base_url('uploads/payments/'.$o['payment_proof']) ?>')" class="btn btn-sm btn-light border text-info p-2 rounded-circle shadow-sm" title="Lihat Bukti"><i class="bi bi-image"></i></button>
                                             <?php else: ?>
-                                                <small class="text-muted italic">None</small>
+                                                <span class="text-muted opacity-50" style="font-size: 0.75rem; font-style: italic;">None</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="text-center py-3" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
+                                        <td class="text-center py-4" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
                                             <?php 
                                             $st = $o['status'];
                                             $class = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
@@ -147,25 +147,25 @@
                                             if($st == 'completed') { $class = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; $text = 'Selesai'; }
                                             if($st == 'canceled') { $class = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; $text = 'Batal'; }
                                             ?>
-                                            <span class="badge <?= $class ?> rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;"><?= $text ?></span>
+                                            <span class="badge <?= $class ?> rounded-pill px-3 py-2 fw-bold" style="font-size: 0.75rem; letter-spacing: 0.3px;"><?= $text ?></span>
                                         </td>
-                                        <td class="pe-4 py-3 text-center" data-label="AKSI">
+                                        <td class="pe-4 py-4 text-center" data-label="AKSI">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-semibold">
+                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-bold" style="font-size: 0.85rem;">
                                                     Detail
                                                 </button>
                                                 <div class="dropdown">
-                                                    <button class="btn btn-sm btn-light border dropdown-toggle fw-medium p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.75rem;">
+                                                    <button class="btn btn-sm btn-white border dropdown-toggle fw-bold p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.8rem;">
                                                         Manage
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: 12px; font-size: 0.85rem;">
+                                                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" style="border-radius: 12px; font-size: 0.85rem; min-width: 180px;">
                                                     <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Konfirmasi Bayar</a></li>
                                                     <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i><?= ($o['order_type'] == 'delivery') ? 'Update: Sedang Diantar' : 'Update: Siap Diambil' ?></a></li>
                                                     <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Selesaikan Pesanan</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><hr class="dropdown-divider mx-2"></li>
                                                     <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan Pesanan</a></li>
                                                     <?php if(in_array($o['status'], ['pending', 'canceled'])): ?>
-                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><hr class="dropdown-divider mx-2"></li>
                                                         <li><a class="dropdown-item text-danger py-2 fw-bold" href="<?= site_url('order/delete/'.$o['id']) ?>" onclick="return confirm('⚠️ Hapus pesanan permanen?\n\nStok akan dikembalikan.')"><i class="bi bi-trash3 me-2"></i>Hapus Permanen</a></li>
                                                     <?php endif; ?>
                                                     </ul>
