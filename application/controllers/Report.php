@@ -31,32 +31,30 @@ class Report extends CI_Controller {
     // Laporan harian
     public function daily() {
         $today = date('Y-m-d');
-        $this->db->where('DATE(created_at)', $today);
-        $query = $this->db->get('sales');
+        $where = ['DATE(sales.created_at)' => $today];
 
         $data = [
             'title'   => 'Laporan Penjualan Hari Ini',
             'date'    => date('d M Y'),
             'content' => 'reports/daily_report',
-            'reports' => $query->result_array()
+            'reports' => $this->M_sales->get_report($where)
         ];
         $this->load->view('layout/wrapper', $data);
     }
 
     // Laporan Pesanan Pending
     public function pending() {
-        $this->db->where('status', 'pending');
-        $this->db->order_by('created_at', 'DESC');
-        $query = $this->db->get('sales');
+        $where = ['sales.status' => 'pending'];
 
         $data = [
             'title'   => 'Daftar Pesanan Belum Selesai (Pending)',
             'date'    => 'Status: Pending', 
             'content' => 'reports/daily_report', // Reuse daily report view as schema is same
-            'reports' => $query->result_array()
+            'reports' => $this->M_sales->get_report($where)
         ];
         $this->load->view('layout/wrapper', $data);
     }
+
 
     // Cetak Struk per Invoice
     public function print_struk($invoice_no) {

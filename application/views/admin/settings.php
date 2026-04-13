@@ -216,13 +216,44 @@
                             </div>
                         </div>
 
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label for="shop_status" class="p-label"><i class="bi bi-shop text-success opacity-75"></i> Status Website (Buka/Tutup)</label>
+                                <select name="shop_status" id="shop_status" class="form-control p-control">
+                                    <option value="open" <?= $shop_status == 'open' ? 'selected' : '' ?>>🟢 Buka (User Bisa Pesan)</option>
+                                    <option value="closed" <?= $shop_status == 'closed' ? 'selected' : '' ?>>🔴 Tutup (Hanya Lihat Menu)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="whatsapp_number" class="p-label"><i class="bi bi-whatsapp text-success opacity-75"></i> Nomor WhatsApp Admin</label>
+                                <input type="text" name="whatsapp_number" id="whatsapp_number" class="form-control p-control" placeholder="Contoh: 628123456789" value="<?= set_value('whatsapp_number', $whatsapp_number ?? '') ?>">
+                            </div>
+                        </div>
+
                         <div class="mb-5">
                             <label for="shop_address" class="p-label"><i class="bi bi-geo-alt-fill text-success opacity-75"></i> Alamat Fisik Toko</label>
                             <textarea name="shop_address" id="shop_address" class="form-control p-control" rows="4" placeholder="Misal: Jl. Mawar No. 12, Kota Hijau..." required><?= set_value('shop_address', $shop_address ?? '') ?></textarea>
                         </div>
 
                         <div class="row g-4 mb-5">
-                            <div class="col-md-6 border-end" style="border-color: #f0f4f1 !important;">
+                             <div class="col-md-4 border-end" style="border-color: #f0f4f1 !important;">
+                                <label class="p-label"><i class="bi bi-qr-code text-success opacity-75"></i> Barcode QRIS</label>
+                                <div class="file-upload-wrap mt-2">
+                                    <input type="file" name="qris_barcode" id="qris_barcode" class="file-input" accept="image/*" onchange="previewImg(this, 'preview_qris')">
+                                    <i class="bi bi-upc-scan text-success fs-1 opacity-50"></i>
+                                    <span class="btn file-btn"><i class="bi bi-folder2-open"></i> Pilih Berkas</span>
+                                </div>
+                                <?php if(!empty($qris_barcode)): ?>
+                                    <div class="img-preview mt-3" style="width:100px; height:auto; overflow:hidden;">
+                                        <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS Barcode" id="preview_qris" style="width:100%; height:auto;">
+                                    </div>
+                                <?php else: ?>
+                                    <div class="img-preview mt-3" id="preview_qris_wrap" style="display:none;">
+                                        <img src="" alt="QRIS Barcode" id="preview_qris" style="width:100px; height:auto;">
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-md-4 border-end" style="border-color: #f0f4f1 !important;">
                                 <label class="p-label"><i class="bi bi-images text-success opacity-75"></i> Foto Story 1</label>
                                 <div class="file-upload-wrap mt-2">
                                     <input type="file" name="story_img_1" id="story_img_1" class="file-input" accept="image/*" onchange="previewImg(this, 'preview1')">
@@ -231,7 +262,7 @@
                                 </div>
                                 <?php if(!empty($story_img_1)): ?><div class="img-preview mt-3"><img src="<?= base_url('uploads/'.$story_img_1) ?>" alt="Story 1" id="preview1"></div><?php endif; ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="p-label"><i class="bi bi-images text-success opacity-75"></i> Foto Story 2</label>
                                 <div class="file-upload-wrap mt-2">
                                     <input type="file" name="story_img_2" id="story_img_2" class="file-input" accept="image/*" onchange="previewImg(this, 'preview2')">
@@ -243,6 +274,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-save px-5"><i class="bi bi-check2-circle"></i> Simpan Identitas</button>
+
                     </form>
                 </div>
 

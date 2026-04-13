@@ -209,14 +209,11 @@ Keranjang</a>
 <option value="stock-desc">Stok Terbanyak</option>
 </select>
 </div>
-<?php
-$cats=['Semua'];
-if(!empty($products)){foreach($products as $p){if(!empty($p['category_name'])&&!in_array($p['category_name'],$cats))$cats[]=$p['category_name'];}}
-?>
 <div class="filter-chips mt-2">
-<?php foreach($cats as $i=>$c):?>
-<button class="filter-chip <?=$i===0?'active':''?>" data-cat="<?=$c?>"><?=$c?></button>
-<?php endforeach;?>
+    <button class="filter-chip active" data-cat="Semua">Semua</button>
+    <?php foreach($categories as $c): ?>
+        <button class="filter-chip" data-cat="<?= htmlspecialchars($c['category_name']) ?>"><?= htmlspecialchars($c['category_name']) ?></button>
+    <?php endforeach; ?>
 </div>
 </div>
 </div>
@@ -240,7 +237,7 @@ $is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
 <div class="prod-card" style="transition-delay:<?=$i*.05?>s">
 <div class="prod-img-wrap">
 <span class="prod-badge <?=$p['stock']>0?'badge-ada':'badge-habis'?>"><?=$p['stock']>0?'✓ Tersedia':'Habis'?></span>
-<?php if($is_f):?><span class="badge-featured">⭐ Unggulan</span><?php endif;?>
+<?php if($is_f):?><span class="badge-featured" style="background: linear-gradient(45deg, #ff9a00, #ff0505); color: white; border: none; font-weight: 800; box-shadow: 0 4px 10px rgba(255, 154, 0, 0.3);">🔥 Best Seller</span><?php endif;?>
 <?php if(!empty($p['image'])&&$p['image']!='default.jpg'):?>
 <img src="<?= base_url('uploads/'.$p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy"
      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -262,16 +259,20 @@ $is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
     <button type="button" class="btn-cart-out w-100" onclick="showDetail(<?= $p['id'] ?>)">
         <i class="fa-solid fa-eye"></i><span>Detail</span>
     </button>
-    <?php if($this->session->userdata('userid')):?>
+    <?php if($shop_status == 'closed'): ?>
+        <div class="btn-cart-dis w-100" style="background:#fff7ed; color:#c2410c; border-color:#fed7aa;">
+            <i class="fa-solid fa-clock"></i><span>Toko Tutup</span>
+        </div>
+    <?php elseif($this->session->userdata('userid')):?>
         <?php if($this->session->userdata('role') == 'admin'): ?>
-            <div class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Mode Kelola Menu</span></div>
+            <div class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Mode Kelola</span></div>
         <?php else: ?>
-            <a href="<?= base_url('shop/add_to_cart/'.$p['id']) ?>" class="btn-cart w-100" onclick="this.classList.add('is-loading');" style="height: 44px;">
+            <button type="button" class="btn-cart w-100" onclick="addToCart(<?= $p['id'] ?>, this)" style="height: 44px;">
                 <i class="fa-solid fa-cart-plus normal-icon"></i>
                 <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
                 <span class="txt-normal">Tambah</span>
                 <span class="txt-loading" style="display:none;">Memproses...</span>
-            </a>
+            </button>
         <?php endif; ?>
     <?php else:?>
     <a href="<?= base_url('auth') ?>" class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Login untuk pesan</span></a>
@@ -350,14 +351,18 @@ else:?>
 
                             <div class="d-grid">
                             <div id="modalOrderActions">
-                                <?php if($this->session->userdata('role') == 'admin'): ?>
+                                <?php if($shop_status == 'closed'): ?>
+                                    <div class="btn-cart-dis py-3 text-center w-100" style="background:#fff7ed; color:#c2410c; border-color:#fed7aa; cursor:default;">
+                                        <i class="fa-solid fa-clock me-2"></i> Toko Sedang Tutup
+                                    </div>
+                                <?php elseif($this->session->userdata('role') == 'admin'): ?>
                                     <div class="btn-cart-dis py-3 text-center w-100" style="background:#eef3eb; color:#8aa898; cursor:default;">
                                         <i class="fa-solid fa-lock me-2"></i> Mode Kelola Menu
                                     </div>
                                 <?php elseif($this->session->userdata('userid')): ?>
-                                    <a id="modalCartLink" href="#" class="btn-cart py-3">
+                                    <button id="modalCartBtn" type="button" class="btn-cart py-3" onclick="addToCartFromModal()">
                                         <i class="fa-solid fa-cart-plus me-2"></i> Tambah ke Keranjang
-                                    </a>
+                                    </button>
                                 <?php else: ?>
                                     <a href="<?= base_url('auth') ?>" class="btn-cart-out py-3 text-center">
                                         <i class="fa-solid fa-lock me-2"></i> Login untuk memesan
@@ -482,8 +487,9 @@ function showDetail(id) {
                 document.getElementById('modalStars').innerHTML = starsHtml;
                 document.getElementById('modalAvgText').textContent = `${d.avg_rating} (${d.total_rating} Penilaian)`;
                 
-                // Set Product ID for rating input
+                // Set Product ID for modal actions
                 document.getElementById('productModal').dataset.productId = d.id;
+                
                 // Reset Star Input
                 document.querySelectorAll('.star-btn').forEach(s => s.classList.replace('fa-solid','fa-regular'));
                 document.querySelectorAll('.star-btn').forEach(s => s.classList.remove('active'));
@@ -535,6 +541,92 @@ function submitRating() {
             showDetail(pid); // Refresh details
         }
     });
+}
+
+function addToCart(id, btn) {
+    if(btn) {
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+    }
+
+    fetch('<?= base_url("shop/add_to_cart_ajax/") ?>' + id, {
+        method: 'POST'
+    })
+    .then(res => res.json())
+    .then(res => {
+        if(res.status === 'success') {
+            // Update Cart count in header
+            const badge = document.querySelector('.btn-hdr-out .badge');
+            if(badge) {
+                badge.textContent = res.cart_count;
+            } else {
+                // If no badge exists yet, add one
+                const cartBtn = document.querySelector('.btn-hdr-out');
+                if(cartBtn) {
+                    const newBadge = document.createElement('span');
+                    newBadge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
+                    newBadge.style.fontSize = '.6rem';
+                    newBadge.textContent = res.cart_count;
+                    cartBtn.appendChild(newBadge);
+                }
+            }
+
+            // Show Toast
+            showToast(res.message, 'success');
+            
+            // Celebration
+            if(window.confetti) {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#102416', '#1B3B25', '#8BAA7C']
+                });
+            }
+        } else {
+            showToast(res.message, 'error');
+        }
+    })
+    .catch(err => {
+        showToast('Terjadi kesalahan silakan coba lagi.', 'error');
+    })
+    .finally(() => {
+        if(btn) {
+            btn.classList.remove('is-loading');
+            btn.disabled = false;
+        }
+    });
+}
+
+function addToCartFromModal() {
+    const pid = document.getElementById('productModal').dataset.productId;
+    const btn = document.getElementById('modalCartBtn');
+    addToCart(pid, btn);
+}
+
+function showToast(msg, type) {
+    const wrap = document.createElement('div');
+    wrap.className = 'toast-wrap';
+    wrap.id = 'tempToast';
+    
+    const icon = type === 'success' ? 'fa-check-circle' : 'fa-circle-exclamation';
+    const color = type === 'success' ? 'var(--gm)' : '#e63946';
+    const border = type === 'success' ? '' : 'err';
+    
+    wrap.innerHTML = `
+        <div class="toast-custom ${border}">
+            <i class="fa-solid ${icon}" style="color:${color};font-size:1.2rem"></i>
+            ${msg}
+        </div>
+    `;
+    
+    document.body.appendChild(wrap);
+    
+    setTimeout(() => {
+        wrap.style.opacity = '0';
+        wrap.style.transition = 'opacity .5s';
+        setTimeout(() => wrap.remove(), 600);
+    }, 3000);
 }
 </script>
 </body>

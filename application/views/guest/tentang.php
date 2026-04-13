@@ -76,11 +76,21 @@
                     <div class="col-md-6 ps-md-5">
                         <h2 class="fw-bold mb-4" style="color: var(--macha-dark) !important;">Tentang Kami</h2>
                         <p class="fs-5 text-muted mb-4">Kami percaya bahwa secangkir matcha bukan sekadar minuman, melainkan sebuah seni dan ketenangan. Macha Premium didedikasikan untuk menghadirkan cita rasa teh hijau Jepang autentik untuk menemani momen spesial Anda.</p>
-                        <div class="d-flex align-items-start mb-3 p-4 rounded-4" style="background-color: var(--macha-bg);">
-                            <i class="fa-solid fa-store fs-2 me-3 mt-1" style="color: var(--macha-primary);"></i>
-                            <div>
-                                <h5 class="fw-bold mb-2">Kunjungi Outlet Fisik Kami</h5>
-                                <p class="mb-0 text-muted" style="line-height: 1.6;"><strong>Outlet Marimacha</strong><br><?= nl2br(htmlentities($shop_address)) ?></p>
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-start mb-3 p-4 rounded-4" style="background-color: var(--macha-bg);">
+                                    <i class="fa-solid fa-store fs-2 me-3 mt-1" style="color: var(--macha-primary);"></i>
+                                    <div>
+                                        <h5 class="fw-bold mb-2">Kunjungi Outlet Fisik Kami</h5>
+                                        <p class="mb-0 text-muted" style="line-height: 1.6;"><strong>Outlet Marimacha</strong><br><?= nl2br(htmlentities($shop_address)) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="p-4 rounded-4" style="background: linear-gradient(135deg, #f8faf9, #fff); border: 1px solid #eef3eb;">
+                                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-users me-2 text-success"></i>Di Balik MariMacha</h5>
+                                    <p class="text-muted mb-0">MariMacha didirikan oleh dua orang sahabat, <strong>Zaki & Teman</strong>, yang memiliki visi yang sama untuk menghadirkan kelezatan matcha premium bagi semua orang. Dengan pembagian tugas yang fleksibel dan penuh dedikasi, kami berkomitmen menjaga kualitas setiap menu yang sampai ke tangan Anda.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,6 +98,7 @@
             </div>
         </section>
     </div>
+
 
     <footer class="text-center">
         <div class="container">

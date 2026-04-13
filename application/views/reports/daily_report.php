@@ -14,7 +14,9 @@
                     <tr>
                         <th>Waktu</th>
                         <th>No. Nota</th>
+                        <th>Item Pesanan</th>
                         <th>Total Bayar</th>
+                        <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -24,6 +26,7 @@
                         <tr>
                             <td><?= date('H:i', strtotime($r['created_at'])) ?> WIB</td>
                             <td><?= $r['invoice_no'] ?></td>
+                            <td class="small"><?= htmlspecialchars($r['item_details'] ?? '-') ?></td>
                             <td class="fw-bold">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
                             <td>
                                 <?php 

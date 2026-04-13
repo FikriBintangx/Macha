@@ -28,6 +28,9 @@ class Settings extends CI_Controller {
             'shop_logo'      => $this->M_settings->get_setting('shop_logo'),
             'story_img_1'    => $this->M_settings->get_setting('story_img_1'),
             'story_img_2'    => $this->M_settings->get_setting('story_img_2'),
+            'shop_status'    => $this->M_settings->get_setting('shop_status') ?: 'open',
+            'whatsapp_number'=> $this->M_settings->get_setting('whatsapp_number'),
+            'qris_barcode'   => $this->M_settings->get_setting('qris_barcode'),
             'categories'     => $this->M_settings->get_categories(),
             'order_types'    => $this->M_settings->get_order_types(),
             'payment_types'  => $this->M_settings->get_payment_methods()
@@ -81,6 +84,16 @@ class Settings extends CI_Controller {
             $this->M_settings->update_setting('shop_address', $address);
         }
 
+        $wa = $this->input->post('whatsapp_number');
+        if ($wa !== null) {
+            $this->M_settings->update_setting('whatsapp_number', $wa);
+        }
+
+        $status = $this->input->post('shop_status');
+        if ($status !== null) {
+            $this->M_settings->update_setting('shop_status', $status);
+        }
+
         // Setup upload configuration
         $config['upload_path']   = FCPATH . 'uploads/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png|webp|svg';
@@ -121,6 +134,18 @@ class Settings extends CI_Controller {
                 $errors[] = 'Logo: ' . $this->upload->display_errors('','');
             }
         }
+
+        // Upload QRIS Barcode
+        if (!empty($_FILES['qris_barcode']['name'])) {
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload('qris_barcode')) {
+                $upload_data = $this->upload->data();
+                $this->M_settings->update_setting('qris_barcode', $upload_data['file_name']);
+            } else {
+                $errors[] = 'QRIS: ' . $this->upload->display_errors('','');
+            }
+        }
+
 
         if(!empty($errors)) {
             $this->session->set_flashdata('error', implode(' | ', $errors));

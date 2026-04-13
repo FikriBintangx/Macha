@@ -33,6 +33,7 @@
                         <th class="py-3 text-uppercase small fw-bold text-center">Kategori</th>
                         <th class="py-3 text-uppercase small fw-bold text-end">Harga Jual</th>
                         <th class="py-3 text-uppercase small fw-bold text-center">Stok</th>
+                        <th class="py-3 text-uppercase small fw-bold text-center">Best Seller</th>
                         <th class="pe-4 py-3 text-uppercase small fw-bold text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -65,6 +66,14 @@
                                         <span class="text-dark fw-bold"><?= $p['stock'] ?></span>
                                     <?php endif; ?>
                                 </td>
+                                <td class="text-center" data-label="BEST SELLER">
+                                    <div class="form-check form-switch d-flex justify-content-center">
+                                        <input class="form-check-input best-seller-toggle" type="checkbox" 
+                                               id="bs-<?= $p['id'] ?>" 
+                                               data-id="<?= $p['id'] ?>"
+                                               <?= $p['is_featured'] ? 'checked' : '' ?>>
+                                    </div>
+                                </td>
                                 <td class="text-center pe-4" data-label="AKSI">
                                     <div class="btn-group shadow-sm rounded-3">
                                         <a href="<?= site_url('product/edit/' . $p['id']) ?>" 
@@ -94,3 +103,25 @@
         </div>
     </div>
 </div>
+
+<script>
+document.querySelectorAll('.best-seller-toggle').forEach(el => {
+    el.addEventListener('change', function() {
+        const id = this.dataset.id;
+        const status = this.checked;
+        
+        fetch('<?= site_url("product/toggle_featured/") ?>' + id)
+        .then(res => res.json())
+        .then(res => {
+            if(res.status !== 'success') {
+                alert(res.message);
+                this.checked = !status; // Revert
+            }
+        })
+        .catch(err => {
+            alert('Terjadi kesalahan koneksi.');
+            this.checked = !status; // Revert
+        });
+    });
+});
+</script>

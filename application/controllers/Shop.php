@@ -25,11 +25,13 @@ class Shop extends CI_Controller
     public function index()
     {
         $data = [
-            'title'        => 'Menu Macha',
-            'products'     => $this->M_product->get_all(),
-            'categories'   => $this->M_product->get_categories(),
-            'shop_logo'    => $this->M_settings->get_setting('shop_logo'),
-            'shop_address' => $this->M_settings->get_setting('shop_address')
+            'title'          => 'Menu Macha',
+            'products'       => $this->M_product->get_all(),
+            'categories'     => $this->M_settings->get_categories(),
+            'shop_logo'      => $this->M_settings->get_setting('shop_logo'),
+            'shop_address'   => $this->M_settings->get_setting('shop_address'),
+            'shop_status'    => $this->M_settings->get_setting('shop_status') ?: 'open',
+            'whatsapp_number'=> $this->M_settings->get_setting('whatsapp_number')
         ];
         $this->load->view('guest/shop', $data);
     }
@@ -104,6 +106,65 @@ class Shop extends CI_Controller
         $this->session->set_flashdata('success', 'Berhasil ditambahkan ke keranjang!');
         redirect($this->agent->is_referral() ? $this->agent->referrer() : 'shop');
     }
+
+    public function add_to_cart_ajax($product_id)
+    {
+        // Check shop status
+        $status = $this->M_settings->get_setting('shop_status') ?: 'open';
+        if ($status == 'closed') {
+            echo json_encode(['status' => 'error', 'message' => 'Maaf, toko sedang tutup. Silakan cek kembali nanti!']);
+            return;
+        }
+
+        if ($this->session->userdata('role') == 'admin') {
+            echo json_encode(['status' => 'error', 'message' => 'Admin tidak diperbolehkan memesan.']);
+            return;
+        }
+
+        $product = $this->M_product->get_by_id($product_id);
+        if (!$product) {
+            echo json_encode(['status' => 'error', 'message' => 'Produk tidak ditemukan.']);
+            return;
+        }
+
+        if ($product['stock'] <= 0) {
+            echo json_encode(['status' => 'error', 'message' => 'Maaf, stok habis!']);
+            return;
+        }
+
+        $preferences = $this->input->post('preferences') ?: '';
+        $cart = $this->session->userdata('cart') ?: [];
+        $found = false;
+
+        foreach ($cart as &$item) {
+            if ($item['id'] == $product_id && ($item['preferences'] ?? '') == $preferences) {
+                $item['qty']++;
+                $item['subtotal'] = $item['price'] * $item['qty'];
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $cart[] = [
+                'id'          => $product['id'],
+                'name'        => $product['name'],
+                'price'       => $product['price'],
+                'image'       => $product['image'],
+                'qty'         => 1,
+                'subtotal'    => $product['price'],
+                'preferences' => $preferences
+            ];
+        }
+
+        $this->session->set_userdata('cart', $cart);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Berhasil ditambahkan ke keranjang!',
+            'cart_count' => count($cart)
+        ]);
+    }
+
 
     public function decrease_cart($index) {
         $cart = $this->session->userdata('cart') ?: [];
@@ -195,7 +256,8 @@ class Shop extends CI_Controller
             'order_types'     => $this->M_settings->get_order_types(true),
             'payment_methods' => $this->M_settings->get_payment_methods(true),
             'shop_logo'       => $this->M_settings->get_setting('shop_logo'),
-            'shop_address'    => $this->M_settings->get_setting('shop_address')
+            'shop_address'    => $this->M_settings->get_setting('shop_address'),
+            'qris_barcode'    => $this->M_settings->get_setting('qris_barcode')
         ];
         $this->load->view('guest/checkout', $data);
     }

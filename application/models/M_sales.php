@@ -52,16 +52,29 @@ class M_sales extends CI_Model
     }
 
     /**
-     * Laporan semua penjualan (admin)
+     * Laporan semua penjualan (admin) dengan detail item
      */
-    public function get_report()
+    public function get_report($where = [])
     {
-        $this->db->select('sales.*, users.full_name');
+        $this->db->select("
+            sales.*, 
+            users.full_name,
+            GROUP_CONCAT(CONCAT(sales_detail.qty, 'x ', products.name) SEPARATOR ', ') as item_details
+        ");
         $this->db->from('sales');
         $this->db->join('users', 'users.id = sales.user_id', 'left');
+        $this->db->join('sales_detail', 'sales_detail.sales_id = sales.id', 'left');
+        $this->db->join('products', 'products.id = sales_detail.product_id', 'left');
+        
+        if(!empty($where)) {
+            $this->db->where($where);
+        }
+        
+        $this->db->group_by('sales.id');
         $this->db->order_by('sales.created_at', 'DESC');
         return $this->db->get()->result_array();
     }
+
 
     /**
      * Detail produk dari satu invoice (untuk nota)

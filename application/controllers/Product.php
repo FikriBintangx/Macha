@@ -209,4 +209,18 @@ class Product extends CI_Controller {
         }
         redirect('product');
     }
+    public function toggle_featured($id = null) {
+        if(!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID tidak ditemukan.']);
+            return;
+        }
+
+        if($this->M_product->toggle_featured($id)) {
+            $product = $this->M_product->get_by_id($id);
+            echo json_encode(['status' => 'success', 'is_featured' => $product['is_featured']]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Gagal mengubah status.']);
+        }
+    }
 }
+

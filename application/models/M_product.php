@@ -57,4 +57,14 @@ class M_product extends CI_Model {
     public function submit_rating($data) {
         return $this->db->insert('product_ratings', $data);
     }
+
+    public function toggle_featured($id) {
+        $product = $this->get_by_id($id);
+        if(!$product) return false;
+        
+        $new_status = $product['is_featured'] ? 0 : 1;
+        $this->db->where('id', $id);
+        return $this->db->update('products', ['is_featured' => $new_status]);
+    }
 }
+

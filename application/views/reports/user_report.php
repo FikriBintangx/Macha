@@ -65,7 +65,8 @@ if (!empty($reports)) {
                     <tr>
                         <th>Waktu Transaksi</th>
                         <th>No. Invoice</th>
-                        <th>Nama Pelanggan</th>
+                        <th>Pelanggan</th>
+                        <th>Items</th>
                         <th>Metode Bayar</th> 
                         <th class="text-end">Total Harga</th>
                         <th class="text-center">Aksi</th>
@@ -91,7 +92,7 @@ if (!empty($reports)) {
                     ?>
                     <!-- Baris Header Grup -->
                     <tr class="group-header cursor-pointer collapsed-group" style="background-color: #f8fbf8; cursor: pointer; border-left: 4px solid #198754;" data-group-id="<?= $gId ?>">
-                        <td colspan="4" class="py-3 border-bottom-0">
+                        <td colspan="5" class="py-3 border-bottom-0">
                             <i class="bi bi-chevron-down me-2 toggle-icon d-inline-block text-success fw-bold" style="transition: transform 0.2s; transform: rotate(-90deg);"></i>
                             <strong class="text-dark fs-6 customer-group-name"><?= htmlspecialchars($cname) ?></strong> 
                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill ms-2 px-2 trx-count"><?= count($transactions) ?> trx</span>
@@ -111,6 +112,9 @@ if (!empty($reports)) {
                         </td>
                         <td class="align-middle" data-label="PELANGGAN">
                             <span class="text-secondary small customer-name-item"><i class="bi bi-person text-muted me-1"></i> <?= htmlspecialchars($r['customer_name'] ?: 'Pelanggan Anonim') ?></span>
+                        </td>
+                        <td class="align-middle" data-label="ITEMS">
+                            <small class="text-muted"><?= htmlspecialchars($r['item_details'] ?? '-') ?></small>
                         </td>
                         <td class="align-middle" data-label="METODE">
                             <span class="badge <?= $r['payment_method'] == 'QRIS' ? 'bg-primary' : 'bg-success' ?> bg-opacity-10 <?= $r['payment_method'] == 'QRIS' ? 'text-primary' : 'text-success' ?> border-0 rounded-pill px-3 py-2">
@@ -150,7 +154,7 @@ if (!empty($reports)) {
                 </tbody>
                 <tfoot class="table-dark d-none d-md-table-footer">
                     <tr>
-                        <td colspan="4" class="text-center fw-bold">TOTAL OMZET KESELURUHAN</td>
+                        <td colspan="5" class="text-center fw-bold">TOTAL OMZET KESELURUHAN</td>
                         <td class="text-end fw-bold" id="totalFilter">Rp <?= number_format($totalSemua, 0, ',', '.') ?></td>
                         <td></td>
                     </tr>
@@ -293,14 +297,15 @@ if (!empty($reports)) {
             // Hanya export row yg tidak di-hidden oleh filter
             if (row.classList.contains('trx-row') && row.style.display !== 'none') {
                 let cols = row.querySelectorAll('td');
-                if(cols.length >= 5) {
+                if(cols.length >= 6) {
                     let date = cols[0].innerText.trim();
                     let inv = cols[1].innerText.trim();
                     let cust = cols[2].innerText.trim().replace('↳', '').trim();
-                    let method = cols[3].innerText.trim().replace('📱', '').replace('💵', '').trim();
-                    let price = cols[4].innerText.trim().replace(/[^0-9]/g, ''); 
+                    let items = cols[3].innerText.trim().replace(/"/g, '""');
+                    let method = cols[4].innerText.trim().replace('📱', '').replace('💵', '').trim();
+                    let price = cols[5].innerText.trim().replace(/[^0-9]/g, ''); 
                     
-                    csvContent += `"${date}","${inv}","${cust}","${method}","${price}"\n`;
+                    csvContent += `"${date}","${inv}","${cust}","${items}","${method}","${price}"\n`;
                 }
             }
         });

@@ -639,7 +639,16 @@
                         </div>
                     </div>
 
-                    <!-- Section Metode Pembayaran hardcoded sudah dihapus, digantikan oleh section Dynamic di atas -->
+                    <!-- QRIS Modal Content (Embedded for easy access) -->
+                    <?php if(!empty($qris_barcode)): ?>
+                    <div id="qrisSection" class="d-none mt-4 text-center p-3 rounded-4" style="background:#fff; border: 2px solid #edf1ed;">
+                        <h6 class="fw-bold mb-3"><i class="bi bi-qr-code-scan me-2 text-success"></i>Scan QRIS MariMacha</h6>
+                        <div class="qris-img-wrap mx-auto mb-3" style="max-width:250px; border: 10px solid #f8faf9; border-radius: 20px;">
+                            <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS Barcode" class="img-fluid">
+                        </div>
+                        <p class="small text-muted mb-0">Silakan scan Barcode di atas menggunakan aplikasi m-Banking atau E-Wallet Anda (Gopay/OVO/Dana).</p>
+                    </div>
+                    <?php endif; ?>
 
                 </form>
             </div>
@@ -747,6 +756,16 @@
                 infoTitle.innerText = "Instruksi " + el.innerText.split('\n')[0].trim();
             } else {
                 infoBox.classList.add('d-none');
+            }
+
+            // Show QRIS Section if available and method is transfer/qris
+            const qrisSec = document.getElementById('qrisSection');
+            if(qrisSec) {
+                if(method.toLowerCase().includes('transfer') || method.toLowerCase().includes('qris')) {
+                    qrisSec.classList.remove('d-none');
+                } else {
+                    qrisSec.classList.add('d-none');
+                }
             }
         }
         // REAL-TIME VALIDATION
