@@ -81,7 +81,7 @@
                 <p class="text-muted small mb-0 mt-1">Daftar pesanan online khusus tanggal <?= date('d M Y', strtotime($date_filter)) ?>.</p>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive responsive-card-table">
+                <div class="table-responsive responsive-card-table" style="min-height: 450px; padding-bottom: 100px;">
                     <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
                         <thead class="" style="background: #f8faf9;">
                             <tr>
@@ -155,7 +155,7 @@
                                                     Detail
                                                 </button>
                                                 <div class="dropdown">
-                                                    <button class="btn btn-sm btn-white border dropdown-toggle fw-bold p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.8rem;">
+                                                    <button class="btn btn-sm btn-white border dropdown-toggle fw-bold p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false" style="font-size: 0.8rem;">
                                                         Manage
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" style="border-radius: 12px; font-size: 0.85rem; min-width: 180px;">
