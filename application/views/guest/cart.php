@@ -122,7 +122,21 @@
 
     <nav class="navbar navbar-macha fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>"><i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>MariMacha</a>
+            <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
+                <?php if(!empty($shop_logo)): ?>
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+                <?php else: ?>
+                    <i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>
+                <?php endif; ?>
+                <span>MariMacha</span>
+                
+                <?php if(isset($shop_status)): ?>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; background: #fff; border: 2px solid var(--gm); color: #000; border-radius: 50px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-left:10px;">
+                        <div style="width: 7px; height: 7px; border-radius: 50%; background: <?= $shop_status == 'open' ? '#25D366' : '#e63946' ?>; box-shadow: 0 0 8px <?= $shop_status == 'open' ? '#25D366' : '#e63946' ?>;"></div>
+                        <?= $shop_status == 'open' ? 'Buka' : 'Tutup' ?>
+                    </div>
+                <?php endif; ?>
+            </a>
             <a href="<?= base_url('shop') ?>" class="btn-ol"><i class="fa-solid fa-arrow-left"></i><span>Lanjut Belanja</span></a>
         </div>
     </nav>

@@ -55,7 +55,8 @@ class Shop extends CI_Controller
             'total'        => $total,
             'products'     => $this->M_product->get_all(),
             'shop_logo'    => $this->M_settings->get_setting('shop_logo'),
-            'shop_address' => $this->M_settings->get_setting('shop_address')
+            'shop_address' => $this->M_settings->get_setting('shop_address'),
+            'shop_status'  => $this->M_settings->get_setting('shop_status') ?: 'open'
         ];
         $this->load->view('guest/cart', $data);
     }

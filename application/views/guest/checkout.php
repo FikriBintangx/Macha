@@ -469,8 +469,13 @@
 
     <nav class="navbar navbar-macha fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMacha
+            <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
+                <?php if(!empty($shop_logo)): ?>
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+                <?php else: ?>
+                    <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
+                <?php endif; ?>
+                <span>MariMacha</span>
             </a>
             <a href="<?= base_url('shop/cart') ?>" class="text-muted text-decoration-none" style="font-size:.9rem">
                 <i class="fa-solid fa-arrow-left me-1"></i>Kembali ke Keranjang
@@ -758,11 +763,16 @@
                 infoBox.classList.add('d-none');
             }
 
-            // Show QRIS Section if available and method is transfer/qris
+            // Show QRIS Section if available and method involves transfer/qris
             const qrisSec = document.getElementById('qrisSection');
             if(qrisSec) {
-                if(method.toLowerCase().includes('transfer') || method.toLowerCase().includes('qris')) {
+                const methodLower = method.toLowerCase();
+                if(methodLower.includes('transfer') || methodLower.includes('qris') || methodLower.includes('trf')) {
                     qrisSec.classList.remove('d-none');
+                    // Scroll to QRIS section smoothly
+                    setTimeout(() => {
+                        qrisSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
                 } else {
                     qrisSec.classList.add('d-none');
                 }

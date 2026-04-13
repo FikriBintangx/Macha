@@ -29,6 +29,28 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);padding-top:72px; a
 .nav-link:hover::after,.nav-link.active-nav::after{left:0;right:0;}
 .nav-link.active-nav{color:var(--gm)!important;font-weight:700;}
 .navbar-nav .nav-link.active{color:var(--txt)!important;}
+
+/* STATUS PILL (requested style) */
+.shop-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    background: #fff;
+    border: 2px solid var(--gm);
+    color: #000 !important;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-left: 10px;
+}
+.status-dot { width: 7px; height: 7px; border-radius: 50%; }
+.status-dot.open { background: #25D366; box-shadow: 0 0 8px #25D366; }
+.status-dot.closed { background: #e63946; box-shadow: 0 0 8px #e63946; }
+
 .btn-hdr{background:var(--gm);color:#fff;border-radius:50px;padding:9px 20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.25s;border:2px solid var(--gm);}
 .btn-hdr:hover{background:var(--gd);border-color:var(--gd);color:#fff;}
 .btn-hdr-out{border:2px solid var(--gm);color:var(--gm);border-radius:50px;padding:9px 20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.25s;}
@@ -157,7 +179,21 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-macha fixed-top">
 <div class="container">
-<a class="navbar-brand" href="<?= base_url() ?>"><i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>MariMacha</a>
+<a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
+    <?php if(!empty($shop_logo)): ?>
+        <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 30px; width: auto; object-fit: contain; margin-right: 8px;">
+    <?php else: ?>
+        <i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>
+    <?php endif; ?>
+    <span>MariMacha</span>
+    
+    <?php if(isset($shop_status)): ?>
+        <div class="shop-status-pill">
+            <div class="status-dot <?= $shop_status == 'open' ? 'open' : 'closed' ?>"></div>
+            <?= $shop_status == 'open' ? 'Buka' : 'Tutup' ?>
+        </div>
+    <?php endif; ?>
+</a>
 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 <i class="fa-solid fa-bars" style="color:var(--gd)"></i></button>
 <div class="collapse navbar-collapse" id="navbarNav">

@@ -58,8 +58,11 @@ class Home extends CI_Controller {
         $story_1 = $this->M_settings->get_setting('story_img_1');
         $story_2 = $this->M_settings->get_setting('story_img_2');
 
-        $data['story_img_1']       = !empty($story_1) ? base_url('uploads/' . $story_1) : 'https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?w=600&auto=format&fit=crop&q=80';
-        $data['story_img_2']       = !empty($story_2) ? base_url('uploads/' . $story_2) : 'https://images.unsplash.com/photo-1613143213508-251f4c7f0d06?w=600&auto=format&fit=crop&q=80';
+        $data['shop_img_1']        = !empty($story_1) ? base_url('uploads/' . $story_1) : 'https://images.unsplash.com/photo-1594911772125-07fc7a2d8d9f?w=600&auto=format&fit=crop&q=80';
+        $data['shop_img_2']        = !empty($story_2) ? base_url('uploads/' . $story_2) : 'https://images.unsplash.com/photo-1613143213508-251f4c7f0d06?w=600&auto=format&fit=crop&q=80';
+
+        $data['shop_logo']         = $this->M_settings->get_setting('shop_logo');
+        $data['shop_status']       = $this->M_settings->get_setting('shop_status') ?: 'open';
 
         $data['featured_products'] = $featured;
         $data['products']          = $products;
@@ -199,6 +202,9 @@ class Home extends CI_Controller {
     public function tentang() {
         $this->load->model('M_settings');
         $data['shop_address'] = $this->M_settings->get_setting('shop_address');
+        $data['shop_logo']    = $this->M_settings->get_setting('shop_logo');
+        $data['shop_status']  = $this->M_settings->get_setting('shop_status') ?: 'open';
+        
         if (empty($data['shop_address'])) {
             $data['shop_address'] = "Citra Raya, Tangerang, Banten";
         }

@@ -315,6 +315,30 @@
       background: transparent !important;
     }
 
+    /* STATUS PILL (requested style) */
+    .shop-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 14px;
+        background: #fff;
+        border: 2px solid var(--green-main);
+        color: #000 !important;
+        border-radius: 50px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-left: 8px;
+    }
+    .status-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+    }
+    .status-dot.open { background: #25D366; box-shadow: 0 0 8px #25D366; }
+    .status-dot.closed { background: #e63946; box-shadow: 0 0 8px #e63946; }
+
     /* ─── IOS FLOATING BAR (GUEST) ─── */
     .ios-navbar-guest {
         display: none;
@@ -2084,8 +2108,20 @@
   <!-- ══════════ NAVBAR ══════════ -->
   <nav class="navbar navbar-expand-lg navbar-macha fixed-top" id="mainNav">
     <div class="container position-relative">
-      <a class="navbar-brand" href="<?= base_url(); ?>">
-        <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMacha
+      <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
+        <?php if(!empty($shop_logo)): ?>
+            <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 32px; width: auto; object-fit: contain; margin-right: 10px;">
+        <?php else: ?>
+            <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
+        <?php endif; ?>
+        <span>MariMacha</span>
+        
+        <?php if(isset($shop_status)): ?>
+            <div class="shop-status-pill">
+                <div class="status-dot <?= $shop_status == 'open' ? 'open' : 'closed' ?>"></div>
+                <?= $shop_status == 'open' ? 'Buka' : 'Tutup' ?>
+            </div>
+        <?php endif; ?>
       </a>
       <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
         aria-controls="navMain" aria-expanded="false">
