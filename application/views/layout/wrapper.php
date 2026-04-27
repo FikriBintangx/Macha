@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- UI Enhancement Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <?php 
         $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
         $notif_orders  = $this->db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
@@ -180,10 +184,73 @@
             font-weight: 700;
             font-size: .9rem;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .user-info { text-align: right; }
         .user-info .name { font-weight: 700; font-size: .88rem; color: #1a2e25; }
         .user-info .role { font-size: .73rem; color: #8aa898; }
+
+        /* ─── ENTRANCE ANIMATIONS ─── */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* ─── GLASSMORPHISM ─── */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(12px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+
+        /* ─── FLOATING ACTION BUTTON ─── */
+        .fab-container {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 998;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        .fab-main {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--green-main);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(27, 59, 37, 0.4);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.5rem;
+        }
+        .fab-main:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--green-dark);
+            box-shadow: 0 15px 30px rgba(27, 59, 37, 0.5);
+        }
+        .fab-label {
+            position: absolute;
+            right: 70px;
+            background: #333;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .fab-main:hover + .fab-label {
+            opacity: 1;
+            right: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .fab-container { bottom: 100px; right: 20px; }
+        }
         
         /* ─── NOTIFICATION DROPDOWN ─── */
         .notif-dropdown {
@@ -191,17 +258,19 @@
             top: 55px;
             right: 0;
             width: 320px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            border: 1px solid #eef2ee;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             display: none;
             flex-direction: column;
             z-index: 1001;
             overflow: hidden;
-            animation: slideIn .3s ease;
+            transform-origin: top right;
         }
-        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .notif-dropdown.show { display: flex; }
         .notif-header { padding: 15px 20px; background: #f8fbf8; border-bottom: 1px solid #edf1ed; font-weight: 700; font-size: .9rem; display: flex; justify-content: space-between; align-items: center; }
         .notif-body { max-height: 350px; overflow-y: auto; }
@@ -581,9 +650,13 @@
             .responsive-card-table td:last-child:before { display: none; }
         }
         .page-header-mobile { display: none; }
-    </style>
-</head>
-<body>
+    <!-- FLOATING ACTION BUTTON -->
+    <div class="fab-container d-none d-md-flex">
+        <a href="<?= site_url('order') ?>" class="fab-main">
+            <i class="bi bi-pc-display-horizontal"></i>
+        </a>
+        <span class="fab-label fw-bold">Kasir Online</span>
+    </div>
 
     <!-- SIDEBAR OVERLAY -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -783,21 +856,36 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Mobile sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const iosNav = document.querySelector('.ios-navbar');
-            
-            sidebar.classList.toggle('open');
-            if (sidebar.classList.contains('open')) {
-                overlay.classList.add('show');
-                document.body.style.overflow = 'hidden'; // Stop scrolling
-                if(iosNav) iosNav.classList.add('hide-nav'); // Hide pill bar when sidebar open
+        // Improved Notification Toggle with GSAP
+        function toggleNotif() {
+            const drop = document.getElementById('notifDropdown');
+            if (drop.style.display === 'flex') {
+                gsap.to(drop, { opacity: 0, scale: 0.95, duration: 0.2, onComplete: () => drop.style.display = 'none' });
             } else {
-                overlay.classList.remove('show');
-                document.body.style.overflow = ''; // Resume scrolling
-                if(iosNav) iosNav.classList.remove('hide-nav');
+                drop.style.display = 'flex';
+                gsap.fromTo(drop, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+            }
+        }
+
+        // Global Entrance Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.from(".sidebar", { x: -100, opacity: 0, duration: 0.8, ease: "power3.out" });
+            gsap.from(".topbar", { y: -50, opacity: 0, duration: 0.8, delay: 0.2, ease: "power3.out" });
+            
+            // Register ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Auto reveal elements with .reveal class
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach((el, i) => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: "top 90%",
+                    onEnter: () => el.classList.add('active')
+                });
+            });
+        });
+    </script>
             }
         }
 

@@ -98,7 +98,7 @@
                         <tbody class="border-top-0" id="orderTbody">
                             <?php if(!empty($orders)): ?>
                                 <?php foreach($orders as $o): ?>
-                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
+                                    <tr class="order-row reveal" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
                                         <td class="ps-4 py-4 fw-bold text-dark" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
                                         <td class="py-4" data-label="INVOICE">
                                             <span class="badge bg-white text-dark border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace;"><?= $o['invoice_no'] ?></span>
@@ -193,7 +193,7 @@
 <!-- Modal Detail Order -->
 <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+        <div class="modal-content border-0 shadow-lg glass-panel" style="border-radius: 24px;">
             <div class="modal-header border-0 bg-success bg-opacity-10 p-4 pb-3">
                 <div>
                     <h5 class="modal-title fw-bold text-success mb-1" id="detailInvoice">#INV-000000</h5>
@@ -226,7 +226,7 @@
 <!-- Modal Bukti Bayar -->
 <div class="modal fade" id="modalProof" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+        <div class="modal-content border-0 shadow-lg glass-panel" style="border-radius: 24px; overflow: hidden;">
             <div class="modal-header border-0 bg-light p-3">
                 <h6 class="modal-title fw-bold text-success"><i class="bi bi-image me-2"></i>Bukti Pembayaran</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -316,11 +316,13 @@
                 if (data.new_status === 'completed') { badgeClass = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; statusText = 'Selesai'; }
                 if (data.new_status === 'canceled') { badgeClass = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; statusText = 'Batal'; }
 
-                cell.innerHTML = `<span class="badge ${badgeClass} rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">${statusText}</span>`;
+                cell.innerHTML = `<span class="badge ${badgeClass} rounded-pill px-3 py-2 fw-bold animate__animated animate__fadeInUp" style="font-size: 0.75rem;">${statusText}</span>`;
                 
-                // Flash the row
-                row.style.backgroundColor = '#e8f5e9';
-                setTimeout(() => row.style.backgroundColor = '', 1000);
+                // Premium GSAP Flash Feedback
+                gsap.fromTo(row, 
+                    { backgroundColor: 'rgba(25, 135, 84, 0.2)' }, 
+                    { backgroundColor: 'rgba(255, 255, 255, 0)', duration: 1.5, ease: "power2.out" }
+                );
             } else {
                 alert('Gagal memperbarui status: ' + data.message);
             }
@@ -363,4 +365,16 @@
 
     userFilter.addEventListener('change', applyFilters);
     smartFilter.addEventListener('input', applyFilters);
+
+    // Staggered Entrance for Rows
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.from(".order-row", {
+            opacity: 0,
+            x: -20,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: "power2.out",
+            delay: 0.5
+        });
+    });
 </script>

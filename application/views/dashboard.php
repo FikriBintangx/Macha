@@ -28,7 +28,7 @@ $low_stock_items = $this->db->get('products')->result_array();
 <!-- ─── HEADER STATS (Berjejer di Paling Atas) ─── -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
-        <div class="stat-card sc-green shadow-sm">
+        <div class="stat-card sc-green shadow-sm reveal">
             <div class="sc-icon"><i class="bi bi-wallet2"></i></div>
             <div class="sc-label">Revenue Hari Ini</div>
             <div class="sc-num">Rp <?= number_format($revenue_today, 0, ',', '.') ?></div>
@@ -36,7 +36,7 @@ $low_stock_items = $this->db->get('products')->result_array();
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-amber shadow-sm">
+        <div class="stat-card sc-amber shadow-sm reveal">
             <div class="sc-icon"><i class="bi bi-clock-history"></i></div>
             <div class="sc-label">Order Pending</div>
             <div class="sc-num"><?= $orders_pending ?></div>
@@ -44,7 +44,7 @@ $low_stock_items = $this->db->get('products')->result_array();
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-blue shadow-sm">
+        <div class="stat-card sc-blue shadow-sm reveal">
             <div class="sc-icon"><i class="bi bi-box-seam"></i></div>
             <div class="sc-label">Katalog Menu</div>
             <div class="sc-num"><?= $total_products ?></div>
@@ -52,7 +52,7 @@ $low_stock_items = $this->db->get('products')->result_array();
         </div>
     </div>
     <div class="col-md-3">
-        <div class="stat-card sc-purple shadow-sm">
+        <div class="stat-card sc-purple shadow-sm reveal">
             <div class="sc-icon"><i class="bi bi-graph-up-arrow"></i></div>
             <div class="sc-label">Order Hari Ini</div>
             <?php $count_today = $this->db->where("DATE(created_at)", $today)->count_all_results('sales'); ?>
@@ -65,7 +65,7 @@ $low_stock_items = $this->db->get('products')->result_array();
 <div class="row g-4">
     <!-- ─── DATA VISUALIZATION (FLOWCHART/CHART) ─── -->
     <div class="col-xl-8">
-        <div class="cc shadow-sm border-0" style="min-height: 500px;">
+        <div class="cc shadow-sm border-0 reveal" style="min-height: 500px;">
             <div class="cc-header d-flex justify-content-between align-items-center bg-white border-0 p-4 pb-0">
                 <div>
                     <h5 class="fw-bold text-success mb-0"><i class="bi bi-diagram-3-fill me-2"></i>Alur & Trafik Order</h5>
@@ -109,7 +109,7 @@ $low_stock_items = $this->db->get('products')->result_array();
 
     <!-- ─── SIDE DATA (INVENTORY/STOCK) ─── -->
     <div class="col-xl-4">
-        <div class="cc shadow-sm border-0 h-100">
+        <div class="cc shadow-sm border-0 h-100 reveal">
             <div class="cc-header bg-white border-0 p-4 pb-0">
                 <h5 class="fw-bold text-success mb-0"><i class="bi bi-database-fill-check me-2"></i>Data Persediaan</h5>
                 <p class="text-muted small mb-0">Status stok produk saat ini.</p>
@@ -272,4 +272,23 @@ $low_stock_items = $this->db->get('products')->result_array();
     }
     setInterval(rtClock, 1000);
     rtClock();
+
+    // GSAP Dashboard Entrance
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.from(".stat-card", {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)"
+        });
+        
+        gsap.from(".cc", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            delay: 0.4,
+            ease: "power4.out"
+        });
+    });
 </script>
