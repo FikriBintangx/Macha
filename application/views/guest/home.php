@@ -266,24 +266,26 @@
 
     .navbar-brand {
       font-weight: 900;
-      font-size: 1.62rem;
+      font-size: 1.5rem;
       color: var(--green-dark) !important;
       letter-spacing: -0.6px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-right: 2rem;
+      gap: 8px;
+      margin-right: 1.5rem;
+      flex-shrink: 0;
     }
 
     .nav-link {
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--green-dark) !important;
-      margin: 0 6px;
+      margin: 0 8px;
       transition: 0.25s ease;
       position: relative;
       padding-bottom: 4px !important;
       border-radius: 0;
+      white-space: nowrap;
     }
 
     .nav-link::after {
@@ -320,17 +322,18 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 4px 14px;
+        padding: 3px 10px;
         background: #fff;
         border: 2px solid var(--green-main);
         color: #000 !important;
         border-radius: 50px;
-        font-size: 0.72rem;
+        font-size: 0.65rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        margin-left: 8px;
+        margin-left: 5px;
+        flex-shrink: 0;
     }
     .status-dot {
         width: 7px; height: 7px;
@@ -2127,36 +2130,36 @@
         <i class="fa-solid fa-bars-staggered" style="color:var(--green-dark);font-size:1.4rem"></i>
       </button>
       <div class="collapse navbar-collapse" id="navMain">
-        <ul class="navbar-nav mx-auto gap-2">
+        <ul class="navbar-nav mx-auto gap-1">
           <li class="nav-item"><a class="nav-link active-link" href="<?= base_url(); ?>">Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= base_url('shop'); ?>">Katalog</a></li>
           <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="#cara-pesan">Cara Pesan</a></li>
         </ul>
-        <div class="d-flex align-items-center gap-3 flex-wrap mt-3 mt-lg-0">
+        <div class="d-flex align-items-center gap-1 gap-xl-2 flex-nowrap mt-3 mt-lg-0">
           <?php
           $cart = $this->session->userdata('cart') ?? [];
           $cart_count = count($cart);
           ?>
           <?php if($this->session->userdata('role') != 'admin'): ?>
-          <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative">
+          <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3" style="font-size: 0.85rem;">
             <i class="fa-solid fa-cart-shopping"></i>
-            Keranjang
+            <span class="d-none d-sm-inline">Keranjang</span>
             <?php if ($cart_count > 0): ?>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style="font-size:0.6rem"><?= $cart_count ?></span>
+                style="font-size:0.55rem; padding: 4px 6px;"><?= $cart_count ?></span>
             <?php endif; ?>
           </a>
           <?php endif; ?>
           <?php if ($this->session->userdata('userid')): ?>
             <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"
-              class="btn-hdr">
-              <i class="fa-solid fa-user"></i> Akun Saya
+              class="btn-hdr px-3" style="font-size: 0.85rem;">
+              <i class="fa-solid fa-user"></i> <span class="d-none d-xl-inline">Akun Saya</span>
             </a>
           <?php else: ?>
-            <div class="d-flex gap-2">
-              <a href="<?= base_url('auth') ?>" class="btn-hdr-out">Masuk</a>
-              <a href="<?= base_url('auth/register') ?>" class="btn-hdr">Daftar</a>
+            <div class="d-flex gap-1 gap-xl-2 flex-nowrap">
+              <a href="<?= base_url('auth') ?>" class="btn-hdr-out px-2 px-xl-3" style="font-size: 0.85rem;">Masuk</a>
+              <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3" style="font-size: 0.85rem;">Daftar</a>
             </div>
           <?php endif; ?>
         </div>
@@ -3046,30 +3049,6 @@
     </div>
   </footer>
 
-    <!-- IOS FLOATING NAVBAR (GUEST) -->
-    <nav class="ios-navbar-guest">
-        <a href="<?= base_url() ?>" class="ios-nav-item active">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
-        </a>
-        <a href="<?= base_url('shop') ?>" class="ios-nav-item">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <span>Menu</span>
-        </a>
-        <a href="#cara-pesan" class="ios-nav-item">
-            <i class="fa-solid fa-circle-question"></i>
-            <span>Bantuan</span>
-        </a>
-        <a href="<?= base_url('shop/cart') ?>" class="ios-nav-item position-relative">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Cart</span>
-            <?php if($cart_count > 0): ?>
-                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 5px; right: -5px; font-size: 0.6rem;">
-                    <?= $cart_count ?>
-                </span>
-            <?php endif; ?>
-        </a>
-    </nav>
 
   <!-- ══════════ FLOATING CART ══════════ -->
   <?php if ($cart_count > 0): ?>

@@ -202,18 +202,22 @@ document.addEventListener("DOMContentLoaded", function() {
 <li class="nav-item"><a class="nav-link" href="<?= base_url() ?>#tentang">Tentang</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url() ?>#cara-pesan">Cara Pesan</a></li>
 </ul>
-<div class="d-flex align-items-center gap-2">
+<div class="d-flex align-items-center gap-1 gap-xl-2 flex-nowrap">
 <?php $cart=$this->session->userdata('cart')??[];$cc=count($cart);?>
 <?php if($this->session->userdata('role') != 'admin'): ?>
-<a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative">
+<a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3" style="font-size: 0.85rem;">
 <i class="fa-solid fa-cart-shopping"></i>
-<?php if($cc>0):?><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:.6rem"><?=$cc?></span><?php endif;?>
-Keranjang</a>
+<span class="d-none d-sm-inline">Keranjang</span>
+<?php if($cc>0):?><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:.55rem; padding: 4px 6px;"><?=$cc?></span><?php endif;?>
+</a>
 <?php endif; ?>
 <?php if($this->session->userdata('userid')):?>
-<a href="<?= ($this->session->userdata('role')=='admin')?base_url('dashboard'):base_url('user') ?>" class="btn-hdr"><i class="fa-solid fa-user"></i>Akun</a>
+<a href="<?= ($this->session->userdata('role')=='admin')?base_url('dashboard'):base_url('user') ?>" class="btn-hdr px-3" style="font-size: 0.85rem;"><i class="fa-solid fa-user"></i> <span class="d-none d-xl-inline">Akun</span></a>
 <?php else:?>
-<a href="<?= base_url('auth') ?>" class="btn-hdr">Login</a>
+<div class="d-flex gap-1 gap-xl-2 flex-nowrap">
+    <a href="<?= base_url('auth') ?>" class="btn-hdr-out px-2 px-xl-3" style="font-size: 0.85rem;">Masuk</a>
+    <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3" style="font-size: 0.85rem;">Daftar</a>
+</div>
 <?php endif;?>
 </div></div></div></nav>
 
