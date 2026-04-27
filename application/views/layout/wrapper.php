@@ -191,8 +191,8 @@
         .user-info .role { font-size: .73rem; color: #8aa898; }
 
         /* ─── ENTRANCE ANIMATIONS ─── */
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal { transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
         
         /* ─── GLASSMORPHISM ─── */
         .glass-panel {
@@ -856,6 +856,24 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const iosNav = document.querySelector('.ios-navbar');
+            
+            sidebar.classList.toggle('open');
+            if (sidebar.classList.contains('open')) {
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden'; 
+                if(iosNav) iosNav.classList.add('hide-nav'); 
+            } else {
+                overlay.classList.remove('show');
+                document.body.style.overflow = ''; 
+                if(iosNav) iosNav.classList.remove('hide-nav');
+            }
+        }
+
         // Improved Notification Toggle with GSAP
         function toggleNotif() {
             const drop = document.getElementById('notifDropdown');
@@ -869,25 +887,30 @@
 
         // Global Entrance Animations
         document.addEventListener('DOMContentLoaded', () => {
-            gsap.from(".sidebar", { x: -100, opacity: 0, duration: 0.8, ease: "power3.out" });
-            gsap.from(".topbar", { y: -50, opacity: 0, duration: 0.8, delay: 0.2, ease: "power3.out" });
-            
-            // Register ScrollTrigger
-            gsap.registerPlugin(ScrollTrigger);
-            
-            // Auto reveal elements with .reveal class
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach((el, i) => {
-                ScrollTrigger.create({
-                    trigger: el,
-                    start: "top 90%",
-                    onEnter: () => el.classList.add('active')
-                });
-            });
-        });
-    </script>
+            // Check if GSAP is loaded
+            if (typeof gsap !== 'undefined') {
+                gsap.from(".sidebar", { x: -100, opacity: 0, duration: 0.8, ease: "power3.out" });
+                gsap.from(".topbar", { y: -50, opacity: 0, duration: 0.8, delay: 0.2, ease: "power3.out" });
+                
+                // Register ScrollTrigger if available
+                if (typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+                    
+                    // Auto reveal elements with .reveal class
+                    const reveals = document.querySelectorAll('.reveal');
+                    reveals.forEach((el, i) => {
+                        // Set initial state via JS for fail-safety
+                        gsap.set(el, { opacity: 0, y: 20 });
+                        
+                        ScrollTrigger.create({
+                            trigger: el,
+                            start: "top 90%",
+                            onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+                        });
+                    });
+                }
             }
-        }
+        });
 
         // Auto-hide Pill Bar on Scroll
         let lastScrollY = window.scrollY;
@@ -895,44 +918,23 @@
             const iosNav = document.querySelector('.ios-navbar');
             if(!iosNav) return;
 
-            // Only trigger if sidebar is not open
             const sidebar = document.getElementById('sidebar');
             if(sidebar && sidebar.classList.contains('open')) return;
 
             if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                // Scrolling Down -> Hide
                 iosNav.classList.add('hide-nav');
             } else {
-                // Scrolling Up -> Show
                 iosNav.classList.remove('hide-nav');
             }
             lastScrollY = window.scrollY;
         });
 
-        // Toggle Notifications
-        function toggleNotif() {
-            const dropdown = document.getElementById('notifDropdown');
-            dropdown.classList.toggle('show');
-            
-            // Close when clicking outside
-            document.addEventListener('click', function closeNotif(e) {
-                if (!e.target.closest('.topbar-actions')) {
-                    dropdown.classList.remove('show');
-                    document.removeEventListener('click', closeNotif);
-                }
-            });
-        }
-
-        // --- SIDEBAR SCROLL PERSISTENCE ---
+        // Sidebar Scroll Persistence
         const sidebarScroll = document.querySelector('.sidebar-scroll');
         if (sidebarScroll) {
-            // Restore position
             const savedScrollPos = sessionStorage.getItem('sidebarScrollPos');
-            if (savedScrollPos) {
-                sidebarScroll.scrollTop = savedScrollPos;
-            }
+            if (savedScrollPos) sidebarScroll.scrollTop = savedScrollPos;
 
-            // Save position on scroll (throttled)
             let scrollTimeout;
             sidebarScroll.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
@@ -941,7 +943,6 @@
                 }, 100);
             });
 
-            // Ensure active link is visible on load
             const activeLink = sidebarScroll.querySelector('.nav-link.active');
             if (activeLink) {
                 const rect = activeLink.getBoundingClientRect();

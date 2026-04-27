@@ -98,7 +98,7 @@
                         <tbody class="border-top-0" id="orderTbody">
                             <?php if(!empty($orders)): ?>
                                 <?php foreach($orders as $o): ?>
-                                    <tr class="order-row reveal" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
+                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
                                         <td class="ps-4 py-4 fw-bold text-dark" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
                                         <td class="py-4" data-label="INVOICE">
                                             <span class="badge bg-white text-dark border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace;"><?= $o['invoice_no'] ?></span>
