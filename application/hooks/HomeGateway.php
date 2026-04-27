@@ -19,9 +19,9 @@ class HomeGateway {
         $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 
         // Jika referer KOSONG, artinya URL diketik langsung pake keyboard / di-copy-paste!
-        if (empty($referer)) {
-            redirect(base_url('home'));
-        }
+        // if (empty($referer)) {
+        //     redirect(base_url('home'));
+        // }
     }
 
 }

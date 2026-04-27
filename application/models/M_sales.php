@@ -22,7 +22,7 @@ class M_sales extends CI_Model
 
         // 2. Detail & potong stok
         foreach ($details as $item) {
-            $product = $this->db->get_where('products', ['id' => $item['product_id']])->row();
+            $product = $this->db->where('id', $item['product_id'])->get('products')->row();
 
             if (!$product || $item['qty'] > $product->stock) {
                 $this->db->trans_rollback();
@@ -90,6 +90,6 @@ class M_sales extends CI_Model
 
     public function get_sales_by_id($id)
     {
-        return $this->db->get_where('sales', ['id' => $id])->row_array();
+        return $this->db->where('id', $id)->get('sales')->row_array();
     }
 }

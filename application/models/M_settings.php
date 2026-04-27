@@ -5,7 +5,7 @@ class M_settings extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        $this->ensure_tables();
+        // $this->ensure_tables();
     }
 
     // Ambil setting berdasarkan key

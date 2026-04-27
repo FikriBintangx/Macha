@@ -11,18 +11,20 @@ application/logs/log-*.php
 application/cache/*
 !application/cache/index.html
 
-# Database config (comment this if you want to push DB credentials)
-# application/config/database.php
-
 # Session storage
 application/sessions/*
 !application/sessions/index.html
+
+# Database config
+application/config/database.php
 
 # Vendor folder
 vendor/
 node_modules/
 
 # User uploads/assets
+uploads/*
+!uploads/index.html
 assets/uploads/*
 !assets/uploads/index.html
 

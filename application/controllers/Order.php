@@ -76,6 +76,18 @@ class Order extends CI_Controller {
     public function update_status($id, $status) {
         $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
         if(in_array($status, $valid_status)) {
+            // Get current order info for points awarding
+            $order = $this->db->get_where('sales', ['id' => $id])->row();
+            
+            if ($status == 'completed' && $order->status != 'completed' && !empty($order->user_id)) {
+                $points = floor($order->total_price / 10000);
+                if ($points > 0) {
+                    $this->db->set('points', 'points + ' . (int)$points, FALSE);
+                    $this->db->where('id', $order->user_id);
+                    $this->db->update('users');
+                }
+            }
+
             $this->db->where('id', $id);
             $this->db->update('sales', ['status' => $status]);
             $this->session->set_flashdata('success', 'Status pesanan berhasil diperbarui menjadi: ' . strtoupper($status));
@@ -96,6 +108,18 @@ class Order extends CI_Controller {
 
         $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
         if(in_array($status, $valid_status)) {
+            // Get current order info for points awarding
+            $order = $this->db->get_where('sales', ['id' => $id])->row();
+            
+            if ($status == 'completed' && $order->status != 'completed' && !empty($order->user_id)) {
+                $points = floor($order->total_price / 10000);
+                if ($points > 0) {
+                    $this->db->set('points', 'points + ' . (int)$points, FALSE);
+                    $this->db->where('id', $order->user_id);
+                    $this->db->update('users');
+                }
+            }
+
             $this->db->where('id', $id);
             $this->db->update('sales', ['status' => $status]);
             

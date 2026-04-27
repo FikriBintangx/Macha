@@ -21,10 +21,10 @@ class Auth extends CI_Controller {
     public function process() {
         $post = $this->input->post(null, TRUE);
         if (isset($post['username']) && isset($post['password'])) {
-            $user = $this->db->get_where('users', [
+            $user = $this->db->where([
                 'username' => trim($post['username']),
                 'password' => trim($post['password']),
-            ])->row_array();
+            ])->get('users')->row_array();
 
             if ($user) {
                 $this->session->set_userdata([
@@ -79,7 +79,7 @@ class Auth extends CI_Controller {
         }
 
         // Cek username unik
-        $exists = $this->db->get_where('users', ['username' => $username])->num_rows();
+        $exists = $this->db->where('username', $username)->get('users')->num_rows();
         if ($exists) {
             $this->session->set_flashdata('error', 'Username sudah digunakan, coba yang lain.');
             redirect('auth/register');
@@ -110,7 +110,7 @@ class Auth extends CI_Controller {
             $this->session->set_flashdata('error', 'Username wajib diisi!');
             redirect('auth/forgot'); return;
         }
-        $user = $this->db->get_where('users', ['username' => $username])->row_array();
+        $user = $this->db->where('username', $username)->get('users')->row_array();
         if (!$user) {
             $this->session->set_flashdata('error', 'Username tidak ditemukan.');
             redirect('auth/forgot'); return;

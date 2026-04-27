@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+    $CI =& get_instance();
+    $pending_count = 0;
+    $notif_orders  = [];
+    if (isset($CI->db)) {
+        $pending_count = $CI->db->where('status', 'pending')->count_all_results('sales');
+        $notif_orders  = $CI->db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
+    }
+?>
+
 <html lang="id">
 <head>
     <title><?= $title ?> | MariMatcha</title>
@@ -11,10 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <?php 
-        $pending_count = $this->db->where('status', 'pending')->count_all_results('sales');
-        $notif_orders  = $this->db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
-    ?>
+
     <style>
         :root {
             --sidebar-w: 260px;
@@ -650,6 +657,51 @@
             .responsive-card-table td:last-child:before { display: none; }
         }
         .page-header-mobile { display: none; }
+
+        /* SKELETON LOADING EFFECT */
+        #skeleton-loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #fff;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .sk-sidebar { width: 260px; height: 100vh; background: #f8faf9; position: fixed; left: 0; top: 0; }
+        .sk-main { margin-left: 280px; flex: 1; }
+        .sk-item { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: sk-loading 1.5s infinite;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        @keyframes sk-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        
+        @media (max-width: 768px) {
+            .sk-sidebar { display: none; }
+            .sk-main { margin-left: 0; }
+        }
+    </style>
+
+    <!-- SKELETON OVERLAY -->
+    <div id="skeleton-loader">
+        <div class="sk-sidebar"></div>
+        <div class="sk-main">
+            <div class="sk-item" style="height: 60px; width: 40%;"></div>
+            <div class="row">
+                <div class="col-3"><div class="sk-item" style="height: 120px;"></div></div>
+                <div class="col-3"><div class="sk-item" style="height: 120px;"></div></div>
+                <div class="col-3"><div class="sk-item" style="height: 120px;"></div></div>
+                <div class="col-3"><div class="sk-item" style="height: 120px;"></div></div>
+            </div>
+            <div class="sk-item" style="height: 300px;"></div>
+            <div class="sk-item" style="height: 200px; width: 60%;"></div>
+        </div>
+    </div>
+
     <!-- FLOATING ACTION BUTTON -->
     <div class="fab-container d-none d-md-flex">
         <a href="<?= site_url('order') ?>" class="fab-main">
@@ -716,7 +768,7 @@
                     </a>
                 </li>
 
-                <div class="nav-section">Produk & Stok</div>
+                <div class="nav-section">Katalog & Menu</div>
                 <li class="nav-item">
                     <a href="<?= site_url('product') ?>" class="nav-link <?= ($this->uri->segment(1) == 'product' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
                         <i class="bi bi-cup-hot-fill"></i> Manajemen Produk
@@ -725,6 +777,11 @@
                 <li class="nav-item">
                     <a href="<?= site_url('product/add') ?>" class="nav-link <?= ($this->uri->segment(1) == 'product' && $this->uri->segment(2) == 'add') ? 'active' : '' ?>">
                         <i class="bi bi-plus-circle-fill"></i> Tambah Produk
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('settings?tab=categories') ?>" class="nav-link <?= ($this->uri->segment(1) == 'settings' && $this->input->get('tab') == 'categories') ? 'active' : '' ?>">
+                        <i class="bi bi-tags-fill"></i> Manajemen Kategori
                     </a>
                 </li>
 
@@ -737,8 +794,23 @@
                         <?php endif; ?>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('order/history') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
+                        <i class="bi bi-receipt-cutoff"></i> Riwayat Transaksi
+                    </a>
+                </li>
 
-
+                <div class="nav-section">Manajemen User</div>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin_users') ?>" class="nav-link <?= ($this->uri->segment(1) == 'admin_users') ? 'active' : '' ?>">
+                        <i class="bi bi-person-gear"></i> Admin & Staff
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin_users/customers') ?>" class="nav-link <?= ($this->uri->segment(1) == 'admin_users' && $this->uri->segment(2) == 'customers') ? 'active' : '' ?>">
+                        <i class="bi bi-people-fill"></i> Data Pelanggan
+                    </a>
+                </li>
 
                 <div class="nav-section">Laporan</div>
                 <li class="nav-item">
@@ -756,19 +828,24 @@
                 </li>
                 <li class="nav-item">
                     <a href="<?= site_url('report') ?>" class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
-                        <i class="bi bi-person-badge-fill"></i> Laporan User
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= site_url('order/history') ?>" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'history') ? 'active' : '' ?>">
-                        <i class="bi bi-file-earmark-text-fill"></i> Laporan Order
+                        <i class="bi bi-person-badge-fill"></i> Analisa Pelanggan
                     </a>
                 </li>
 
                 <div class="nav-section">Sistem</div>
                 <li class="nav-item">
-                    <a href="<?= site_url('settings') ?>" class="nav-link <?= ($this->uri->segment(1) == 'settings') ? 'active' : '' ?>">
-                        <i class="bi bi-gear-fill"></i> Pengaturan Toko
+                    <a href="<?= site_url('settings') ?>" class="nav-link <?= ($this->uri->segment(1) == 'settings' && !$this->input->get('tab')) ? 'active' : '' ?>">
+                        <i class="bi bi-gear-fill"></i> Identitas Toko
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('settings?tab=payment-methods') ?>" class="nav-link <?= ($this->uri->segment(1) == 'settings' && $this->input->get('tab') == 'payment-methods') ? 'active' : '' ?>">
+                        <i class="bi bi-credit-card-2-back-fill"></i> Metode Bayar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('settings?tab=order-types') ?>" class="nav-link <?= ($this->uri->segment(1) == 'settings' && $this->input->get('tab') == 'order-types') ? 'active' : '' ?>">
+                        <i class="bi bi-truck-flatbed"></i> Tipe Pesanan
                     </a>
                 </li>
             </ul>
@@ -792,11 +869,9 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <?php /*
         <button class="topbar-btn d-md-none border-0" onclick="toggleSidebar()" style="width:38px;height:38px">
             <i class="bi bi-list fs-5"></i>
         </button>
-        */ ?>
         <div class="page-title"><?= $title ?></div>
         <div class="topbar-actions">
             <div class="position-relative">
@@ -838,10 +913,10 @@
                 <i class="bi bi-shop"></i>
             </a>
             <div class="user-info">
-                <div class="name"><?= htmlspecialchars($this->session->userdata('full_name')) ?></div>
+                <div class="name"><?= htmlspecialchars($this->session->userdata('full_name') ?? '') ?></div>
                 <div class="role">Administrator</div>
             </div>
-            <div class="avatar"><?= strtoupper(substr($this->session->userdata('full_name'), 0, 1)) ?></div>
+            <div class="avatar"><?= strtoupper(substr($this->session->userdata('full_name') ?? '', 0, 1)) ?></div>
         </div>
     </header>
 
@@ -887,6 +962,12 @@
 
         // Global Entrance Animations
         document.addEventListener('DOMContentLoaded', () => {
+            // Skeleton Loader fade out
+            const sk = document.getElementById('skeleton-loader');
+            if(sk && typeof gsap !== 'undefined') {
+                gsap.to(sk, { opacity: 0, duration: 0.8, delay: 0.5, onComplete: () => sk.style.display = 'none' });
+            }
+
             // Check if GSAP is loaded
             if (typeof gsap !== 'undefined') {
                 gsap.from(".sidebar", { x: -100, opacity: 0, duration: 0.8, ease: "power3.out" });

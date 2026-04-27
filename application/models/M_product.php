@@ -23,7 +23,7 @@ class M_product extends CI_Model {
 
     // Mengambil satu data produk berdasarkan ID (untuk Edit)
     public function get_by_id($id) {
-        return $this->db->get_where('products', ['id' => $id])->row_array();
+        return $this->db->where('id', $id)->get('products')->row_array();
     }
 
     // Mengupdate data produk

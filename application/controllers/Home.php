@@ -30,7 +30,7 @@ class Home extends CI_Controller {
         $user_id = $this->session->userdata('userid');
         $data['my_review'] = null;
         if ($user_id) {
-            $data['my_review'] = $this->db->get_where('testimonials', ['user_id' => $user_id])->row_array();
+            $data['my_review'] = $this->db->where('user_id', $user_id)->get('testimonials')->row_array();
         }
 
         // Featured products untuk scroll storytelling
@@ -184,7 +184,7 @@ class Home extends CI_Controller {
 
             if ($user_id) {
                 // Cari apakah user ini sudah pernah ulasan
-                $exist = $this->db->get_where('testimonials', ['user_id' => $user_id])->row();
+                $exist = $this->db->where('user_id', $user_id)->get('testimonials')->row();
                 if ($exist) {
                     $this->db->where('id', $exist->id);
                     $this->db->update('testimonials', $data);

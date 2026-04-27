@@ -271,9 +271,29 @@
         /* ── FLASH ── */
         .flash-success { background: #e6f4ea; border: none; border-left: 4px solid var(--green-main); border-radius: 14px; color: #2e6b3e; padding: 14px 20px; margin-bottom: 20px; }
         .flash-error { background: #fce4ec; border: none; border-left: 4px solid #e53e3e; border-radius: 14px; color: #880e4f; padding: 14px 20px; margin-bottom: 20px; }
+
+        /* SKELETON LOADING */
+        #skeleton-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+        .sk-hero { height: 180px; border-radius: 24px; background: #f0f4f1; }
+        .sk-chips { display: flex; gap: 12px; }
+        .sk-chip { flex: 1; height: 80px; border-radius: 14px; background: #f8faf9; }
+        .sk-card { height: 120px; border-radius: 20px; background: #fcfdfc; }
+        .sk-anim { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: sk-loading 1.5s infinite; }
+        @keyframes sk-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
+    <!-- SKELETON OVERLAY -->
+    <div id="skeleton-loader">
+        <div class="sk-hero sk-anim"></div>
+        <div class="sk-chips">
+            <div class="sk-chip sk-anim"></div>
+            <div class="sk-chip sk-anim"></div>
+            <div class="sk-chip sk-anim"></div>
+        </div>
+        <div class="sk-card sk-anim"></div>
+        <div class="sk-card sk-anim"></div>
+    </div>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-macha fixed-top">
@@ -329,6 +349,13 @@
         $done_orders     = count(array_filter($orders, function($o) { return $o['status'] == 'completed'; }));
         ?>
         <div class="summary-chips">
+            <div class="chip" style="background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%); border-color: #bbf7d0;">
+                <div class="chip-icon" style="background:var(--green-main); color:#fff;"><i class="fa-solid fa-star"></i></div>
+                <div>
+                    <div class="chip-num text-success"><?= number_format($user['points'] ?? 0, 0, ',', '.') ?></div>
+                    <div class="chip-label">Macha Points</div>
+                </div>
+            </div>
             <div class="chip">
                 <div class="chip-icon" style="background:#e8f4ee"><i class="fa-solid fa-receipt" style="color:var(--green-main)"></i></div>
                 <div>
@@ -350,20 +377,14 @@
                     <div class="chip-label">Selesai</div>
                 </div>
             </div>
-            <div class="chip">
-                <div class="chip-icon" style="background:#ede9fe"><i class="fa-solid fa-money-bill" style="color:#7c3aed"></i></div>
-                <div>
-                    <div class="chip-num" style="font-size:1rem">Rp <?= number_format($total_spent, 0, ',', '.') ?></div>
-                    <div class="chip-label">Total Belanja</div>
-                </div>
-            </div>
         </div>
 
         <!-- Filter Tabs -->
         <div class="filter-tabs" id="filterTabs">
             <div class="ftab active" data-filter="all"><i class="fa-solid fa-list me-1"></i>Semua (<?= $total_orders ?>)</div>
             <div class="ftab" data-filter="pending">⏳ Pending (<?= $pending_orders ?>)</div>
-            <div class="ftab" data-filter="paid">✅ Dibayar</div>
+            <div class="ftab" data-filter="paid">✅ Diterima</div>
+            <div class="ftab" data-filter="shipped">🔥 Dimasak</div>
             <div class="ftab" data-filter="completed">🎉 Selesai (<?= $done_orders ?>)</div>
             <div class="ftab" data-filter="profile-settings" style="margin-left:auto; border-color:var(--green-main); color:var(--green-main);"><i class="fa-solid fa-user-gear me-1"></i>Pengaturan Akun</div>
         </div>
@@ -372,16 +393,17 @@
         <?php if (!empty($orders)): ?>
             <?php
             $status_map = [
-                'pending'   => ['sb-pending',   'Menunggu Pembayaran', 'fa-clock',           1],
-                'paid'      => ['sb-paid',       'Sudah Dibayar',       'fa-check',           2],
-                'completed' => ['sb-completed',  'Selesai',             'fa-flag-checkered',  3],
-                'canceled'  => ['sb-canceled',   'Dibatalkan',          'fa-ban',             0],
+                'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
+                'paid'      => ['sb-paid',       'Pesanan Diterima', 'fa-check-circle',    2],
+                'shipped'   => ['sb-shipped',    'Sedang Dimasak',   'fa-fire-burner',     3],
+                'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
+                'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
             ];
-            $step_labels = ['Pesan', 'Bayar', 'Selesai'];
+            $step_labels = ['Pesan', 'Diterima', 'Dimasak', 'Selesai'];
             ?>
             <div id="orderList">
             <?php foreach ($orders as $o): ?>
-                <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 0]; ?>
+                <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1]; ?>
                 <div class="order-card" data-status="<?= $o['status'] ?>">
                     <div class="order-head">
                         <div>
@@ -397,7 +419,7 @@
                     <?php if ($o['status'] !== 'canceled'): ?>
                     <div class="order-progress">
                         <div class="progress-steps">
-                            <?php for ($s = 1; $s <= 3; $s++): ?>
+                            <?php for ($s = 1; $s <= 4; $s++): ?>
                             <div class="ps-step <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
                                 <div class="ps-dot <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
                                     <?php if ($sm[3] >= $s): ?><i class="fa-solid fa-check" style="font-size:.6rem"></i><?php else: ?><?= $s ?><?php endif; ?>
@@ -558,6 +580,18 @@
                     }
                 }
             });
+        });
+    </script>
+    <script>
+        window.addEventListener('load', function() {
+            const sk = document.getElementById('skeleton-loader');
+            if(sk) {
+                setTimeout(() => {
+                    sk.style.transition = 'opacity 0.6s ease';
+                    sk.style.opacity = '0';
+                    setTimeout(() => sk.style.display = 'none', 600);
+                }, 500);
+            }
         });
     </script>
 </body>
