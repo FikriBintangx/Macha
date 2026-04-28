@@ -126,9 +126,11 @@
                                 <span class="role-badge role-<?= $u['role'] ?>"><?= $u['role'] ?></span>
                             </td>
                             <td class="text-center">
+                                <?php if($u['role'] !== 'user'): ?>
                                 <button class="btn-action text-primary me-1" onclick="editUser(<?= htmlspecialchars(json_encode($u)) ?>)" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
+                                <?php endif; ?>
                                 <?php if($u['id'] != $this->session->userdata('userid')): ?>
                                 <a href="<?= site_url('admin_users/delete/'.$u['id']) ?>" class="btn-action text-danger" onclick="return confirm('Hapus user ini?')" title="Hapus">
                                     <i class="bi bi-trash3-fill"></i>

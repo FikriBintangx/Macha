@@ -29,9 +29,10 @@
             --green-dark:  #102416;
             --green-main:  #1B3B25;
             --green-light: #53725D;
-            --cream:       #F5F5F0;
+            --cream:       #F5F5F0; /* Premium Organic Cream */
             --sidebar-bg:  #1B3B25;
             --sidebar-sec: #53725D;
+            --glass: rgba(255, 255, 255, 0.7);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -39,7 +40,9 @@
             display: flex;
             min-height: 100vh;
             background: var(--cream);
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle Paper Texture */
             color: #1a2e25;
+            overflow-x: hidden;
         }
 
         /* ─── SIDEBAR ─── */
@@ -151,15 +154,17 @@
             left: var(--sidebar-w);
             right: 0;
             height: 68px;
-            background: #fff;
-            border-bottom: 1px solid #e9ede9;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(233, 237, 233, 0.5);
             display: flex;
             align-items: center;
             padding: 0 28px;
             z-index: 900;
             gap: 16px;
         }
-        .page-title { font-weight: 700; font-size: 1.1rem; color: #1a2e25; flex: 1; }
+        .page-title { font-weight: 800; font-size: 1.2rem; color: #1a2e25; flex: 1; letter-spacing: -0.5px; }
         .topbar-actions { display: flex; align-items: center; gap: 12px; }
         .topbar-btn {
             width: 38px; height: 38px;
@@ -201,6 +206,43 @@
         .reveal { transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
         
+        /* ─── COMMAND PALETTE (Alt+K) ─── */
+        #commandPalette .modal-content {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+        }
+        .search-input-group {
+            background: #f1f5f2;
+            border-radius: 16px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .search-input-group input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        .command-item {
+            padding: 12px 20px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: 0.2s;
+            margin-bottom: 5px;
+        }
+        .command-item:hover { background: var(--green-main); color: #fff; transform: translateX(5px); }
+        .command-item i { width: 24px; text-align: center; }
+        .kb-hint { font-size: 0.7rem; background: #eee; padding: 2px 6px; border-radius: 4px; color: #666; font-family: monospace; }
+
         /* ─── GLASSMORPHISM ─── */
         .glass-panel {
             background: rgba(255, 255, 255, 0.7) !important;
@@ -929,6 +971,52 @@
         <?php if(isset($content)) $this->load->view($content); ?>
     </main>
 
+    <!-- COMMAND PALETTE MODAL -->
+    <div class="modal fade" id="commandPalette" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content shadow-2xl">
+                <div class="modal-body p-4">
+                    <div class="search-input-group mb-4">
+                        <i class="bi bi-search fs-5 text-muted"></i>
+                        <input type="text" id="cmdSearch" placeholder="Ketik untuk mencari (Alt+K)..." autocomplete="off">
+                        <span class="kb-hint">ESC</span>
+                    </div>
+                    <div class="command-list" id="cmdList">
+                        <div class="small text-muted mb-3 px-3 uppercase fw-bold" style="letter-spacing:1px;">Navigasi Cepat</div>
+                        <a href="<?= site_url('dashboard') ?>" class="command-item">
+                            <i class="bi bi-grid-1x2-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="<?= site_url('product') ?>" class="command-item">
+                            <i class="bi bi-cup-hot-fill"></i>
+                            <span>Manajemen Produk</span>
+                        </a>
+                        <a href="<?= site_url('product/add') ?>" class="command-item">
+                            <i class="bi bi-plus-circle-fill"></i>
+                            <span>Tambah Produk Baru</span>
+                        </a>
+                        <a href="<?= site_url('order') ?>" class="command-item">
+                            <i class="bi bi-pc-display-horizontal"></i>
+                            <span>Kasir Online</span>
+                        </a>
+                        <a href="<?= site_url('report') ?>" class="command-item">
+                            <i class="bi bi-bar-chart-fill"></i>
+                            <span>Laporan Penjualan</span>
+                        </a>
+                        <a href="<?= site_url('admin_users/customers') ?>" class="command-item">
+                            <i class="bi bi-people-fill"></i>
+                            <span>Data Pelanggan</span>
+                        </a>
+                        <a href="<?= site_url('settings') ?>" class="command-item">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Pengaturan Sistem</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Mobile sidebar toggle
@@ -1036,7 +1124,37 @@
                     activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }
-        }
+            // Entrance Animations
+            gsap.from(".main-content > *", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out",
+                delay: 0.8
+            });
+
+            // Command Palette (Alt+K)
+            const cmdModal = new bootstrap.Modal(document.getElementById('commandPalette'));
+            const cmdSearch = document.getElementById('cmdSearch');
+
+            window.addEventListener('keydown', (e) => {
+                if (e.altKey && e.key === 'k') {
+                    e.preventDefault();
+                    cmdModal.show();
+                    setTimeout(() => cmdSearch.focus(), 500);
+                }
+            });
+
+            // Command Search Logic
+            cmdSearch.addEventListener('input', function() {
+                const q = this.value.toLowerCase();
+                document.querySelectorAll('.command-item').forEach(item => {
+                    const text = item.innerText.toLowerCase();
+                    item.style.display = text.includes(q) ? 'flex' : 'none';
+                });
+            });
+        });
     </script>
 </body>
 </html>
