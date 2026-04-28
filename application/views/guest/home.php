@@ -67,6 +67,7 @@
     body {
       font-family: 'Outfit', sans-serif;
       background: var(--cream);
+      background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Premium Paper Texture */
       color: var(--text);
       overflow-x: hidden !important;
       width: 100%;
@@ -250,18 +251,19 @@
 
     /* ─── NAVBAR ─── */
     .navbar-macha {
-      background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 2px 20px rgba(45, 90, 39, 0.08);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      box-shadow: 0 2px 20px rgba(45, 90, 39, 0.05);
       padding: 13px 0;
       transition: var(--transition);
-      border-bottom: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .navbar-macha.scrolled {
       padding: 8px 0;
-      background: rgba(255, 255, 255, 0.99);
-      box-shadow: 0 10px 30px rgba(45, 90, 39, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(45, 90, 39, 0.1);
     }
 
     .navbar-brand {
@@ -510,7 +512,7 @@
       padding-top: 140px;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at top left, #eaf2eb 0%, var(--cream) 60%);
+      background: radial-gradient(circle at top left, #eaf2eb 0%, transparent 60%);
     }
 
     .hero-decorative {
@@ -3304,6 +3306,64 @@
       ScrollTrigger.refresh();
     });
   </script>
+
+  <!-- COMMAND PALETTE MODAL -->
+  <div class="modal fade" id="commandPalette" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content shadow-2xl" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-radius: 24px;">
+              <div class="modal-body p-4">
+                  <div class="search-input-group mb-4" style="background: #f1f5f2; border-radius: 16px; padding: 12px 20px; display: flex; align-items: center; gap: 15px;">
+                      <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                      <input type="text" id="cmdSearch" placeholder="Ketik untuk mencari (Alt+K)..." style="background: transparent; border: none; width: 100%; font-size: 1.1rem; outline: none;">
+                  </div>
+                  <div class="command-list" id="cmdList">
+                      <div class="small text-muted mb-3 px-3 uppercase fw-bold" style="letter-spacing:1px; font-size: 0.7rem;">Navigasi Cepat</div>
+                      <a href="<?= base_url(); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
+                          <i class="fa-solid fa-house"></i>
+                          <span>Halaman Depan</span>
+                      </a>
+                      <a href="<?= base_url('shop'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
+                          <i class="fa-solid fa-mug-hot"></i>
+                          <span>Lihat Menu</span>
+                      </a>
+                      <a href="<?= base_url('shop/cart'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
+                          <i class="fa-solid fa-cart-shopping"></i>
+                          <span>Keranjang Saya</span>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Command Palette (Alt+K)
+        const paletteEl = document.getElementById('commandPalette');
+        if (paletteEl) {
+            const cmdModal = new bootstrap.Modal(paletteEl);
+            const cmdSearch = document.getElementById('cmdSearch');
+
+            window.addEventListener('keydown', (e) => {
+                if (e.altKey && e.key === 'k') {
+                    e.preventDefault();
+                    cmdModal.show();
+                    if (cmdSearch) setTimeout(() => cmdSearch.focus(), 500);
+                }
+            });
+
+            if (cmdSearch) {
+                cmdSearch.addEventListener('input', function() {
+                    const q = this.value.toLowerCase();
+                    document.querySelectorAll('.command-item').forEach(item => {
+                        const text = item.innerText.toLowerCase();
+                        item.style.display = text.includes(q) ? 'flex' : 'none';
+                    });
+                });
+            }
+        }
+        });
+    </script>
   <!-- ══════════ IOS FLOATING BAR (GUEST) ══════════ -->
   <nav class="ios-navbar-guest" id="iosNavGuest">
     <a href="<?= base_url(); ?>" class="ios-nav-item <?= (current_url() == base_url()) ? 'active' : '' ?>">

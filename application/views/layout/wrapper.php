@@ -1154,7 +1154,7 @@
                     item.style.display = text.includes(q) ? 'flex' : 'none';
                 });
             });
-        });
+        }
     </script>
 </body>
 </html>

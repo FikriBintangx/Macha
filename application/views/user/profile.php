@@ -13,13 +13,15 @@
             --green-dark:  #102416;
             --green-main:  #1B3B25;
             --green-soft:  #53725D;
-            --cream:       #F5F5F0;
+            --cream:       #F5F5F0; /* Premium Organic Cream */
             --card-bg:     #ffffff;
+            --glass: rgba(255, 255, 255, 0.7);
         }
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(160deg, #f0f4f1 0%, #f5f0e8 100%);
+            background: var(--cream);
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle Paper Texture */
             min-height: 100vh;
             padding-top: 80px;
             color: #1a2e25;
@@ -27,10 +29,12 @@
 
         /* ── NAVBAR ── */
         .navbar-macha {
-            background: rgba(255,255,255,.96);
-            backdrop-filter: blur(16px);
-            box-shadow: 0 2px 24px rgba(45,90,39,.08);
+            background: rgba(255,255,255,.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 2px 24px rgba(45,90,39,.05);
             padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
         .navbar-brand { font-weight: 800; color: var(--green-ultra) !important; font-size: 1.4rem; text-decoration: none; }
         .nav-pill {
@@ -220,7 +224,75 @@
         </div>
     </div>
 
+    <!-- COMMAND PALETTE MODAL -->
+    <div class="modal fade" id="commandPalette" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content shadow-2xl" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-radius: 24px;">
+                <div class="modal-body p-4">
+                    <div class="search-input-group mb-4" style="background: #f1f5f2; border-radius: 16px; padding: 12px 20px; display: flex; align-items: center; gap: 15px;">
+                        <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                        <input type="text" id="cmdSearch" placeholder="Ketik untuk mencari (Alt+K)..." style="background: transparent; border: none; width: 100%; font-size: 1.1rem; outline: none;">
+                    </div>
+                    <div class="command-list" id="cmdList">
+                        <div class="small text-muted mb-3 px-3 uppercase fw-bold" style="letter-spacing:1px; font-size: 0.7rem;">Navigasi Cepat</div>
+                        <a href="<?= base_url(); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.2s;">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Halaman Depan</span>
+                        </a>
+                        <a href="<?= base_url('shop'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.2s;">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>Lanjut Belanja</span>
+                        </a>
+                        <a href="<?= base_url('user'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.2s;">
+                            <i class="fa-solid fa-receipt"></i>
+                            <span>Riwayat Pesanan</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .command-item:hover { background: var(--green-main); color: #fff; transform: translateX(5px); }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Entrance Animations
+            gsap.from(".profile-card", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            // Command Palette (Alt+K)
+            const paletteEl = document.getElementById('commandPalette');
+            if (paletteEl) {
+                const cmdModal = new bootstrap.Modal(paletteEl);
+                const cmdSearch = document.getElementById('cmdSearch');
+
+                window.addEventListener('keydown', (e) => {
+                    if (e.altKey && e.key === 'k') {
+                        e.preventDefault();
+                        cmdModal.show();
+                        if (cmdSearch) setTimeout(() => cmdSearch.focus(), 500);
+                    }
+                });
+
+                if (cmdSearch) {
+                    cmdSearch.addEventListener('input', function() {
+                        const q = this.value.toLowerCase();
+                        document.querySelectorAll('.command-item').forEach(item => {
+                            const text = item.innerText.toLowerCase();
+                            item.style.display = text.includes(q) ? 'flex' : 'none';
+                        });
+                    });
+                }
+            }
+        });
+
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
