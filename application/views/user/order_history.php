@@ -21,40 +21,12 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--cream);
-            background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle Paper Texture */
             min-height: 100vh;
-            padding-top: 80px;
+            padding-top: 120px;
             color: #1a2e25;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* ── NAVBAR ── */
-        .navbar-macha {
-            background: rgba(255,255,255,.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 2px 24px rgba(45,90,39,.05);
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .navbar-brand { font-weight: 800; color: var(--green-ultra) !important; font-size: 1.4rem; text-decoration: none; }
-        .nav-pill {
-            background: #fff;
-            border: 1.5px solid #e9ede9;
-            color: var(--green-main);
-            border-radius: 50px;
-            padding: 8px 18px;
-            font-weight: 700;
-            font-size: .85rem;
-            text-decoration: none;
-            transition: .25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
-        .nav-pill:hover { background: #f0f7f2; color: var(--green-dark); border-color: var(--green-main); transform: translateY(-1px); }
-        .nav-pill-danger { border-color: #fecaca; color: #dc2626; background: #fff; }
-        .nav-pill-danger:hover { background: #fee2e2; color: #b91c1c; border-color: #f87171; }
 
         /* ── PROFILE HERO ── */
         .user-hero {
@@ -275,44 +247,13 @@
         /* ── FLASH ── */
         .flash-success { background: #e6f4ea; border: none; border-left: 4px solid var(--green-main); border-radius: 14px; color: #2e6b3e; padding: 14px 20px; margin-bottom: 20px; }
         .flash-error { background: #fce4ec; border: none; border-left: 4px solid #e53e3e; border-radius: 14px; color: #880e4f; padding: 14px 20px; margin-bottom: 20px; }
-
-        /* SKELETON LOADING */
-        #skeleton-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
-        .sk-hero { height: 180px; border-radius: 24px; background: #f0f4f1; }
-        .sk-chips { display: flex; gap: 12px; }
-        .sk-chip { flex: 1; height: 80px; border-radius: 14px; background: #f8faf9; }
-        .sk-card { height: 120px; border-radius: 20px; background: #fcfdfc; }
-        .sk-anim { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: sk-loading 1.5s infinite; }
-        @keyframes sk-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
-    <!-- SKELETON OVERLAY -->
-    <div id="skeleton-loader">
-        <div class="sk-hero sk-anim"></div>
-        <div class="sk-chips">
-            <div class="sk-chip sk-anim"></div>
-            <div class="sk-chip sk-anim"></div>
-            <div class="sk-chip sk-anim"></div>
-        </div>
-        <div class="sk-card sk-anim"></div>
-        <div class="sk-card sk-anim"></div>
-    </div>
-
     <!-- NAVBAR -->
-    <nav class="navbar navbar-macha fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
-            </a>
-            <div class="d-flex gap-2 align-items-center">
-                <a href="<?= site_url('shop') ?>" class="nav-pill"><i class="fa-solid fa-bag-shopping"></i>Belanja</a>
-                <a href="<?= site_url('auth/logout') ?>" class="nav-pill nav-pill-danger"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('layout/navbar'); ?>
 
-    <div class="container py-3 mb-5" style="max-width:860px">
+    <div class="container py-3 flex-grow-1" style="max-width:860px">
 
         <!-- Flash Messages -->
         <?php if($this->session->flashdata('success')): ?>
@@ -587,16 +528,7 @@
         });
     </script>
     <script>
-        window.addEventListener('load', function() {
-            const sk = document.getElementById('skeleton-loader');
-            if(sk) {
-                setTimeout(() => {
-                    sk.style.transition = 'opacity 0.6s ease';
-                    sk.style.opacity = '0';
-                    setTimeout(() => sk.style.display = 'none', 600);
-                }, 500);
-            }
-        });
+        // Removed skeleton timeout
     </script>
     <!-- COMMAND PALETTE MODAL -->
     <div class="modal fade" id="commandPalette" tabindex="-1">
@@ -635,7 +567,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Entrance Animations
             gsap.from(".user-hero, .summary-chips, .order-card", {
-                opacity: 0,
                 y: 20,
                 duration: 0.8,
                 stagger: 0.1,
@@ -668,5 +599,8 @@
             }
         });
     </script>
+    <footer class="text-center py-4" style="color:#8aa898; font-size:0.85rem; border-top:1px solid #dce8dc; margin-top:auto;">
+        &copy; <?= date('Y') ?> MariMatcha. All rights reserved.
+    </footer>
 </body>
 </html>

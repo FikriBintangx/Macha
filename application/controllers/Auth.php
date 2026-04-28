@@ -14,7 +14,7 @@ class Auth extends CI_Controller {
         if ($this->session->userdata('userid')) {
             $this->_redirect_by_role($this->session->userdata('role'));
         } else {
-            $this->load->view('auth/login');
+            $this->load->view('auth/login', ['form_type' => 'login']);
         }
     }
 
@@ -51,7 +51,7 @@ class Auth extends CI_Controller {
             $this->_redirect_by_role($this->session->userdata('role'));
             return;
         }
-        $this->load->view('auth/register');
+        $this->load->view('auth/login', ['form_type' => 'register']);
     }
 
     public function do_register() {
@@ -59,16 +59,10 @@ class Auth extends CI_Controller {
         $username  = trim($post['username']  ?? '');
         $full_name = trim($post['full_name'] ?? '');
         $password  = trim($post['password']  ?? '');
-        $confirm   = trim($post['confirm']   ?? '');
 
         // Validasi
         if (empty($username) || empty($full_name) || empty($password)) {
             $this->session->set_flashdata('error', 'Semua field wajib diisi!');
-            redirect('auth/register');
-            return;
-        }
-        if ($password !== $confirm) {
-            $this->session->set_flashdata('error', 'Password dan konfirmasi tidak cocok!');
             redirect('auth/register');
             return;
         }
@@ -101,18 +95,18 @@ class Auth extends CI_Controller {
     // ─── FORGOT PASSWORD ─────────────────────────────────
     public function forgot() {
         if ($this->session->userdata('userid')) { redirect('home'); return; }
-        $this->load->view('auth/forgot');
+        $this->load->view('auth/login', ['form_type' => 'forgot']);
     }
 
     public function do_forgot() {
-        $username = trim($this->input->post('username', TRUE));
-        if (empty($username)) {
-            $this->session->set_flashdata('error', 'Username wajib diisi!');
+        $identity = trim($this->input->post('identity', TRUE));
+        if (empty($identity)) {
+            $this->session->set_flashdata('error', 'Username atau Email wajib diisi!');
             redirect('auth/forgot'); return;
         }
-        $user = $this->db->where('username', $username)->get('users')->row_array();
+        $user = $this->db->where('username', $identity)->or_where('email', $identity)->get('users')->row_array();
         if (!$user) {
-            $this->session->set_flashdata('error', 'Username tidak ditemukan.');
+            $this->session->set_flashdata('error', 'Akun tidak ditemukan.');
             redirect('auth/forgot'); return;
         }
         // Tampilkan form reset password

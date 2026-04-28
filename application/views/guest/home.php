@@ -67,7 +67,6 @@
     body {
       font-family: 'Outfit', sans-serif;
       background: var(--cream);
-      background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Premium Paper Texture */
       color: var(--text);
       overflow-x: hidden !important;
       width: 100%;
@@ -75,9 +74,10 @@
       position: relative;
     }
 
-    html, body {
-        max-width: 100vw;
-        overflow-x: hidden;
+    html,
+    body {
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     html.lenis {
@@ -251,19 +251,18 @@
 
     /* ─── NAVBAR ─── */
     .navbar-macha {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      box-shadow: 0 2px 20px rgba(45, 90, 39, 0.05);
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(45, 90, 39, 0.08);
       padding: 13px 0;
       transition: var(--transition);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      border-bottom: none;
     }
 
     .navbar-macha.scrolled {
       padding: 8px 0;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 10px 30px rgba(45, 90, 39, 0.1);
+      background: rgba(255, 255, 255, 0.99);
+      box-shadow: 0 10px 30px rgba(45, 90, 39, 0.12);
     }
 
     .navbar-brand {
@@ -321,67 +320,97 @@
 
     /* STATUS PILL (requested style) */
     .shop-status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 3px 10px;
-        background: #fff;
-        border: 2px solid var(--green-main);
-        color: #000 !important;
-        border-radius: 50px;
-        font-size: 0.65rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        margin-left: 5px;
-        flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: #fff;
+      border: 2px solid var(--green-main);
+      color: #000 !important;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-left: 5px;
+      flex-shrink: 0;
     }
+
     .status-dot {
-        width: 7px; height: 7px;
-        border-radius: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
     }
-    .status-dot.open { background: #25D366; box-shadow: 0 0 8px #25D366; }
-    .status-dot.closed { background: #e63946; box-shadow: 0 0 8px #e63946; }
+
+    .status-dot.open {
+      background: #25D366;
+      box-shadow: 0 0 8px #25D366;
+    }
+
+    .status-dot.closed {
+      background: #e63946;
+      box-shadow: 0 0 8px #e63946;
+    }
 
     /* ─── IOS FLOATING BAR (GUEST) ─── */
     .ios-navbar-guest {
-        display: none;
-        position: fixed;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        padding: 8px 20px;
-        border-radius: 40px;
-        z-index: 10000;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        border: 1px solid rgba(255,255,255,0.3);
-        width: 90%;
-        max-width: 360px;
-        justify-content: space-around;
-        align-items: center;
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 8px 20px;
+      border-radius: 40px;
+      z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      width: 90%;
+      max-width: 360px;
+      justify-content: space-around;
+      align-items: center;
     }
+
     .ios-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: var(--green-light);
-        text-decoration: none;
-        font-size: 0.65rem;
-        font-weight: 700;
-        gap: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--green-light);
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 700;
+      gap: 2px;
     }
-    .ios-nav-item i { font-size: 1.3rem; }
-    .ios-nav-item.active { color: var(--green-main); }
-    
+
+    .ios-nav-item i {
+      font-size: 1.3rem;
+    }
+
+    .ios-nav-item.active {
+      color: var(--green-main);
+    }
+
     @media (max-width: 768px) {
-        .navbar-macha .navbar-nav, .navbar-macha .navbar-toggler { display: none !important; }
-        .ios-navbar-guest { display: flex; }
-        .navbar-macha { padding: 10px 0; }
-        .navbar-brand { font-size: 1.4rem; }
+
+      .navbar-macha .navbar-nav,
+      .navbar-macha .navbar-toggler {
+        display: none !important;
+      }
+
+      .ios-navbar-guest {
+        display: flex;
+      }
+
+      .navbar-macha {
+        padding: 10px 0;
+      }
+
+      .navbar-brand {
+        font-size: 1.4rem;
+      }
     }
 
     .invisible-init {
@@ -512,7 +541,7 @@
       padding-top: 140px;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at top left, #eaf2eb 0%, transparent 60%);
+      background: radial-gradient(circle at top left, #eaf2eb 0%, var(--cream) 60%);
     }
 
     .hero-decorative {
@@ -1350,12 +1379,15 @@
       padding: 40px 10px;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE/Edge */
     }
 
     .testi-slider::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none;
+      /* Chrome/Safari */
     }
 
     .testi-item {
@@ -1383,7 +1415,7 @@
       box-shadow: var(--shadow-sm);
       transition: all 0.3s ease;
       color: var(--green-dark);
-      border: 1px solid rgba(0,0,0,0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .testi-btn:hover {
@@ -1393,12 +1425,19 @@
     }
 
     @media (max-width: 991px) {
-      .testi-item { flex: 0 0 calc(50% - 15px); }
+      .testi-item {
+        flex: 0 0 calc(50% - 15px);
+      }
     }
 
     @media (max-width: 767px) {
-      .testi-item { flex: 0 0 100%; }
-      .testi-slider { padding: 40px 0; }
+      .testi-item {
+        flex: 0 0 100%;
+      }
+
+      .testi-slider {
+        padding: 40px 0;
+      }
     }
 
     .testi-stars {
@@ -1452,10 +1491,11 @@
       background: #fff;
       padding: 45px;
       border-radius: 30px;
-      box-shadow: 0 15px 45px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.03);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.03);
       position: relative;
     }
+
     .review-form-card .form-control {
       border-radius: 15px;
       border: 2px solid #f1f5f2;
@@ -1465,11 +1505,13 @@
       transition: all 0.3s ease;
       font-weight: 500;
     }
+
     .review-form-card .form-control:focus {
       border-color: var(--green-main);
       background: #fff;
       box-shadow: 0 8px 24px rgba(27, 59, 37, 0.08);
     }
+
     .star-rating-input {
       display: flex;
       flex-direction: row-reverse;
@@ -1477,21 +1519,29 @@
       gap: 12px;
       margin-bottom: 25px;
     }
-    .star-rating-input input { display: none; }
+
+    .star-rating-input input {
+      display: none;
+    }
+
     .star-rating-input label {
       font-size: 2rem;
       color: #e2e8f0;
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     .star-rating-input label:hover,
-    .star-rating-input label:hover ~ label,
-    .star-rating-input input:checked ~ label {
+    .star-rating-input label:hover~label,
+    .star-rating-input input:checked~label {
       color: #fbbf24;
       transform: scale(1.1);
       text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
     }
-    .star-rating-input label:hover { transform: scale(1.2) rotate(8deg); }
+
+    .star-rating-input label:hover {
+      transform: scale(1.2) rotate(8deg);
+    }
 
     /* ─── WA BANNER ─── */
     .wa-section {
@@ -2056,24 +2106,55 @@
     }
 
     /* ─── UI & PERFORMANCE OPTIMIZATIONS ─── */
-    .hero-img-wrap img, .prod-card-inner, .step-card, .testi-card, .feature-card, .f-leaf, .story-bg-text-wrapper, .story-track {
+    .hero-img-wrap img,
+    .prod-card-inner,
+    .step-card,
+    .testi-card,
+    .feature-card,
+    .f-leaf,
+    .story-bg-text-wrapper,
+    .story-track {
       will-change: transform, opacity;
     }
 
     /* CTA Popping Enhancements */
-    .btn-hero-primary { box-shadow: 0 12px 28px rgba(37, 211, 102, 0.2); }
-    .btn-hero-primary:hover { box-shadow: 0 16px 36px rgba(37, 211, 102, 0.4); }
-    .btn-hero-wa { box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05); border-color: #25d366; }
+    .btn-hero-primary {
+      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.2);
+    }
+
+    .btn-hero-primary:hover {
+      box-shadow: 0 16px 36px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-hero-wa {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+      border-color: #25d366;
+    }
 
     @media (max-width: 768px) {
+
       /* Disable heavy animations & effects */
-      .f-leaf, .marker-pulse, .hero-decorative { display: none !important; }
-      .glass-content-wrap, .premium-map-container { 
-        backdrop-filter: none !important; 
+      .f-leaf,
+      .marker-pulse,
+      .hero-decorative {
+        display: none !important;
       }
-      .navbar-macha { background: rgba(255, 255, 255, 0.99) !important; backdrop-filter: none !important; }
-      .glass-content-wrap { background: rgba(16, 36, 22, 0.95) !important; border-radius: 20px; }
-      
+
+      .glass-content-wrap,
+      .premium-map-container {
+        backdrop-filter: none !important;
+      }
+
+      .navbar-macha {
+        background: rgba(255, 255, 255, 0.99) !important;
+        backdrop-filter: none !important;
+      }
+
+      .glass-content-wrap {
+        background: rgba(16, 36, 22, 0.95) !important;
+        border-radius: 20px;
+      }
+
       /* Make Floating Cart easier to tap on mobile */
       .floating-cart {
         width: auto !important;
@@ -2086,6 +2167,7 @@
         right: 20px;
         box-shadow: 0 10px 25px rgba(16, 36, 22, 0.5);
       }
+
       .floating-cart::after {
         content: 'Lihat Keranjang';
         font-weight: 800;
@@ -2114,17 +2196,18 @@
   <nav class="navbar navbar-expand-lg navbar-macha fixed-top" id="mainNav">
     <div class="container position-relative">
       <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
-        <?php if(!empty($shop_logo)): ?>
-            <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
+        <?php if (!empty($shop_logo)): ?>
+          <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo"
+            style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
         <?php else: ?>
-            <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
+          <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
         <?php endif; ?>
         <span>MariMatcha</span>
-        
+
         <?php $is_open = $this->M_settings->is_shop_open(); ?>
         <div class="shop-status-pill">
-            <div class="status-dot <?= $is_open ? 'open' : 'closed' ?>"></div>
-            <?= $is_open ? 'Buka' : 'Tutup' ?>
+          <div class="status-dot <?= $is_open ? 'open' : 'closed' ?>"></div>
+          <?= $is_open ? 'Buka' : 'Tutup' ?>
         </div>
       </a>
       <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
@@ -2143,15 +2226,16 @@
           $cart = $this->session->userdata('cart') ?? [];
           $cart_count = count($cart);
           ?>
-          <?php if($this->session->userdata('role') != 'admin'): ?>
-          <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3" style="font-size: 0.85rem;">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span class="d-none d-sm-inline">Keranjang</span>
-            <?php if ($cart_count > 0): ?>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style="font-size:0.55rem; padding: 4px 6px;"><?= $cart_count ?></span>
-            <?php endif; ?>
-          </a>
+          <?php if ($this->session->userdata('role') != 'admin'): ?>
+            <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3"
+              style="font-size: 0.85rem;">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="d-none d-sm-inline">Keranjang</span>
+              <?php if ($cart_count > 0): ?>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style="font-size:0.55rem; padding: 4px 6px;"><?= $cart_count ?></span>
+              <?php endif; ?>
+            </a>
           <?php endif; ?>
           <?php if ($this->session->userdata('userid')): ?>
             <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"
@@ -2161,7 +2245,8 @@
           <?php else: ?>
             <div class="d-flex gap-1 gap-xl-2 flex-nowrap">
               <a href="<?= base_url('auth') ?>" class="btn-hdr-out px-2 px-xl-3" style="font-size: 0.85rem;">Masuk</a>
-              <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3" style="font-size: 0.85rem;">Daftar</a>
+              <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3"
+                style="font-size: 0.85rem;">Daftar</a>
             </div>
           <?php endif; ?>
         </div>
@@ -2353,11 +2438,11 @@
                   <?php
                   $img_link = base_url('assets/img/productORI.png'); // Default fallback
                   if (!empty($prod['image'])) {
-                      if (file_exists(FCPATH . 'uploads/' . $prod['image'])) {
-                          $img_link = base_url('uploads/' . $prod['image']);
-                      } elseif (file_exists(FCPATH . 'assets/img/' . $prod['image'])) {
-                          $img_link = base_url('assets/img/' . $prod['image']);
-                      }
+                    if (file_exists(FCPATH . 'uploads/' . $prod['image'])) {
+                      $img_link = base_url('uploads/' . $prod['image']);
+                    } elseif (file_exists(FCPATH . 'assets/img/' . $prod['image'])) {
+                      $img_link = base_url('assets/img/' . $prod['image']);
+                    }
                   }
                   ?>
                   <img src="<?= $img_link ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
@@ -2372,14 +2457,15 @@
                     <?= htmlspecialchars($prod['description'] ?? 'Minuman matcha segar dengan resep rahasia.') ?>
                   </div>
                   <?php if ($prod['stock'] > 0): ?>
-                    <?php if($this->session->userdata('role') == 'admin'): ?>
-                        <div class="btn-add-cart shimmer-btn text-center" style="background:#eef3eb; color:#8aa898; cursor:default; box-shadow:none;">
-                          <i class="fa-solid fa-lock me-1"></i> Mode Kelola
-                        </div>
+                    <?php if ($this->session->userdata('role') == 'admin'): ?>
+                      <div class="btn-add-cart shimmer-btn text-center"
+                        style="background:#eef3eb; color:#8aa898; cursor:default; box-shadow:none;">
+                        <i class="fa-solid fa-lock me-1"></i> Mode Kelola
+                      </div>
                     <?php else: ?>
-                        <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart shimmer-btn">
-                          <i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang
-                        </a>
+                      <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart shimmer-btn">
+                        <i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang
+                      </a>
                     <?php endif; ?>
                   <?php else: ?>
                     <span class="btn-add-cart sold-out">
@@ -2531,23 +2617,27 @@
       </div>
       <div class="testi-slider-container reveal-up invisible-init">
         <div class="testi-slider" id="testiSlider">
-          <?php if(!empty($testimonials)): foreach ($testimonials as $t): ?>
-            <div class="testi-item">
-              <div class="testi-card">
-                <div class="testi-stars"><?= str_repeat('<i class="fa-solid fa-star"></i>', $t['stars']) ?></div>
-                <p class="testi-quote" style="min-height: 100px;">"<?= htmlspecialchars($t['quote']) ?>"</p>
-                <div class="testi-user mt-4">
-                  <div class="testi-avatar" style="background-color: var(--tertiary-light); color: var(--green-dark); font-weight: bold;">
-                    <?= strtoupper(substr($t['name'] ?? 'M', 0, 1)) ?>
-                  </div>
-                  <div>
-                    <div class="testi-name"><?= htmlspecialchars($t['name'] ?? 'Pelanggan') ?></div>
-                    <div class="testi-loc" style="font-size: 0.8rem;"><i class="fa-solid fa-location-dot me-1"></i><?= htmlspecialchars($t['location'] ?? 'Indonesia') ?></div>
+          <?php if (!empty($testimonials)):
+            foreach ($testimonials as $t): ?>
+              <div class="testi-item">
+                <div class="testi-card">
+                  <div class="testi-stars"><?= str_repeat('<i class="fa-solid fa-star"></i>', $t['stars']) ?></div>
+                  <p class="testi-quote" style="min-height: 100px;">"<?= htmlspecialchars($t['quote']) ?>"</p>
+                  <div class="testi-user mt-4">
+                    <div class="testi-avatar"
+                      style="background-color: var(--tertiary-light); color: var(--green-dark); font-weight: bold;">
+                      <?= strtoupper(substr($t['name'] ?? 'M', 0, 1)) ?>
+                    </div>
+                    <div>
+                      <div class="testi-name"><?= htmlspecialchars($t['name'] ?? 'Pelanggan') ?></div>
+                      <div class="testi-loc" style="font-size: 0.8rem;"><i
+                          class="fa-solid fa-location-dot me-1"></i><?= htmlspecialchars($t['location'] ?? 'Indonesia') ?>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          <?php endforeach; else: ?>
+            <?php endforeach; else: ?>
             <div class="col-12 text-center text-muted py-4 w-100">Belum ada ulasan yang ditampilkan.</div>
           <?php endif; ?>
         </div>
@@ -2563,7 +2653,7 @@
         <div class="col-lg-6">
           <div class="review-form-card reveal-up invisible-init">
             <h4 class="mb-4 text-center">
-              <?= !empty($my_review) ? 'Edit Ulasan Kamu' : 'Beri Ulasan Kamu' ?> 
+              <?= !empty($my_review) ? 'Edit Ulasan Kamu' : 'Beri Ulasan Kamu' ?>
               <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i>
             </h4>
             <form action="<?= base_url('home/submit_review') ?>" method="POST">
@@ -2571,8 +2661,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="small fw-bold text-muted mb-2 ms-2">NAMA LENGKAP</label>
-                    <input type="text" name="name" class="form-control" placeholder="Tulis nama kamu..." 
-                      value="<?= htmlspecialchars($my_review['name'] ?? $this->session->userdata('full_name') ?? '') ?>" required>
+                    <input type="text" name="name" class="form-control" placeholder="Tulis nama kamu..."
+                      value="<?= htmlspecialchars($my_review['name'] ?? $this->session->userdata('full_name') ?? '') ?>"
+                      required>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -2582,32 +2673,43 @@
                       value="<?= htmlspecialchars($my_review['location'] ?? '') ?>">
                   </div>
                 </div>
-                
+
                 <div class="col-12 py-2">
-                   <div class="section-label d-flex justify-content-center mb-0" style="font-size: 0.7rem;">Nilai Pengalamanmu</div>
-                   <div class="star-rating-input">
-                      <?php $currStars = $my_review['stars'] ?? 5; ?>
-                      <input type="radio" name="stars" value="5" id="st5" <?= ($currStars == 5) ? 'checked' : '' ?>><label for="st5"><i class="fa-solid fa-star"></i></label>
-                      <input type="radio" name="stars" value="4" id="st4" <?= ($currStars == 4) ? 'checked' : '' ?>><label for="st4"><i class="fa-solid fa-star"></i></label>
-                      <input type="radio" name="stars" value="3" id="st3" <?= ($currStars == 3) ? 'checked' : '' ?>><label for="st3"><i class="fa-solid fa-star"></i></label>
-                      <input type="radio" name="stars" value="2" id="st2" <?= ($currStars == 2) ? 'checked' : '' ?>><label for="st2"><i class="fa-solid fa-star"></i></label>
-                      <input type="radio" name="stars" value="1" id="st1" <?= ($currStars == 1) ? 'checked' : '' ?>><label for="st1"><i class="fa-solid fa-star"></i></label>
-                   </div>
+                  <div class="section-label d-flex justify-content-center mb-0" style="font-size: 0.7rem;">Nilai
+                    Pengalamanmu</div>
+                  <div class="star-rating-input">
+                    <?php $currStars = $my_review['stars'] ?? 5; ?>
+                    <input type="radio" name="stars" value="5" id="st5" <?= ($currStars == 5) ? 'checked' : '' ?>><label
+                      for="st5"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="stars" value="4" id="st4" <?= ($currStars == 4) ? 'checked' : '' ?>><label
+                      for="st4"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="stars" value="3" id="st3" <?= ($currStars == 3) ? 'checked' : '' ?>><label
+                      for="st3"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="stars" value="2" id="st2" <?= ($currStars == 2) ? 'checked' : '' ?>><label
+                      for="st2"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="stars" value="1" id="st1" <?= ($currStars == 1) ? 'checked' : '' ?>><label
+                      for="st1"><i class="fa-solid fa-star"></i></label>
+                  </div>
                 </div>
 
                 <div class="col-12">
                   <div class="form-group">
                     <label class="small fw-bold text-muted mb-2 ms-2">ULASAN / PESAN KAMU</label>
-                    <textarea name="quote" class="form-control" rows="4" placeholder="Ceritakan pengalamanmu mengonsumsi produk MariMatcha..." required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
+                    <textarea name="quote" class="form-control" rows="4"
+                      placeholder="Ceritakan pengalamanmu mengonsumsi produk MariMatcha..."
+                      required><?= htmlspecialchars($my_review['quote'] ?? '') ?></textarea>
                   </div>
                 </div>
-                
+
                 <div class="col-12 text-center mt-4">
-                  <button type="submit" class="btn-hero-primary" style="padding: 18px 60px; border-radius: 50px; font-size: 1.1rem; width: 100%;">
-                    <?= !empty($my_review) ? 'Update Ulasan Saya' : 'Kirim Ulasan Sekarang' ?> <i class="fa-solid fa-paper-plane ms-2"></i>
+                  <button type="submit" class="btn-hero-primary"
+                    style="padding: 18px 60px; border-radius: 50px; font-size: 1.1rem; width: 100%;">
+                    <?= !empty($my_review) ? 'Update Ulasan Saya' : 'Kirim Ulasan Sekarang' ?> <i
+                      class="fa-solid fa-paper-plane ms-2"></i>
                   </button>
-                  <?php if(!empty($my_review)): ?>
-                    <p class="small text-muted mt-3"><i class="fa-solid fa-info-circle me-1"></i> Kamu sudah memberikan ulasan. Mengirim ulang akan memperbarui ulasan lamamu.</p>
+                  <?php if (!empty($my_review)): ?>
+                    <p class="small text-muted mt-3"><i class="fa-solid fa-info-circle me-1"></i> Kamu sudah memberikan
+                      ulasan. Mengirim ulang akan memperbarui ulasan lamamu.</p>
                   <?php endif; ?>
                 </div>
               </div>
@@ -2641,7 +2743,8 @@
       <div class="text-center mb-5">
         <h2 class="section-h2 text-white">Dikirim ke <span style="color: var(--tertiary);">Seluruh Indonesia</span></h2>
         <p style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Dari jantung
-          Tangerang, kami memastikan setiap produk MariMatcha sampai di tangan Anda dalam kondisi segar dan sempurna.</p>
+          Tangerang, kami memastikan setiap produk MariMatcha sampai di tangan Anda dalam kondisi segar dan sempurna.
+        </p>
       </div>
 
       <div class="premium-map-container">
@@ -2836,7 +2939,7 @@
       border-radius: 40px;
       transform: rotate(-1.5deg);
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
 
@@ -3194,7 +3297,7 @@
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           if (navbarCollapse.classList.contains('show')) {
-            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, {toggle: false});
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
             bsCollapse.hide();
           }
         });
@@ -3306,80 +3409,25 @@
       ScrollTrigger.refresh();
     });
   </script>
-
-  <!-- COMMAND PALETTE MODAL -->
-  <div class="modal fade" id="commandPalette" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-          <div class="modal-content shadow-2xl" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-radius: 24px;">
-              <div class="modal-body p-4">
-                  <div class="search-input-group mb-4" style="background: #f1f5f2; border-radius: 16px; padding: 12px 20px; display: flex; align-items: center; gap: 15px;">
-                      <i class="fa-solid fa-magnifying-glass text-muted"></i>
-                      <input type="text" id="cmdSearch" placeholder="Ketik untuk mencari (Alt+K)..." style="background: transparent; border: none; width: 100%; font-size: 1.1rem; outline: none;">
-                  </div>
-                  <div class="command-list" id="cmdList">
-                      <div class="small text-muted mb-3 px-3 uppercase fw-bold" style="letter-spacing:1px; font-size: 0.7rem;">Navigasi Cepat</div>
-                      <a href="<?= base_url(); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
-                          <i class="fa-solid fa-house"></i>
-                          <span>Halaman Depan</span>
-                      </a>
-                      <a href="<?= base_url('shop'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
-                          <i class="fa-solid fa-mug-hot"></i>
-                          <span>Lihat Menu</span>
-                      </a>
-                      <a href="<?= base_url('shop/cart'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333;">
-                          <i class="fa-solid fa-cart-shopping"></i>
-                          <span>Keranjang Saya</span>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Command Palette (Alt+K)
-        const paletteEl = document.getElementById('commandPalette');
-        if (paletteEl) {
-            const cmdModal = new bootstrap.Modal(paletteEl);
-            const cmdSearch = document.getElementById('cmdSearch');
-
-            window.addEventListener('keydown', (e) => {
-                if (e.altKey && e.key === 'k') {
-                    e.preventDefault();
-                    cmdModal.show();
-                    if (cmdSearch) setTimeout(() => cmdSearch.focus(), 500);
-                }
-            });
-
-            if (cmdSearch) {
-                cmdSearch.addEventListener('input', function() {
-                    const q = this.value.toLowerCase();
-                    document.querySelectorAll('.command-item').forEach(item => {
-                        const text = item.innerText.toLowerCase();
-                        item.style.display = text.includes(q) ? 'flex' : 'none';
-                    });
-                });
-            }
-        }
-        });
-    </script>
   <!-- ══════════ IOS FLOATING BAR (GUEST) ══════════ -->
   <nav class="ios-navbar-guest" id="iosNavGuest">
     <a href="<?= base_url(); ?>" class="ios-nav-item <?= (current_url() == base_url()) ? 'active' : '' ?>">
       <i class="fa-solid fa-house"></i>
       <span>Home</span>
     </a>
-    <a href="<?= base_url('shop'); ?>" class="ios-nav-item <?= (strpos(current_url(), 'shop') !== false && strpos(current_url(), 'cart') === false) ? 'active' : '' ?>">
+    <a href="<?= base_url('shop'); ?>"
+      class="ios-nav-item <?= (strpos(current_url(), 'shop') !== false && strpos(current_url(), 'cart') === false) ? 'active' : '' ?>">
       <i class="fa-solid fa-mug-hot"></i>
       <span>Menu</span>
     </a>
-    <a href="<?= base_url('shop/cart'); ?>" class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>">
+    <a href="<?= base_url('shop/cart'); ?>"
+      class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>">
       <i class="fa-solid fa-cart-shopping"></i>
       <span>Cart</span>
     </a>
     <?php if ($this->session->userdata('userid')): ?>
-      <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>" class="ios-nav-item">
+      <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"
+        class="ios-nav-item">
         <i class="fa-solid fa-user-circle"></i>
         <span>Akun</span>
       </a>
@@ -3395,15 +3443,15 @@
     // Auto-hide Guest Pill Bar on Scroll
     let lastScrollYGuest = window.scrollY;
     window.addEventListener('scroll', () => {
-        const iosNav = document.getElementById('iosNavGuest');
-        if(!iosNav) return;
+      const iosNav = document.getElementById('iosNavGuest');
+      if (!iosNav) return;
 
-        if (window.scrollY > lastScrollYGuest && window.scrollY > 100) {
-            gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
-        } else {
-            gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
-        }
-        lastScrollYGuest = window.scrollY;
+      if (window.scrollY > lastScrollYGuest && window.scrollY > 100) {
+        gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
+      } else {
+        gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
+      }
+      lastScrollYGuest = window.scrollY;
     });
   </script>
 </body>

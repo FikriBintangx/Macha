@@ -8,107 +8,166 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root {
-  --gd: #102416; /* Blackish Green */
-  --gm: #1B3B25; /* Primary */
-  --gl: #53725D; /* Secondary */
-  --tertiary: #8BAA7C; /* Tertiary */
-  --cream: #F5F5F0; /* Neutral */
-  --dark: #0A140D; /* Near Black */
-  --txt: #1B3B25; /* Primary Forest Text */
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Outfit',sans-serif;background:var(--cream);padding-top:72px; animation: fadeIn 0.6s ease-in-out;}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-/* NAVBAR */
-.navbar-macha{background:rgba(255,255,255,.97);backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(45,90,39,.08);padding:13px 0;}
-.navbar-brand{font-weight:900;font-size:1.5rem;color:var(--gd)!important;letter-spacing:-.5px;}
-.nav-link{font-weight:600;color:var(--txt)!important;margin:0 4px;transition:.25s;position:relative;padding-bottom:4px!important;}
-.nav-link::after{content:'';position:absolute;left:50%;right:50%;bottom:0;height:2.5px;background:var(--gm);border-radius:4px;transition:.25s;}
-.nav-link:hover{color:var(--gm)!important;}
-.nav-link:hover::after,.nav-link.active-nav::after{left:0;right:0;}
-.nav-link.active-nav{color:var(--gm)!important;font-weight:700;}
-.navbar-nav .nav-link.active{color:var(--txt)!important;}
+  :root {
+    --green-dark: #102416;
+    --green-main: #1B3B25;
+    --green-light: #53725D;
+    --tertiary: #8BAA7C;
+    --cream: #F5F5F0;
+    --white: #ffffff;
+    --text: #1B3B25;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    padding-top: 80px;
+  }
 
-/* STATUS PILL (requested style) */
-.shop-status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 12px;
-    background: #fff;
-    border: 2px solid var(--gm);
-    color: #000 !important;
+  /* ─── PREMIUM BANNER ─── */
+  .shop-banner {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-main) 100%);
+    padding: 100px 0 80px;
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+    text-align: center;
+  }
+  .shop-banner::before {
+    content: 'MATCHA';
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 15vw; font-weight: 950; opacity: 0.03; letter-spacing: 20px;
+  }
+  .shop-banner h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; margin-bottom: 15px; position: relative; z-index: 1; }
+  .shop-banner p { font-size: 1.1rem; opacity: 0.8; max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+
+  /* ─── STICKY FILTER BAR ─── */
+  .sticky-filters {
+    position: sticky;
+    top: 80px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 15px 0;
+  }
+  .filter-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: none; /* Hide for Firefox */
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; } /* Hide for Chrome */
+
+  .filter-pill {
+    white-space: nowrap;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--green-main);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .filter-pill.active {
+    background: var(--green-main);
+    color: var(--white);
+    border-color: var(--green-main);
+    box-shadow: 0 10px 20px rgba(27, 59, 37, 0.2);
+  }
+
+  /* ─── PRODUCT GRID ─── */
+  .product-grid {
+    padding: 40px 0 100px;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: 28px;
+    overflow: hidden;
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.03);
+    will-change: transform, opacity;
+  }
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(16, 36, 22, 0.12);
+  }
+  .product-img-wrap {
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+    background: #f8fcf9;
+  }
+  .product-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-card:hover img { transform: scale(1.1); }
+  
+  .product-badge {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    padding: 5px 15px;
     border-radius: 50px;
     font-size: 0.7rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-left: 10px;
-}
-.status-dot { width: 7px; height: 7px; border-radius: 50%; }
-.status-dot.open { background: #25D366; box-shadow: 0 0 8px #25D366; }
-.status-dot.closed { background: #e63946; box-shadow: 0 0 8px #e63946; }
+    color: var(--green-dark);
+    z-index: 2;
+  }
 
-.btn-hdr{background:var(--gm);color:#fff;border-radius:50px;padding:9px 20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.25s;border:2px solid var(--gm);}
-.btn-hdr:hover{background:var(--gd);border-color:var(--gd);color:#fff;}
-.btn-hdr-out{border:2px solid var(--gm);color:var(--gm);border-radius:50px;padding:9px 20px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.25s;}
-.btn-hdr-out:hover{background:var(--gm);color:#fff;}
+  .product-body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-cat { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--tertiary); letter-spacing: 1px; margin-bottom: 5px; }
+  .product-name { font-size: 1.15rem; font-weight: 900; color: var(--green-dark); margin-bottom: 8px; line-height: 1.2; }
+  .product-price { font-size: 1.25rem; font-weight: 950; color: var(--green-main); margin-bottom: 15px; }
 
-/* PAGE BANNER */
-.page-banner{background:linear-gradient(135deg,var(--gd) 0%,#0f3024 40%,var(--gm) 100%);padding:64px 0 56px;text-align:center;color:#fff;position:relative;overflow:hidden;}
-.page-banner::before{content:'🍵';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:12rem;opacity:.05;}
-.page-banner::after{content:'🌿';position:absolute;left:-20px;bottom:-20px;font-size:10rem;opacity:.04;}
-.page-banner h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-1px;}
-.page-banner p{opacity:.8;margin-top:10px;font-size:1rem;}
-.banner-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px;}
-.banner-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:6px 16px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.9);backdrop-filter:blur(4px);}
+  .btn-premium-cart {
+    background: var(--green-dark);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: auto;
+  }
+  .btn-premium-cart:hover {
+    background: var(--green-main);
+    transform: scale(1.02);
+  }
 
-/* SEARCH BAR */
-.search-section{background:#fff;border-bottom:1px solid #edf1ed;padding:18px 0;position:sticky;top:72px;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.04);}
-.search-wrap{position:relative;max-width:480px;}
-.search-input{width:100%;border:2px solid #e0e8e0;border-radius:50px;padding:11px 48px 11px 20px;font-family:'Outfit',sans-serif;font-size:.95rem;outline:none;transition:.25s;background:#f9fbf9;}
-.search-input:focus{border-color:var(--gm);background:#fff;box-shadow:0 0 0 3px rgba(64,145,108,.1);}
-.search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:#8aa898;pointer-events:none;}
-.filter-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
-.filter-chip{border:2px solid #e0e8e0;background:#fff;color:#6b9080;border-radius:50px;padding:6px 16px;font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;}
-.filter-chip:hover,.filter-chip.active{border-color:var(--gm);background:var(--gm);color:#fff;}
-.sort-select{border:2px solid #e0e8e0;border-radius:50px;padding:8px 16px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;color:var(--gd);outline:none;cursor:pointer;transition:.2s;}
-.sort-select:focus{border-color:var(--gm);}
+  /* ─── UTILS ─── */
+  .invisible-init { opacity: 0; transform: translateY(30px); }
 
-/* PRODUCT GRID */
-.prod-card{background:#fff;border-radius:24px;overflow:hidden;transition:.35s;height:100%;box-shadow:0 4px 16px rgba(0,0,0,.05);display:flex;flex-direction:column;border:2px solid transparent;position:relative;}
-.prod-card:hover{transform:translateY(-8px);box-shadow:0 20px 48px rgba(45,90,39,.14);border-color:rgba(64,145,108,.15);}
-.prod-img-wrap{height:200px;overflow:hidden;position:relative;background:linear-gradient(135deg,#e8f5e9,#f0faf2);}
-.prod-img-wrap img{width:100%;height:100%;object-fit:cover;transition:.5s;}
-.prod-card:hover .prod-img-wrap img{transform:scale(1.08);}
-.prod-img-emoji{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;}
-.prod-badge{position:absolute;top:12px;left:12px;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:50px;}
-.badge-ada{background:rgba(64,145,108,.9);color:#fff;backdrop-filter:blur(4px);}
-.badge-habis{background:rgba(220,38,38,.9);color:#fff;backdrop-filter:blur(4px);}
-.badge-featured{position:absolute;top:12px;right:12px;font-size:.68rem;font-weight:800;padding:4px 10px;border-radius:50px;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff;}
-.prod-body{padding:20px;flex:1;display:flex;flex-direction:column;}
-.prod-cat{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:#9ab0a0;font-weight:700;margin-bottom:4px;}
-.prod-name{font-size:1rem;font-weight:800;color:var(--gd);margin-bottom:6px;line-height:1.3;}
-.prod-price{font-size:1.15rem;font-weight:900;color:var(--gm);margin-bottom:8px;}
-.prod-stock-wrap{margin-bottom:12px;}
-.prod-stock-bar{height:3px;background:#edf1ed;border-radius:4px;margin-bottom:4px;}
-.prod-stock-fill{height:3px;border-radius:4px;background:linear-gradient(90deg,var(--gm),var(--gl));transition:width 1.2s ease;}
-.prod-stock-txt{font-size:.72rem;color:#8aa898;font-weight:600;}
-.btn-cart{background:var(--gd);color:#fff;border-radius:50px;padding:10px 0;font-weight:700;width:100%;text-decoration:none;text-align:center;display:flex;justify-content:center;align-items:center;gap:8px;margin-top:auto;border:none;transition:.25s;position:relative;overflow:hidden;font-family:'Outfit',sans-serif;font-size:.9rem;}
-.btn-cart::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:var(--gm);transition:.3s;z-index:0;border-radius:inherit;}
-.btn-cart:hover::before{height:100%;}
-.btn-cart span,.btn-cart i{position:relative;z-index:1;}
-.btn-cart:hover{color:#fff;}
-.btn-cart.is-loading {pointer-events:none; opacity:0.9;}
-.btn-cart.is-loading .spinner-icon {display:inline-block !important;}
-.btn-cart.is-loading .normal-icon {display:none !important;}
-.btn-cart.is-loading .txt-loading {display:inline-block !important;}
-.btn-cart.is-loading .txt-normal {display:none !important;}
-.btn-cart-out{background:transparent;border:2px solid var(--gm);color:var(--gm);border-radius:50px;padding:10px 0;font-weight:700;width:100%;text-align:center;display:flex;justify-content:center;align-items:center;gap:8px;margin-top:auto;cursor:pointer;transition:.25s;font-family:'Outfit',sans-serif;font-size:.9rem;text-decoration:none;}
-.btn-cart-out:hover{background:var(--gm);color:#fff;}
-.btn-cart-dis{background:#f0f0f0;border:2px solid #e0e0e0;color:#bbb;border-radius:50px;padding:10px 0;font-weight:700;width:100%;text-align:center;display:flex;justify-content:center;align-items:center;gap:8px;margin-top:auto;cursor:not-allowed;font-size:.9rem;}
+  @media (max-width: 768px) {
+    .product-img-wrap { height: 180px; }
+    .product-body { padding: 15px; }
+    .product-name { font-size: 1rem; }
+    .sticky-filters { top: 72px; }
+  }9rem;}
 
 /* RESULT COUNT */
 .result-info{padding:16px 0 8px;font-size:.88rem;color:#8aa898;font-weight:600;}
@@ -176,159 +235,114 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <?php endif;?>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-macha fixed-top">
-<div class="container">
-<a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
-    <?php if(!empty($shop_logo)): ?>
-        <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
-    <?php else: ?>
-        <i class="fa-solid fa-leaf me-2" style="color:var(--gm)"></i>
-    <?php endif; ?>
-    <span>MariMatcha</span>
-    
-    <?php $is_open = $this->M_settings->is_shop_open(); ?>
-    <div class="shop-status-pill">
-        <div class="status-dot <?= $is_open ? 'open' : 'closed' ?>"></div>
-        <?= $is_open ? 'Buka' : 'Tutup' ?>
-    </div>
-</a>
-<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-<i class="fa-solid fa-bars" style="color:var(--gd)"></i></button>
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav mx-auto gap-1">
-<li class="nav-item"><a class="nav-link" href="<?= base_url() ?>">Beranda</a></li>
-<li class="nav-item"><a class="nav-link active-nav" href="<?= base_url('shop') ?>">Katalog</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url() ?>#tentang">Tentang</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url() ?>#cara-pesan">Cara Pesan</a></li>
-</ul>
-<div class="d-flex align-items-center gap-1 gap-xl-2 flex-nowrap">
-<?php $cart=$this->session->userdata('cart')??[];$cc=count($cart);?>
-<?php if($this->session->userdata('role') != 'admin'): ?>
-<a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3" style="font-size: 0.85rem;">
-<i class="fa-solid fa-cart-shopping"></i>
-<span class="d-none d-sm-inline">Keranjang</span>
-<?php if($cc>0):?><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:.55rem; padding: 4px 6px;"><?=$cc?></span><?php endif;?>
-</a>
-<?php endif; ?>
-<?php if($this->session->userdata('userid')):?>
-<a href="<?= ($this->session->userdata('role')=='admin')?base_url('dashboard'):base_url('user') ?>" class="btn-hdr px-3" style="font-size: 0.85rem;"><i class="fa-solid fa-user"></i> <span class="d-none d-xl-inline">Akun</span></a>
-<?php else:?>
-<div class="d-flex gap-1 gap-xl-2 flex-nowrap">
-    <a href="<?= base_url('auth') ?>" class="btn-hdr-out px-2 px-xl-3" style="font-size: 0.85rem;">Masuk</a>
-    <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3" style="font-size: 0.85rem;">Daftar</a>
-</div>
-<?php endif;?>
-</div></div></div></nav>
+<?php $this->load->view('layout/navbar'); ?>
 
 <!-- PAGE BANNER -->
-<div class="page-banner">
-<h1><i class="fa-solid fa-mug-hot me-2"></i>Katalog Menu</h1>
-<p>Pilih minuman matcha favoritmu — fresh setiap hari, dibuat dengan cinta</p>
-<div class="banner-chips">
-<span class="banner-chip">🌿 <?= count($products ?? []) ?> Varian</span>
-<span class="banner-chip">⭐ 4.9 Rating</span>
-<span class="banner-chip">🔥 Best Seller Hari Ini</span>
-</div>
+<div class="shop-banner">
+    <h1>Koleksi Premium</h1>
+    <p>Rasakan kemurnian matcha Jepang terbaik yang dipilih khusus untuk kesegaran harimu.</p>
 </div>
 
-<!-- SEARCH + FILTER -->
-<div class="search-section">
-<div class="container">
-<div class="d-flex align-items-center gap-3 flex-wrap">
-<div class="search-wrap flex-grow-1" style="max-width:380px;">
-<input type="text" class="search-input" id="searchInput" placeholder="🔍 Cari menu matcha...">
-<i class="fa-solid fa-magnifying-glass search-icon"></i>
-</div>
-<select class="sort-select" id="sortSelect">
-<option value="default">Urutkan: Default</option>
-<option value="price-asc">Harga: Murah dulu</option>
-<option value="price-desc">Harga: Mahal dulu</option>
-<option value="name-asc">Nama: A–Z</option>
-<option value="stock-desc">Stok Terbanyak</option>
-</select>
-</div>
-<div class="filter-chips mt-2">
-    <button class="filter-chip active" data-cat="Semua">Semua</button>
-    <?php foreach($categories as $c): ?>
-        <button class="filter-chip" data-cat="<?= htmlspecialchars($c['category_name']) ?>"><?= htmlspecialchars($c['category_name']) ?></button>
-    <?php endforeach; ?>
-</div>
-</div>
-</div>
-
-<!-- PRODUCTS -->
-<div class="container py-4">
-<div class="result-info" id="resultInfo"><?= count($products??[]) ?> produk ditemukan</div>
-<div class="row g-4" id="productGrid">
-<?php
-$emojis=['🍵','☕','🧋','🍃','🌿','🥤','🫖','🍶'];
-if(!empty($products)):
-foreach($products as $i=>$p):
-$pct=min(100,max(8,($p['stock']/50)*100));
-$is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
-?>
-<div class="col-6 col-md-4 col-lg-3 prod-item"
-     data-name="<?=strtolower(htmlspecialchars($p['name']))?>"
-     data-cat="<?=htmlspecialchars($p['category_name']??'Matcha')?>"
-     data-price="<?=$p['price']?>"
-     data-stock="<?=$p['stock']?>">
-<div class="prod-card" style="transition-delay:<?=$i*.05?>s">
-<div class="prod-img-wrap">
-<span class="prod-badge <?=$p['stock']>0?'badge-ada':'badge-habis'?>"><?=$p['stock']>0?'✓ Tersedia':'Habis'?></span>
-<?php if($is_f):?><span class="badge-featured" style="background: linear-gradient(45deg, #ff9a00, #ff0505); color: white; border: none; font-weight: 800; box-shadow: 0 4px 10px rgba(255, 154, 0, 0.3);">🔥 Best Seller</span><?php endif;?>
-<?php if(!empty($p['image'])&&$p['image']!='default.jpg'):?>
-<img src="<?= base_url('uploads/'.$p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy"
-     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-<div class="prod-img-emoji" style="display:none"><?=$emojis[$i%count($emojis)]?></div>
-<?php else:?>
-<div class="prod-img-emoji"><?=$emojis[$i%count($emojis)]?></div>
-<?php endif;?>
-</div>
-<div class="prod-body">
-<div class="prod-cat"><?=htmlspecialchars($p['category_name']??'Matcha')?></div>
-<div class="prod-name"><?=htmlspecialchars($p['name'])?></div>
-<div class="prod-price">Rp <?=number_format($p['price'],0,',','.')?></div>
-<div class="prod-stock-wrap">
-<div class="prod-stock-bar"><div class="prod-stock-fill" style="width:0%" data-w="<?=$pct?>%"></div></div>
-<div class="prod-stock-txt"><?=$p['stock']<=5&&$p['stock']>0?'⚠️ Sisa '.$p['stock'].' pcs':'Stok: '.$p['stock'].' pcs'?></div>
-</div>
-<?php if($p['stock']>0):?>
-<div class="d-flex flex-column gap-2 mt-auto">
-    <button type="button" class="btn-cart-out w-100" onclick="showDetail(<?= $p['id'] ?>)">
-        <i class="fa-solid fa-eye"></i><span>Detail</span>
-    </button>
-    <?php if($shop_status == 'closed'): ?>
-        <div class="btn-cart-dis w-100" style="background:#fff7ed; color:#c2410c; border-color:#fed7aa;">
-            <i class="fa-solid fa-clock"></i><span>Toko Tutup</span>
+<!-- STICKY FILTER BAR -->
+<div class="sticky-filters">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3">
+            <div class="filter-scroll flex-grow-1" id="filterScroll">
+                <button class="filter-pill active" data-cat="Semua">Semua Menu</button>
+                <?php foreach($categories as $c): ?>
+                    <button class="filter-pill" data-cat="<?= htmlspecialchars($c['category_name']) ?>"><?= htmlspecialchars($c['category_name']) ?></button>
+                <?php endforeach; ?>
+            </div>
+            <div class="d-none d-md-block">
+                <select class="sort-select border-0 bg-transparent fw-bold" id="sortSelect" style="outline:none; cursor:pointer; font-size: 0.85rem; color: var(--green-main);">
+                    <option value="default">Urutkan: Terbaru</option>
+                    <option value="price-asc">Harga Terendah</option>
+                    <option value="price-desc">Harga Tertinggi</option>
+                    <option value="stock-desc">Stok Terbanyak</option>
+                </select>
+            </div>
         </div>
-    <?php elseif($this->session->userdata('userid')):?>
-        <?php if($this->session->userdata('role') == 'admin'): ?>
-            <div class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Mode Kelola</span></div>
-        <?php else: ?>
-            <button type="button" class="btn-cart w-100" onclick="addToCart(<?= $p['id'] ?>, this)" style="height: 44px;">
-                <i class="fa-solid fa-cart-plus normal-icon"></i>
-                <i class="fa-solid fa-spinner fa-spin spinner-icon" style="display:none;"></i>
-                <span class="txt-normal">Tambah</span>
-                <span class="txt-loading" style="display:none;">Memproses...</span>
-            </button>
-        <?php endif; ?>
-    <?php else:?>
-    <a href="<?= base_url('auth') ?>" class="btn-cart-out w-100"><i class="fa-solid fa-lock"></i><span>Login untuk pesan</span></a>
+    </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<div class="container product-grid">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+        <div class="result-info" id="resultInfo" style="font-weight: 700; color: var(--green-light);"><?= count($products??[]) ?> Produk Ditemukan</div>
+        <div class="search-wrap" style="position:relative; max-width: 250px; width: 100%;">
+            <input type="text" class="form-control border-0 bg-white rounded-pill px-4" id="searchInput" placeholder="Cari menu..." style="font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <i class="fa-solid fa-magnifying-glass" style="position:absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--tertiary); font-size: 0.8rem;"></i>
+        </div>
+    </div>
+
+    <div class="row g-3 g-md-4" id="productGrid">
+    <?php
+    $emojis=['🍵','☕','🧋','🍃','🌿','🥤','🫖','🍶'];
+    if(!empty($products)):
+    foreach($products as $i=>$p):
+    $pct=min(100,max(8,($p['stock']/50)*100));
+    $is_f=!empty($p['is_featured'])&&$p['is_featured']==1;
+    ?>
+    <div class="col-6 col-md-4 col-lg-3 prod-item invisible-init"
+         data-name="<?=strtolower(htmlspecialchars($p['name']))?>"
+         data-cat="<?=htmlspecialchars($p['category_name']??'Matcha')?>"
+         data-price="<?=$p['price']?>"
+         data-stock="<?=$p['stock']?>">
+        <div class="product-card">
+            <div class="product-img-wrap" onclick="showDetail(<?= $p['id'] ?>)" style="cursor:pointer;">
+                <span class="product-badge <?=$p['stock']>0?'':'text-danger'?>">
+                    <i class="fa-solid <?=$p['stock']>0?'fa-circle-check':'fa-circle-xmark'?> me-1"></i>
+                    <?=$p['stock']>0?'Tersedia':'Habis'?>
+                </span>
+                <?php if($is_f):?><div style="position:absolute; top:15px; right:15px; z-index:2; background: linear-gradient(135deg, #f59e0b, #fbbf24); color:#fff; font-size:0.65rem; font-weight:900; padding:4px 10px; border-radius:50px; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);">BEST SELLER</div><?php endif;?>
+                
+                <?php if(!empty($p['image'])&&$p['image']!='default.jpg'):?>
+                    <img src="<?= base_url('uploads/'.$p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:5rem; background:#f8fcf9;"><?=$emojis[$i%count($emojis)]?></div>
+                <?php else:?>
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:5rem; background:#f8fcf9;"><?=$emojis[$i%count($emojis)]?></div>
+                <?php endif;?>
+            </div>
+            <div class="product-body">
+                <div class="product-cat"><?=htmlspecialchars($p['category_name']??'Matcha')?></div>
+                <h3 class="product-name"><?=htmlspecialchars($p['name'])?></h3>
+                <div class="product-price">Rp <?=number_format($p['price'],0,',','.')?></div>
+                
+                <?php if($p['stock']>0):?>
+                    <div class="d-flex flex-column gap-2 mt-auto">
+                        <?php if($shop_status == 'closed'): ?>
+                            <div class="btn-premium-cart" style="background:#f1f5f2; color:#8aa898; cursor:not-allowed;">
+                                <i class="fa-solid fa-clock"></i><span>Toko Tutup</span>
+                            </div>
+                        <?php elseif($this->session->userdata('role') == 'admin'): ?>
+                            <div class="btn-premium-cart" style="background:#f1f5f2; color:#8aa898; cursor:default;">
+                                <i class="fa-solid fa-lock"></i><span>Mode Kelola</span>
+                            </div>
+                        <?php else: ?>
+                            <button type="button" class="btn-premium-cart" onclick="addToCart(<?= $p['id'] ?>, this)">
+                                <i class="fa-solid fa-cart-plus"></i><span>Tambah</span>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                <?php else:?>
+                    <div class="btn-premium-cart" style="background:#fdf2f2; color:#e63946; cursor:not-allowed;">
+                        <i class="fa-solid fa-ban"></i><span>Stok Habis</span>
+                    </div>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+    <?php endforeach;
+    else:?>
+    <div class="col-12"><div class="empty-state"><span class="empty-icon">🍵</span><h4 style="color:var(--green-dark)">Belum ada produk</h4><p style="color:var(--green-light)">Admin sedang menyiapkan menu terbaik untukmu.</p></div></div>
     <?php endif;?>
-</div>
-<?php else:?>
-<div class="btn-cart-dis"><i class="fa-solid fa-ban"></i><span>Stok Habis</span></div>
-<?php endif;?>
-</div>
-</div>
-</div>
-<?php endforeach;
-else:?>
-<div class="col-12"><div class="empty-state"><span class="empty-icon">🍵</span><h4 style="color:var(--gd)">Belum ada produk</h4><p style="color:#8aa898">Admin sedang menyiapkan menu.</p></div></div>
-<?php endif;?>
-</div>
-<div id="noResults"><span style="font-size:3rem;display:block;margin-bottom:12px">🔍</span>Tidak ada produk yang cocok</div>
+    </div>
+    <div id="noResults" style="display:none; text-align:center; padding:100px 0;">
+        <i class="fa-solid fa-magnifying-glass mb-3" style="font-size: 3rem; color: var(--tertiary);"></i>
+        <h4 style="font-weight: 800; color: var(--green-dark);">Pencarian Tidak Ditemukan</h4>
+        <p style="color: var(--green-light);">Coba kata kunci lain atau kategori yang berbeda.</p>
+    </div>
 </div>
 
 <footer class="text-center"><p class="mb-0" style="font-size:.85rem;color:#8aa898">© <?=date('Y')?> <strong style="color:var(--gd)">MariMatcha</strong>. Dibuat dengan ❤️</p></footer>
@@ -336,40 +350,43 @@ else:?>
 <!-- MODAL DETAIL PRODUK -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0" style="border-radius:28px; overflow:hidden;">
+        <div class="modal-content border-0" style="border-radius:40px; overflow:hidden; box-shadow: 0 40px 100px rgba(16, 36, 22, 0.3);">
             <div class="modal-body p-0">
                 <div class="row g-0">
                     <div class="col-md-5">
-                        <div id="modalImgWrap" style="height:100%; min-height:300px; background:#eef3eb; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-                            <img id="modalImg" src="" style="width:100%; height:100%; object-fit:cover;">
+                        <div id="modalImgWrap" style="height:100%; min-height:400px; background:linear-gradient(135deg, #f8fcf9 0%, #eef3eb 100%); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;">
+                            <img id="modalImg" src="" style="width:100%; height:100%; object-fit:cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <div class="p-4 p-lg-5">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 id="modalName" class="fw-black mb-0" style="font-weight:900; color:var(--gd);">Produk</h3>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="mb-3">
-                                <span id="modalPrice" class="h4 fw-bold text-success">Rp 0</span>
-                                <span class="ms-2 text-muted small" id="modalStock">Stok: 0</span>
+                    <div class="col-md-7" style="background: var(--white);">
+                        <div class="p-4 p-lg-5 position-relative">
+                            <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" style="top:30px; right:30px; z-index:10; background-color:rgba(0,0,0,0.05); padding:12px; border-radius:50%;"></button>
+                            
+                            <div class="mb-4">
+                                <h3 id="modalName" class="fw-black mb-1" style="font-size: 2rem; color: var(--green-dark); letter-spacing: -1px;">Produk</h3>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span id="modalPrice" class="h3 fw-black mb-0" style="color: var(--green-main);">Rp 0</span>
+                                    <span class="badge bg-light text-success rounded-pill px-3" id="modalStock" style="font-weight: 800;">Stok: 0</span>
+                                </div>
                             </div>
                             
                             <!-- Average Rating Display -->
-                            <div class="d-flex align-items-center mb-4 gap-2">
-                                <div id="modalStars" class="text-warning"></div>
-                                <span id="modalAvgText" class="fw-bold" style="font-size:.9rem; color:var(--gl);">0 (0 Penilaian)</span>
+                            <div class="d-flex align-items-center mb-4 gap-2 py-2 px-3 rounded-pill" style="background: #fff8eb; width: fit-content;">
+                                <div id="modalStars" class="text-warning d-flex gap-1" style="font-size: 0.9rem;"></div>
+                                <span id="modalAvgText" class="fw-black" style="font-size: 0.85rem; color: #b45309;">0 (0 Penilaian)</span>
                             </div>
 
-                            <h6 class="fw-bold small text-uppercase letter-spacing-1 mb-2" style="color:var(--gl);">Deskripsi</h6>
-                            <p id="modalDesc" class="text-secondary small mb-4" style="line-height:1.6;">Deskripsi...</p>
+                            <div class="mb-4">
+                                <h6 class="fw-black small text-uppercase letter-spacing-1 mb-2" style="color: var(--tertiary);">Deskripsi Produk</h6>
+                                <p id="modalDesc" class="text-secondary" style="line-height:1.6; font-size: 0.95rem;">Deskripsi...</p>
+                            </div>
 
-                            <!-- Rating Action Section (Hanya untuk yang sudah login) -->
+                            <!-- Rating Action Section -->
                             <?php if($this->session->userdata('userid')): ?>
                                 <?php if($this->session->userdata('role') != 'admin'): ?>
-                                <div class="rating-box p-3 rounded-4 mb-4" style="background:#f8faf8; border:1px solid #edf2ed;">
-                                    <h6 class="fw-bold small mb-2">Beri Penilaian Rasa</h6>
-                                    <div class="star-rating mb-2" id="starInput">
+                                <div class="rating-box p-4 rounded-4 mb-4" style="background:rgba(245, 245, 240, 0.5); border:1.5px solid #edf2ed; backdrop-filter: blur(10px);">
+                                    <h6 class="fw-black small mb-3 text-success">Beri Penilaian Rasa</h6>
+                                    <div class="star-rating mb-3 d-flex gap-2" id="starInput">
                                         <i class="fa-star fa-regular star-btn" data-rate="1"></i>
                                         <i class="fa-star fa-regular star-btn" data-rate="2"></i>
                                         <i class="fa-star fa-regular star-btn" data-rate="3"></i>
@@ -377,37 +394,32 @@ else:?>
                                         <i class="fa-star fa-regular star-btn" data-rate="5"></i>
                                     </div>
                                     <input type="hidden" id="rateValue" value="0">
-                                    <textarea id="rateComment" class="form-control form-control-sm border-0 mb-2" rows="2" placeholder="Tulis komentar kamu..." style="background:#fff; border-radius:12px;"></textarea>
-                                    <button type="button" onclick="submitRating()" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">Kirim Rating</button>
+                                    <textarea id="rateComment" class="form-control border-0 mb-3 shadow-sm" rows="2" placeholder="Apa pendapatmu tentang rasa ini?" style="border-radius:15px; padding:12px; font-size:0.9rem;"></textarea>
+                                    <button type="button" onclick="submitRating()" class="btn btn-success w-100 rounded-pill py-2 fw-black shadow-sm" style="background: var(--green-main); border:none;">Kirim Penilaian</button>
                                 </div>
                                 <?php endif; ?>
                             <?php else: ?>
-                                <div class="rating-box p-3 rounded-4 mb-4 text-center" style="background:#fff7ed; border:1px solid #ffedd5;">
-                                    <p class="small text-secondary mb-2"><i class="fa-solid fa-lock me-1"></i> Suka dengan rasa produk ini? Login untuk memberikan penilaian.</p>
-                                    <a href="<?= base_url('auth') ?>" class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold">Login Sekarang</a>
+                                <div class="p-4 rounded-4 mb-4 text-center" style="background:#fff7ed; border:1.5px dashed #fed7aa;">
+                                    <p class="small text-muted mb-3"><i class="fa-solid fa-lock me-2 text-warning"></i> Login untuk memberikan penilaian produk ini.</p>
+                                    <a href="<?= base_url('auth') ?>" class="btn btn-sm btn-warning rounded-pill px-4 fw-black text-white" style="background: #f59e0b; border:none;">Login Sekarang</a>
                                 </div>
                             <?php endif; ?>
 
-                            <div class="d-grid">
                             <div id="modalOrderActions">
                                 <?php if($shop_status == 'closed'): ?>
-                                    <div class="btn-cart-dis py-3 text-center w-100" style="background:#fff7ed; color:#c2410c; border-color:#fed7aa; cursor:default;">
-                                        <i class="fa-solid fa-clock me-2"></i> Toko Sedang Tutup
+                                    <div class="py-3 text-center w-100 rounded-pill" style="background:#f1f5f2; color:#8aa898; font-weight:800;">
+                                        <i class="fa-solid fa-clock me-2"></i> TOKO SEDANG TUTUP
                                     </div>
                                 <?php elseif($this->session->userdata('role') == 'admin'): ?>
-                                    <div class="btn-cart-dis py-3 text-center w-100" style="background:#eef3eb; color:#8aa898; cursor:default;">
-                                        <i class="fa-solid fa-lock me-2"></i> Mode Kelola Menu
+                                    <div class="py-3 text-center w-100 rounded-pill" style="background:#eef3eb; color:#8aa898; font-weight:800;">
+                                        <i class="fa-solid fa-lock me-2"></i> MODE KELOLA MENU
                                     </div>
-                                <?php elseif($this->session->userdata('userid')): ?>
-                                    <button id="modalCartBtn" type="button" class="btn-cart py-3" onclick="addToCartFromModal()">
+                                <?php else: ?>
+                                    <button id="modalCartBtn" type="button" class="btn btn-success w-100 py-3 rounded-pill fw-black shadow-lg" 
+                                            onclick="addToCartFromModal()" style="background: var(--green-dark); border:none; font-size: 1.1rem; letter-spacing: -0.5px;">
                                         <i class="fa-solid fa-cart-plus me-2"></i> Tambah ke Keranjang
                                     </button>
-                                <?php else: ?>
-                                    <a href="<?= base_url('auth') ?>" class="btn-cart-out py-3 text-center">
-                                        <i class="fa-solid fa-lock me-2"></i> Login untuk memesan
-                                    </a>
                                 <?php endif; ?>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -418,255 +430,307 @@ else:?>
 </div>
 
 <style>
-.star-btn { cursor:pointer; font-size:1.5rem; transition:.2s; color:#ccc; }
-.star-btn.active, .star-btn:hover { color:#f59e0b; }
+.star-btn { cursor:pointer; font-size:1.6rem; transition: var(--transition); color:#d1d5db; }
+.star-btn.active, .star-btn:hover { color:#f59e0b; transform: scale(1.2); }
 .star-btn.fa-solid { color:#f59e0b; }
+.fw-black { font-weight: 900; }
+
+@media (max-width: 768px) {
+    #modalImgWrap { min-height: 250px; }
+    .modal-content { border-radius: 30px; }
+}
 </style>
 
+<!-- GSAP & ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <script>
-// TOAST AUTO HIDE
-var tw=document.getElementById('toastWrap');
-if(tw)setTimeout(function(){tw.style.opacity='0';tw.style.transition='opacity .5s';setTimeout(function(){tw.remove();},600);},3500);
+    document.addEventListener("DOMContentLoaded", function() {
+        gsap.registerPlugin(ScrollTrigger);
 
-// CARD REVEAL (IntersectionObserver)
-var ioCards=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting){e.target.querySelector('.prod-card').classList.add('visible');ioCards.unobserve(e.target);}});
-},{threshold:.1});
-document.querySelectorAll('.prod-item').forEach(function(el){ioCards.observe(el);});
+        // 1. Entrance Animations
+        const tl = gsap.timeline();
+        tl.from(".shop-banner h1", { y: 50, opacity: 0, duration: 1, ease: "power4.out" })
+          .from(".shop-banner p", { y: 20, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.6")
+          .from(".sticky-filters", { y: -20, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.4");
 
-// STOCK BARS
-var ioBar=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting){e.target.querySelectorAll('.prod-stock-fill').forEach(function(b){b.style.width=b.dataset.w;});ioBar.unobserve(e.target);}});
-},{threshold:.2});
-document.querySelectorAll('.prod-item').forEach(function(el){ioBar.observe(el);});
-
-// RIPPLE
-document.querySelectorAll('.btn-cart,.btn-cart-out').forEach(function(btn){
-  btn.addEventListener('click',function(e){
-    var r=btn.getBoundingClientRect(),sz=Math.max(r.width,r.height);
-    var rp=document.createElement('span');rp.className='ripple-c';
-    rp.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-r.left-sz/2)+'px;top:'+(e.clientY-r.top-sz/2)+'px;';
-    btn.appendChild(rp);setTimeout(function(){rp.remove();},600);
-  });
-});
-
-// SEARCH & FILTER
-var items=document.querySelectorAll('.prod-item');
-var ri=document.getElementById('resultInfo');
-var ng=document.getElementById('noResults');
-function filterProducts(){
-  var q=document.getElementById('searchInput').value.toLowerCase().trim();
-  var activeCat=document.querySelector('.filter-chip.active').dataset.cat;
-  var sort=document.getElementById('sortSelect').value;
-  var arr=Array.from(items);
-  var vis=[];
-  arr.forEach(function(el){
-    var name=el.dataset.name;
-    var cat=el.dataset.cat;
-    var matchQ=!q||name.includes(q);
-    var matchC=activeCat==='Semua'||cat===activeCat;
-    el.style.display=(matchQ&&matchC)?'':'none';
-    if(matchQ&&matchC)vis.push(el);
-  });
-  // Sort
-  var grid=document.getElementById('productGrid');
-  vis.sort(function(a,b){
-    if(sort==='price-asc')return+a.dataset.price-+b.dataset.price;
-    if(sort==='price-desc')return+b.dataset.price-+a.dataset.price;
-    if(sort==='name-asc')return a.dataset.name.localeCompare(b.dataset.name);
-    if(sort==='stock-desc')return+b.dataset.stock-+a.dataset.stock;
-    return 0;
-  });
-  vis.forEach(function(el){grid.appendChild(el);});
-  ri.textContent=vis.length+' produk ditemukan';
-  ng.style.display=vis.length===0?'block':'none';
-}
-document.getElementById('searchInput').addEventListener('input',filterProducts);
-document.getElementById('sortSelect').addEventListener('change',filterProducts);
-document.querySelectorAll('.filter-chip').forEach(function(c){
-  c.addEventListener('click',function(){
-    document.querySelectorAll('.filter-chip').forEach(function(x){x.classList.remove('active');});
-    c.classList.add('active');
-    filterProducts();
-  });
-});
-
-// DETAIL MODAL LOGIC
-var pModal = new bootstrap.Modal(document.getElementById('productModal'));
-function showDetail(id) {
-    document.getElementById('modalImgWrap').innerHTML = '<div class="fa-3x"><i class="fa-solid fa-spinner fa-spin text-success"></i></div>';
-    pModal.show();
-    
-    fetch('<?= base_url("shop/get_product_details/") ?>' + id)
-        .then(res => res.json())
-        .then(res => {
-            if(res.status === 'success') {
-                let d = res.data;
-                document.getElementById('modalName').textContent = d.name;
-                document.getElementById('modalDesc').textContent = d.description;
-                document.getElementById('modalPrice').textContent = 'Rp ' + d.price;
-                document.getElementById('modalStock').textContent = 'Stok: ' + d.stock;
-                
-                let cartBtn = document.getElementById('modalCartLink');
-                if(cartBtn) cartBtn.href = '<?= base_url("shop/add_to_cart/") ?>' + d.id;
-                
-                // Show Image
-                if(d.image !== 'default') {
-                    document.getElementById('modalImgWrap').innerHTML = `<img src="${d.image}" style="width:100%; height:100%; object-fit:cover;">`;
-                } else {
-                    document.getElementById('modalImgWrap').innerHTML = `<div style="font-size:6rem">🍵</div>`;
-                }
-
-                // Show Average Rating
-                let starsHtml = '';
-                for(let i=1; i<=5; i++) {
-                    starsHtml += `<i class="fa-star ${i <= Math.round(d.avg_rating) ? 'fa-solid' : 'fa-regular'}"></i>`;
-                }
-                document.getElementById('modalStars').innerHTML = starsHtml;
-                document.getElementById('modalAvgText').textContent = `${d.avg_rating} (${d.total_rating} Penilaian)`;
-                
-                // Set Product ID for modal actions
-                document.getElementById('productModal').dataset.productId = d.id;
-                
-                // Reset Star Input
-                document.querySelectorAll('.star-btn').forEach(s => s.classList.replace('fa-solid','fa-regular'));
-                document.querySelectorAll('.star-btn').forEach(s => s.classList.remove('active'));
-                document.getElementById('rateValue').value = 0;
-                document.getElementById('rateComment').value = '';
-            }
-        });
-}
-
-// STAR INPUT LOGIC
-document.querySelectorAll('.star-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        let rate = this.dataset.rate;
-        document.getElementById('rateValue').value = rate;
-        document.querySelectorAll('.star-btn').forEach(s => {
-            if(s.dataset.rate <= rate) {
-                s.classList.replace('fa-regular', 'fa-solid');
-                s.classList.add('active');
-            } else {
-                s.classList.replace('fa-solid', 'fa-regular');
-                s.classList.remove('active');
-            }
-        });
-    });
-});
-
-function submitRating() {
-    let pid = document.getElementById('productModal').dataset.productId;
-    let rate = document.getElementById('rateValue').value;
-    let comment = document.getElementById('rateComment').value;
-    let name = "<?= htmlspecialchars($this->session->userdata('full_name') ?: 'Guest') ?>";
-
-    if(rate == 0) { alert('Tolong pilih bintangnya dulu ya!'); return; }
-
-    const formData = new FormData();
-    formData.append('product_id', pid);
-    formData.append('rating', rate);
-    formData.append('comment', comment);
-    formData.append('full_name', name);
-
-    fetch('<?= base_url("shop/submit_rating") ?>', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(res => {
-        alert(res.message);
-        if(res.status === 'success') {
-            showDetail(pid); // Refresh details
-        }
-    });
-}
-
-function addToCart(id, btn) {
-    if(btn) {
-        btn.classList.add('is-loading');
-        btn.disabled = true;
-    }
-
-    fetch('<?= base_url("shop/add_to_cart_ajax/") ?>' + id, {
-        method: 'POST'
-    })
-    .then(res => res.json())
-    .then(res => {
-        if(res.status === 'success') {
-            // Update Cart count in header
-            const badge = document.querySelector('.btn-hdr-out .badge');
-            if(badge) {
-                badge.textContent = res.cart_count;
-            } else {
-                // If no badge exists yet, add one
-                const cartBtn = document.querySelector('.btn-hdr-out');
-                if(cartBtn) {
-                    const newBadge = document.createElement('span');
-                    newBadge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
-                    newBadge.style.fontSize = '.6rem';
-                    newBadge.textContent = res.cart_count;
-                    cartBtn.appendChild(newBadge);
-                }
-            }
-
-            // Show Toast
-            showToast(res.message, 'success');
-            
-            // Celebration
-            if(window.confetti) {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#102416', '#1B3B25', '#8BAA7C']
+        // 2. Product Grid Staggered Reveal
+        function initScrollAnimations() {
+            gsap.utils.toArray('.prod-item').forEach((item, i) => {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse",
+                        once: true // Performance: only animate once
+                    }
                 });
-            }
-        } else {
-            showToast(res.message, 'error');
+            });
         }
-    })
-    .catch(err => {
-        showToast('Terjadi kesalahan silakan coba lagi.', 'error');
-    })
-    .finally(() => {
-        if(btn) {
-            btn.classList.remove('is-loading');
-            btn.disabled = false;
+        initScrollAnimations();
+
+        // 3. Search & Filter Logic (Optimized)
+        const items = document.querySelectorAll('.prod-item');
+        const ri = document.getElementById('resultInfo');
+        const ng = document.getElementById('noResults');
+        const grid = document.getElementById('productGrid');
+
+        function filterProducts() {
+            const q = document.getElementById('searchInput').value.toLowerCase().trim();
+            const activeCat = document.querySelector('.filter-pill.active').dataset.cat;
+            const sort = document.getElementById('sortSelect').value;
+            
+            let visibleCount = 0;
+            const visibleItems = [];
+
+            items.forEach(el => {
+                const name = el.dataset.name;
+                const cat = el.dataset.cat;
+                const matchQ = !q || name.includes(q);
+                const matchC = activeCat === 'Semua' || cat === activeCat;
+
+                if (matchQ && matchC) {
+                    el.style.display = '';
+                    visibleCount++;
+                    visibleItems.push(el);
+                    // Re-trigger GSAP for newly visible items if they haven't animated yet
+                    gsap.to(el, { opacity: 1, y: 0, duration: 0.4 });
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            // Sorting
+            visibleItems.sort((a, b) => {
+                if(sort === 'price-asc') return +a.dataset.price - +b.dataset.price;
+                if(sort === 'price-desc') return +b.dataset.price - +a.dataset.price;
+                if(sort === 'stock-desc') return +b.dataset.stock - +a.dataset.stock;
+                return 0; // Default: Order by database sequence
+            });
+
+            visibleItems.forEach(el => grid.appendChild(el));
+            ri.textContent = visibleCount + ' Produk Ditemukan';
+            ng.style.display = visibleCount === 0 ? 'block' : 'none';
+            ScrollTrigger.refresh();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.getElementById('sortSelect').addEventListener('change', filterProducts);
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts();
+                
+                // Scroll pill into view on mobile
+                this.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
+        });
+
+        // 4. Modal Logic
+        const pModal = new bootstrap.Modal(document.getElementById('productModal'));
+        window.showDetail = function(id) {
+            document.getElementById('modalImgWrap').innerHTML = '<div class="fa-2x"><i class="fa-solid fa-spinner fa-spin text-success"></i></div>';
+            pModal.show();
+            
+            fetch('<?= base_url("shop/get_product_details/") ?>' + id)
+                .then(res => res.json())
+                .then(res => {
+                    if(res.status === 'success') {
+                        let d = res.data;
+                        document.getElementById('modalName').textContent = d.name;
+                        document.getElementById('modalDesc').textContent = d.description || 'Minuman matcha segar dengan resep rahasia.';
+                        document.getElementById('modalPrice').textContent = 'Rp ' + d.price;
+                        document.getElementById('modalStock').textContent = 'Stok: ' + d.stock;
+                        
+                        if(d.image && d.image !== 'default') {
+                            document.getElementById('modalImgWrap').innerHTML = `<img src="${d.image}" style="width:100%; height:100%; object-fit:cover;">`;
+                        } else {
+                            document.getElementById('modalImgWrap').innerHTML = `<div style="font-size:6rem">🍵</div>`;
+                        }
+
+                        let starsHtml = '';
+                        for(let i=1; i<=5; i++) {
+                            starsHtml += `<i class="fa-star ${i <= Math.round(d.avg_rating) ? 'fa-solid' : 'fa-regular'}" style="color:#f59e0b"></i>`;
+                        }
+                        document.getElementById('modalStars').innerHTML = starsHtml;
+                        document.getElementById('modalAvgText').textContent = `${d.avg_rating} (${d.total_rating} Penilaian)`;
+                        document.getElementById('productModal').dataset.productId = d.id;
+
+                        // Check if user has rated this product (Read-Only Mode)
+                        const userRatingBox = document.getElementById('rateComment');
+                        const ratingBtn = document.querySelector('button[onclick="submitRating()"]');
+                        const starBtns = document.querySelectorAll('.star-btn');
+                        
+                        if (userRatingBox) {
+                            if (d.user_rating) {
+                                document.getElementById('rateValue').value = d.user_rating.rating;
+                                userRatingBox.value = d.user_rating.comment;
+                                userRatingBox.readOnly = true;
+                                userRatingBox.style.background = '#f9fbf9';
+                                userRatingBox.style.opacity = '0.7';
+                                
+                                starBtns.forEach(s => {
+                                    s.classList.remove('fa-solid', 'active');
+                                    s.classList.add('fa-regular');
+                                    if (parseInt(s.dataset.rate) <= d.user_rating.rating) {
+                                        s.classList.remove('fa-regular');
+                                        s.classList.add('fa-solid', 'active');
+                                    }
+                                    s.style.pointerEvents = 'none'; // Read-only
+                                    s.style.opacity = '0.7';
+                                });
+                                
+                                if (ratingBtn) {
+                                    ratingBtn.style.display = 'none';
+                                }
+                            } else {
+                                document.getElementById('rateValue').value = '0';
+                                userRatingBox.value = '';
+                                userRatingBox.readOnly = false;
+                                userRatingBox.style.background = '#fff';
+                                userRatingBox.style.opacity = '1';
+                                
+                                starBtns.forEach(s => {
+                                    s.classList.remove('fa-solid', 'active');
+                                    s.classList.add('fa-regular');
+                                    s.style.pointerEvents = 'auto'; // Clickable
+                                    s.style.opacity = '1';
+                                });
+                                
+                                if (ratingBtn) {
+                                    ratingBtn.style.display = 'block';
+                                    ratingBtn.disabled = false;
+                                    ratingBtn.innerHTML = 'Kirim Penilaian';
+                                    ratingBtn.style.background = 'var(--green-main)';
+                                    ratingBtn.style.color = '#fff';
+                                }
+                            }
+                        }
+                    }
+                });
+        };
+
+        // Star Rating Click Logic
+        const stars = document.querySelectorAll('.star-btn');
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const val = parseInt(this.dataset.rate);
+                document.getElementById('rateValue').value = val;
+                stars.forEach(s => {
+                    if (parseInt(s.dataset.rate) <= val) {
+                        s.classList.remove('fa-regular');
+                        s.classList.add('fa-solid', 'active');
+                    } else {
+                        s.classList.remove('fa-solid', 'active');
+                        s.classList.add('fa-regular');
+                    }
+                });
+            });
+        });
+
+        // Submit Rating Function
+        window.submitRating = function() {
+            const pid = document.getElementById('productModal').dataset.productId;
+            const rate = document.getElementById('rateValue').value;
+            const comment = document.getElementById('rateComment').value;
+            const btn = document.querySelector('button[onclick="submitRating()"]');
+
+            if (rate == 0) {
+                showToast('Pilih jumlah bintang terlebih dahulu.', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+
+            const formData = new FormData();
+            formData.append('product_id', pid);
+            formData.append('rating', rate);
+            formData.append('comment', comment);
+
+            fetch('<?= base_url("shop/submit_rating") ?>', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === 'success') {
+                    showToast(res.message, 'success');
+                    btn.innerHTML = '<i class="fa-solid fa-check-circle me-2"></i> Penilaian Anda Disimpan';
+                    btn.style.background = '#8aa898';
+                    document.getElementById('rateComment').readOnly = true;
+                    stars.forEach(s => s.style.pointerEvents = 'none');
+                    
+                    // Refresh data produk agar average rating langsung update
+                    setTimeout(() => showDetail(pid), 1000);
+                } else {
+                    showToast(res.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Kirim Penilaian';
+                }
+            })
+            .catch(err => {
+                showToast('Terjadi kesalahan.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = 'Kirim Penilaian';
+            });
+        };
+
+        // 5. Cart Logic (AJAX)
+        window.addToCart = function(id, btn) {
+            if(btn) {
+                btn.disabled = true;
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+                fetch('<?= base_url("shop/add_to_cart_ajax/") ?>' + id, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            showToast(res.message, 'success');
+                            const badge = document.querySelector('.btn-hdr-out .badge');
+                            if(badge) badge.textContent = res.cart_count;
+                            
+                            confetti({
+                                particleCount: 80,
+                                spread: 60,
+                                origin: { y: 0.8 },
+                                colors: ['#102416', '#1B3B25', '#8BAA7C']
+                            });
+                        } else {
+                            showToast(res.message, 'error');
+                        }
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalHtml;
+                    });
+            }
+        };
+
+        function showToast(msg, type) {
+            const wrap = document.createElement('div');
+            wrap.className = 'toast-wrap';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-circle-exclamation';
+            const color = type === 'success' ? '#1B3B25' : '#e63946';
+            wrap.innerHTML = `<div class="toast-custom ${type==='error'?'err':''}">
+                <i class="fa-solid ${icon}" style="color:${color}"></i> ${msg}
+            </div>`;
+            document.body.appendChild(wrap);
+            setTimeout(() => {
+                wrap.style.opacity = '0';
+                setTimeout(() => wrap.remove(), 600);
+            }, 3000);
         }
     });
-}
-
-function addToCartFromModal() {
-    const pid = document.getElementById('productModal').dataset.productId;
-    const btn = document.getElementById('modalCartBtn');
-    addToCart(pid, btn);
-}
-
-function showToast(msg, type) {
-    const wrap = document.createElement('div');
-    wrap.className = 'toast-wrap';
-    wrap.id = 'tempToast';
-    
-    const icon = type === 'success' ? 'fa-check-circle' : 'fa-circle-exclamation';
-    const color = type === 'success' ? 'var(--gm)' : '#e63946';
-    const border = type === 'success' ? '' : 'err';
-    
-    wrap.innerHTML = `
-        <div class="toast-custom ${border}">
-            <i class="fa-solid ${icon}" style="color:${color};font-size:1.2rem"></i>
-            ${msg}
-        </div>
-    `;
-    
-    document.body.appendChild(wrap);
-    
-    setTimeout(() => {
-        wrap.style.opacity = '0';
-        wrap.style.transition = 'opacity .5s';
-        setTimeout(() => wrap.remove(), 600);
-    }, 3000);
-}
 </script>
 </body>
 </html>

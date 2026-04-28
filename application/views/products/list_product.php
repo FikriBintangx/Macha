@@ -1,3 +1,4 @@
+<div class="container py-4">
 <div class="row align-items-center mb-4 g-3">
     <div class="col-md-auto col-12 text-center text-md-start">
         <h3 class="fw-bold text-success mb-0">Daftar Menu Macha</h3>
@@ -102,6 +103,7 @@
             </table>
         </div>
     </div>
+</div>
 </div>
 
 <script>

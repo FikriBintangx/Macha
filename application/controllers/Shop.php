@@ -285,10 +285,10 @@ class Shop extends CI_Controller
 
         $data_sales = [
             'invoice_no'      => 'INV-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -5)),
-            'customer_name'   => $this->input->post('name'),
+            'customer_name'   => $this->input->post('customer_name'),
             'phone'           => $this->input->post('phone'),
             'address'         => $this->input->post('address'),
-            'google_maps_link'=> $this->input->post('maps_link'),
+            'google_maps_link'=> $this->input->post('google_maps_link'),
             'notes'           => $this->input->post('notes'),
             'total_price'     => $total_price,
             'status'          => 'pending',
@@ -312,11 +312,73 @@ class Shop extends CI_Controller
         if ($this->M_sales->save_transaction($data_sales, $details)) {
             $last_id = $this->M_sales->last_sales_id();
             $this->session->set_userdata('cart', []);
-            $this->session->set_flashdata('success', 'Pesanan Anda berhasil dikirim!');
-            redirect('shop/invoice/' . $last_id);
+            $this->session->set_flashdata('success', 'Pesanan Anda berhasil dibuat! Silakan selesaikan pembayaran.');
+            redirect('shop/payment/' . $last_id);
         } else {
             $this->session->set_flashdata('error', 'Terjadi kesalahan sistem.');
             redirect('shop/checkout');
+        }
+    }
+
+    public function payment($sales_id) {
+        $this->load->model('M_sales');
+        $data['order'] = $this->db->where('id', $sales_id)->get('sales')->row_array();
+        
+        if(!$data['order']) {
+            redirect('shop');
+        }
+        
+        // Cek admin phone dan setting
+        $data['admin_phone'] = $this->M_settings->get_setting('admin_whatsapp');
+        $data['shop_logo'] = $this->M_settings->get_setting('shop_logo');
+        $data['qris_barcode'] = $this->M_settings->get_setting('qris_barcode');
+        
+        $this->load->view('guest/payment', $data);
+    }
+
+    public function upload_payment() {
+        $sales_id = $this->input->post('sales_id');
+        $bank_dest = $this->input->post('bank_dest');
+        $nominal_input = $this->input->post('nominal');
+
+        $order = $this->db->where('id', $sales_id)->get('sales')->row();
+        if(!$order) {
+            redirect('shop');
+        }
+
+        if(empty($bank_dest)) {
+            $this->session->set_flashdata('error', 'Pilih bank tujuan transfer.');
+            redirect('shop/payment/'.$sales_id);
+        }
+
+        $config['upload_path']          = FCPATH . 'uploads/payments/';
+        $config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
+        $config['max_size']             = 2048; // 2MB
+        $config['file_name']            = 'PAY-'.$order->invoice_no.'-'.time();
+
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, TRUE);
+        }
+
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+        if ( ! $this->upload->do_upload('payment_proof')) {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect('shop/payment/'.$sales_id);
+        } else {
+            $data = $this->upload->data();
+            $file_name = $data['file_name'];
+
+            $this->db->where('id', $sales_id);
+            $this->db->update('sales', [
+                'payment_proof' => $file_name,
+                'status' => 'paid',
+                'notes' => $order->notes . "\n[User Uploaded Proof: Bank " . $bank_dest . " | Nominal Rp " . number_format($nominal_input,0,',','.') . "]"
+            ]);
+
+            $this->session->set_flashdata('success', 'Bukti pembayaran berhasil diupload! Pesanan Anda segera diverifikasi admin.');
+            redirect('shop/invoice/'.$sales_id);
         }
     }
 
@@ -419,6 +481,19 @@ class Shop extends CI_Controller
             $rating = $this->M_product->get_average_rating($id);
             $recent_ratings = $this->M_product->get_ratings($id, 5);
             
+            $user_rating = null;
+            if ($this->session->userdata('userid')) {
+                $user_name = $this->session->userdata('full_name');
+                $this->db->where(['product_id' => $id, 'full_name' => $user_name]);
+                $existing = $this->db->get('product_ratings')->row();
+                if ($existing) {
+                    $user_rating = [
+                        'rating' => $existing->rating,
+                        'comment' => $existing->comment
+                    ];
+                }
+            }
+
             echo json_encode([
                 'status' => 'success',
                 'data' => [
@@ -431,7 +506,8 @@ class Shop extends CI_Controller
                     'avg_rating'  => round($rating['average'] ?? 0, 1),
                     'total_rating'=> $rating['total'] ?? 0,
                     'is_featured' => $p['is_featured'],
-                    'recent_reviews' => $recent_ratings
+                    'recent_reviews' => $recent_ratings,
+                    'user_rating' => $user_rating
                 ]
             ]);
         } else {

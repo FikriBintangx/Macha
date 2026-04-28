@@ -51,6 +51,16 @@ class Admin_users extends CI_Controller {
         $post = $this->input->post();
         $id = $post['id'] ?? null;
 
+        // PRIVACY GUARD: Cek apakah user yang diedit adalah role 'user'
+        if ($id) {
+            $existing_user = $this->db->where('id', $id)->get('users')->row_array();
+            if ($existing_user && $existing_user['role'] == 'user') {
+                $this->session->set_flashdata('error', 'Kebijakan Privasi: Data pelanggan hanya bisa diubah oleh pelanggan itu sendiri.');
+                redirect($post['redirect_url'] ?: 'admin_users/customers');
+                return;
+            }
+        }
+
         $data = [
             'username'  => $post['username'],
             'full_name' => $post['full_name'],
@@ -92,6 +102,14 @@ class Admin_users extends CI_Controller {
         if ($id == $this->session->userdata('userid')) {
             $this->session->set_flashdata('error', 'Anda tidak bisa menghapus akun Anda sendiri!');
             redirect('admin_users');
+            return;
+        }
+
+        // PRIVACY GUARD: Cek apakah user yang dihapus adalah role 'user'
+        $existing_user = $this->db->where('id', $id)->get('users')->row_array();
+        if ($existing_user && $existing_user['role'] == 'user') {
+            $this->session->set_flashdata('error', 'Kebijakan Privasi: Data pelanggan tidak dapat dihapus oleh Admin.');
+            redirect('admin_users/customers');
             return;
         }
 

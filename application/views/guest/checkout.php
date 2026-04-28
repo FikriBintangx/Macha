@@ -581,6 +581,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
                     <!-- Informasi Pengiriman -->
@@ -650,16 +652,7 @@
                         </div>
                     </div>
 
-                    <!-- QRIS Modal Content (Embedded for easy access) -->
-                    <?php if(!empty($qris_barcode)): ?>
-                    <div id="qrisSection" class="d-none mt-4 text-center p-3 rounded-4" style="background:#fff; border: 2px solid #edf1ed;">
-                        <h6 class="fw-bold mb-3"><i class="bi bi-qr-code-scan me-2 text-success"></i>Scan QRIS MariMatcha</h6>
-                        <div class="qris-img-wrap mx-auto mb-3" style="max-width:250px; border: 10px solid #f8faf9; border-radius: 20px;">
-                            <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS Barcode" class="img-fluid">
-                        </div>
-                        <p class="small text-muted mb-0">Silakan scan Barcode di atas menggunakan aplikasi m-Banking atau E-Wallet Anda (Gopay/OVO/Dana).</p>
-                    </div>
-                    <?php endif; ?>
+                    <!-- QR Section moved up -->
 
                 </form>
             </div>
@@ -713,8 +706,7 @@
                     <div
                         style="margin-top:16px;padding:14px;background:rgba(255,255,255,.08);border-radius:14px;font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.7)">
                         <i class="fa-solid fa-circle-info me-1"></i>
-                        Setelah checkout, upload bukti transfer di <strong style="color:#fff">Akun Saya</strong>. Admin
-                        verifikasi dalam 1×24 jam.
+                        Setelah checkout, Anda akan diarahkan ke <strong>Halaman Pembayaran</strong> untuk scan QRIS dan Upload Bukti Transfer.
                     </div>
                 </div>
             </div>
@@ -769,20 +761,7 @@
                 infoBox.classList.add('d-none');
             }
 
-            // Show QRIS Section if available and method involves transfer/qris
-            const qrisSec = document.getElementById('qrisSection');
-            if(qrisSec) {
-                const methodLower = method.toLowerCase();
-                if(methodLower.includes('transfer') || methodLower.includes('qris') || methodLower.includes('trf')) {
-                    qrisSec.classList.remove('d-none');
-                    // Scroll to QRIS section smoothly
-                    setTimeout(() => {
-                        qrisSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                } else {
-                    qrisSec.classList.add('d-none');
-                }
-            }
+
         }
         // REAL-TIME VALIDATION
         document.querySelectorAll('.form-control[required]').forEach(function (inp) {

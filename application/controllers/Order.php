@@ -28,8 +28,7 @@ class Order extends CI_Controller {
         $this->db->from('sales');
         $this->db->join('users', 'users.id = sales.user_id', 'left');
         
-        // Hanya tampilkan pesanan online (bukan tunai/debit lokal)
-        $this->db->where_not_in('sales.payment_method', ['Cash', 'Debit', 'Tunai']);
+        // Tampilkan semua pesanan, termasuk COD (Tunai) dari frontend
         
         // Filter Tanggal - Selalu terapkan tanggal target (default hari ini)
         $this->db->where('DATE(sales.created_at)', $target_date);
@@ -54,8 +53,7 @@ class Order extends CI_Controller {
         $this->db->select('sales.*, users.full_name as user_name');
         $this->db->from('sales');
         $this->db->join('users', 'users.id = sales.user_id', 'left');
-        $this->db->where_not_in('sales.payment_method', ['Cash', 'Debit']);
-        
+
         if($date_filter) {
             $this->db->where('DATE(sales.created_at)', $date_filter);
         }

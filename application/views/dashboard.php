@@ -120,7 +120,7 @@ $rev_month_str = $revenue_month >= 1000000
     }
 </style>
 
-<div class="container-fluid py-4">
+<div class="container py-4">
     <!-- Operational Status Alert -->
     <div class="row mb-4">
         <div class="col-12">
@@ -303,6 +303,55 @@ $rev_month_str = $revenue_month >= 1000000
         </div>
     </div>
 </div>
+
+<!-- FLOATING POS BUTTON -->
+<a href="<?= site_url('order') ?>" class="floating-pos-btn shadow-lg" title="Buka Kasir Online">
+    <i class="bi bi-pc-display-horizontal fs-4"></i>
+    <span class="floating-pos-text">Kasir</span>
+</a>
+
+<style>
+.floating-pos-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--green-main), #2ea043);
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(46, 160, 67, 0.4) !important;
+    z-index: 999;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    overflow: hidden;
+    padding: 0;
+}
+.floating-pos-text {
+    font-size: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-weight: 800;
+    margin-left: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.floating-pos-btn:hover {
+    width: 150px;
+    color: white;
+    background: linear-gradient(135deg, #102416, #1b3b25);
+    padding: 0 20px;
+    justify-content: flex-start;
+}
+.floating-pos-btn:hover .floating-pos-text {
+    font-size: 0.95rem;
+    opacity: 1;
+    margin-left: 12px;
+}
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

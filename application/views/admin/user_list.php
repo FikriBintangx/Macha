@@ -21,8 +21,8 @@
         border-bottom: 1px solid #f1f5f3;
     }
     .avatar-circle {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         background: #e2e8f0;
         border-radius: 50%;
         display: flex;
@@ -31,35 +31,72 @@
         font-weight: 700;
         color: #475569;
         overflow: hidden;
+        flex-shrink: 0;
     }
     .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
     
     .role-badge {
-        padding: 4px 12px;
+        padding: 5px 14px;
         border-radius: 50px;
         font-size: 0.7rem;
         font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    .role-admin { background: rgba(16, 185, 129, 0.1); color: #059669; }
-    .role-owner { background: rgba(139, 92, 246, 0.1); color: #6d28d9; }
-    .role-staff { background: rgba(59, 130, 246, 0.1); color: #2563eb; }
-    .role-user { background: rgba(100, 116, 139, 0.1); color: #475569; }
+    .role-admin { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16,185,129,0.2); }
+    .role-owner { background: rgba(139, 92, 246, 0.1); color: #6d28d9; border: 1px solid rgba(139,92,246,0.2); }
+    .role-staff { background: rgba(59, 130, 246, 0.1); color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
+    .role-user  { background: rgba(100, 116, 139, 0.1); color: #475569; border: 1px solid rgba(100,116,139,0.2); }
 
     .btn-action {
-        width: 32px;
-        height: 32px;
+        width: 36px; height: 36px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
+        border-radius: 10px;
         transition: all 0.2s;
-        border: none;
+        border: 1px solid #edf2f0;
         background: #f8faf9;
+        text-decoration: none;
     }
-    .btn-action:hover { transform: translateY(-2px); }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+    /* Mobile Card Mode */
+    @media (max-width: 768px) {
+        .user-table table, .user-table thead, .user-table tbody,
+        .user-table th, .user-table td, .user-table tr { display: block; width: 100%; }
+        .user-table thead tr { display: none; }
+        .user-table tbody tr {
+            background: #fff;
+            border: 1px solid #edf2ed;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            padding: 4px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+        .user-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f5f9f5;
+        }
+        .user-table td:last-child { border-bottom: none; }
+        .user-table td::before {
+            content: attr(data-label);
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8aa898;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+    }
 </style>
 
+<div class="container py-4">
 <div class="row g-4 mb-5">
     <div class="col-12">
         <?php if($this->session->flashdata('success')): ?>
@@ -89,8 +126,8 @@
                 <?php endif; ?>
             </div>
             
-            <div class="table-responsive">
-                <table class="table user-table mb-0">
+            <div class="table-responsive user-table">
+                <table class="table mb-0">
                     <thead>
                         <tr>
                             <th>User</th>
@@ -103,7 +140,7 @@
                     <tbody>
                         <?php foreach($users as $u): ?>
                         <tr>
-                            <td>
+                            <td data-label="USER">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="avatar-circle">
                                         <?php if($u['profile_image'] && $u['profile_image'] != 'default_user.png'): ?>
@@ -118,20 +155,20 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><code class="text-primary"><?= $u['username'] ?></code></td>
-                            <td>
+                            <td data-label="USERNAME"><code class="text-primary"><?= $u['username'] ?></code></td>
+                            <td data-label="KONTAK">
                                 <div class="small fw-bold"><?= $u['phone'] ?: '-' ?></div>
                             </td>
-                            <td>
+                            <td data-label="ROLE">
                                 <span class="role-badge role-<?= $u['role'] ?>"><?= $u['role'] ?></span>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" data-label="AKSI">
                                 <?php if($u['role'] !== 'user'): ?>
                                 <button class="btn-action text-primary me-1" onclick="editUser(<?= htmlspecialchars(json_encode($u)) ?>)" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                                 <?php endif; ?>
-                                <?php if($u['id'] != $this->session->userdata('userid')): ?>
+                                <?php if($u['id'] != $this->session->userdata('userid') && $u['role'] !== 'user'): ?>
                                 <a href="<?= site_url('admin_users/delete/'.$u['id']) ?>" class="btn-action text-danger" onclick="return confirm('Hapus user ini?')" title="Hapus">
                                     <i class="bi bi-trash3-fill"></i>
                                 </a>
@@ -204,6 +241,9 @@
             </form>
         </div>
     </div>
+</div>
+
+</div>
 </div>
 
 <script>

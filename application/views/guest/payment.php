@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --green-dark:#102416; --green-main:#1B3B25; --cream:#F5F5F0; }
-        body { font-family:'Outfit',sans-serif; background:var(--cream); padding-top:80px; }
-        .navbar-macha { background:rgba(255,255,255,.97); backdrop-filter:blur(12px); box-shadow:0 2px 20px rgba(45,90,39,.08); padding:14px 0; }
-        .navbar-brand { font-weight:800; color:var(--green-dark) !important; font-size:1.4rem; }
+        body { font-family:'Outfit',sans-serif; background:var(--cream); padding-top:120px; }
         
         .upload-card { background:#fff; border-radius:24px; box-shadow:0 10px 36px rgba(0,0,0,.07); overflow:hidden; }
         .upload-header { background:linear-gradient(135deg, var(--green-dark), var(--green-main)); color:#fff; padding:28px 32px; }
@@ -52,14 +50,8 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-macha fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
-            </a>
-            <a href="<?= base_url('user') ?>" class="btn-back"><i class="fa-solid fa-arrow-left me-1"></i>Kembali</a>
-        </div>
-    </nav>
+    <!-- NAVBAR -->
+    <?php $this->load->view('layout/navbar'); ?>
 
     <div class="container mb-5">
         <div class="row justify-content-center">
@@ -76,61 +68,40 @@
                     </div>
                     <div class="upload-body">
 
+                        <!-- Urgency Timer -->
+                        <div style="background:rgba(251,191,36,.1); border:1px solid rgba(251,191,36,.3); border-radius:14px; padding:12px; text-align:center; font-weight:700; color:#b45309; margin-bottom:24px;">
+                            <i class="fa-solid fa-clock me-1"></i> Selesaikan pembayaran dalam: <span id="paymentTimer" style="font-family:monospace; font-size:1.1rem; color:#d97706;">15:00</span>
+                        </div>
+
                         <!-- Jumlah -->
                         <div class="amount-box">
-                            <div class="label">Total yang harus dibayar</div>
+                            <div class="label">Total Tagihan (Termasuk Ongkir)</div>
                             <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
+                            <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
                         </div>
 
-                        <!-- Rekening -->
-                        <p style="font-weight:700;color:var(--green-dark);margin-bottom:12px"><i class="fa-solid fa-building-columns me-2"></i>Transfer ke Salah Satu Rekening</p>
-                        <div class="rek-list">
-                            <div class="rek-item">
-                                <div class="rek-icon" style="background:#0066AE20;color:#0066AE"><i class="fa-solid fa-building-columns"></i></div>
-                                <div class="rek-info flex-grow-1">
-                                    <div class="bank-name">BCA</div>
-                                    <div class="rek-no" id="bca-no">1234567890</div>
-                                    <div class="atas-nama">A.N MariMatcha</div>
-                                </div>
-                                <button class="copy-btn" onclick="copyNo('bca-no', this)">Salin</button>
+                        <?php if(!empty($qris_barcode)): ?>
+                        <!-- QRIS Section -->
+                        <div class="text-center mb-4 p-4" style="background:#fafcf9; border:2px dashed #c8d8c0; border-radius:20px;">
+                            <h6 class="fw-bold mb-3" style="color:var(--green-dark)"><i class="bi bi-qr-code-scan me-2"></i>Scan QRIS MariMatcha</h6>
+                            <div style="background:#fff; padding:12px; display:inline-block; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06);">
+                                <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS" style="width:200px; height:200px; border-radius:8px;">
                             </div>
-                            <div class="rek-item">
-                                <div class="rek-icon" style="background:#E6A80020;color:#E6A800"><i class="fa-solid fa-building-columns"></i></div>
-                                <div class="rek-info flex-grow-1">
-                                    <div class="bank-name">Mandiri</div>
-                                    <div class="rek-no" id="mandiri-no">0987654321</div>
-                                    <div class="atas-nama">A.N MariMatcha</div>
-                                </div>
-                                <button class="copy-btn" onclick="copyNo('mandiri-no', this)">Salin</button>
-                            </div>
-                            <div class="rek-item">
-                                <div class="rek-icon" style="background:#00AED620;color:#00AED6"><i class="fa-brands fa-google-pay"></i></div>
-                                <div class="rek-info flex-grow-1">
-                                    <div class="bank-name">GoPay / OVO / Dana</div>
-                                    <div class="rek-no" id="gopay-no">081234567890</div>
-                                    <div class="atas-nama">A.N MariMatcha</div>
-                                </div>
-                                <button class="copy-btn" onclick="copyNo('gopay-no', this)">Salin</button>
-                            </div>
+                            <p class="mt-3 mb-0" style="font-size:0.85rem; color:#7a9080;">Scan menggunakan e-wallet atau m-banking favoritmu.</p>
                         </div>
+                        <?php endif; ?>
+
+
 
                         <!-- Enhanced Confirmation Form -->
-                        <form action="<?= base_url('user/upload_payment') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= base_url('shop/upload_payment') ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="sales_id" value="<?= $order['id'] ?>">
                             <input type="hidden" name="expected_nominal" value="<?= $order['total_price'] ?>">
 
-                            <div class="mb-4">
-                                <label class="form-label" style="font-weight:700;color:var(--green-dark);">1. Pilih Bank Tujuan Transfer</label>
-                                <select name="bank_dest" class="form-select" required style="border-radius:12px; padding:12px; border:2px solid #e8ede8;">
-                                    <option value="">-- Pilih Bank --</option>
-                                    <option value="BCA">BCA (1234567890)</option>
-                                    <option value="Mandiri">Mandiri (0987654321)</option>
-                                    <option value="GOPAY">GoPay/OVO/Dana (081234567890)</option>
-                                </select>
-                            </div>
+                            <input type="hidden" name="bank_dest" value="QRIS">
 
                             <div class="mb-4">
-                                <label class="form-label" style="font-weight:700;color:var(--green-dark);">2. Masukkan Nominal yang Ditransfer</label>
+                                <label class="form-label" style="font-weight:700;color:var(--green-dark);">1. Masukkan Nominal Pembayaran</label>
                                 <div class="input-group">
                                     <span class="input-group-text" style="background:#f0faef; border-color:#e8ede8; font-weight:700;">Rp</span>
                                     <input type="number" name="nominal" class="form-control" placeholder="Contoh: 55000" value="<?= $order['total_price'] ?>" required style="border-radius:0 12px 12px 0; padding:12px; border:2px solid #e8ede8; border-left:none;">
@@ -138,7 +109,7 @@
                                 <div class="form-text text-danger" style="font-size:.8rem; font-weight:600;">*Harus sesuai dengan total tagihan untuk konfirmasi otomatis</div>
                             </div>
 
-                            <p style="font-weight:700;color:var(--green-dark);margin-bottom:12px"><i class="fa-solid fa-image me-2"></i>3. Upload Foto/Screenshot Bukti Transfer</p>
+                            <p style="font-weight:700;color:var(--green-dark);margin-bottom:12px"><i class="fa-solid fa-image me-2"></i>2. Upload Foto/Screenshot Bukti Transfer</p>
                             
                             <div class="file-zone mb-3" onclick="document.getElementById('payFile').click()">
                                 <input type="file" id="payFile" name="payment_proof" accept="image/*,.pdf" required
@@ -167,6 +138,22 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Timer Logic (15 Menit)
+        let timeRemaining = 15 * 60; // 15 menit
+        const timerEl = document.getElementById('paymentTimer');
+        const interval = setInterval(() => {
+            if(timeRemaining <= 0) {
+                clearInterval(interval);
+                timerEl.textContent = "Waktu Habis";
+                timerEl.style.color = "red";
+                return;
+            }
+            timeRemaining--;
+            let m = Math.floor(timeRemaining / 60);
+            let s = timeRemaining % 60;
+            timerEl.textContent = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+        }, 1000);
+
         function copyNo(id, btn) {
             const no = document.getElementById(id).textContent;
             navigator.clipboard.writeText(no).then(() => {

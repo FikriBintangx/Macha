@@ -124,8 +124,9 @@
     }
 </style>
 
-<div class="row g-4 justify-content-center pt-2 pb-5">
-    <div class="col-lg-10 col-xl-9">
+<div class="container py-4">
+    <div class="row g-4 justify-content-center pt-2 pb-5">
+        <div class="col-lg-10 col-xl-9">
         
         <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 16px; border:none; background:#d1e7dd; color:#0f5132; box-shadow:0 4px 15px rgba(20,80,40,0.1);">
@@ -560,6 +561,7 @@
 </script>
 
     </div>
+</div>
 </div>
 
 <script>

@@ -1,3 +1,8 @@
+<?php
+    $CI =& get_instance();
+    $CI->load->model('M_settings');
+    $shop_logo = $CI->M_settings->get_setting('shop_logo');
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>

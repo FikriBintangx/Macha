@@ -1,3 +1,51 @@
+<style>
+/* ── KASIR ONLINE RESPONSIVE CARD-STACK ── */
+@media (max-width: 768px) {
+    .responsive-card-table table,
+    .responsive-card-table thead,
+    .responsive-card-table tbody,
+    .responsive-card-table th,
+    .responsive-card-table td,
+    .responsive-card-table tr { display: block; width: 100%; }
+
+    .responsive-card-table thead tr { display: none; }
+
+    .responsive-card-table .order-row {
+        background: #fff;
+        border: 1px solid #edf2ed;
+        border-radius: 16px;
+        margin-bottom: 14px;
+        padding: 4px 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+    .responsive-card-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px !important;
+        border-bottom: 1px solid #f5f9f5 !important;
+        font-size: 0.9rem;
+    }
+    .responsive-card-table td:last-child { border-bottom: none !important; }
+    .responsive-card-table td::before {
+        content: attr(data-label);
+        font-size: 0.7rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #8aa898;
+        flex-shrink: 0;
+        margin-right: 10px;
+    }
+    .responsive-card-table td.ps-4 { padding-left: 16px !important; }
+    .responsive-card-table td.pe-4 { padding-right: 16px !important; }
+}
+/* Force text colors in table to be dark */
+table.table tbody td { color: #000 !important; opacity: 1 !important; visibility: visible !important; }
+</style>
+
+<div class="container py-4">
 <div class="row">
     <div class="col-12">
         <?php if($this->session->flashdata('success')): ?>
@@ -14,6 +62,9 @@
                 <p class="text-muted small mb-0">Pemantauan orderan masuk secara real-time.</p>
             </div>
             <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-white border shadow-sm px-3 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#calcModal">
+                    <i class="bi bi-calculator me-1 text-info"></i> Kalkulator
+                </button>
                 <a href="<?= site_url('product') ?>" class="btn btn-sm btn-white border shadow-sm px-3 rounded-pill fw-semibold">
                     <i class="bi bi-pencil-square me-1 text-primary"></i> Ubah Produk
                 </a>
@@ -78,10 +129,10 @@
         <div class="card border-0 shadow-sm bg-white" style="border-radius: 16px;">
             <div class="card-header bg-white p-4 pb-2 border-bottom-0 rounded-top">
                 <h5 class="mb-0 text-success fw-bold"><i class="bi bi-box-seam me-2"></i>Pesanan Masuk</h5>
-                <p class="text-muted small mb-0 mt-1">Daftar pesanan online khusus tanggal <?= date('d M Y', strtotime($date_filter)) ?>.</p>
+                <p class="text-muted small mb-0 mt-1">Daftar pesanan online khusus tanggal <?= date('d M Y', strtotime($date_filter)) ?>. (Debug: <?= count($orders) ?> found)</p>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive responsive-card-table" style="min-height: 450px; padding-bottom: 100px;">
+                <div class="table-responsive" style="min-height: 450px; padding-bottom: 100px;">
                     <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
                         <thead class="" style="background: #f8faf9;">
                             <tr>
@@ -98,13 +149,13 @@
                         <tbody class="border-top-0" id="orderTbody">
                             <?php if(!empty($orders)): ?>
                                 <?php foreach($orders as $o): ?>
-                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s;">
-                                        <td class="ps-4 py-4 fw-bold text-dark" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
+                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s; opacity: 1 !important; visibility: visible !important; color: #000 !important;">
+                                        <td class="ps-4 py-4 fw-bold" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
                                         <td class="py-4" data-label="INVOICE">
-                                            <span class="badge bg-white text-dark border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace;"><?= $o['invoice_no'] ?></span>
+                                            <span class="badge bg-white border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace; color: #000 !important;"><?= $o['invoice_no'] ?></span>
                                         </td>
                                         <td class="py-4" data-label="PELANGGAN">
-                                            <div class="text-dark fw-bold customer-name-item" style="font-size: 0.95rem;">
+                                            <div class="fw-bold customer-name-item" style="font-size: 0.95rem; color: #000 !important;">
                                                 <?= htmlspecialchars($o['user_name'] ? $o['user_name'] : $o['customer_name']) ?>
                                             </div>
                                         </td>
@@ -118,7 +169,7 @@
                                                     <i class="bi bi-bag-check text-success"></i> AMBIL
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="text-dark small fw-semibold">
+                                            <div class="small fw-semibold" style="color: #000 !important;">
                                                 <i class="bi bi-credit-card-2-back me-1 opacity-50"></i><?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
                                             </div>
                                         </td>
@@ -151,7 +202,7 @@
                                         </td>
                                         <td class="pe-4 py-4 text-center" data-label="AKSI">
                                             <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-bold" style="font-size: 0.85rem;">
+                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>, this)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-bold" style="font-size: 0.85rem;">
                                                     Detail
                                                 </button>
                                                 <div class="dropdown">
@@ -243,10 +294,17 @@
 
 <script>
     // Show Order Detail
-    function showDetail(id) {
+    function showDetail(id, btn) {
+        if (!btn) btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        btn.disabled = true;
+
         fetch('<?= site_url('order/get_details/') ?>' + id)
         .then(response => response.json())
         .then(data => {
+            btn.innerHTML = originalHtml;
+            btn.disabled = false;
             if (data.success) {
                 const o = data.order;
                 document.getElementById('detailInvoice').innerText = '#' + o.invoice_no;
@@ -278,11 +336,8 @@
         });
     }
 
-    // Image View
-    function viewProof(url) {
-        document.getElementById('imageProofDisplay').src = url;
-        new bootstrap.Modal(document.getElementById('modalProof')).show();
-    }
+    // Image View - unified to use the one defined at the bottom
+    // function viewProof(url) is defined at the end of the file
 
     // AJAX Update Status
     function updateStatus(id, status) {
@@ -333,48 +388,160 @@
         });
     }
 
-    const userFilter = document.getElementById('userFilter');
-    const smartFilter = document.getElementById('smartFilter');
-    const orderRows = document.querySelectorAll('.order-row');
-
-    function applyFilters() {
-        const selectedUser = userFilter.value.toLowerCase();
-        const keyword = smartFilter.value.toLowerCase();
-
-        orderRows.forEach(row => {
-            const customerNameNode = row.querySelector('.customer-name-item');
-            const customerName = customerNameNode ? customerNameNode.innerText.toLowerCase() : "";
-            const rowText = row.innerText.toLowerCase();
-
-            const matchesUser = selectedUser === "" || customerName.includes(selectedUser);
-            const matchesKeyword = rowText.includes(keyword);
-
-            if (matchesUser && matchesKeyword) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    const dateFilter = document.getElementById('dateFilter');
-    
-    dateFilter.addEventListener('change', function() {
-        window.location.href = "<?= site_url('order') ?>?date=" + this.value;
-    });
-
-    userFilter.addEventListener('change', applyFilters);
-    smartFilter.addEventListener('input', applyFilters);
-
-    // Staggered Entrance for Rows
     document.addEventListener('DOMContentLoaded', () => {
-        gsap.from(".order-row", {
-            opacity: 0,
-            x: -20,
-            duration: 0.5,
-            stagger: 0.05,
-            ease: "power2.out",
-            delay: 0.5
+        const userFilter = document.getElementById('userFilter');
+        const smartFilter = document.getElementById('smartFilter');
+        const dateFilter = document.getElementById('dateFilter');
+
+        function applyFilters() {
+            const selectedUser = userFilter.value.toLowerCase().trim();
+            const keyword = smartFilter.value.toLowerCase().trim();
+            const orderRows = document.querySelectorAll('.order-row');
+
+            console.log('Applying filters:', {
+                totalRows: orderRows.length,
+                selectedUser: selectedUser,
+                keyword: keyword
+            });
+
+            // First, make sure all rows are visible
+            orderRows.forEach(row => {
+                row.style.display = "table-row";
+            });
+
+            let visibleCount = 0;
+            orderRows.forEach(row => {
+                const customerNameNode = row.querySelector('.customer-name-item');
+                const customerName = customerNameNode ? customerNameNode.innerText.toLowerCase() : "";
+                const rowText = row.innerText.toLowerCase();
+
+                const matchesUser = selectedUser === "" || customerName.includes(selectedUser);
+                const matchesKeyword = keyword === "" || rowText.includes(keyword);
+
+                if (matchesUser && matchesKeyword) {
+                    row.style.display = "table-row";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            console.log('Visible rows after filtering:', visibleCount);
+        }
+
+        // Ensure all rows are visible initially
+        const initialRows = document.querySelectorAll('.order-row');
+        initialRows.forEach(row => {
+            row.style.display = "table-row";
+        });
+
+        // Apply filters on page load
+        // Apply filters on page load - disabled to ensure everything shows up
+        // applyFilters();
+
+        // Set up event listeners
+        dateFilter.addEventListener('change', function() {
+            window.location.href = "<?= site_url('order') ?>?date=" + this.value;
+        });
+
+        userFilter.addEventListener('change', applyFilters);
+        smartFilter.addEventListener('input', applyFilters);
+
+        // Staggered Entrance for Rows - removed GSAP to prevent opacity:0 hangups
+        document.querySelectorAll('.order-row').forEach(row => {
+            row.style.opacity = "1";
         });
     });
+
+    /* ── KALKULATOR MINI LOGIC ── */
+    let calcCurrent = '';
+    const calcDisplay = document.getElementById('calcDisplay');
+    function calcInput(val) {
+        if (calcCurrent === 'Error') calcCurrent = '';
+        calcCurrent += val;
+        calcDisplay.value = calcCurrent;
+    }
+    function calcClear() {
+        calcCurrent = '';
+        calcDisplay.value = '';
+    }
+    function calcDel() {
+        if (calcCurrent === 'Error') calcCurrent = '';
+        calcCurrent = calcCurrent.slice(0, -1);
+        calcDisplay.value = calcCurrent;
+    }
+    function calcCalculate() {
+        try {
+            if(calcCurrent.trim() !== "") {
+                // Prevent dangerous eval, safe basic math evaluation
+                calcCurrent = String(new Function('return ' + calcCurrent.replace(/×/g, '*').replace(/÷/g, '/'))());
+                calcDisplay.value = calcCurrent;
+            }
+        } catch (e) {
+            calcCurrent = 'Error';
+            calcDisplay.value = calcCurrent;
+        }
+    }
+</script>
+
+<!-- MODAL KALKULATOR MINI -->
+<div class="modal fade" id="calcModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 24px; background: #f8faf9;">
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold text-success"><i class="bi bi-calculator me-2"></i>Kalkulator Kasir</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <input type="text" id="calcDisplay" class="form-control text-end mb-3" readonly 
+                       style="font-size: 1.8rem; font-weight: 700; background: #fff; border: 1px solid #dce8dc; border-radius: 12px; height: 65px; letter-spacing: 1px;">
+                <div class="d-grid" style="grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#ef4444;" onclick="calcClear()">C</button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#f59e0b;" onclick="calcDel()"><i class="bi bi-backspace"></i></button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#52b788;" onclick="calcInput('%')">%</button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#52b788;" onclick="calcInput('/')">÷</button>
+
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('7')">7</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('8')">8</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('9')">9</button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#52b788;" onclick="calcInput('*')">×</button>
+
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('4')">4</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('5')">5</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('6')">6</button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#52b788;" onclick="calcInput('-')">-</button>
+
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('1')">1</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('2')">2</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('3')">3</button>
+                    <button class="btn btn-light shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; color:#52b788;" onclick="calcInput('+')">+</button>
+
+                    <button class="btn btn-white shadow-sm calc-btn border" style="grid-column: span 2; border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('0')">0</button>
+                    <button class="btn btn-white shadow-sm calc-btn border" style="border-radius:12px; font-weight:700; height:50px;" onclick="calcInput('.')">.</button>
+                    <button class="btn shadow-sm calc-btn" style="border-radius:12px; font-weight:700; height:50px; background:linear-gradient(135deg, var(--green-main), #2ea043); color:white;" onclick="calcCalculate()">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Image Bukti (Kasir Online) -->
+<div class="modal fade" id="modalProofKasir" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0 shadow-none">
+            <div class="modal-header border-0 d-flex justify-content-end p-0 mb-2">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1); background-color: rgba(255,255,255,0.8); border-radius: 50%; padding: 10px;"></button>
+            </div>
+            <div class="modal-body p-0 text-center">
+                <img id="proofImgKasir" src="" alt="Bukti Transfer" class="img-fluid rounded-4 shadow-lg" style="max-height: 80vh; border: 4px solid #fff;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewProof(url) {
+        document.getElementById('proofImgKasir').src = url;
+        new bootstrap.Modal(document.getElementById('modalProofKasir')).show();
+    }
 </script>
