@@ -964,8 +964,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Skeleton Loader fade out
             const sk = document.getElementById('skeleton-loader');
-            if(sk && typeof gsap !== 'undefined') {
-                gsap.to(sk, { opacity: 0, duration: 0.8, delay: 0.5, onComplete: () => sk.style.display = 'none' });
+            if(sk) {
+                if(typeof gsap !== 'undefined') {
+                    gsap.to(sk, { opacity: 0, duration: 0.8, delay: 0.5, onComplete: () => sk.style.display = 'none' });
+                } else {
+                    sk.style.display = 'none';
+                }
             }
 
             // Check if GSAP is loaded

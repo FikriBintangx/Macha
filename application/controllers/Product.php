@@ -37,7 +37,7 @@ class Product extends CI_Controller {
         $data = [
             'title'      => 'Tambah Produk Baru',
             'categories' => $categories,
-            'content'    => 'products/add_product'
+            'content'    => 'admin/product_add'
         ];
         $this->load->view('layout/wrapper', $data);
     }

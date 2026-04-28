@@ -3,8 +3,8 @@
         <div class="col-lg-10">
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-header bg-white border-0 pt-4 px-4">
-                    <h4 class="fw-bold" style="color: var(--macha-dark);">
-                        <i class="fa-solid fa-plus-circle me-2"></i>Tambah Produk Baru
+                    <h4 class="fw-bold text-success">
+                        <i class="bi bi-plus-circle-fill me-2"></i>Tambah Produk Baru
                     </h4>
                     <p class="text-muted small">Pilih gambar dari koleksi atau unggah baru.</p>
                 </div>
@@ -59,18 +59,22 @@
                             <div class="col-md-6">
                                 <div class="card border border-light-subtle rounded-4 p-4 h-100 shadow-none bg-light bg-opacity-10">
                                     <h6 class="fw-bold mb-4 text-success border-bottom border-success border-opacity-25 pb-2">
-                                        <i class="fa-solid fa-folder-open me-2"></i>KOLEKSI DARI FOLDER UPLOADS
+                                        <i class="bi bi-folder2-open me-2"></i>KOLEKSI DARI FOLDER UPLOADS
                                     </h6>
                                     
                                     <div class="preset-grid mb-4" id="presetGrid">
                                         <?php 
                                         $upload_path = FCPATH . 'uploads/';
-                                        $files = array_diff(scandir($upload_path), array('.', '..'));
-                                        $image_files = array_filter($files, function($f) use ($upload_path) {
-                                            return is_file($upload_path . $f) && preg_match('/\.(jpg|jpeg|png|webp)$/i', $f);
-                                        });
-                                        // Take latest 12 images
-                                        $image_files = array_reverse(array_slice($image_files, -12));
+                                        if (is_dir($upload_path)) {
+                                            $files = array_diff(scandir($upload_path), array('.', '..'));
+                                            $image_files = array_filter($files, function($f) use ($upload_path) {
+                                                return is_file($upload_path . $f) && preg_match('/\.(jpg|jpeg|png|webp)$/i', $f);
+                                            });
+                                            // Take latest 12 images
+                                            $image_files = array_reverse(array_slice($image_files, -12));
+                                        } else {
+                                            $image_files = [];
+                                        }
                                         
                                         foreach($image_files as $img):
                                         ?>
@@ -95,7 +99,7 @@
                                              style="display: none; max-width: 100%; max-height: 160px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                                         
                                         <div id="placeholderText" class="text-muted">
-                                            <i class="fa-solid fa-image fs-1 d-block mb-2" style="color: #cbd5e0;"></i>
+                                            <i class="bi bi-image fs-1 d-block mb-2" style="color: #cbd5e0;"></i>
                                             <p class="mb-0 small fw-bold">Pratinjau Foto</p>
                                         </div>
                                     </div>
@@ -106,7 +110,7 @@
                         <div class="d-flex gap-3 pt-4 border-top">
                             <a href="<?= base_url('product'); ?>" class="btn btn-light rounded-pill px-4 text-secondary fw-bold">Batal</a>
                             <button type="submit" class="btn btn-macha rounded-pill px-5 flex-grow-1 shadow-sm fw-bold py-2">
-                                <i class="fa-solid fa-check-circle me-2"></i>Simpan ke Menu
+                                <i class="bi bi-check-circle-fill me-2"></i>Simpan ke Menu
                             </button>
                         </div>
                     </form>
