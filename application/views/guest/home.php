@@ -3309,30 +3309,39 @@
         });
       }
 
-      // 3. CURSOR REFINED FOLLOW
-      const cursor = document.getElementById('cursor');
-      const follower = document.getElementById('follower');
-      const followerText = follower.querySelector('.follower-text');
+      // 1. LIBS REGISTRATION
+      gsap.registerPlugin(ScrollTrigger);
 
-      window.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
-        gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4, ease: "power3.out" });
-      });
+      // 2. MOBILE OPTIMIZATION
+      if (window.innerWidth <= 1024) {
+        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+        ScrollTrigger.config({ ignoreMobileResize: true });
+      }
 
-      document.querySelectorAll('a, button, .perspective-card').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          follower.classList.add('active');
-          if (el.classList.contains('perspective-card') || el.closest('.prod-card')) {
-            follower.classList.add('view-more');
-            if (followerText) followerText.style.transform = "translate(-50%, -50%) scale(1)";
-          }
+      // 3. LENIS (Desktop Only)
+      if (window.innerWidth > 1024) {
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          smoothTouch: false,
         });
-        el.addEventListener('mouseleave', () => {
-          follower.classList.remove('active');
-          follower.classList.remove('view-more');
-          if (followerText) followerText.style.transform = "translate(-50%, -50%) scale(0)";
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+      }
+
+      // 4. MOUSE CURSOR (Desktop Only)
+      if (window.innerWidth > 1024) {
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('follower');
+        window.addEventListener('mousemove', (e) => {
+          gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+          gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4, ease: "power3.out" });
         });
-      });
+      }
 
       // 4. PRELOADER & HERO ENTRANCE (PRO)
       let progress = 0;
@@ -3419,6 +3428,12 @@
 
       // 6. SCROLL TRIGGER ANIMATIONS & UTILS
       gsap.registerPlugin(ScrollTrigger);
+      
+      // Normalize scroll for mobile to prevent stuttering
+      if (window.innerWidth <= 1024) {
+        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+        ScrollTrigger.config({ ignoreMobileResize: true });
+      }
 
       const commonTrigger = (el) => ({ trigger: el, start: "top 85%", toggleActions: "play none none reverse" });
 
@@ -3455,10 +3470,10 @@
           ease: "back.out(1.2)"
         })
         .to(slides[0], {
-          x: -400,
+          x: window.innerWidth < 768 ? -200 : -400,
           opacity: 0,
           scale: 0.8,
-          filter: "blur(10px)",
+          filter: window.innerWidth < 768 ? "blur(4px)" : "blur(10px)",
           duration: 1,
           ease: "power2.in"
         }, "+=0.5");
