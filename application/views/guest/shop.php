@@ -160,7 +160,8 @@
   }
 
   /* ─── UTILS ─── */
-  .invisible-init { opacity: 0; transform: translateY(30px); }
+  .invisible-init { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .visible-ready { opacity: 1 !important; transform: translateY(0) !important; }
 
   @media (max-width: 768px) {
     .product-img-wrap { height: 180px; }
@@ -183,11 +184,53 @@
 .toast-custom.err{border-left-color:#e63946;}
 @keyframes toast-in{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
 
-/* FLOATING CART */
-.floating-cart{position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:var(--gd);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 8px 25px rgba(45,90,39,.4);z-index:999;transition:.25s;}
-.floating-cart:hover{background:var(--gm);color:#fff;transform:scale(1.1);}
-.fc-badge{position:absolute;top:-4px;right:-4px;background:#e63946;color:#fff;border-radius:50%;width:20px;height:20px;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;animation:pulse-badge 2s infinite;}
-@keyframes pulse-badge{0%{box-shadow:0 0 0 0 rgba(230,57,70,.6);}70%{box-shadow:0 0 0 8px rgba(230,57,70,0);}100%{box-shadow:0 0 0 0 rgba(230,57,70,0);}}
+/* FLOATING CART (MOBILE) */
+.floating-cart {
+    position: fixed;
+    bottom: 90px; /* Di atas iOS Bottom Bar */
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    color: #fff;
+    display: none; /* Default hidden, show on mobile */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(16, 36, 22, 0.4);
+    z-index: 1000;
+    transition: var(--transition);
+    border: 2px solid rgba(255,255,255,0.1);
+}
+.floating-cart:hover { transform: scale(1.1) translateY(-5px); color: #fff; background: var(--green-main); }
+
+.fc-badge {
+    position: absolute;
+    top: -5px; right: -5px;
+    background: #e63946;
+    color: #fff;
+    border-radius: 50%;
+    min-width: 22px; height: 22px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 2px solid #fff;
+    animation: pulse-badge 2s infinite;
+}
+@keyframes pulse-badge { 
+    0% { box-shadow: 0 0 0 0 rgba(230,57,70, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(230,57,70, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(230,57,70, 0); }
+}
+
+@media (max-width: 991px) {
+    .floating-cart { display: flex; }
+}
 
 /* CARD REVEAL */
 .prod-card{opacity:0;transform:translateY(24px);transition:.5s cubic-bezier(.16,1,.3,1);}
@@ -200,6 +243,52 @@
 
 /* NO RESULTS */
 #noResults{display:none;text-align:center;padding:60px 20px;color:#8aa898;}
+
+/* iOS FLOATING BAR (GUEST) */
+.ios-navbar-guest {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    border-radius: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    z-index: 9000;
+    border: 1px solid rgba(255,255,255,0.2);
+    width: max-content;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ios-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    color: #6b8e7b;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    min-width: 60px;
+    position: relative;
+}
+
+.ios-nav-item i { font-size: 1.2rem; margin-bottom: 4px; transition: 0.3s; }
+.ios-nav-item span { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+
+.ios-nav-item:hover, .ios-nav-item.active { color: var(--green-dark); background: rgba(27, 59, 37, 0.05); }
+.ios-nav-item.active i { transform: translateY(-2px); color: var(--green-main); }
+.ios-nav-item.active span { opacity: 1; color: var(--green-main); }
+
+@media (min-width: 992px) {
+    .ios-navbar-guest { display: none; }
+}
 
 footer{background:#fff;border-top:1px solid #e8ede8;padding:24px 0;}
 
@@ -297,7 +386,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <?php if($is_f):?><div style="position:absolute; top:15px; right:15px; z-index:2; background: linear-gradient(135deg, #f59e0b, #fbbf24); color:#fff; font-size:0.65rem; font-weight:900; padding:4px 10px; border-radius:50px; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);">BEST SELLER</div><?php endif;?>
                 
                 <?php if(!empty($p['image'])&&$p['image']!='default.jpg'):?>
-                    <img src="<?= base_url('uploads/'.$p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy"
+                    <img src="<?= base_url('uploads/'.$p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" 
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                     <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:5rem; background:#f8fcf9;"><?=$emojis[$i%count($emojis)]?></div>
                 <?php else:?>
@@ -459,20 +548,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 2. Product Grid Staggered Reveal
         function initScrollAnimations() {
-            gsap.utils.toArray('.prod-item').forEach((item, i) => {
-                gsap.to(item, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top 90%",
-                        toggleActions: "play none none reverse",
-                        once: true // Performance: only animate once
-                    }
+            const items = gsap.utils.toArray('.prod-item');
+            if(items.length > 0) {
+                items.forEach((item, i) => {
+                    gsap.to(item, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 95%",
+                            onEnter: () => item.classList.add('visible-ready'),
+                            once: true
+                        }
+                    });
                 });
-            });
+            } else {
+                // Fallback reveal if no items
+                document.querySelectorAll('.prod-item').forEach(el => el.classList.add('visible-ready'));
+            }
         }
         initScrollAnimations();
 
@@ -730,7 +825,101 @@ document.addEventListener("DOMContentLoaded", function() {
                 setTimeout(() => wrap.remove(), 600);
             }, 3000);
         }
+
+        // Sync Floating Badge with Navbar Badge
+        function syncCartBadge(count) {
+            const badges = document.querySelectorAll('.fc-badge, .btn-hdr-out .badge');
+            badges.forEach(b => {
+                b.textContent = count;
+                b.style.display = count > 0 ? 'flex' : 'none';
+            });
+            
+            // Pulse animation on sync
+            const iosNav = document.getElementById('iosNav');
+            if(iosNav) {
+                gsap.fromTo(iosNav, { scale: 1 }, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
+            }
+        }
+
+        // Override addToCart to include AJAX & Sync
+        window.addToCart = function(id, btn) {
+            if(btn) {
+                btn.disabled = true;
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+                fetch('<?= base_url("shop/add_to_cart_ajax/") ?>' + id, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            showToast(res.message, 'success');
+                            syncCartBadge(res.cart_count);
+                            
+                            confetti({
+                                particleCount: 80,
+                                spread: 60,
+                                origin: { y: 0.8 },
+                                colors: ['#102416', '#1B3B25', '#8BAA7C']
+                            });
+                        } else {
+                            showToast(res.message, 'error');
+                        }
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalHtml;
+                    });
+            }
+        };
+
+        // Auto-hide Nav on Scroll
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const iosNav = document.getElementById('iosNav');
+            if (!iosNav) return;
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
+            } else {
+                gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
+            }
+            lastScrollY = window.scrollY;
+        });
     });
 </script>
+
+<!-- iOS FLOATING BAR -->
+<nav class="ios-navbar-guest" id="iosNav">
+    <a href="<?= base_url(); ?>" class="ios-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a href="<?= base_url('shop'); ?>" class="ios-nav-item active">
+        <i class="fa-solid fa-mug-hot"></i>
+        <span>Menu</span>
+    </a>
+    <a href="<?= base_url(); ?>#ulasan" class="ios-nav-item">
+        <i class="fa-solid fa-star"></i>
+        <span>Ulasan</span>
+    </a>
+    <a href="<?= base_url('shop/cart'); ?>" class="ios-nav-item">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cart</span>
+        <?php 
+            $cart_count = (isset($this->cart)) ? $this->cart->total_items() : 0;
+        ?>
+        <span class="fc-badge" style="<?= $cart_count > 0 ? 'display:flex' : 'display:none' ?>"><?= $cart_count ?></span>
+    </a>
+    <?php if ($this->session->userdata('userid')): ?>
+        <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>" class="ios-nav-item">
+            <i class="fa-solid fa-user-circle"></i>
+            <span>Akun</span>
+        </a>
+    <?php else: ?>
+        <a href="<?= base_url('auth'); ?>" class="ios-nav-item">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span>Masuk</span>
+        </a>
+    <?php endif; ?>
+</nav>
 </body>
 </html>

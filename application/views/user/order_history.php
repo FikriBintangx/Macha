@@ -245,11 +245,85 @@
         }
 
         /* ── FLASH ── */
-        .flash-success { background: #e6f4ea; border: none; border-left: 4px solid var(--green-main); border-radius: 14px; color: #2e6b3e; padding: 14px 20px; margin-bottom: 20px; }
         .flash-error { background: #fce4ec; border: none; border-left: 4px solid #e53e3e; border-radius: 14px; color: #880e4f; padding: 14px 20px; margin-bottom: 20px; }
+
+        /* ─── SKELETON LOADING SYSTEM ─── */
+        .skel-loading { position: relative; overflow: hidden; }
+        .skel-shimmer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: translateX(-100%);
+            animation: skel-shimmer 1.5s infinite;
+            z-index: 10;
+        }
+        @keyframes skel-shimmer { 100% { transform: translateX(100%); } }
+
+        .skel-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f0f3f1; z-index: 9; border-radius: inherit;
+        }
+        .loaded .skel-overlay, .loaded .skel-shimmer { display: none !important; }
     </style>
 </head>
 <body>
+    <!-- PREMIUM WAVY SPLASH SCREEN -->
+    <div id="macha-splash" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--green-ultra); z-index:20000; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        <!-- Background Waves (Animated) -->
+        <div class="splash-waves-bg">
+            <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path id="wave-path" fill="rgba(27, 59, 37, 0.5)" d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,112C672,107,768,149,864,165.3C960,181,1056,171,1152,149.3C1248,128,1344,96,1392,80L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <div style="text-align:center; position:relative; z-index:2;">
+            <div id="splash-logo-box" style="width:130px; height:130px; background:#fff; border-radius:35px; display:flex; align-items:center; justify-content:center; margin:0 auto 30px; box-shadow:0 25px 60px rgba(0,0,0,0.4); position:relative; overflow:hidden;">
+                <?php 
+                    $ci =& get_instance();
+                    $ci->load->model('M_settings');
+                    $sl = $ci->M_settings->get_setting('shop_logo');
+                    if(!empty($sl)): 
+                ?>
+                    <img src="<?= base_url('uploads/'.$sl) ?>" style="width:90px; height:90px; object-fit:contain; mix-blend-mode:multiply;">
+                <?php else: ?>
+                    <i class="fa-solid fa-leaf" style="color:var(--green-main); font-size:3.5rem;"></i>
+                <?php endif; ?>
+                <div class="shine-effect"></div>
+            </div>
+            
+            <div class="loader-container">
+                <div id="splash-bar" class="loader-bar"></div>
+            </div>
+            <div id="splash-text" class="loader-text">Brewing Your Premium Matcha</div>
+        </div>
+    </div>
+
+    <style>
+        .splash-waves-bg {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 60%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        .wave-svg { width: 100%; height: 100%; }
+        .shine-effect {
+            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg); animation: shine 2.5s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 100% { left: 200%; } }
+        
+        .loader-container {
+            width: 180px; height: 3px; background: rgba(255,255,255,0.08);
+            border-radius: 10px; margin: 0 auto; overflow: hidden;
+        }
+        .loader-bar { width: 0%; height: 100%; background: #8BAA7C; box-shadow: 0 0 15px rgba(139,170,124,0.6); }
+        .loader-text {
+            color: rgba(255,255,255,0.6); font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 4px; 
+            margin-top: 20px; font-weight: 800;
+        }
+    </style>
+
     <!-- NAVBAR -->
     <?php $this->load->view('layout/navbar'); ?>
 
@@ -294,28 +368,32 @@
         $done_orders     = count(array_filter($orders, function($o) { return $o['status'] == 'completed'; }));
         ?>
         <div class="summary-chips">
-            <div class="chip" style="background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%); border-color: #bbf7d0;">
+            <div class="chip skel-loading" style="background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%); border-color: #bbf7d0;">
+                <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                 <div class="chip-icon" style="background:var(--green-main); color:#fff;"><i class="fa-solid fa-star"></i></div>
                 <div>
                     <div class="chip-num text-success"><?= number_format($user['points'] ?? 0, 0, ',', '.') ?></div>
                     <div class="chip-label">Macha Points</div>
                 </div>
             </div>
-            <div class="chip">
+            <div class="chip skel-loading">
+                <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                 <div class="chip-icon" style="background:#e8f4ee"><i class="fa-solid fa-receipt" style="color:var(--green-main)"></i></div>
                 <div>
                     <div class="chip-num"><?= $total_orders ?></div>
                     <div class="chip-label">Total Pesanan</div>
                 </div>
             </div>
-            <div class="chip">
+            <div class="chip skel-loading">
+                <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                 <div class="chip-icon" style="background:#fef3c7"><i class="fa-solid fa-clock" style="color:#d97706"></i></div>
                 <div>
                     <div class="chip-num"><?= $pending_orders ?></div>
                     <div class="chip-label">Menunggu Bayar</div>
                 </div>
             </div>
-            <div class="chip">
+            <div class="chip skel-loading">
+                <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                 <div class="chip-icon" style="background:#dcfce7"><i class="fa-solid fa-check" style="color:#16a34a"></i></div>
                 <div>
                     <div class="chip-num"><?= $done_orders ?></div>
@@ -349,7 +427,8 @@
             <div id="orderList">
             <?php foreach ($orders as $o): ?>
                 <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1]; ?>
-                <div class="order-card" data-status="<?= $o['status'] ?>">
+                <div class="order-card skel-loading" data-status="<?= $o['status'] ?>">
+                    <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                     <div class="order-head">
                         <div>
                             <div class="invoice-no"><i class="fa-solid fa-file-invoice me-1" style="color:var(--green-main)"></i><?= htmlspecialchars($o['invoice_no']) ?></div>
@@ -528,7 +607,12 @@
         });
     </script>
     <script>
-        // Removed skeleton timeout
+        // Skeleton Loader Handler
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.skel-loading').forEach(el => el.classList.add('loaded'));
+            }, 800); // Micro-delay for premium feel
+        });
     </script>
     <!-- COMMAND PALETTE MODAL -->
     <div class="modal fade" id="commandPalette" tabindex="-1">
@@ -565,13 +649,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Entrance Animations
-            gsap.from(".user-hero, .summary-chips, .order-card", {
-                y: 20,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power2.out"
+            // --- REFINED IMMERSIVE ZOOM PASS-THROUGH ---
+            const splashTl = gsap.timeline({
+                onComplete: () => {
+                    document.getElementById('macha-splash').style.display = 'none';
+                }
             });
+
+            // Gentle background pulse
+            gsap.to("#wave-path", {
+                duration: 5,
+                attr: { d: "M0,160L48,181.3C96,203,192,245,288,234.7C384,224,480,160,576,133.3C672,107,768,117,864,138.7C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" },
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            splashTl.to("#splash-bar", {
+                width: "100%",
+                duration: 1.8,
+                ease: "power2.inOut"
+            })
+            .to(".loader-container, .loader-text", {
+                opacity: 0,
+                y: -10,
+                duration: 0.4,
+                ease: "power2.in"
+            }, "-=0.2")
+            .to("#splash-logo-box", {
+                scale: 25,          // Deeper zoom
+                opacity: 0,
+                duration: 1.4,
+                ease: "power4.in"
+            }, "-=0.1")
+            .to("#macha-splash", {
+                scale: 1.5,
+                filter: "blur(60px)", 
+                opacity: 0,
+                duration: 1.2,
+                ease: "power4.inOut"
+            }, "-=1.1")
+            .from(".user-hero", {
+                scale: 1.05,        // Subtle scale-down for smoothness
+                opacity: 0,
+                filter: "blur(15px)",
+                duration: 1.5,
+                ease: "power3.out"
+            }, "-=0.9")
+            .from(".summary-chips .chip", {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.08,
+                ease: "power2.out"
+            }, "-=0.8");
+
+            // --- DASHBOARD INTERACTIVITY ---
 
             // Command Palette (Alt+K)
             const paletteEl = document.getElementById('commandPalette');

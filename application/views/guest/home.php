@@ -165,18 +165,52 @@
       color: var(--tertiary);
     }
 
-    .preloader-logo {
-      font-size: 3rem;
-      font-weight: 900;
-      margin-bottom: 20px;
+    .preloader-logo-box {
+      width: 120px;
+      height: 120px;
+      background: #fff;
+      border-radius: 32px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .preloader-logo-box img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .preloader-logo-box i {
+      font-size: 3rem;
+      color: var(--green-main);
+    }
+
+    .preloader-logo-box .shine-effect {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: skewX(-20deg);
+      animation: preloaderShine 2s infinite;
+    }
+
+    @keyframes preloaderShine {
+      0% { left: -100%; }
+      100% { left: 200%; }
     }
 
     .preloader-bar-wrap {
-      width: 200px;
-      height: 2px;
+      width: 180px;
+      height: 3px;
       background: rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
@@ -193,10 +227,11 @@
     }
 
     .preloader-num {
-      margin-top: 10px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 2px;
+      margin-top: 15px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      opacity: 0.6;
     }
 
     /* ─── MAGNETIC BUTTON WRAPPER ─── */
@@ -912,14 +947,29 @@
       animation: shimmer 3s infinite;
     }
 
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-150%) rotate(45deg);
-      }
+    /* ─── PREMIUM SKELETON LOADING ─── */
+    .skeleton-box {
+      position: relative;
+      overflow: hidden;
+      background-color: #f0f3f1;
+    }
 
-      100% {
-        transform: translateX(150%) rotate(45deg);
-      }
+    .skeleton-box .skeleton-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #f0f3f1;
+      z-index: 2; /* Below the badge, but above the image initially */
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    .skeleton-box.loaded .skeleton-img {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .prod-img-wrap img {
+      position: relative;
+      z-index: 1;
     }
 
     .prod-img-wrap {
@@ -1930,6 +1980,17 @@
       line-height: 1.1;
       margin-bottom: 20px;
       letter-spacing: -1.5px;
+      overflow: hidden; /* For split reveal */
+    }
+
+    .hero h1 span.line-wrap {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 span.line-inner {
+      display: block;
+      transform: translateY(100%);
     }
 
     .hero h1 .highlight {
@@ -2181,9 +2242,13 @@
 
   <!-- ══════════ PRELOADER ══════════ -->
   <div class="m-preloader" id="preloader">
-    <div class="preloader-logo">
-      <i class="fa-solid fa-leaf" id="preloaderLeaf"></i>
-      <span id="preloaderText">MariMatcha</span>
+    <div class="preloader-logo-box" id="preloaderLogo">
+      <?php if (!empty($shop_logo)): ?>
+        <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo">
+      <?php else: ?>
+        <i class="fa-solid fa-leaf"></i>
+      <?php endif; ?>
+      <div class="shine-effect"></div>
     </div>
     <div class="preloader-bar-wrap">
       <div class="preloader-bar" id="preloaderBar"></div>
@@ -2218,6 +2283,7 @@
         <ul class="navbar-nav mx-auto gap-1">
           <li class="nav-item"><a class="nav-link active-link" href="<?= base_url(); ?>">Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= base_url('shop'); ?>">Katalog</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ulasan">Ulasan</a></li>
           <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="#cara-pesan">Cara Pesan</a></li>
         </ul>
@@ -2265,66 +2331,75 @@
     </div>
   <?php endif; ?>
 
-  <!-- ══════════ HERO ══════════ -->
-  <section class="hero">
-    <div class="hero-decorative d1"></div>
-    <div class="hero-decorative d2"></div>
-    <div class="container position-relative" style="z-index:1">
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-6 hero-text-col">
-          <div class="hero-tag">
-            <i class="fa-solid fa-location-dot"></i> UMKM Tangerang · Banten
-          </div>
-          <h1>Nikmati Segar <br>Minuman <span class="highlight">Matcha</span> <br>Terbaik Kami</h1>
-          <p class="hero-desc">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok untuk harimu
-            yang penuh semangat dan rasa!</p>
+  <!-- ══════════ HERO IMMERSIVE ZOOM WRAPPER ══════════ -->
+  <section class="hero-zoom-outer">
+    <div class="hero-fixed-container">
+      <section class="hero">
+        <div class="hero-decorative d1"></div>
+        <div class="hero-decorative d2"></div>
+        <div class="container position-relative" style="z-index:1">
+          <div class="row align-items-center gy-5 hero-main-row">
+            <div class="col-lg-6 hero-text-col">
+              <div class="hero-tag">
+                <i class="fa-solid fa-location-dot"></i> UMKM Tangerang · Banten
+              </div>
+              <h1>
+                <span class="line-wrap"><span class="line-inner">Nikmati Segar</span></span>
+                <span class="line-wrap"><span class="line-inner">Minuman <span class="highlight">Matcha</span></span></span>
+                <span class="line-wrap"><span class="line-inner">Terbaik Kami</span></span>
+              </h1>
+              <p class="hero-desc">Dibuat dari teh hijau grade premium, disajikan dingin maupun panas. Cocok untuk harimu yang penuh semangat dan rasa!</p>
 
-          <div class="hero-cta">
-            <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
-              <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
-            </a>
-            <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk"
-              target="_blank" rel="noopener noreferrer" class="btn-hero-wa">
-              <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
-            </a>
-          </div>
+              <div class="hero-cta">
+                <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
+                  <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
+                </a>
+                <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk" target="_blank" rel="noopener noreferrer" class="btn-hero-wa">
+                  <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
+                </a>
+              </div>
 
-          <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-num">500+</span>
-              <span class="stat-label">Pelanggan Puas</span>
+              <div class="hero-stats">
+                <div class="stat-item">
+                  <span class="stat-num">500+</span>
+                  <span class="stat-label">Pelanggan Puas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-num">15+</span>
+                  <span class="stat-label">Varian Menu</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-num">4.9<i class="fa-solid fa-star ms-1" style="color:var(--accent);font-size:1rem"></i></span>
+                  <span class="stat-label">Rating Kami</span>
+                </div>
+              </div>
             </div>
-            <div class="stat-item">
-              <span class="stat-num">15+</span>
-              <span class="stat-label">Varian Menu</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-num">4.9<span style="color:var(--accent); font-size:1.5rem">★</span></span>
-              <span class="stat-label">Rating Kami</span>
+
+            <div class="col-lg-6 hero-img-col d-flex justify-content-center">
+              <div class="hero-img-wrap">
+                <div class="hero-img-bg"></div>
+                <img src="<?= base_url('assets/img/productORI.png'); ?>" alt="Premium Matcha" class="hero-main-img">
+                
+                <div class="hero-badge-float b1">
+                  <div class="float-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                  <div>
+                    <div class="float-label">Pengiriman Aman</div>
+                    <div class="float-val">Dan Cepat</div>
+                  </div>
+                </div>
+                
+                <div class="hero-badge-float b2">
+                  <div class="float-icon"><i class="fa-solid fa-award"></i></div>
+                  <div>
+                    <div class="float-label">Bahan Alami</div>
+                    <div class="float-val">100% Premium</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-6 hero-img-col">
-          <div class="hero-img-wrap">
-            <div class="hero-img-bg"></div>
-            <img src="<?= base_url('assets/img/KONTEN02.jpeg'); ?>" alt="Matcha Segar MariMatcha" loading="eager">
-            <div class="hero-badge-float b1">
-              <div class="float-icon"><i class="fa-solid fa-star"></i></div>
-              <div>
-                <div class="float-label">Kualitas Terjamin</div>
-                <div class="float-val">100% Premium</div>
-              </div>
-            </div>
-            <div class="hero-badge-float b2">
-              <div class="float-icon"><i class="fa-solid fa-truck-fast"></i></div>
-              <div>
-                <div class="float-label">Pengiriman Aman</div>
-                <div class="float-val">Dan Cepat</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   </section>
 
@@ -2427,27 +2502,28 @@
           <?php foreach ($featured_products as $prod): ?>
             <div class="prod-card invisible-init perspective-card">
               <div class="prod-card-inner">
-                <div class="prod-img-wrap">
-                  <div class="prod-badge-wrap">
-                    <?php if ($prod['stock'] > 0): ?>
-                      <span class="prod-badge">Tersedia</span>
-                    <?php else: ?>
-                      <span class="prod-badge" style="background: rgba(229, 62, 62, 0.9); color: white;">Habis</span>
-                    <?php endif; ?>
-                  </div>
-                  <?php
-                  $img_link = base_url('assets/img/productORI.png'); // Default fallback
-                  if (!empty($prod['image'])) {
-                    if (file_exists(FCPATH . 'uploads/' . $prod['image'])) {
-                      $img_link = base_url('uploads/' . $prod['image']);
-                    } elseif (file_exists(FCPATH . 'assets/img/' . $prod['image'])) {
-                      $img_link = base_url('assets/img/' . $prod['image']);
+                  <div class="prod-img-wrap skeleton-box">
+                    <div class="skeleton-img"></div>
+                    <div class="prod-badge-wrap">
+                      <?php if ($prod['stock'] > 0): ?>
+                        <span class="prod-badge">Tersedia</span>
+                      <?php else: ?>
+                        <span class="prod-badge" style="background: rgba(229, 62, 62, 0.9); color: white;">Habis</span>
+                      <?php endif; ?>
+                    </div>
+                    <?php
+                    $img_link = base_url('assets/img/productORI.png'); // Default fallback
+                    if (!empty($prod['image'])) {
+                      if (file_exists(FCPATH . 'uploads/' . $prod['image'])) {
+                        $img_link = base_url('uploads/' . $prod['image']);
+                      } elseif (file_exists(FCPATH . 'assets/img/' . $prod['image'])) {
+                        $img_link = base_url('assets/img/' . $prod['image']);
+                      }
                     }
-                  }
-                  ?>
-                  <img src="<?= $img_link ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
-                    onerror="this.src='<?= base_url('assets/img/productORI.png'); ?>'">
-                </div>
+                    ?>
+                    <img src="<?= $img_link ?>" alt="<?= htmlspecialchars($prod['name']) ?>" loading="lazy"
+                      onerror="this.src='<?= base_url('assets/img/productORI.png'); ?>'">
+                  </div>
                 <div class="prod-body">
                   <div class="prod-header">
                     <h3 class="prod-name"><?= htmlspecialchars($prod['name']) ?></h3>
@@ -2608,14 +2684,14 @@
   </section>
 
   <!-- ══════════ TESTIMONIAL ══════════ -->
-  <section class="testi-section" id="testi-kami">
+  <section class="testi-section" id="ulasan">
     <div class="container">
       <div class="text-center mb-5 reveal-up invisible-init">
         <div class="section-label"><i class="fa-solid fa-star"></i> Ulasan Pelanggan</div>
         <h2 class="section-h2">Kata Mereka Tentang Kami</h2>
         <p class="section-sub mx-auto">Lebih dari ratusan pelanggan puas setiap bulannya. Ini yang mereka katakan.</p>
       </div>
-      <div class="testi-slider-container reveal-up invisible-init">
+      <div class="testi-slider-container reveal-up invisible-init gs-testi-row">
         <div class="testi-slider" id="testiSlider">
           <?php if (!empty($testimonials)):
             foreach ($testimonials as $t): ?>
@@ -2657,7 +2733,7 @@
               <i class="fa-solid fa-heart ms-2" style="color:var(--accent)"></i>
             </h4>
             <form action="<?= base_url('home/submit_review') ?>" method="POST">
-              <div class="row g-4">
+              <div class="row g-4 gs-prod-grid">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="small fw-bold text-muted mb-2 ms-2">NAMA LENGKAP</label>
@@ -2832,21 +2908,25 @@
     }
 
     .story-track {
-      display: flex;
-      width: 300%;
-      /* For 3 horizontal panels */
-      height: 100%;
       position: relative;
+      width: 100%;
+      height: 100%;
       z-index: 2;
     }
 
     .story-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 5%;
+      opacity: 0;
+      visibility: hidden;
+      will-change: transform, opacity, filter;
     }
 
     .glass-content-wrap {
@@ -3178,7 +3258,17 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // 1. LENIS SMOOTH SCROLL (REFINED)
+      // 1. REVEAL SITE FALLBACK (Safety)
+      const forceReveal = setTimeout(() => {
+        const p = document.getElementById('preloader');
+        if (p && p.style.display !== 'none') {
+          p.style.opacity = '0';
+          setTimeout(() => p.style.display = 'none', 500);
+          document.body.classList.add('site-ready');
+        }
+      }, 5000);
+
+      // 2. MOUSE FOLLOWER (Magnetic Effect)
       const lenis = new Lenis({
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -3246,28 +3336,52 @@
 
       // 4. PRELOADER & HERO ENTRANCE (PRO)
       let progress = 0;
+      const pNum = document.getElementById('preloaderNum');
+      const pBar = document.getElementById('preloaderBar');
+
       const progressInterval = setInterval(() => {
-        progress += Math.floor(Math.random() * 15) + 1;
+        progress += Math.floor(Math.random() * 15) + 5;
         if (progress >= 100) {
           progress = 100;
           clearInterval(progressInterval);
+          clearTimeout(forceReveal);
           revealSite();
         }
-        document.getElementById('preloaderNum').innerText = progress + "%";
-        gsap.to('#preloaderBar', { width: progress + "%", duration: 0.2 });
-      }, 60);
+        if (pNum) pNum.innerText = progress + "%";
+        if (pBar && typeof gsap !== 'undefined') {
+          gsap.to(pBar, { width: progress + "%", duration: 0.1 });
+        }
+      }, 50);
 
       function revealSite() {
-        const tl = gsap.timeline();
-        tl.to('#preloader', { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.4 })
-          .fromTo('.navbar-macha', { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "expo.out" }, "-=0.6")
-          .fromTo('footer', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "-=1");
+        if (typeof gsap === 'undefined') {
+          const p = document.getElementById('preloader');
+          if (p) p.style.display = 'none';
+          return;
+        }
 
-        setTimeout(() => {
-          document.getElementById('preloader').style.display = 'none';
-          document.body.classList.add('site-ready');
-          ScrollTrigger.refresh();
-        }, 2200);
+        const tl = gsap.timeline({
+          onComplete: () => {
+            const p = document.getElementById('preloader');
+            if (p) p.style.display = 'none';
+            document.body.classList.add('site-ready');
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+          }
+        });
+
+        tl.to('.preloader-bar-wrap, .preloader-num', {
+          opacity: 0, y: -20, duration: 0.4
+        })
+        .to('#preloaderLogo', {
+          scale: 35, opacity: 0, duration: 1.4, ease: "power4.in"
+        }, "-=0.2")
+        .to('#preloader', {
+          filter: "blur(60px)", opacity: 0, duration: 1, ease: "power2.inOut"
+        }, "-=0.8")
+        .fromTo('.navbar-macha', { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "expo.out" }, "-=0.4")
+        .fromTo('.line-inner', { y: "110%" }, { y: "0%", duration: 1.2, stagger: 0.15, ease: "power4.out" }, "-=0.6")
+        .fromTo('.hero-desc, .hero-cta, .hero-stats', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.8")
+        .fromTo('.hero-img-wrap', { scale: 0.8, opacity: 0, rotate: 5 }, { scale: 1, opacity: 1, rotate: 0, duration: 1.5, ease: "power4.out" }, "-=1.2");
       }
 
       // 5. SCROLL PROGRESS & RESPONSIVE MENU
@@ -3308,26 +3422,95 @@
 
       const commonTrigger = (el) => ({ trigger: el, start: "top 85%", toggleActions: "play none none reverse" });
 
-      // Horizontal Story Track Refined
-      const storyTrack = document.querySelector('.story-track');
-      if (storyTrack) {
-        gsap.to(storyTrack, {
-          xPercent: -66.66,
-          ease: "none",
+      // 6. PREMIUM STORYTELLING: CENTER REVEAL & SCATTER
+      if (document.querySelector('#storySection')) {
+        const slides = gsap.utils.toArray('.story-slide');
+        const storyTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#storySection",
-            pin: true,
-            scrub: 1.2,
             start: "top top",
-            end: () => "+=" + (window.innerWidth > 768 ? storyTrack.offsetWidth : storyTrack.offsetWidth * 2),
-            invalidateOnRefresh: true
+            end: "+=3500", // Increased duration for smoothness
+            scrub: 1.2,
+            pin: true,
+            anticipatePin: 1
           }
         });
 
-        // Parallax background text
-        gsap.to(".story-bg-text", {
-          x: '15%',
-          scrollTrigger: { trigger: "#storySection", start: "top bottom", end: "bottom top", scrub: 1 }
+        // Parallax background text movement
+        storyTl.to(".story-bg-text", {
+          x: '-20%',
+          duration: 3,
+          ease: "none"
+        }, 0);
+
+        // --- PHASE 01: Reveal & Move Left ---
+        storyTl.fromTo(slides[0], {
+          scale: 0.5,
+          opacity: 0,
+          visibility: "visible"
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          ease: "back.out(1.2)"
+        })
+        .to(slides[0], {
+          x: -400,
+          opacity: 0,
+          scale: 0.8,
+          filter: "blur(10px)",
+          duration: 1,
+          ease: "power2.in"
+        }, "+=0.5");
+
+        // --- PHASE 02: Reveal & Move Right ---
+        storyTl.fromTo(slides[1], {
+          scale: 0.5,
+          opacity: 0,
+          visibility: "visible"
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          ease: "back.out(1.2)"
+        }, "-=0.2")
+        .to(slides[1], {
+          x: 400,
+          opacity: 0,
+          scale: 0.8,
+          filter: "blur(10px)",
+          duration: 1,
+          ease: "power2.in"
+        }, "+=0.5");
+
+        // --- PHASE 03: Reveal & Final Zoom Pass-Through ---
+        storyTl.fromTo(slides[2], {
+          scale: 0.5,
+          opacity: 0,
+          visibility: "visible"
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          ease: "back.out(1.2)"
+        }, "-=0.2")
+        .to(slides[2], {
+          scale: 15,
+          opacity: 0,
+          filter: "blur(30px)",
+          duration: 1.5,
+          ease: "power4.in"
+        }, "+=0.5");
+
+        // Background color transition
+        ScrollTrigger.create({
+          trigger: "#storySection",
+          start: "top center",
+          end: "bottom center",
+          onEnter: () => gsap.to("body", { backgroundColor: "#102416", duration: 1 }),
+          onLeave: () => gsap.to("body", { backgroundColor: "#F5F5F0", duration: 1 }),
+          onEnterBack: () => gsap.to("body", { backgroundColor: "#102416", duration: 1 }),
+          onLeaveBack: () => gsap.to("body", { backgroundColor: "#F5F5F0", duration: 1 })
         });
       }
 
@@ -3406,6 +3589,84 @@
         onLeaveBack: () => gsap.to("body", { backgroundColor: "#F5F5F0", duration: 1 })
       });
 
+      // 7. IMMERSIVE HERO ZOOM REVEAL
+      if (document.querySelector('.hero-zoom-outer')) {
+        const heroTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".hero-zoom-outer",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            invalidateOnRefresh: true
+          }
+        });
+
+        heroTl.to(".hero-text-col", {
+          opacity: 0,
+          x: -100,
+          scale: 0.9,
+          duration: 1,
+          ease: "power2.in"
+        }, 0)
+        .to(".hero-img-wrap", {
+          scale: 15,
+          filter: "blur(20px)",
+          opacity: 0,
+          duration: 2,
+          ease: "power2.in"
+        }, 0)
+        .to(".hero-decorative", {
+          scale: 3,
+          opacity: 0,
+          duration: 1.5
+        }, 0);
+      }
+
+      // 8. TESTIMONIAL FOCUS REVEAL (INVERSE ZOOM)
+      const testiCards = gsap.utils.toArray('.testi-item');
+      if (testiCards.length > 0) {
+        testiCards.forEach((card, i) => {
+          gsap.fromTo(card, {
+            scale: 3,
+            filter: "blur(20px)",
+            opacity: 0,
+            y: 100
+          }, {
+            scale: 1,
+            filter: "blur(0px)",
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "top center",
+              scrub: 1
+            }
+          });
+        });
+      }
+
+      // 9. MAGNETIC BUTTONS EFFECT
+      const magneticButtons = document.querySelectorAll('.btn-hero-primary, .btn-hero-wa, .btn-hdr, .btn-view-all');
+      magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+        });
+      });
+
+      // 10. GLOBAL SKELETON HANDLER
+      window.addEventListener('load', () => {
+        document.querySelectorAll('.skeleton-box').forEach(el => el.classList.add('loaded'));
+      });
+
       ScrollTrigger.refresh();
     });
   </script>
@@ -3419,6 +3680,10 @@
       class="ios-nav-item <?= (strpos(current_url(), 'shop') !== false && strpos(current_url(), 'cart') === false) ? 'active' : '' ?>">
       <i class="fa-solid fa-mug-hot"></i>
       <span>Menu</span>
+    </a>
+    <a href="#ulasan" class="ios-nav-item">
+      <i class="fa-solid fa-star"></i>
+      <span>Ulasan</span>
     </a>
     <a href="<?= base_url('shop/cart'); ?>"
       class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>">
