@@ -18,6 +18,9 @@ if (isset($CI->db)) {
     <title><?= $title ?> | MariMatcha</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php if(!empty($shop_logo)): ?>
+        <link rel="icon" type="image/x-icon" href="<?= base_url('uploads/'.$shop_logo) ?>">
+    <?php endif; ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -749,14 +752,14 @@ if (isset($CI->db)) {
             <div class="brand-icon">
                 <?php if (!empty($shop_logo)): ?>
                     <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo"
-                        style="width:100%; height:100%; object-fit:cover; mix-blend-mode: multiply;">
+                        style="width:100%; height:100%; object-fit:contain; background: white; border-radius: 8px; padding: 4px;">
                 <?php else: ?>
                     <i class="bi bi-box-seam-fill"></i>
                 <?php endif; ?>
             </div>
             <div class="brand-text">
-                <h5>MariMatcha</h5>
-                <small>Admin Panel</small>
+                <h5 class="mb-0">MariMatcha</h5>
+                <small class="opacity-75">Admin Panel</small>
             </div>
         </a>
 

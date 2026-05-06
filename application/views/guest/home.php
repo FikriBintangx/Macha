@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php if(!empty($shop_logo)): ?>
+    <link rel="icon" type="image/x-icon" href="<?= base_url('uploads/'.$shop_logo) ?>">
+  <?php endif; ?>
   <title>MariMatcha – Minuman Matcha Premium UMKM</title>
   <meta name="description"
     content="Minuman matcha segar berkualitas premium dari Tangerang. Pesan langsung secara online, pengiriman ke seluruh Indonesia.">

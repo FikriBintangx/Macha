@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php 
+    $CI =& get_instance();
+    $CI->load->model('M_settings');
+    $shop_logo = $CI->M_settings->get_setting('shop_logo');
+    if(!empty($shop_logo)): 
+?>
+    <link rel="icon" type="image/x-icon" href="<?= base_url('uploads/'.$shop_logo) ?>">
+<?php endif; ?>
 <title>Autentikasi | MariMatcha</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -307,7 +315,7 @@
                 <?php else: ?>
                     <i class="fa-solid fa-leaf"></i>
                 <?php endif; ?>
-                MariMatcha
+                <span>MariMatcha</span>
             </div>
             <p class="auth-tagline-lg">Rasakan kemurnian matcha premium dari pegunungan Jepang, kini hadir di depan pintu Anda. Gabung bersama 5.000+ pelanggan setia kami.</p>
             

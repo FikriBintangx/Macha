@@ -16,6 +16,7 @@ class Shop extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->database();
         $this->load->model('M_product');
         $this->load->model('M_settings');
         $this->load->library('user_agent', NULL, 'agent');
@@ -169,6 +170,29 @@ class Shop extends CI_Controller
             'message' => 'Berhasil ditambahkan ke keranjang!',
             'cart_count' => count($cart)
         ]);
+    }
+
+    public function search_ajax()
+    {
+        $query = $this->input->get('q', TRUE);
+        if (empty($query)) {
+            echo json_encode([]);
+            return;
+        }
+
+        $this->db->select('id, name, price, image');
+        $this->db->from('products');
+        $this->db->like('name', $query);
+        $this->db->where('stock >', 0);
+        $this->db->limit(5);
+        $products = $this->db->get()->result_array();
+
+        foreach ($products as &$p) {
+            $p['price_formatted'] = 'Rp ' . number_format($p['price'], 0, ',', '.');
+            $p['image_url'] = !empty($p['image']) ? base_url('uploads/' . $p['image']) : 'default';
+        }
+
+        echo json_encode($products);
     }
 
 

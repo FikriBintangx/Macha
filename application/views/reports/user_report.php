@@ -1,6 +1,16 @@
+<?php
+    $CI =& get_instance();
+    $CI->load->model('M_settings');
+    $shop_logo = $CI->M_settings->get_setting('shop_logo');
+?>
 <div class="row align-items-center mb-4 g-3">
     <div class="col-md-auto col-12 text-center text-md-start">
-        <h4 class="text-success fw-bold m-0"><i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan Penjualan</h4>
+        <div class="d-flex align-items-center">
+            <?php if(!empty($shop_logo)): ?>
+                <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height: 40px; margin-right: 15px; border-radius: 8px;">
+            <?php endif; ?>
+            <h4 class="text-success fw-bold m-0"><i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan Penjualan</h4>
+        </div>
     </div>
     <div class="col-md-auto col-12 ms-md-auto text-center">
         <div class="d-flex gap-2 justify-content-center">

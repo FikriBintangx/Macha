@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php 
+        $ci =& get_instance();
+        $ci->load->model('M_settings');
+        $sl = $ci->M_settings->get_setting('shop_logo');
+        if(!empty($sl)): 
+    ?>
+        <link rel="icon" type="image/x-icon" href="<?= base_url('uploads/'.$sl) ?>">
+    <?php endif; ?>
     <title>Profil Saya | MariMatcha</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -132,11 +140,21 @@
 </head>
 <body>
 
+    <?php
+    $ci =& get_instance();
+    $ci->load->model('M_settings');
+    $shop_logo = $ci->M_settings->get_setting('shop_logo');
+    ?>
     <!-- NAVBAR -->
     <nav class="navbar navbar-macha fixed-top">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>MariMatcha
+            <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
+                <?php if(!empty($shop_logo)): ?>
+                    <img src="<?= base_url('uploads/'.$shop_logo) ?>" alt="Logo" style="height:40px; margin-right:10px; width: auto; object-fit: contain;">
+                <?php else: ?>
+                    <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
+                <?php endif; ?>
+                <span>MariMatcha</span>
             </a>
             <div class="d-flex gap-2 align-items-center">
                 <a href="<?= base_url('user') ?>" class="nav-pill" style="border:none; color:var(--green-soft)"><i class="fa-solid fa-arrow-left me-1"></i>Kembali</a>
