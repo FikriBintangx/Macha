@@ -61,38 +61,6 @@
     }
     .btn-action:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
 
-    /* Mobile Card Mode */
-    @media (max-width: 768px) {
-        .user-table table, .user-table thead, .user-table tbody,
-        .user-table th, .user-table td, .user-table tr { display: block; width: 100%; }
-        .user-table thead tr { display: none; }
-        .user-table tbody tr {
-            background: #fff;
-            border: 1px solid #edf2ed;
-            border-radius: 16px;
-            margin-bottom: 14px;
-            padding: 4px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            overflow: hidden;
-        }
-        .user-table td {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f5f9f5;
-        }
-        .user-table td:last-child { border-bottom: none; }
-        .user-table td::before {
-            content: attr(data-label);
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #8aa898;
-            flex-shrink: 0;
-            margin-right: 10px;
-        }
     }
 </style>
 
@@ -126,7 +94,7 @@
                 <?php endif; ?>
             </div>
             
-            <div class="table-responsive user-table">
+            <div class="table-responsive responsive-card-table">
                 <table class="table mb-0">
                     <thead>
                         <tr>

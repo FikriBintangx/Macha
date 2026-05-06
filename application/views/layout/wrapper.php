@@ -15,7 +15,7 @@ if (isset($CI->db)) {
 <html lang="id">
 
 <head>
-    <title><?= $title ?> | MariMatcha</title>
+    <title><?= $title ?> | <?= $this->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php if(!empty($shop_logo)): ?>
@@ -603,6 +603,72 @@ if (isset($CI->db)) {
                 backdrop-filter: blur(10px);
             }
 
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 15px;
+                padding-top: 80px;
+                min-height: calc(100vh - 100px);
+            }
+
+            .page-title {
+                font-size: 1rem;
+            }
+
+            /* Responsive Tables (Card Stack Pattern) */
+            .responsive-card-table table, 
+            .responsive-card-table thead, 
+            .responsive-card-table tbody, 
+            .responsive-card-table th, 
+            .responsive-card-table td, 
+            .responsive-card-table tr { 
+                display: block !important; 
+                width: 100% !important; 
+            }
+
+            .responsive-card-table thead tr { 
+                display: none !important; 
+            }
+
+            .responsive-card-table tr {
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 16px;
+                margin-bottom: 15px;
+                padding: 10px 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            }
+
+            .responsive-card-table td {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 10px 20px !important;
+                border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+                text-align: right;
+            }
+
+            .responsive-card-table td:last-child {
+                border-bottom: none !important;
+            }
+
+            .responsive-card-table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: 800;
+                text-transform: uppercase;
+                font-size: 0.7rem;
+                color: var(--green-light);
+                opacity: 0.7;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+            .stat-card .sc-num {
+                font-size: 1.8rem;
+            }
+
             .topbar .page-title,
             .topbar .user-info,
             .topbar .avatar {
@@ -613,21 +679,36 @@ if (isset($CI->db)) {
                 margin-left: auto;
                 gap: 8px;
             }
+        }
 
-            .main-content {
-                margin-left: 0;
-                margin-top: 60px;
-                width: 100%;
-                padding: 20px 15px;
-                padding-bottom: 110px;
-            }
+        .page-header-mobile {
+            display: none;
+        }
 
+        .ios-navbar {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
             .ios-navbar {
                 display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(0,0,0,0.05);
+                z-index: 9995;
+                padding: 0 15px;
+                justify-content: space-around;
+                align-items: center;
+                box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
             }
 
             .page-header-mobile {
-                display: block !important;
+                display: block;
                 margin-bottom: 25px;
                 padding: 10px 0;
             }
@@ -635,53 +716,8 @@ if (isset($CI->db)) {
             .page-header-mobile h4 {
                 font-size: 1.6rem;
                 letter-spacing: -0.5px;
-            }
-
-            /* TABLE RESPONSIVE CARD PATTERN */
-            .responsive-card-table table,
-            .responsive-card-table thead,
-            .responsive-card-table tbody,
-            .responsive-card-table th,
-            .responsive-card-table td,
-            .responsive-card-table tr {
-                display: block;
-            }
-
-            .responsive-card-table thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            .responsive-card-table tr {
-                border: 1px solid #edf2ed;
-                border-radius: 16px;
-                margin-bottom: 15px;
-                padding: 15px;
-                background: #fff;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            }
-
-            .responsive-card-table td {
-                border: none !important;
-                padding: 10px 0 !important;
-                position: relative;
-                padding-left: 45% !important;
-                text-align: right;
-                min-height: 40px;
-                font-size: 0.9rem;
-            }
-
-            .responsive-card-table td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0;
-                width: 40%;
-                text-align: left;
-                font-weight: 700;
-                color: #8aa898;
-                text-transform: uppercase;
-                font-size: 0.7rem;
+                font-weight: 800;
+                color: var(--green-main);
             }
         }
 
@@ -758,7 +794,7 @@ if (isset($CI->db)) {
                 <?php endif; ?>
             </div>
             <div class="brand-text">
-                <h5 class="mb-0">MariMatcha</h5>
+                <h5 class="mb-0"><?= $this->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></h5>
                 <small class="opacity-75">Admin Panel</small>
             </div>
         </a>

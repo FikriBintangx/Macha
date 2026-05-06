@@ -1,46 +1,4 @@
 <style>
-/* ── KASIR ONLINE RESPONSIVE CARD-STACK ── */
-@media (max-width: 768px) {
-    .responsive-card-table table,
-    .responsive-card-table thead,
-    .responsive-card-table tbody,
-    .responsive-card-table th,
-    .responsive-card-table td,
-    .responsive-card-table tr { display: block; width: 100%; }
-
-    .responsive-card-table thead tr { display: none; }
-
-    .responsive-card-table .order-row {
-        background: #fff;
-        border: 1px solid #edf2ed;
-        border-radius: 16px;
-        margin-bottom: 14px;
-        padding: 4px 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-        overflow: hidden;
-    }
-    .responsive-card-table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 16px !important;
-        border-bottom: 1px solid #f5f9f5 !important;
-        font-size: 0.9rem;
-    }
-    .responsive-card-table td:last-child { border-bottom: none !important; }
-    .responsive-card-table td::before {
-        content: attr(data-label);
-        font-size: 0.7rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: #8aa898;
-        flex-shrink: 0;
-        margin-right: 10px;
-    }
-    .responsive-card-table td.ps-4 { padding-left: 16px !important; }
-    .responsive-card-table td.pe-4 { padding-right: 16px !important; }
-}
 /* Force text colors in table to be dark */
 table.table tbody td { color: #000 !important; opacity: 1 !important; visibility: visible !important; }
 </style>
@@ -132,8 +90,8 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
                 <p class="text-muted small mb-0 mt-1">Daftar pesanan online khusus tanggal <?= date('d M Y', strtotime($date_filter)) ?>. (Debug: <?= count($orders) ?> found)</p>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive" style="min-height: 450px; padding-bottom: 100px;">
-                    <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
+                <div class="table-responsive responsive-card-table" style="min-height: 450px; padding-bottom: 100px;">
+                    <table class="table table-hover align-middle mb-0">
                         <thead class="" style="background: #f8faf9;">
                             <tr>
                                 <th class="ps-4 py-3 border-0 text-muted small fw-bold">JAM</th>

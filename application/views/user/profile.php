@@ -11,7 +11,7 @@
     ?>
         <link rel="icon" type="image/x-icon" href="<?= base_url('uploads/'.$sl) ?>">
     <?php endif; ?>
-    <title>Profil Saya | MariMatcha</title>
+    <title>Profil Saya | <?= $ci->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -154,7 +154,7 @@
                 <?php else: ?>
                     <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
                 <?php endif; ?>
-                <span>MariMatcha</span>
+                <span><?= $ci->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></span>
             </a>
             <div class="d-flex gap-2 align-items-center">
                 <a href="<?= base_url('user') ?>" class="nav-pill" style="border:none; color:var(--green-soft)"><i class="fa-solid fa-arrow-left me-1"></i>Kembali</a>

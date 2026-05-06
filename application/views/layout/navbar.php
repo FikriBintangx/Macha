@@ -188,7 +188,7 @@ $session_userid = $ci->session->userdata('userid'); // Gunakan 'userid' sesuai A
             <?php else: ?>
                 <i class="fa-solid fa-leaf text-success me-2 fs-3"></i>
             <?php endif; ?>
-            <span class="fw-bold fs-4" style="color: var(--green-dark); letter-spacing: -0.5px;">MariMatcha</span>
+            <span class="fw-bold fs-4" style="color: var(--green-dark); letter-spacing: -0.5px;"><?= $this->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></span>
         </a>
 
         <!-- Toggler -->
