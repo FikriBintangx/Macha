@@ -3642,10 +3642,14 @@
       tourSteps.push({ element: '#iosNavGuest', popover: { title: 'Mobile Floating Bar', description: 'Kalau kamu pakai HP, navigasi pintar ini bakal nemenin kamu terus di bawah layar.', side: "top", align: 'center' } });
     }
 
-    // Tambahkan sisa step
+    // Tambahkan sisa step untuk menjelajah seluruh halaman (tanpa label "Phase")
     tourSteps.push(
-      { element: '.btn-hero-primary', popover: { title: 'Mulai Pesanan', description: 'Atau langsung klik tombol ini kalau kamu udah nggak sabar pengen lihat menu Katalog kami!', side: "right", align: 'center' } },
-      { element: '.hero-stats', popover: { title: 'Kepercayaan Pelanggan', description: 'Bergabunglah bersama ratusan pelanggan lain yang puas dengan MariMatcha. Yuk pesan sekarang!', side: "top", align: 'center' } }
+      { element: '.hero-stats', popover: { title: 'Kepercayaan Pelanggan', description: 'Bergabunglah bersama ratusan pelanggan lain yang puas dengan MariMatcha. Kualitas terjamin!', side: "bottom", align: 'center' } },
+      { element: '#storySection', popover: { title: 'Cerita MariMatcha', description: 'Kenali lebih dekat dedikasi dan perjalanan kami dalam menyajikan racikan matcha paling otentik.', side: "top", align: 'center' } },
+      { element: '.btn-view-all', popover: { title: 'Eksplorasi Menu', description: 'Klik tombol ini untuk melihat seluruh katalog menu, varian rasa, dan produk best-seller kami.', side: "top", align: 'center' } },
+      { element: '#cara-pesan', popover: { title: 'Mudahnya Memesan', description: 'Nggak perlu bingung! Ini adalah alur praktis dari proses pemilihan menu sampai pesanan tiba di rumahmu.', side: "top", align: 'center' } },
+      { element: '#ulasan', popover: { title: 'Apa Kata Mereka?', description: 'Lihat rating dan review jujur dari para penikmat MariMatcha lainnya di sini.', side: "top", align: 'center' } },
+      { element: '#btnTourHome', popover: { title: 'Ulangi Panduan', description: 'Kamu selalu bisa mengklik tombol ini kapan pun kamu ingin mengulang panduan interaktif ini. Selamat menjelajah!', side: "top", align: 'center' } }
     );
 
     const tourDriverHome = driver({
