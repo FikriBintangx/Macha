@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ */
 class Auth extends CI_Controller {
 
     public function __construct() {
@@ -21,9 +26,12 @@ class Auth extends CI_Controller {
     public function process() {
         $post = $this->input->post(null, TRUE);
         if (isset($post['username']) && isset($post['password'])) {
+            $username = trim($post['username']);
+            $password = trim($post['password']);
+
             $user = $this->db->where([
-                'username' => trim($post['username']),
-                'password' => trim($post['password']),
+                'username' => $username,
+                'password' => $password,
             ])->get('users')->row_array();
 
             if ($user) {
@@ -36,10 +44,30 @@ class Auth extends CI_Controller {
                 $this->session->set_flashdata('welcome_msg',
                     $user['role'] == 'admin' ? 'Selamat datang Admin!' : 'Selamat datang, '.$user['full_name'].'!');
                 $this->_redirect_by_role($user['role']);
-            } else {
-                $this->session->set_flashdata('error', 'Username atau password salah.');
-                redirect('auth');
+                return;
             }
+
+            // Cek jika login sebagai Supplier (email atau name)
+            $supplier = $this->db->where('email', $username)->or_where('name', $username)->get('suppliers')->row_array();
+            if ($supplier && password_verify($password, $supplier['password'])) {
+                if ($supplier['status'] == 'active') {
+                    $session_data = [
+                        'supplier_id' => $supplier['id'],
+                        'supplier_name' => $supplier['name'],
+                        'supplier_email' => $supplier['email'],
+                        'supplier_logged_in' => TRUE
+                    ];
+                    $this->session->set_userdata($session_data);
+                    redirect('supplier/dashboard');
+                } else {
+                    $this->session->set_flashdata('error', 'Akun supplier tidak aktif.');
+                    redirect('auth');
+                }
+                return;
+            }
+
+            $this->session->set_flashdata('error', 'Username atau password salah.');
+            redirect('auth');
         } else {
             redirect('auth');
         }

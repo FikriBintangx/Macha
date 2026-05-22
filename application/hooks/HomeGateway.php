@@ -5,8 +5,8 @@ class HomeGateway {
 
     public function check_visit() {
         $CI =& get_instance();
-        $class = strtolower($CI->router->fetch_class());
-        $method = strtolower($CI->router->fetch_method());
+        $class = strtolower($CI->router->class);
+        $method = strtolower($CI->router->method);
         
         if (is_cli()) return;
 

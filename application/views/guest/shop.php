@@ -38,13 +38,41 @@
   .shop-banner p { font-size: 1.1rem; opacity: 0.8; max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
 
   .sticky-filters {
-    position: sticky; top: 80px; z-index: 100;
-    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(0,0,0,0.05); padding: 15px 0;
+    position: sticky; top: 95px; z-index: 100;
+    width: max-content;
+    max-width: 90%;
+    margin: -35px auto 40px; /* Overlap banner slightly */
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-radius: 50px; padding: 10px 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sticky-filters.scrolled {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    transform: scale(0.95);
+  }
+  
+  .filter-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    padding-bottom: 2px;
+  }
+  .filter-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
   }
   .filter-pill {
     padding: 8px 24px; border-radius: 50px; background: var(--white); border: 1px solid rgba(0,0,0,0.1);
     color: var(--green-main); font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: var(--transition);
+    flex-shrink: 0;
+  }
+  .sticky-filters.scrolled .filter-pill {
+    padding: 6px 16px;
+    font-size: 0.75rem;
   }
   .filter-pill.active { background: var(--green-main); color: var(--white); box-shadow: 0 10px 20px rgba(27, 59, 37, 0.2); }
 
@@ -112,15 +140,11 @@
 </div>
 
 <div class="sticky-filters">
-    <div class="container">
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-            <div class="filter-group d-flex gap-2 filter-scroll">
-                <button class="filter-pill active" data-cat="Semua">Semua Menu</button>
-                <?php foreach($categories as $c): ?>
-                    <button class="filter-pill" data-cat="<?= htmlspecialchars($c['category_name']) ?>"><?= htmlspecialchars($c['category_name']) ?></button>
-                <?php endforeach; ?>
-            </div>
-        </div>
+    <div class="filter-group d-flex gap-2 filter-scroll">
+        <button class="filter-pill active" data-cat="Semua">Semua Menu</button>
+        <?php foreach($categories as $c): ?>
+            <button class="filter-pill" data-cat="<?= htmlspecialchars($c['category_name']) ?>"><?= htmlspecialchars($c['category_name']) ?></button>
+        <?php endforeach; ?>
     </div>
 </div>
 
@@ -302,14 +326,18 @@
     const pModal = new bootstrap.Modal(document.getElementById('productModal'));
     
     function showToast(msg, type) {
-        const t = document.createElement('div');
-        t.className = 'toast-wrap';
-        t.innerHTML = `<div class="toast-custom ${type==='error'?'err':''}"><i class="fa-solid fa-circle-info me-2"></i> ${msg}</div>`;
-        document.body.appendChild(t);
-        setTimeout(() => {
-            t.style.opacity = '0';
-            setTimeout(() => t.remove(), 500);
-        }, 3000);
+        if (typeof window.showDynamicIslandNotif === 'function') {
+            window.showDynamicIslandNotif(msg, type);
+        } else {
+            const t = document.createElement('div');
+            t.className = 'toast-wrap';
+            t.innerHTML = `<div class="toast-custom ${type==='error'?'err':''}"><i class="fa-solid fa-circle-info me-2"></i> ${msg}</div>`;
+            document.body.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0';
+                setTimeout(() => t.remove(), 500);
+            }, 3000);
+        }
     }
 
     function syncCartBadge(count) {
@@ -465,10 +493,20 @@
 
         let lastY = window.scrollY;
         window.addEventListener('scroll', () => {
+            // iOS Nav hidden on scroll down
             const nav = document.getElementById('iosNav');
-            if(!nav) return;
-            if(window.scrollY > lastY && window.scrollY > 100) gsap.to(nav, { y: 100, opacity: 0 });
-            else gsap.to(nav, { y: 0, opacity: 1 });
+            if(nav) {
+                if(window.scrollY > lastY && window.scrollY > 100) gsap.to(nav, { y: 100, opacity: 0 });
+                else gsap.to(nav, { y: 0, opacity: 1 });
+            }
+            
+            // Sticky Filters Shrink
+            const filters = document.querySelector('.sticky-filters');
+            if(filters) {
+                if(window.scrollY > 150) filters.classList.add('scrolled');
+                else filters.classList.remove('scrolled');
+            }
+            
             lastY = window.scrollY;
         });
     });

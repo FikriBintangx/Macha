@@ -353,7 +353,7 @@
                     <div class="input-group">
                         <label class="input-label">Username</label>
                         <div class="input-field-wrap">
-                            <input type="text" name="username" class="auth-input" placeholder="Masukkan username" required>
+                            <input type="text" name="username" class="auth-input" placeholder="Masukkan username / email" required>
                             <i class="fa-solid fa-user input-icon"></i>
                         </div>
                     </div>

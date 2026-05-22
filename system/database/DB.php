@@ -61,6 +61,7 @@ function &DB($params = '', $query_builder_override = NULL)
 			show_error('The configuration file database.php does not exist.');
 		}
 
+		/** @var array $db */
 		include($file_path);
 
 		// Make packages contain database config files,

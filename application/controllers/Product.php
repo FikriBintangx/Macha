@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Upload $upload
+ * @property M_product $M_product
+ */
 class Product extends CI_Controller {
 
     public function __construct() {
@@ -195,7 +202,7 @@ class Product extends CI_Controller {
             return;
         }
 
-        $product = $this->db->get_where('products', ['id' => $id])->row();
+        $product = $this->db->where('id', $id)->get('products')->row();
         if ($product) {
             $image_path = './uploads/' . $product->image;
             $is_preset  = preg_match('/^maca\d+\.jpg$/', $product->image);

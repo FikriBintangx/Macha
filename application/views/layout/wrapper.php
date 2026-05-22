@@ -7,8 +7,10 @@ $notif_orders = [];
 $shop_logo = $CI->M_settings->get_setting('shop_logo');
 
 if (isset($CI->db)) {
-    $pending_count = $CI->db->where('status', 'pending')->count_all_results('sales');
-    $notif_orders = $CI->db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
+    /** @var CI_DB_query_builder $db */
+    $db = $CI->db;
+    $pending_count = $db->where('status', 'pending')->count_all_results('sales');
+    $notif_orders = $db->where('status', 'pending')->order_by('created_at', 'DESC')->limit(5)->get('sales')->result_array();
 }
 ?>
 
@@ -37,11 +39,31 @@ if (isset($CI->db)) {
             --green-dark: #102416;
             --green-main: #1B3B25;
             --green-light: #53725D;
+            --tertiary: #8BAA7C;
             --cream: #F5F5F0;
-            /* Premium Organic Cream */
             --sidebar-bg: #1B3B25;
             --sidebar-sec: #53725D;
             --glass: rgba(255, 255, 255, 0.7);
+
+            /* Spacing Tokens */
+            --space-micro: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+
+            /* Radius Tokens */
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 28px;
+            --radius-xl: 35px;
+            
+            /* Typography Tokens */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-md: 1rem;
+            --text-lg: 1.25rem;
+            --text-xl: 2rem;
         }
 
         * {
@@ -173,9 +195,9 @@ if (isset($CI->db)) {
         }
 
         .nav-link.active {
-            background: linear-gradient(135deg, var(--green-main), #52b788);
+            background: rgba(255, 255, 255, 0.08);
             color: #fff !important;
-            box-shadow: 0 4px 14px rgba(64, 145, 108, .35);
+            box-shadow: inset 4px 0 0 var(--tertiary), inset 15px 0 20px rgba(139, 170, 124, 0.05);
         }
 
         .nav-badge {
@@ -265,7 +287,7 @@ if (isset($CI->db)) {
             justify-content: center;
             color: #6b9080;
             cursor: pointer;
-            transition: .2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none;
             position: relative;
         }
@@ -273,6 +295,7 @@ if (isset($CI->db)) {
         .topbar-btn:hover {
             background: #e8f4ee;
             color: var(--green-main);
+            transform: scale(1.08);
         }
 
         .notif-dot {
@@ -531,18 +554,19 @@ if (isset($CI->db)) {
 
         /* ─── STAT CARDS ─── */
         .stat-card {
-            border-radius: 18px;
-            padding: 24px;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
             color: #fff;
             position: relative;
             overflow: hidden;
             border: none;
-            transition: transform .25s, box-shadow .25s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, .15);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 10;
         }
 
         .stat-card .sc-icon {

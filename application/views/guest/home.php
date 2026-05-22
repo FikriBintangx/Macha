@@ -2219,23 +2219,14 @@
         border-radius: 20px;
       }
 
-      /* Make Floating Cart easier to tap on mobile */
+      /* Hide Floating Cart on mobile because ios-navbar-guest is used */
       .floating-cart {
-        width: auto !important;
-        padding: 0 24px;
-        height: 56px;
-        border-radius: 28px;
-        font-size: 1.1rem;
-        gap: 12px;
-        bottom: 20px;
-        right: 20px;
-        box-shadow: 0 10px 25px rgba(16, 36, 22, 0.5);
+        display: none !important;
       }
-
-      .floating-cart::after {
-        content: 'Lihat Keranjang';
-        font-weight: 800;
-        font-size: 0.95rem;
+      
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
       }
     }
   </style>
@@ -2261,79 +2252,9 @@
 
 
   <!-- ══════════ NAVBAR ══════════ -->
-  <nav class="navbar navbar-expand-lg navbar-macha fixed-top" id="mainNav">
-    <div class="container position-relative">
-      <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
-        <?php if (!empty($shop_logo)): ?>
-          <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo"
-            style="height: 60px; width: auto; object-fit: contain; margin-right: 12px;">
-        <?php else: ?>
-          <i class="fa-solid fa-leaf me-2" style="color:var(--green-main)"></i>
-        <?php endif; ?>
-        <span>MariMatcha</span>
+  <?php $this->load->view('layout/navbar'); ?>
 
-        <?php $is_open = $this->M_settings->is_shop_open(); ?>
-        <div class="shop-status-pill">
-          <div class="status-dot <?= $is_open ? 'open' : 'closed' ?>"></div>
-          <?= $is_open ? 'Buka' : 'Tutup' ?>
-        </div>
-      </a>
-      <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
-        aria-controls="navMain" aria-expanded="false">
-        <i class="fa-solid fa-bars-staggered" style="color:var(--green-dark);font-size:1.4rem"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navMain">
-        <ul class="navbar-nav mx-auto gap-1">
-          <li class="nav-item"><a class="nav-link active-link" href="<?= base_url(); ?>">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="<?= base_url('shop'); ?>">Katalog</a></li>
-          <li class="nav-item"><a class="nav-link" href="#ulasan">Ulasan</a></li>
-          <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
-          <li class="nav-item"><a class="nav-link" href="#cara-pesan">Cara Pesan</a></li>
-        </ul>
-        <div class="d-flex align-items-center gap-1 gap-xl-2 flex-nowrap mt-3 mt-lg-0">
-          <?php
-          $cart = $this->session->userdata('cart') ?? [];
-          $cart_count = count($cart);
-          ?>
-          <?php if ($this->session->userdata('role') != 'admin'): ?>
-            <a href="<?= base_url('shop/cart') ?>" class="btn-hdr-out position-relative px-2 px-xl-3"
-              style="font-size: 0.85rem;">
-              <i class="fa-solid fa-cart-shopping"></i>
-              <span class="d-none d-sm-inline">Keranjang</span>
-              <?php if ($cart_count > 0): ?>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  style="font-size:0.55rem; padding: 4px 6px;"><?= $cart_count ?></span>
-              <?php endif; ?>
-            </a>
-          <?php endif; ?>
-          <?php if ($this->session->userdata('userid')): ?>
-            <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"
-              class="btn-hdr px-3" style="font-size: 0.85rem;">
-              <i class="fa-solid fa-user"></i> <span class="d-none d-xl-inline">Akun Saya</span>
-            </a>
-          <?php else: ?>
-            <div class="d-flex gap-1 gap-xl-2 flex-nowrap">
-              <a href="<?= base_url('auth') ?>" class="btn-hdr-out px-2 px-xl-3" style="font-size: 0.85rem;">Masuk</a>
-              <a href="<?= base_url('auth/register') ?>" class="btn-hdr px-2 px-xl-3"
-                style="font-size: 0.85rem;">Daftar</a>
-            </div>
-          <?php endif; ?>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ══════════ TOAST ══════════ -->
-  <?php if ($this->session->flashdata('success')): ?>
-    <div class="toast-wrap" id="toastWrap">
-      <div class="toast-custom">
-        <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
-        <div class="toast-msg"><?= $this->session->flashdata('success') ?></div>
-        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
-      </div>
-    </div>
-  <?php endif; ?>
-
+  <!-- Toast removed, now handled by navbar Dynamic Island -->
   <!-- ══════════ HERO IMMERSIVE ZOOM WRAPPER ══════════ -->
   <section class="hero-zoom-outer">
     <div class="hero-fixed-container">
@@ -2922,11 +2843,12 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 5%;
+      padding-bottom: 50px; /* Push content up slightly */
       opacity: 0;
       visibility: hidden;
       will-change: transform, opacity, filter;
@@ -2941,6 +2863,7 @@
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
       max-width: 1100px;
       margin: 0 auto;
+      transform: translateY(-20px); /* Move card up visually */
     }
 
 
@@ -3239,10 +3162,14 @@
 
 
   <!-- ══════════ FLOATING CART ══════════ -->
-  <?php if ($cart_count > 0): ?>
-    <a href="<?= base_url('shop/cart') ?>" class="floating-cart" title="Lihat Keranjang (<?= $cart_count ?> item)">
+  <?php 
+  $cart = $this->session->userdata('cart') ?? [];
+  $current_cart_count = is_array($cart) ? count($cart) : 0;
+  if ($current_cart_count > 0): 
+  ?>
+    <a href="<?= base_url('shop/cart') ?>" class="floating-cart" title="Lihat Keranjang (<?= $current_cart_count ?> item)">
       <i class="fa-solid fa-cart-shopping"></i>
-      <span class="fc-badge"><?= $cart_count ?></span>
+      <span class="fc-badge"><?= $current_cart_count ?></span>
     </a>
   <?php endif; ?>
 
@@ -3461,64 +3388,64 @@
           ease: "none"
         }, 0);
 
-        // --- PHASE 01: Reveal & Move Left ---
+        // --- PHASE 01: Reveal & Move Up (Shadcn Sleek Style) ---
         storyTl.fromTo(slides[0], {
-          scale: 0.5,
+          y: 80,
           opacity: 0,
           visibility: "visible"
         }, {
-          scale: 1,
+          y: 0,
           opacity: 1,
           duration: 1,
-          ease: "back.out(1.2)"
+          ease: "power4.out"
         })
         .to(slides[0], {
-          x: window.innerWidth < 768 ? -200 : -400,
+          y: -150,
           opacity: 0,
-          scale: 0.8,
-          filter: window.innerWidth < 768 ? "blur(4px)" : "blur(10px)",
+          scale: 0.95,
+          filter: "blur(8px)",
           duration: 1,
-          ease: "power2.in"
-        }, "+=0.5");
+          ease: "power3.inOut"
+        }, "+=0.6");
 
-        // --- PHASE 02: Reveal & Move Right ---
+        // --- PHASE 02: Reveal & Move Up ---
         storyTl.fromTo(slides[1], {
-          scale: 0.5,
+          y: 80,
           opacity: 0,
           visibility: "visible"
         }, {
-          scale: 1,
+          y: 0,
           opacity: 1,
           duration: 1,
-          ease: "back.out(1.2)"
+          ease: "power4.out"
         }, "-=0.2")
         .to(slides[1], {
-          x: 400,
+          y: -150,
           opacity: 0,
-          scale: 0.8,
-          filter: "blur(10px)",
+          scale: 0.95,
+          filter: "blur(8px)",
           duration: 1,
-          ease: "power2.in"
-        }, "+=0.5");
+          ease: "power3.inOut"
+        }, "+=0.6");
 
-        // --- PHASE 03: Reveal & Final Zoom Pass-Through ---
+        // --- PHASE 03: Reveal & Final Zoom ---
         storyTl.fromTo(slides[2], {
-          scale: 0.5,
+          y: 80,
           opacity: 0,
           visibility: "visible"
         }, {
-          scale: 1,
+          y: 0,
           opacity: 1,
           duration: 1,
-          ease: "back.out(1.2)"
+          ease: "power4.out"
         }, "-=0.2")
         .to(slides[2], {
-          scale: 15,
+          scale: 1.2,
           opacity: 0,
-          filter: "blur(30px)",
-          duration: 1.5,
-          ease: "power4.in"
-        }, "+=0.5");
+          filter: "blur(20px)",
+          duration: 1.2,
+          ease: "power4.inOut"
+        }, "+=0.8");
 
         // Background color transition
         ScrollTrigger.create({
@@ -3704,9 +3631,16 @@
       <span>Ulasan</span>
     </a>
     <a href="<?= base_url('shop/cart'); ?>"
-      class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>">
+      class="ios-nav-item <?= (strpos(current_url(), 'cart') !== false) ? 'active' : '' ?>" style="position: relative;">
       <i class="fa-solid fa-cart-shopping"></i>
       <span>Cart</span>
+      <?php 
+      $cart_mobile = $this->session->userdata('cart') ?? [];
+      $cart_count_mobile = is_array($cart_mobile) ? count($cart_mobile) : 0;
+      if ($cart_count_mobile > 0): 
+      ?>
+          <span style="position:absolute; top:-5px; right:12px; background:#e53e3e; color:#fff; font-size:0.65rem; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid #fff;"><?= $cart_count_mobile ?></span>
+      <?php endif; ?>
     </a>
     <?php if ($this->session->userdata('userid')): ?>
       <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>"

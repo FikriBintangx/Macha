@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Island Navbar Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --green-dark: #102416;
+            --green-main: #1B3B25;
+            --tertiary: #8BAA7C;
+            --cream: #F5F5F0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--cream);
+            height: 200vh; /* To simulate scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 150px;
+        }
+
+        /* DYNAMIC ISLAND BASE */
+        .dynamic-island {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+            width: 500px;
+            background: rgba(27, 59, 37, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(27, 59, 37, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: white;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+
+        /* INNER CONTENT */
+        .di-logo {
+            font-size: 1.2rem;
+            color: var(--tertiary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .di-links {
+            display: flex;
+            gap: 25px;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+
+        .di-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.8;
+            transition: 0.2s;
+        }
+
+        .di-links a:hover {
+            opacity: 1;
+            color: var(--tertiary);
+        }
+
+        .di-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            white-space: nowrap;
+        }
+
+        .di-icons i {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .di-icons i:hover { color: var(--tertiary); }
+
+        .cart-wrap { position: relative; }
+        .cart-badge {
+            position: absolute;
+            top: -5px; right: -8px;
+            background: #E63946;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            width: 16px; height: 16px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            border: 2px solid var(--green-main);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* NOTIFICATION STATE (Hidden by default) */
+        .di-notif {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            height: 24px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            color: var(--tertiary);
+            font-weight: 600;
+        }
+
+        .di-notif-track {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .di-notif-item {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        /* SEARCH STATE (Hidden by default) */
+        .di-search {
+            position: absolute;
+            left: 50%;
+            bottom: 15px;
+            transform: translateX(-50%);
+            width: 80%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .di-search input {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 15px;
+            padding: 10px 15px;
+            color: white;
+            font-family: 'Outfit';
+            outline: none;
+        }
+
+        /* =========================================
+           STATES CLASSES
+           ========================================= */
+        
+        /* 1. Shrink (Scrolled) */
+        .dynamic-island.shrink {
+            width: 150px; /* Only show logo and cart */
+        }
+        .dynamic-island.shrink .di-links, 
+        .dynamic-island.shrink .di-logo span {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* 2. Add to Cart (Expand horizontally) */
+        .dynamic-island.notif {
+            width: 450px;
+            background: var(--green-dark);
+        }
+        .dynamic-island.notif .di-links { opacity: 0; visibility: hidden; }
+        .dynamic-island.notif .di-notif { opacity: 1; visibility: visible; }
+
+        /* 3. Search (Expand vertically) */
+        .dynamic-island.search {
+            height: 120px;
+            border-radius: 25px;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+        .dynamic-island.search .di-search { opacity: 1; visibility: visible; }
+
+        /* Demo Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: var(--green-main);
+            color: white;
+            font-family: 'Outfit';
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover { background: var(--tertiary); color: var(--green-dark); }
+        .title { text-align: center; color: var(--green-main); }
+    </style>
+</head>
+<body>
+
+    <!-- THE DYNAMIC ISLAND -->
+    <nav class="dynamic-island" id="island">
+        <!-- Logo -->
+        <div class="di-logo">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Macha</span>
+        </div>
+
+        <!-- Links -->
+        <div class="di-links" id="links">
+            <a href="#">Beranda</a>
+            <a href="#">Produk</a>
+            <a href="#">Cerita</a>
+        </div>
+
+        <!-- Icons -->
+        <div class="di-icons">
+            <i class="fa-solid fa-magnifying-glass" onclick="toggleSearch()"></i>
+            <div class="cart-wrap">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div class="cart-badge" id="badge">0</div>
+            </div>
+        </div>
+
+        <!-- Notification Content -->
+        <div class="di-notif">
+            <div class="di-notif-track" id="notif-track">
+                <div class="di-notif-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Matcha Latte ditambahkan!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Content -->
+        <div class="di-search">
+            <input type="text" placeholder="Cari matcha favoritmu...">
+        </div>
+    </nav>
+
+
+    <div class="title">
+        <h1>Simulasi Dynamic Island Navbar</h1>
+        <p>Coba klik tombol di bawah ini atau <strong>Scroll ke bawah</strong> untuk melihat interaksi.</p>
+    </div>
+
+    <!-- Controls to simulate actions -->
+    <div class="controls">
+        <button onclick="simulateAddToCart()">Simulasi "Tambah Keranjang"</button>
+        <button onclick="toggleSearch()">Toggle Form Pencarian</button>
+        <button onclick="resetIsland()">Reset Default</button>
+    </div>
+
+    <script>
+        const island = document.getElementById('island');
+        const badge = document.getElementById('badge');
+        let cartCount = 0;
+        let isSearchOpen = false;
+
+        // 1. SCROLL INTERACTION (Shrink)
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50 && !island.classList.contains('notif') && !island.classList.contains('search')) {
+                island.classList.add('shrink');
+            } else {
+                island.classList.remove('shrink');
+            }
+        });
+
+        // Hover to un-shrink
+        island.addEventListener('mouseenter', () => {
+            if(island.classList.contains('shrink')) {
+                island.classList.remove('shrink');
+            }
+        });
+
+        const products = ['Matcha Latte', 'Sakura Tea', 'Hojicha', 'Sencha', 'Oolong'];
+
+        // 2. ADD TO CART INTERACTION
+        function simulateAddToCart() {
+            island.className = 'dynamic-island notif'; // apply notif state
+            
+            const track = document.getElementById('notif-track');
+            const product = products[Math.floor(Math.random() * products.length)];
+            
+            // Add new item to track
+            const newItem = document.createElement('div');
+            newItem.className = 'di-notif-item';
+            newItem.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${product} ditambahkan!</span>`;
+            track.appendChild(newItem);
+
+            // trigger reflow
+            void track.offsetWidth;
+
+            // Move track up by 24px for each new item (except the first one which is already 0)
+            const itemsCount = track.children.length;
+            track.style.transform = `translateY(-${(itemsCount - 1) * 24}px)`;
+
+            // Pop effect on badge
+            badge.style.transform = 'scale(0)';
+            
+            setTimeout(() => {
+                cartCount++;
+                badge.innerText = cartCount;
+                badge.style.transform = 'scale(1.5)';
+            }, 300);
+
+            // Revert after 2.5 seconds
+            if (window.notifTimeout) clearTimeout(window.notifTimeout);
+            window.notifTimeout = setTimeout(() => {
+                badge.style.transform = 'scale(1)';
+                resetIsland();
+            }, 2500);
+        }
+
+        // 3. SEARCH INTERACTION
+        function toggleSearch() {
+            isSearchOpen = !isSearchOpen;
+            if(isSearchOpen) {
+                island.className = 'dynamic-island search';
+            } else {
+                resetIsland();
+            }
+        }
+
+        function resetIsland() {
+            island.className = 'dynamic-island';
+            if(window.scrollY > 50) {
+                island.classList.add('shrink');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -75,7 +75,7 @@ class Order extends CI_Controller {
         $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
         if(in_array($status, $valid_status)) {
             // Get current order info for points awarding
-            $order = $this->db->get_where('sales', ['id' => $id])->row();
+            $order = $this->db->where('id', $id)->get('sales')->row();
             
             if ($status == 'completed' && $order->status != 'completed' && !empty($order->user_id)) {
                 $points = floor($order->total_price / 10000);
@@ -107,7 +107,7 @@ class Order extends CI_Controller {
         $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
         if(in_array($status, $valid_status)) {
             // Get current order info for points awarding
-            $order = $this->db->get_where('sales', ['id' => $id])->row();
+            $order = $this->db->where('id', $id)->get('sales')->row();
             
             if ($status == 'completed' && $order->status != 'completed' && !empty($order->user_id)) {
                 $points = floor($order->total_price / 10000);
@@ -139,7 +139,7 @@ class Order extends CI_Controller {
 
     // Hapus pesanan (hanya pending/canceled yang boleh dihapus)
     public function delete($id) {
-        $order = $this->db->get_where('sales', ['id' => $id])->row_array();
+        $order = $this->db->where('id', $id)->get('sales')->row_array();
         
         if (!$order) {
             $this->session->set_flashdata('error', 'Pesanan tidak ditemukan.');
@@ -154,7 +154,7 @@ class Order extends CI_Controller {
             return;
         }
 
-        $details = $this->db->get_where('sales_detail', ['sales_id' => $id])->result_array();
+        $details = $this->db->where('sales_id', $id)->get('sales_detail')->result_array();
         foreach ($details as $d) {
             $this->db->set('stock', 'stock + ' . (int)$d['qty'], FALSE);
             $this->db->where('id', $d['product_id']);
