@@ -245,13 +245,15 @@
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding: 8px 15px;
+            justify-content: space-evenly;
+            gap: 2px;
+            padding: 8px 5px;
             border-radius: 50px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             z-index: 9000;
             border: 1px solid rgba(255,255,255,0.2);
-            width: max-content;
+            width: 95%;
+            max-width: 400px;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -262,10 +264,11 @@
             justify-content: center;
             text-decoration: none !important;
             color: #6b8e7b;
-            padding: 8px 12px;
+            padding: 6px 2px;
             border-radius: 20px;
             transition: all 0.3s ease;
-            min-width: 60px;
+            flex: 1;
+            text-align: center;
         }
 
         .ios-nav-item i { font-size: 1.2rem; margin-bottom: 4px; transition: 0.3s; }
