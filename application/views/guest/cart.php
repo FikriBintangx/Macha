@@ -220,7 +220,17 @@
         .page-overlay.show { display: flex; }
 
         @media (max-width: 768px) {
-            .summary-glass { margin-top: 30px; position: static; padding: 30px; }
+            .summary-glass { margin-top: 30px; position: static; padding: 25px; border-radius: 25px; }
+            .cart-card { padding: 16px; border-radius: 20px; }
+            .item-row { gap: 12px; align-items: flex-start; }
+            .item-img { width: 85px; height: 85px; border-radius: 16px; }
+            .item-name { font-size: 1.05rem; }
+            .qty-control { margin-top: 10px; }
+            .btn-remove { top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 10px; }
+            .pref-wrap { margin-top: 15px; padding-top: 12px; }
+            .pref-pill { padding: 6px 12px; font-size: 0.7rem; }
+            .ios-navbar-guest { width: 95%; max-width: 360px; justify-content: space-between; padding: 8px 10px; }
+            .ios-nav-item { min-width: auto; padding: 8px; }
         }
 
         /* ─── iOS FLOATING BAR (GUEST) ─── */

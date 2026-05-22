@@ -16,6 +16,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
 
   <!-- Smooth Scroll (Lenis) -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
@@ -398,16 +400,16 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      padding: 8px 20px;
+      padding: 8px 15px;
       border-radius: 40px;
       z-index: 10000;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.8);
       width: 90%;
-      max-width: 360px;
+      max-width: 380px;
       justify-content: space-around;
       align-items: center;
     }
@@ -420,15 +422,26 @@
       text-decoration: none;
       font-size: 0.65rem;
       font-weight: 700;
-      gap: 2px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 6px 14px;
+      border-radius: 20px;
+      gap: 3px;
     }
 
     .ios-nav-item i {
       font-size: 1.3rem;
+      margin-bottom: 2px;
+      transition: all 0.3s ease;
     }
 
     .ios-nav-item.active {
+      background: rgba(27, 59, 37, 0.08);
       color: var(--green-main);
+    }
+
+    .ios-nav-item.active i {
+      transform: translateY(-2px) scale(1.05);
     }
 
     @media (max-width: 768px) {
@@ -2278,8 +2291,8 @@
                 <a href="<?= base_url('shop') ?>" class="btn-hero-primary">
                   <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
                 </a>
-                <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk" target="_blank" rel="noopener noreferrer" class="btn-hero-wa">
-                  <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Tanya via WA
+                <a href="javascript:void(0)" id="btnTourHome" class="btn-hero-wa" style="border-color: var(--tertiary); color: var(--green-dark);">
+                  <i class="fa-solid fa-map-location-dot" style="font-size:1.2rem"></i> Panduan Web
                 </a>
               </div>
 
@@ -3614,6 +3627,44 @@
 
       ScrollTrigger.refresh();
     });
+
+    // ─── TOUR DRIVER.JS HOME ───
+    const driver = window.driver.js.driver;
+    
+    // Siapkan step dasar
+    let tourSteps = [
+      { popover: { title: 'Welcome to MariMatcha! 🍃', description: 'Siap untuk merasakan matcha premium terbaik? Mari kita mulai tour singkat ini.' } },
+      { element: '.navbar-macha', popover: { title: 'Menu Navigasi', description: 'Gunakan navigasi utama ini untuk pindah ke Katalog Menu, melihat Keranjang, atau masuk ke Akun kamu.', side: "bottom", align: 'center' } }
+    ];
+
+    // Cek jika di perangkat mobile, tambahkan panduan mobile navbar
+    if (window.innerWidth < 992) {
+      tourSteps.push({ element: '#iosNavGuest', popover: { title: 'Mobile Floating Bar', description: 'Kalau kamu pakai HP, navigasi pintar ini bakal nemenin kamu terus di bawah layar.', side: "top", align: 'center' } });
+    }
+
+    // Tambahkan sisa step
+    tourSteps.push(
+      { element: '.btn-hero-primary', popover: { title: 'Mulai Pesanan', description: 'Atau langsung klik tombol ini kalau kamu udah nggak sabar pengen lihat menu Katalog kami!', side: "right", align: 'center' } },
+      { element: '.hero-stats', popover: { title: 'Kepercayaan Pelanggan', description: 'Bergabunglah bersama ratusan pelanggan lain yang puas dengan MariMatcha. Yuk pesan sekarang!', side: "top", align: 'center' } }
+    );
+
+    const tourDriverHome = driver({
+      showProgress: true,
+      animate: true,
+      nextBtnText: 'Lanjut',
+      prevBtnText: 'Kembali',
+      doneBtnText: 'Selesai',
+      onHighlightStarted: (element) => {
+        if (element && element.classList && element.classList.contains('navbar-macha')) {
+            element.classList.remove('scrolled'); // Memaksa lebarin navbar
+        }
+      },
+      steps: tourSteps
+    });
+
+    document.getElementById('btnTourHome').addEventListener('click', () => {
+        tourDriverHome.drive();
+    });
   </script>
   <!-- ══════════ IOS FLOATING BAR (GUEST) ══════════ -->
   <nav class="ios-navbar-guest" id="iosNavGuest">
@@ -3657,19 +3708,8 @@
   </nav>
 
   <script>
-    // Auto-hide Guest Pill Bar on Scroll
-    let lastScrollYGuest = window.scrollY;
-    window.addEventListener('scroll', () => {
-      const iosNav = document.getElementById('iosNavGuest');
-      if (!iosNav) return;
-
-      if (window.scrollY > lastScrollYGuest && window.scrollY > 100) {
-        gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
-      } else {
-        gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
-      }
-      lastScrollYGuest = window.scrollY;
-    });
+    // Navigation bar functionality logic can go here.
+    // Auto-hide feature has been disabled to keep it persistent.
   </script>
 </body>
 

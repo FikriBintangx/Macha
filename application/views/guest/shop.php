@@ -15,6 +15,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css"/>
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
 <style>
   :root {
     --green-dark: #102416;
@@ -107,14 +109,14 @@
   
   .ios-navbar-guest {
     position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-    background: rgba(16, 36, 22, 0.9); backdrop-filter: blur(20px); border-radius: 40px;
-    padding: 10px 25px; display: flex; gap: 15px; z-index: 1000; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 40px;
+    padding: 8px 15px; display: flex; justify-content: space-around; align-items: center; width: 90%; max-width: 380px; z-index: 10000; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8);
   }
-  .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.65rem; font-weight: 700; transition: all 0.3s ease; position: relative; min-width: 55px; }
-  .ios-nav-item i { font-size: 1.2rem; margin-bottom: 4px; transition: all 0.3s ease; }
-  .ios-nav-item.active { color: #8BAA7C; }
-  .ios-nav-item.active i { transform: translateY(-3px); }
-  .fc-badge { position: absolute; top: -5px; right: 8px; background: #ff4757; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; font-weight: 900; min-width: 18px; text-align: center; display: flex; align-items: center; justify-content: center; border: 2px solid #102416; }
+  .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--green-light); text-decoration: none; font-size: 0.65rem; font-weight: 700; transition: all 0.3s ease; position: relative; padding: 6px 14px; border-radius: 20px; gap: 3px; }
+  .ios-nav-item i { font-size: 1.3rem; margin-bottom: 2px; transition: all 0.3s ease; }
+  .ios-nav-item.active { background: rgba(27, 59, 37, 0.08); color: var(--green-main); }
+  .ios-nav-item.active i { transform: translateY(-2px) scale(1.05); }
+  .fc-badge { position: absolute; top: 0px; right: 5px; background: #e53e3e; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 50%; font-weight: 800; min-width: 20px; height: 20px; text-align: center; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
 
   .toast-wrap { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999; }
   .toast-custom { background: var(--green-dark); color: white; padding: 16px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 15px 40px rgba(0,0,0,0.2); display: flex; align-items: center; border-left: 5px solid var(--tertiary); animation: slideDown 0.5s ease; }
@@ -128,6 +130,21 @@
   @media (orientation: landscape) and (max-height: 500px) {
     .ios-navbar-guest { display: none !important; }
   }
+  
+  /* ─── RESPONSIVE CARD FIX ─── */
+  @media (max-width: 767px) {
+    .product-body { padding: 15px; }
+    .product-img-wrap { height: 180px; }
+    .product-name { font-size: 1.05rem; margin-bottom: 8px; }
+    .product-price { font-size: 1.15rem; margin-bottom: 12px; }
+    .btn-detail-macha { width: 40px; height: 40px; border-radius: 12px; }
+    .btn-premium-cart { height: 40px; border-radius: 12px; padding: 0 10px; font-size: 0.8rem; }
+    .btn-premium-cart i { margin-right: 4px; }
+  }
+  @media (max-width: 380px) {
+    .btn-premium-cart span { display: none; }
+    .btn-premium-cart { justify-content: center; padding: 0; }
+  }
 </style>
 </head>
 <body>
@@ -137,6 +154,9 @@
 <div class="shop-banner">
     <h1>Koleksi Premium</h1>
     <p>Rasakan kemurnian matcha Jepang terbaik yang dipilih khusus untuk kesegaran harimu.</p>
+    <button class="btn btn-outline-light rounded-pill mt-3 px-4 fw-bold shadow-sm" id="btnTour" style="position: relative; z-index: 2;">
+        <i class="fa-solid fa-map-location-dot me-2"></i>Panduan Menu
+    </button>
 </div>
 
 <div class="sticky-filters">
@@ -509,6 +529,27 @@
             
             lastY = window.scrollY;
         });
+    });
+
+    // ─── TOUR DRIVER.JS ───
+    const driver = window.driver.js.driver;
+    const tourDriver = driver({
+      showProgress: true,
+      animate: true,
+      nextBtnText: 'Lanjut',
+      prevBtnText: 'Kembali',
+      doneBtnText: 'Selesai',
+      steps: [
+        { popover: { title: 'Selamat Datang! 🍵', description: 'Mari kita kenali cara memesan minuman favoritmu di MariMatcha.' } },
+        { element: '.sticky-filters', popover: { title: 'Kategori Menu', description: 'Kamu bisa memfilter minuman berdasarkan kategori seperti Best Seller, Coffee, dll di sini.', side: "bottom", align: 'center' } },
+        { element: '.prod-card:first-child', popover: { title: 'Detail Produk', description: 'Klik foto minuman untuk melihat deskripsi lengkap dan memberikan review atau melihat review pelanggan lain!', side: "right", align: 'start' } },
+        { element: '.prod-card:first-child .btn-add-cart', popover: { title: 'Masukkan Keranjang', description: 'Pilih produk yang kamu inginkan dan klik tombol ini. Jangan lupa untuk mengatur preferensi (Less Sugar, Extra Ice, dll) nanti di Keranjang!', side: "bottom", align: 'center' } },
+        { element: '#iosNav', popover: { title: 'Navigasi Pintar', description: 'Gunakan navigasi di bawah ini untuk berpindah halaman atau melihat Keranjang kamu saat di HP.', side: "top", align: 'center' } }
+      ]
+    });
+
+    document.getElementById('btnTour').addEventListener('click', () => {
+        tourDriver.drive();
     });
 </script>
 </body>

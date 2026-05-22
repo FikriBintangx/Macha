@@ -228,6 +228,31 @@
     }
     .btn-premium:active { transform: translateY(-2px); }
 
+    .btn-back-home {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        color: rgba(255,255,255,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: var(--transition);
+        z-index: 100;
+        border: 1px solid rgba(255,255,255,0.1);
+        font-size: 1.1rem;
+    }
+    .btn-back-home:hover {
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        transform: rotate(90deg);
+        border-color: transparent;
+    }
+
     /* LINKS & FOOTER */
     .auth-links-row {
         display: flex;
@@ -334,6 +359,11 @@
     <!-- RIGHT CONTENT -->
     <div class="auth-content">
         <div class="glass-card" id="mainCard">
+            <!-- BACK BUTTON -->
+            <a href="<?= base_url() ?>" class="btn-back-home" title="Kembali ke Beranda">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+
             <!-- NOTIF -->
             <div class="notif-bar <?= $this->session->flashdata('error') ? 'error show' : '' ?>" id="notifErr">
                 <?= $this->session->flashdata('error') ?>
