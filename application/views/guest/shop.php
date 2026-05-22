@@ -110,9 +110,9 @@
   .ios-navbar-guest {
     position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 40px;
-    padding: 8px 15px; display: flex; justify-content: space-around; align-items: center; width: 90%; max-width: 380px; z-index: 10000; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8);
+    padding: 8px 5px; display: flex; justify-content: space-evenly; align-items: center; width: 95%; max-width: 400px; z-index: 10000; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8); gap: 2px;
   }
-  .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--green-light); text-decoration: none; font-size: 0.65rem; font-weight: 700; transition: all 0.3s ease; position: relative; padding: 6px 14px; border-radius: 20px; gap: 3px; }
+  .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--green-light); text-decoration: none; font-size: 0.6rem; font-weight: 700; transition: all 0.3s ease; position: relative; padding: 6px 2px; border-radius: 20px; gap: 3px; flex: 1; text-align: center; }
   .ios-nav-item i { font-size: 1.3rem; margin-bottom: 2px; transition: all 0.3s ease; }
   .ios-nav-item.active { background: rgba(27, 59, 37, 0.08); color: var(--green-main); }
   .ios-nav-item.active i { transform: translateY(-2px) scale(1.05); }

@@ -229,8 +229,9 @@
             .btn-remove { top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 10px; }
             .pref-wrap { margin-top: 15px; padding-top: 12px; }
             .pref-pill { padding: 6px 12px; font-size: 0.7rem; }
-            .ios-navbar-guest { width: 95%; max-width: 360px; justify-content: space-between; padding: 8px 10px; }
-            .ios-nav-item { min-width: auto; padding: 8px; }
+            .ios-navbar-guest { width: 95%; max-width: 400px; justify-content: space-evenly; padding: 8px 5px; gap: 2px; }
+            .ios-nav-item { min-width: auto; padding: 6px 2px; flex: 1; text-align: center; }
+            .ios-nav-item span { font-size: 0.6rem; letter-spacing: 0; }
         }
 
         /* ─── iOS FLOATING BAR (GUEST) ─── */
