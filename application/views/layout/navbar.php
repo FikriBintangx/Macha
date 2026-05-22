@@ -89,7 +89,8 @@ if ($ci->session->flashdata('success')) {
 
     /* SCROLLED / SHRINK STATE */
     .navbar-macha.scrolled:not(:hover) {
-        width: 330px;
+        width: 90%;
+        max-width: 330px;
         height: 60px;
         top: 15px;
         border-radius: 40px;
@@ -97,7 +98,8 @@ if ($ci->session->flashdata('success')) {
     }
     
     .navbar-macha.scrolled:not(:hover).notif-active {
-        width: 480px;
+        width: 95%;
+        max-width: 480px;
     }
 
     .navbar-macha.scrolled:not(:hover) .hide-on-scroll {

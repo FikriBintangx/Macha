@@ -19,11 +19,14 @@
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--cream);
             color: var(--text);
-            overflow-x: hidden;
             padding-top: 100px;
         }
 
@@ -237,23 +240,23 @@
         /* ─── iOS FLOATING BAR (GUEST) ─── */
         .ios-navbar-guest {
             position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8);
+            bottom: 0;
+            left: 0;
+            transform: none;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
             justify-content: space-evenly;
             gap: 2px;
-            padding: 8px 5px;
-            border-radius: 50px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            padding: 10px 5px;
+            border-radius: 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
             z-index: 9000;
-            border: 1px solid rgba(255,255,255,0.2);
-            width: 95%;
-            max-width: 400px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            width: 100%;
+            max-width: none;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 

@@ -29,7 +29,8 @@
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+  html, body { max-width: 100vw; overflow-x: hidden; }
+  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); }
 
   .shop-banner {
     background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-main) 100%);
@@ -108,9 +109,9 @@
   .star-btn.fa-solid { color:#f59e0b; }
   
   .ios-navbar-guest {
-    position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 40px;
-    padding: 8px 5px; display: flex; justify-content: space-evenly; align-items: center; width: 95%; max-width: 400px; z-index: 10000; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8); gap: 2px;
+    position: fixed; bottom: 0; left: 0; transform: none;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 0;
+    padding: 10px 5px; display: flex; justify-content: space-evenly; align-items: center; width: 100%; max-width: none; z-index: 10000; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.2); gap: 2px;
   }
   .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--green-light); text-decoration: none; font-size: 0.6rem; font-weight: 700; transition: all 0.3s ease; position: relative; padding: 6px 2px; border-radius: 20px; gap: 3px; flex: 1; text-align: center; }
   .ios-nav-item i { font-size: 1.3rem; margin-bottom: 2px; transition: all 0.3s ease; }

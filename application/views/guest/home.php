@@ -397,19 +397,19 @@
     .ios-navbar-guest {
       display: none;
       position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 0;
+      left: 0;
+      transform: none;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      padding: 8px 5px;
-      border-radius: 40px;
+      padding: 10px 5px;
+      border-radius: 0;
       z-index: 10000;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      width: 95%;
-      max-width: 400px;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+      max-width: none;
       justify-content: space-evenly;
       align-items: center;
       gap: 2px;
