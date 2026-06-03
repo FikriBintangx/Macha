@@ -46,6 +46,16 @@
         .btn-back:hover { color:var(--green-dark); }
 
         .flash-err { background:#fde8e8; border-left:4px solid #e53e3e; border-radius:12px; padding:14px 20px; color:#9b1c1c; margin-bottom:20px; border:none; }
+
+        @media (max-width: 768px) {
+            body { padding-top: 100px; }
+            .upload-card { border-radius: 18px; margin: 0 10px; }
+            .upload-header { padding: 20px 24px; }
+            .upload-body { padding: 24px; }
+            .amount-box { padding: 15px; }
+            .amount-box .amount { font-size: 1.6rem; }
+            .file-zone { padding: 25px 15px; }
+        }
     </style>
 </head>
 <body>

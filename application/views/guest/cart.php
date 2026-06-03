@@ -235,6 +235,7 @@
             .ios-navbar-guest { width: 95%; max-width: 400px; justify-content: space-evenly; padding: 8px 5px; gap: 2px; }
             .ios-nav-item { min-width: auto; padding: 6px 2px; flex: 1; text-align: center; }
             .ios-nav-item span { font-size: 0.6rem; letter-spacing: 0; }
+            .cart-container { padding-bottom: 120px; margin-top: 25px; }
         }
 
         /* ─── iOS FLOATING BAR (GUEST) ─── */
