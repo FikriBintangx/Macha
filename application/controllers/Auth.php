@@ -168,8 +168,22 @@ class Auth extends CI_Controller {
         redirect('auth');
     }
 
+    private function _ensure_user_columns() {
+        $this->load->dbforge();
+        if ($this->db->table_exists('users') && !$this->db->field_exists('email', 'users')) {
+            $this->dbforge->add_column('users', [
+                'email'          => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'oauth_provider' => ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE],
+                'oauth_uid'      => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'profile_image'  => ['type' => 'TEXT', 'null' => TRUE]
+            ]);
+        }
+    }
+
     // ─── GOOGLE LOGIN (FIREBASE) ─────────────────────────
     public function google_login() {
+        $this->_ensure_user_columns();
+        
         $email = $this->input->post('email', TRUE);
         $name = $this->input->post('display_name', TRUE);
         $uid = $this->input->post('uid', TRUE);
