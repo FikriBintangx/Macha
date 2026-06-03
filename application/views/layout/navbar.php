@@ -308,6 +308,18 @@ if ($ci->session->flashdata('success')) {
             transform: none !important;
             margin: 0 !important;
         }
+        
+        /* CART MENU SPECIAL LAYOUT: BOTTOM NAVBAR */
+        body.cart-page-body .navbar-macha {
+            top: auto !important;
+            bottom: 20px !important;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.15) !important;
+        }
+        body.cart-page-body .search-results-dropdown {
+            top: auto !important;
+            bottom: calc(100% + 15px) !important;
+        }
+
         .nav-content-default { padding: 0 15px; justify-content: space-between; }
         
         .navbar-macha.scrolled:not(.is-hovered) { 

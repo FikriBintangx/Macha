@@ -238,7 +238,7 @@
         }
     </style>
 </head>
-<body>
+<body class="cart-page-body">
     <div class="page-overlay" id="pageOverlay">
         <div class="text-center">
             <div class="spinner-grow text-success mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
