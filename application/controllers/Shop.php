@@ -263,6 +263,12 @@ class Shop extends CI_Controller
 
     public function checkout()
     {
+        if (!$this->session->userdata('userid')) {
+            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk melakukan pesanan.');
+            redirect('auth');
+            return;
+        }
+        
         if ($this->session->userdata('role') == 'admin') {
             redirect('dashboard');
             return;
