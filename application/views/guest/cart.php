@@ -224,10 +224,10 @@
 
         @media (max-width: 768px) {
             body { padding-top: 80px; }
-            .cart-container { padding-bottom: 50px; margin-top: 30px; }
-            .summary-glass { margin-top: 30px; position: static; padding: 25px; border-radius: 24px; box-shadow: 0 10px 40px rgba(16, 36, 22, 0.15); }
+            .cart-container { padding-bottom: 50px; margin-top: 10px; padding-left: 15px; padding-right: 15px; }
+            .summary-glass { margin-top: 20px; position: static; padding: 20px; border-radius: 20px; box-shadow: 0 10px 40px rgba(16, 36, 22, 0.15); }
             
-            .cart-card { padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+            .cart-card { padding: 15px; border-radius: 16px; margin-bottom: 15px; }
             .item-row { gap: 15px; align-items: stretch; }
             .item-img { width: 90px; height: 90px; border-radius: 16px; }
             .item-info { display: flex; flex-direction: column; justify-content: center; }

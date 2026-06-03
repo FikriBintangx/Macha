@@ -45,8 +45,10 @@ if ($ci->session->flashdata('success')) {
         z-index: 1050;
         position: fixed;
         top: 25px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 auto !important;
+        transform: none !important;
         border-radius: 50px;
         width: 90%;
         max-width: 1000px;
@@ -299,9 +301,13 @@ if ($ci->session->flashdata('success')) {
     /* MOBILE OVERRIDES */
     @media (max-width: 991px) {
         .navbar-macha {
-            width: 95%;
-            top: 15px;
-            height: 60px;
+            width: 95% !important;
+            top: 15px !important;
+            height: 60px !important;
+            left: 0 !important;
+            right: 0 !important;
+            margin: 0 auto !important;
+            transform: none !important;
         }
         .nav-content-default { padding: 0 15px; justify-content: space-between; }
         .navbar-macha.scrolled:not(.is-hovered) { width: 95%; }
@@ -349,14 +355,6 @@ if ($ci->session->flashdata('success')) {
         transition: 0.2s;
     }
     .mobile-fullscreen-menu a:hover { color: var(--tertiary); }
-    .mobile-menu-close {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        color: #fff;
-        font-size: 2rem;
-        cursor: pointer;
-    }
 
     /* ─── DRIVER.JS CUSTOM THEME (MARIMATCHA PREMIUM) ─── */
     .driver-popover {
@@ -793,7 +791,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Mobile Fullscreen Menu -->
 <div class="mobile-fullscreen-menu" id="mobileMenu">
-    <i class="fa-solid fa-xmark mobile-menu-close" id="mobileMenuClose"></i>
     <a href="<?= base_url() ?>">Beranda</a>
     <a href="<?= base_url('shop') ?>">Katalog</a>
     <a href="<?= base_url('#tentang') ?>">Tentang</a>
@@ -808,18 +805,31 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenuClose = document.getElementById('mobileMenuClose');
     const mobileMenu = document.getElementById('mobileMenu');
     if(mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('open');
-        });
-        mobileMenuClose.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
+            mobileMenu.classList.toggle('open');
+            const icon = mobileMenuBtn.querySelector('i');
+            if(icon) {
+                if(mobileMenu.classList.contains('open')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                } else {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            }
         });
         const links = mobileMenu.querySelectorAll('a');
         links.forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                const icon = mobileMenuBtn.querySelector('i');
+                if(icon) {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            });
         });
     }
 });
