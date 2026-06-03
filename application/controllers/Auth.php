@@ -166,6 +166,71 @@ class Auth extends CI_Controller {
         redirect('auth');
     }
 
+    // ─── GOOGLE LOGIN (FIREBASE) ─────────────────────────
+    public function google_login() {
+        $email = $this->input->post('email', TRUE);
+        $name = $this->input->post('display_name', TRUE);
+        $uid = $this->input->post('uid', TRUE);
+        $photo = $this->input->post('photo_url', TRUE);
+
+        if (!$email || !$uid) {
+            echo json_encode(['status' => 'error', 'message' => 'Data tidak lengkap dari Google']);
+            return;
+        }
+
+        // Cek apakah user dengan email atau oauth_uid sudah ada
+        $user = $this->db->where('email', $email)
+                         ->or_where('oauth_uid', $uid)
+                         ->get('users')
+                         ->row_array();
+
+        if (!$user) {
+            // Jika belum ada, daftarkan otomatis
+            $username = explode('@', $email)[0] . rand(100, 999);
+            
+            $data = [
+                'username'       => $username,
+                'email'          => $email,
+                'password'       => password_hash($uid, PASSWORD_DEFAULT), // Dummy password
+                'full_name'      => $name ?: 'Pengguna Google',
+                'role'           => 'user',
+                'oauth_provider' => 'google',
+                'oauth_uid'      => $uid,
+                'created_at'     => date('Y-m-d H:i:s'),
+            ];
+            
+            if (!empty($photo)) {
+                $data['profile_image'] = $photo;
+            }
+
+            $this->db->insert('users', $data);
+            $user = $this->db->where('id', $this->db->insert_id())->get('users')->row_array();
+        } else {
+            // Update provider jika sebelumnya daftar manual tapi emailnya sama
+            if (empty($user['oauth_uid'])) {
+                $this->db->update('users', [
+                    'oauth_provider' => 'google',
+                    'oauth_uid'      => $uid
+                ], ['id' => $user['id']]);
+            }
+        }
+
+        // Set session
+        $this->session->set_userdata([
+            'userid'    => $user['id'],
+            'username'  => $user['username'],
+            'full_name' => $user['full_name'],
+            'role'      => $user['role'],
+        ]);
+        
+        $this->session->set_flashdata('welcome_msg', 'Selamat datang, '.$user['full_name'].'!');
+
+        echo json_encode([
+            'status' => 'success',
+            'redirect' => base_url($user['role'] == 'admin' ? 'dashboard' : 'home')
+        ]);
+    }
+
     // ─── LOGOUT ──────────────────────────────────────────
     public function logout() {
         $this->session->sess_destroy();

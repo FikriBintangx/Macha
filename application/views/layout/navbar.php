@@ -35,11 +35,11 @@ if ($ci->session->flashdata('success')) {
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         height: var(--navbar-height);
-        transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                    top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                    border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                    padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: width 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                    height 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                    top 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                    border-radius 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                    padding 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         will-change: width, height, top, border-radius, padding;
         border: 1px solid rgba(255,255,255,0.08);
         z-index: 1050;
@@ -51,7 +51,7 @@ if ($ci->session->flashdata('success')) {
         width: 90%;
         max-width: 1000px;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        overflow: hidden;
+        /* overflow: hidden; Dihapus agar dropdown tidak terpotong */
         padding: 0 !important;
     }
 
@@ -88,7 +88,7 @@ if ($ci->session->flashdata('success')) {
     }
 
     /* SCROLLED / SHRINK STATE */
-    .navbar-macha.scrolled:not(:hover) {
+    .navbar-macha.scrolled:not(.is-hovered) {
         width: 90%;
         max-width: 330px;
         height: 60px;
@@ -97,12 +97,12 @@ if ($ci->session->flashdata('success')) {
         padding: 0 25px;
     }
     
-    .navbar-macha.scrolled:not(:hover).notif-active {
+    .navbar-macha.scrolled:not(.is-hovered).notif-active {
         width: 95%;
         max-width: 480px;
     }
 
-    .navbar-macha.scrolled:not(:hover) .hide-on-scroll {
+    .navbar-macha.scrolled:not(.is-hovered) .hide-on-scroll {
         opacity: 0;
         visibility: hidden;
         max-width: 0;
@@ -111,16 +111,16 @@ if ($ci->session->flashdata('success')) {
         overflow: hidden;
     }
 
-    .navbar-macha.scrolled:not(:hover) .btn-macha-outline span {
+    .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline span {
         display: none;
     }
     
-    .navbar-macha.scrolled:not(:hover) .btn-macha-outline {
+    .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline {
         padding: 8px 12px;
     }
 
     .hide-on-scroll {
-        transition: opacity 0.3s ease, visibility 0.3s, max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity 0.5s ease, visibility 0.5s, max-width 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         opacity: 1;
         visibility: visible;
         max-width: 600px; /* Arbitrary large max-width for transition */
@@ -139,7 +139,7 @@ if ($ci->session->flashdata('success')) {
         border-radius: 50px;
         transition: height 0.4s ease;
     }
-    .navbar-macha.scrolled:not(:hover) .navbar-brand img {
+    .navbar-macha.scrolled:not(.is-hovered) .navbar-brand img {
         height: 35px;
     }
     .brand-text {
@@ -304,7 +304,7 @@ if ($ci->session->flashdata('success')) {
             height: 60px;
         }
         .nav-content-default { padding: 0 25px; }
-        .navbar-macha.scrolled:not(:hover) { width: 95%; }
+        .navbar-macha.scrolled:not(.is-hovered) { width: 95%; }
         .nav-links-wrap, .search-container, .brand-text { display: none !important; }
         .right-actions .btn-macha-filled span { display: none; }
         .breadcrumb-area { margin-top: 85px; }
@@ -504,18 +504,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Hover logic with delay to prevent stuttering
+    let hoverTimeout;
+    if (nav) {
+        nav.addEventListener('mouseenter', () => {
+            clearTimeout(hoverTimeout);
+            nav.classList.add('is-hovered');
+        });
+        nav.addEventListener('mouseleave', () => {
+            hoverTimeout = setTimeout(() => {
+                nav.classList.remove('is-hovered');
+            }, 150); // Mencegah stutter jika kursor lepas sedikit karena animasi size
+        });
+    }
+
     // Predictive Search Logic
+    let currentFocus = -1;
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             clearTimeout(debounce);
             const q = this.value.trim();
+            currentFocus = -1; // Reset focus on input
 
             if(q.length < 2) {
                 resultsDiv.style.display = 'none';
+                resultsDiv.innerHTML = '';
                 return;
             }
 
+            // Tampilkan state loading
+            resultsDiv.innerHTML = '<div class="p-3 text-center text-muted small"><i class="fa-solid fa-spinner fa-spin"></i> Mencari...</div>';
+            resultsDiv.style.display = 'block';
+
             debounce = setTimeout(() => {
+                // Pastikan input masih valid setelah delay
+                if(searchInput.value.trim().length < 2) {
+                    resultsDiv.style.display = 'none';
+                    return;
+                }
+
                 fetch(`<?= site_url('shop/search_ajax') ?>?q=${encodeURIComponent(q)}`)
                     .then(r => r.json())
                     .then(data => {
@@ -527,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     : `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=f4faf6&color=1B3B25`;
                                 
                                 html += `
-                                    <a href="javascript:void(0)" class="search-result-item" onclick="handleSearchClick(event, ${item.id})">
+                                    <a href="javascript:void(0)" class="search-result-item" onclick="handleSearchClick(event, ${item.id})" data-id="${item.id}">
                                         <img src="${img}" class="search-result-img" onerror="this.src='https://ui-avatars.com/api/?name=Matcha&background=f4faf6&color=1B3B25'">
                                         <div class="search-result-info">
                                             <span class="name">${item.name}</span>
@@ -537,15 +564,57 @@ document.addEventListener('DOMContentLoaded', function() {
                                 `;
                             });
                             resultsDiv.innerHTML = html;
-                            resultsDiv.style.display = 'block';
                         } else {
                             resultsDiv.innerHTML = '<div class="p-3 text-center text-muted small">Menu tidak ditemukan</div>';
-                            resultsDiv.style.display = 'block';
                         }
                     })
-                    .catch(e => console.error("Search Error:", e));
+                    .catch(e => {
+                        console.error("Search Error:", e);
+                        resultsDiv.innerHTML = '<div class="p-3 text-center text-danger small"><i class="fa-solid fa-circle-exclamation"></i> Gagal mengambil data</div>';
+                    });
             }, 300);
         });
+
+        // Keyboard Navigation (Atas/Bawah/Enter)
+        searchInput.addEventListener('keydown', function(e) {
+            const items = resultsDiv.querySelectorAll('.search-result-item');
+            if(items.length === 0) return;
+
+            if(e.key === 'ArrowDown') {
+                e.preventDefault();
+                currentFocus++;
+                addActive(items);
+            } else if(e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentFocus--;
+                addActive(items);
+            } else if(e.key === 'Enter') {
+                e.preventDefault();
+                if(currentFocus > -1) {
+                    if(items[currentFocus]) items[currentFocus].click();
+                } else if(items.length > 0) {
+                    items[0].click(); // Auto-select pertama jika tekan enter
+                }
+            }
+        });
+
+        function addActive(items) {
+            if(!items) return false;
+            removeActive(items);
+            if(currentFocus >= items.length) currentFocus = 0;
+            if(currentFocus < 0) currentFocus = (items.length - 1);
+            items[currentFocus].classList.add('active');
+            items[currentFocus].style.background = '#f4faf6'; 
+            // Auto-scroll ke item yang aktif
+            items[currentFocus].scrollIntoView({ block: "nearest" });
+        }
+
+        function removeActive(items) {
+            for(let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+                items[i].style.background = '';
+            }
+        }
     }
 
     // Close on click outside
@@ -587,6 +656,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset transform instantly just in case an animation is running
         navSlotWrapper.style.transition = 'none';
         navSlotWrapper.style.transform = 'translateY(0)';
+        nav.style.overflow = 'hidden'; // Tambahkan overflow hidden agar animasi tidak tembus
         // Force reflow
         void navSlotWrapper.offsetWidth;
 
@@ -630,6 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     navSlotWrapper.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
                     if(nav) nav.classList.remove('notif-active');
+                    nav.style.overflow = ''; // Kembalikan overflow agar search dropdown tampil
                 }, 50);
             }, 600);
         }

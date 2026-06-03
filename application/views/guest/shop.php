@@ -253,12 +253,12 @@
                 
                 <div class="row g-0">
                     <div class="col-lg-6">
-                        <div id="modalImgWrap" class="modal-img-container" style="background:#f8faf9; height:100%; min-height:550px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                        <div id="modalImgWrap" class="modal-img-container" style="background:#f8faf9; height:100%; min-height:400px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
                             <!-- Injected via JS -->
                         </div>
                     </div>
                     <div class="col-lg-6 bg-white">
-                        <div class="p-4 p-md-5 d-flex flex-column h-100">
+                        <div class="p-4 d-flex flex-column h-100">
                             <div class="mb-4">
                                 <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold mb-3" style="font-size: 0.7rem; letter-spacing: 1.5px; text-transform:uppercase;">Premium Matcha Series</span>
                                 <h2 id="modalName" class="display-5 fw-900 mb-3" style="color: var(--green-dark); line-height: 1.1; letter-spacing:-1.5px;"></h2>
@@ -266,34 +266,34 @@
                                     <div id="modalStars" class="fs-4 text-warning"></div>
                                     <span id="modalAvgText" class="text-muted fw-bold small"></span>
                                 </div>
-                                <div id="modalPrice" class="display-6 fw-950 text-success mb-4" style="letter-spacing:-1px;"></div>
-                                <div class="mb-4">
-                                    <h6 class="fw-bold text-uppercase text-muted mb-2" style="font-size:0.75rem; letter-spacing:1px;">Deskripsi</h6>
-                                    <p id="modalDesc" class="text-secondary" style="font-size: 1.05rem; line-height: 1.7;"></p>
+                                <div id="modalPrice" class="display-6 fw-950 text-success mb-3" style="letter-spacing:-1px;"></div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-uppercase text-muted mb-1" style="font-size:0.75rem; letter-spacing:1px;">Deskripsi</h6>
+                                    <p id="modalDesc" class="text-secondary mb-0" style="font-size: 1.05rem; line-height: 1.5;"></p>
                                 </div>
-                                <div id="modalStock" class="d-inline-block px-3 py-2 bg-light rounded-3 border fw-bold text-dark small mb-4"></div>
+                                <div id="modalStock" class="d-inline-block px-3 py-2 bg-light rounded-3 border fw-bold text-dark small mb-3"></div>
                             </div>
 
-                            <div class="mt-auto pt-4 border-top">
+                            <div class="mt-auto pt-3 border-top">
                                 <?php if($this->session->userdata('userid')): ?>
-                                    <div class="rating-input-wrap mb-4">
-                                        <h6 class="fw-bold mb-3">Beri Penilaian Rasa</h6>
-                                        <div class="d-flex gap-2 mb-3">
+                                    <div class="rating-input-wrap mb-3">
+                                        <h6 class="fw-bold mb-2">Beri Penilaian Rasa</h6>
+                                        <div class="d-flex gap-2 mb-2">
                                             <?php for($i=1;$i<=5;$i++): ?>
                                                 <i class="fa-regular fa-star star-btn fs-3" data-rate="<?= $i ?>" style="cursor:pointer; color:#f59e0b; transition: transform 0.2s;"></i>
                                             <?php endfor; ?>
                                             <input type="hidden" id="rateValue" value="0">
                                         </div>
-                                        <textarea id="rateComment" class="form-control border-0 shadow-none p-3 mb-3" rows="2" placeholder="Tulis review singkatmu..." style="background:#f8faf9; border-radius:15px; font-size:0.95rem;"></textarea>
-                                        <button type="button" class="btn btn-success w-100 rounded-pill fw-bold" onclick="window.submitRating()" style="height:50px; background:var(--green-main); border:none;">Kirim Review</button>
+                                        <textarea id="rateComment" class="form-control border-0 shadow-none p-2 mb-2" rows="2" placeholder="Tulis review singkatmu..." style="background:#f8faf9; border-radius:12px; font-size:0.9rem;"></textarea>
+                                        <button type="button" class="btn btn-success w-100 rounded-pill fw-bold" onclick="window.submitRating()" style="height:45px; background:var(--green-main); border:none;">Kirim Review</button>
                                     </div>
                                 <?php else: ?>
-                                    <div class="p-3 rounded-4 mb-4 text-center" style="background:#fffcf5; border:1px dashed #f59e0b;">
+                                    <div class="p-2 rounded-4 mb-3 text-center" style="background:#fffcf5; border:1px dashed #f59e0b;">
                                         <p class="small text-muted mb-0">Silakan <a href="<?= site_url('auth') ?>" class="fw-bold text-success">Login</a> untuk memberikan penilaian.</p>
                                     </div>
                                 <?php endif; ?>
 
-                                <button id="modalCartBtn" type="button" class="btn btn-dark w-100 rounded-pill px-4 fw-bold d-flex align-items-center justify-content-center gap-2" onclick="window.addToCartFromModal()" style="height:60px; font-size:1.1rem;">
+                                <button id="modalCartBtn" type="button" class="btn btn-dark w-100 rounded-pill px-4 fw-bold d-flex align-items-center justify-content-center gap-2" onclick="window.addToCartFromModal()" style="height:55px; font-size:1.05rem;">
                                     <i class="fa-solid fa-cart-plus fs-5"></i>
                                     <span>Tambah ke Keranjang</span>
                                 </button>

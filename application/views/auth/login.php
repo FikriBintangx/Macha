@@ -228,6 +228,32 @@
     }
     .btn-premium:active { transform: translateY(-2px); }
 
+    .btn-google {
+        width: 100%;
+        background: #ffffff;
+        color: #3f3f46;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 100px;
+        padding: 15px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .btn-google:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .btn-google img {
+        width: 20px; height: 20px;
+    }
+
     .btn-back-home {
         position: absolute;
         top: 25px;
@@ -409,6 +435,17 @@
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
+
+                <div class="d-flex align-items-center my-4" style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">
+                    <hr class="flex-grow-1 m-0" style="border-color: rgba(255,255,255,0.2);">
+                    <span class="mx-3">Atau masuk dengan</span>
+                    <hr class="flex-grow-1 m-0" style="border-color: rgba(255,255,255,0.2);">
+                </div>
+
+                <button type="button" class="btn-google" onclick="signInWithGoogle()" id="btnGoogleLogin">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                    <span>Masuk dengan Google</span>
+                </button>
 
                 <div class="auth-footer">
                     Belum punya akun? <a href="javascript:void(0)" onclick="switchForm('register')" class="highlight-link">Daftar sekarang</a>
@@ -593,6 +630,83 @@
         n.className = 'notif-bar show ' + type;
         setTimeout(() => n.classList.remove('show'), 4000);
     }
+</script>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+  // TODO: GANTI DENGAN FIREBASE CONFIG MILIKMU!
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3qIhEh1NF5JPbR2ZUMRfIFD_boUJS_OA",
+    authDomain: "macha-umkm.firebaseapp.com",
+    projectId: "macha-umkm",
+    storageBucket: "macha-umkm.firebasestorage.app",
+    messagingSenderId: "194613325888",
+    appId: "1:194613325888:web:93f0a9fb85332cf948afa5",
+    measurementId: "G-8EM8LXEYY6"
+  };
+
+  let app, auth, provider;
+  try {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      provider = new GoogleAuthProvider();
+  } catch (e) {
+      console.warn("Firebase belum dikonfigurasi. Ganti firebaseConfig di login.php");
+  }
+
+  window.signInWithGoogle = function() {
+      if (!auth) {
+          alert('Firebase belum dikonfigurasi. Harap masukkan config di file login.php');
+          return;
+      }
+      
+      const btn = document.getElementById('btnGoogleLogin');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+      btn.disabled = true;
+
+      signInWithPopup(auth, provider)
+        .then((result) => {
+            const user = result.user;
+            // Kirim data user ke backend CodeIgniter
+            const fd = new FormData();
+            fd.append('email', user.email);
+            fd.append('display_name', user.displayName);
+            fd.append('uid', user.uid);
+            fd.append('photo_url', user.photoURL);
+
+            fetch('<?= base_url("auth/google_login") ?>', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    showNotif('Login berhasil! Mengalihkan...', 'success');
+                    window.location.href = res.redirect;
+                } else {
+                    showNotif(res.message || 'Login gagal', 'error');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showNotif('Terjadi kesalahan server', 'error');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+
+        }).catch((error) => {
+            console.error(error);
+            showNotif('Autentikasi Google dibatalkan / gagal', 'error');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+  };
 </script>
 
 </body>
