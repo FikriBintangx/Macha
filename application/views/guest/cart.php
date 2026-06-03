@@ -30,15 +30,7 @@
             padding-top: 100px;
         }
 
-        /* ─── NAVBAR REFINED (Identical to Shop) ─── */
-        .navbar-macha {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-            padding: 12px 0;
-        }
-        .navbar-brand { font-weight: 900; font-size: 1.6rem; color: var(--green-dark) !important; letter-spacing: -1px; }
+
         
         .shop-status-pill {
             display: inline-flex;
