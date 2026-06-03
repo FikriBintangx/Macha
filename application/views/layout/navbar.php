@@ -219,20 +219,21 @@ if ($ci->session->flashdata('success')) {
         position: absolute;
         top: calc(100% + 15px);
         right: 0;
-        width: 320px;
-        background: #fff;
-        border-radius: 20px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        display: none;
-        overflow: hidden;
         z-index: 1100;
         border: 1px solid rgba(0,0,0,0.05);
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        width: 300px;
+        max-width: 90vw;
+        overflow: hidden;
+        display: none; /* hidden by default */
     }
     .search-result-item {
         display: flex;
         align-items: center;
         gap: 15px;
-        padding: 12px 18px;
+        padding: 12px 15px;
         text-decoration: none !important;
         color: var(--green-dark);
         transition: all 0.2s ease;
@@ -339,10 +340,10 @@ if ($ci->session->flashdata('success')) {
             opacity: 1; visibility: visible; max-width: 200px; overflow: visible;
         }
         
-        .search-input-group { background: transparent; padding: 6px; }
-        .search-input-group input { width: 0; padding: 0; opacity: 0; transition: all 0.4s ease; }
-        .search-input-group:focus-within { background: rgba(255,255,255,0.15); border-radius: 50px; }
-        .search-input-group:focus-within input { width: 100px; padding-left: 8px; opacity: 1; }
+        .search-input-group { background: transparent; padding: 6px; cursor: pointer; display: flex; align-items: center; }
+        .search-input-group input { width: 0; padding: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .search-input-group:focus-within { background: rgba(255,255,255,0.15); border-radius: 50px; padding: 6px 12px; }
+        .search-input-group:focus-within input { width: 130px; padding-left: 8px; opacity: 1; }
 
         .right-actions .btn-macha-filled span,
         .right-actions .btn-macha-outline span { display: none !important; }
@@ -505,10 +506,10 @@ if ($ci->session->flashdata('success')) {
             <div class="right-actions">
                 <!-- Predictive Search -->
                 <div class="search-container hide-on-scroll">
-                    <div class="search-input-group">
+                    <label class="search-input-group" for="navSearchInput">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
                         <input type="text" id="navSearchInput" placeholder="Cari menu..." autocomplete="off">
-                    </div>
+                    </label>
                     <div id="navSearchResults" class="search-results-dropdown"></div>
                 </div>
 
