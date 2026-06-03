@@ -72,6 +72,12 @@ if (isset($CI->db)) {
             padding: 0;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
             min-height: 100vh;
@@ -79,7 +85,6 @@ if (isset($CI->db)) {
             background-image: url("https://www.transparenttextures.com/patterns/p6.png");
             /* Subtle Paper Texture */
             color: #1a2e25;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }

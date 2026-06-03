@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --green-dark:#102416; --green-main:#1B3B25; --cream:#F5F5F0; }
+        html, body { overflow-x: hidden; width: 100%; max-width: 100%; }
         body { font-family:'Outfit',sans-serif; background:var(--cream); padding-top:90px; }
         
         .upload-card { background:#fff; border-radius:24px; box-shadow:0 10px 36px rgba(0,0,0,.07); overflow:hidden; }

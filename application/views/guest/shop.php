@@ -29,7 +29,7 @@
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { max-width: 100vw; overflow-x: hidden; }
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
   body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); }
 
   .shop-banner {

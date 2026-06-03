@@ -19,6 +19,12 @@
             --txt: #1B3B25;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--cream);
