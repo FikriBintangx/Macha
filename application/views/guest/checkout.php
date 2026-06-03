@@ -22,7 +22,7 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--cream);
-            padding-top: 72px;
+            padding-top: 90px;
             color: var(--txt);
             animation: fadeIn 0.4s ease-in;
         }
@@ -463,7 +463,7 @@
             box-shadow: 0 4px 10px rgba(27, 77, 62, .2);
         }
         @media (max-width: 768px) {
-            body { padding-top: 90px; }
+            body { padding-top: 80px; }
             .navbar-macha { padding: 10px 0; }
             .navbar-brand { font-size: 1.2rem; }
             .steps-bar { padding: 15px 0; margin-bottom: 20px; }

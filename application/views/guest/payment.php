@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --green-dark:#102416; --green-main:#1B3B25; --cream:#F5F5F0; }
-        body { font-family:'Outfit',sans-serif; background:var(--cream); padding-top:120px; }
+        body { font-family:'Outfit',sans-serif; background:var(--cream); padding-top:90px; }
         
         .upload-card { background:#fff; border-radius:24px; box-shadow:0 10px 36px rgba(0,0,0,.07); overflow:hidden; }
         .upload-header { background:linear-gradient(135deg, var(--green-dark), var(--green-main)); color:#fff; padding:28px 32px; }
@@ -48,7 +48,7 @@
         .flash-err { background:#fde8e8; border-left:4px solid #e53e3e; border-radius:12px; padding:14px 20px; color:#9b1c1c; margin-bottom:20px; border:none; }
 
         @media (max-width: 768px) {
-            body { padding-top: 100px; }
+            body { padding-top: 85px; }
             .upload-card { border-radius: 18px; margin: 0 10px; }
             .upload-header { padding: 20px 24px; }
             .upload-body { padding: 24px; }
