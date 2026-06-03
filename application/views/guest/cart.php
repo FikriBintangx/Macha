@@ -268,12 +268,31 @@
 
     <!-- Minimal Mobile Header (Only visible on mobile) -->
     <div class="cart-mobile-header">
-        <a href="javascript:history.back()" class="btn-back">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
+        <button class="btn-back" style="background:transparent; border:none;" onclick="toggleCartMenu(this)">
+            <i class="fa-solid fa-bars"></i>
+        </button>
         <div class="fw-black" style="color: var(--green-dark); font-size: 1.1rem;">Keranjang</div>
         <div style="width: 20px;"></div> <!-- Spacer for centering -->
     </div>
+    
+    <script>
+    function toggleCartMenu(btn) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if(mobileMenu) {
+            mobileMenu.classList.toggle('open');
+            const icon = btn.querySelector('i');
+            if(icon) {
+                if(mobileMenu.classList.contains('open')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                } else {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        }
+    }
+    </script>
 
     <!-- NAVBAR (Hidden on mobile via CSS) -->
     <?php $this->load->view('layout/navbar'); ?>
