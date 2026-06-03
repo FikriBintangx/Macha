@@ -22,7 +22,7 @@
             font-family: 'Outfit', sans-serif;
             background: var(--cream);
             min-height: 100vh;
-            padding-top: 120px;
+            padding-top: 95px;
             color: #1a2e25;
             display: flex;
             flex-direction: column;
@@ -50,6 +50,7 @@
             transform: translateY(-50%);
             font-size: 6rem;
             opacity: .12;
+            pointer-events: none;
         }
         .uh-avatar {
             width: 70px; height: 70px;
@@ -350,7 +351,7 @@
                     <p>Semoga harimu menyenangkan dan penuh rasa matcha! ☕</p>
                 </div>
             </div>
-            <div class="d-flex gap-2 flex-wrap">
+            <div class="d-flex gap-2 flex-wrap" style="position: relative; z-index: 2;">
                 <a href="#" onclick="document.querySelector('[data-filter=\'profile-settings\']').click(); return false;" class="btn-shop-hero" style="background:rgba(255,255,255,0.15); color:#fff; border:1.5px solid rgba(255,255,255,0.3); backdrop-filter:blur(4px);">
                     <i class="fa-solid fa-user-circle"></i>Profil
                 </a>
