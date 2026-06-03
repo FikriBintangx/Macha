@@ -309,11 +309,12 @@ if ($ci->session->flashdata('success')) {
             margin: 0 !important;
         }
         
-        /* CART MENU SPECIAL LAYOUT: BOTTOM NAVBAR */
+        /* CART MENU SPECIAL LAYOUT: DISTRACTION-FREE CART */
         body.cart-page-body .navbar-macha {
-            top: auto !important;
-            bottom: 20px !important;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.15) !important;
+            display: none !important;
+        }
+        body.cart-page-body .breadcrumb-area {
+            margin-top: 20px !important;
         }
         body.cart-page-body .search-results-dropdown {
             top: auto !important;
