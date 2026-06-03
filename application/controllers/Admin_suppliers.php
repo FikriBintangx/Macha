@@ -15,6 +15,26 @@ class Admin_suppliers extends CI_Controller {
             redirect('auth');
         }
         $this->load->database();
+        $this->_ensure_table_exists();
+    }
+
+    private function _ensure_table_exists() {
+        if (!$this->db->table_exists('suppliers')) {
+            $this->load->dbforge();
+            $fields = [
+                'id'         => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => TRUE],
+                'name'       => ['type' => 'VARCHAR', 'constraint' => '100'],
+                'email'      => ['type' => 'VARCHAR', 'constraint' => '100'],
+                'password'   => ['type' => 'VARCHAR', 'constraint' => '255'],
+                'phone'      => ['type' => 'VARCHAR', 'constraint' => '20', 'null' => TRUE],
+                'address'    => ['type' => 'TEXT', 'null' => TRUE],
+                'status'     => ['type' => 'ENUM("active","inactive")', 'default' => 'active'],
+                'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
+            ];
+            $this->dbforge->add_field($fields);
+            $this->dbforge->add_key('id', TRUE);
+            $this->dbforge->create_table('suppliers');
+        }
     }
 
     /**

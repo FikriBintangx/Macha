@@ -639,6 +639,7 @@ if (isset($CI->db)) {
                 width: 100%;
                 padding: 15px;
                 padding-top: 80px;
+                padding-bottom: 85px; /* Added for ios-navbar */
                 min-height: calc(100vh - 100px);
             }
 
@@ -738,6 +739,34 @@ if (isset($CI->db)) {
                 box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
             }
 
+            .ios-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: #8aa898;
+                font-size: 0.7rem;
+                font-weight: 600;
+                gap: 4px;
+                transition: all 0.3s ease;
+                width: 20%;
+                text-align: center;
+            }
+
+            .ios-nav-item i {
+                font-size: 1.4rem;
+                margin-bottom: -2px;
+            }
+
+            .ios-nav-item.active {
+                color: var(--green-main);
+                transform: translateY(-2px);
+            }
+            
+            .ios-nav-item:hover {
+                color: var(--green-main);
+            }
+
             .page-header-mobile {
                 display: block;
                 margin-bottom: 25px;
@@ -750,6 +779,7 @@ if (isset($CI->db)) {
                 font-weight: 800;
                 color: var(--green-main);
             }
+
         }
 
         .page-header-mobile {
