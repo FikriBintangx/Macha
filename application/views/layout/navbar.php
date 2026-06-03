@@ -300,19 +300,21 @@ if ($ci->session->flashdata('success')) {
     /* MOBILE OVERRIDES */
     @media (max-width: 991px) {
         .navbar-macha {
-            width: 95% !important;
+            width: calc(100% - 30px) !important;
             top: 15px !important;
             height: 60px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
+            left: 15px !important;
+            right: 15px !important;
+            transform: none !important;
             margin: 0 !important;
         }
         .nav-content-default { padding: 0 15px; justify-content: space-between; }
         
         .navbar-macha.scrolled:not(.is-hovered) { 
-            width: 90% !important; 
-            max-width: 260px !important;
+            width: 260px !important; 
+            max-width: calc(100% - 30px) !important;
             left: 50% !important; 
+            right: auto !important;
             transform: translateX(-50%) !important; 
             margin: 0 !important; 
         }
@@ -848,6 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                 }
+                
             });
         });
     }
