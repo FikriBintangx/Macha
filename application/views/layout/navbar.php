@@ -325,10 +325,10 @@ if ($ci->session->flashdata('success')) {
         .navbar-macha.scrolled:not(.is-hovered) { 
             width: 260px !important; 
             max-width: calc(100% - 30px) !important;
-            left: 50% !important; 
-            right: auto !important;
-            transform: translateX(-50%) !important; 
-            margin: 0 !important; 
+            left: 0 !important; 
+            right: 0 !important;
+            transform: none !important; 
+            margin: 0 auto !important; 
         }
         
         .nav-links-wrap, .brand-text { display: none !important; }
