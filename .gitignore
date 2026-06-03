@@ -1,5 +1,5 @@
 # CodeIgniter gitignore
-index.php
+/index.php
 license.txt
 user_guide/
 
