@@ -170,13 +170,23 @@ class Auth extends CI_Controller {
 
     private function _ensure_user_columns() {
         $this->load->dbforge();
-        if ($this->db->table_exists('users') && !$this->db->field_exists('email', 'users')) {
-            $this->dbforge->add_column('users', [
-                'email'          => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
-                'oauth_provider' => ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE],
-                'oauth_uid'      => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
-                'profile_image'  => ['type' => 'TEXT', 'null' => TRUE]
-            ]);
+        if ($this->db->table_exists('users')) {
+            $fields_to_add = [];
+            if (!$this->db->field_exists('email', 'users')) {
+                $fields_to_add['email'] = ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE];
+            }
+            if (!$this->db->field_exists('oauth_provider', 'users')) {
+                $fields_to_add['oauth_provider'] = ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE];
+            }
+            if (!$this->db->field_exists('oauth_uid', 'users')) {
+                $fields_to_add['oauth_uid'] = ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE];
+            }
+            if (!$this->db->field_exists('profile_image', 'users')) {
+                $fields_to_add['profile_image'] = ['type' => 'TEXT', 'null' => TRUE];
+            }
+            if (!empty($fields_to_add)) {
+                $this->dbforge->add_column('users', $fields_to_add);
+            }
         }
     }
 
