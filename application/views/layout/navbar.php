@@ -45,10 +45,9 @@ if ($ci->session->flashdata('success')) {
         z-index: 1050;
         position: fixed;
         top: 25px;
-        left: 0 !important;
-        right: 0 !important;
-        margin: 0 auto !important;
-        transform: none !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
         border-radius: 50px;
         width: 90%;
         max-width: 1000px;
@@ -304,15 +303,17 @@ if ($ci->session->flashdata('success')) {
             width: 95% !important;
             top: 15px !important;
             height: 60px !important;
-            left: 0 !important;
-            right: 0 !important;
-            margin: 0 auto !important;
+            left: 2.5% !important;
+            right: auto !important;
+            margin: 0 !important;
             transform: none !important;
         }
         .nav-content-default { padding: 0 15px; justify-content: space-between; }
-        .navbar-macha.scrolled:not(.is-hovered) { width: 95%; }
+        .navbar-macha.scrolled:not(.is-hovered) { width: 95% !important; left: 2.5% !important; transform: none !important; margin: 0 !important; }
         .nav-links-wrap, .search-container, .brand-text { display: none !important; }
-        .right-actions .btn-macha-filled span { display: none; }
+        .right-actions .btn-macha-filled span,
+        .right-actions .btn-macha-outline span { display: none !important; }
+        .right-actions .text-danger { display: none !important; }
         .breadcrumb-area { margin-top: 85px; }
         .mobile-menu-btn { display: flex !important; }
     }
