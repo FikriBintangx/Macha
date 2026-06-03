@@ -223,67 +223,28 @@
         .page-overlay.show { display: flex; }
 
         @media (max-width: 768px) {
-            .summary-glass { margin-top: 30px; position: static; padding: 25px; border-radius: 25px; }
-            .cart-card { padding: 16px; border-radius: 20px; }
-            .item-row { gap: 12px; align-items: flex-start; }
-            .item-img { width: 85px; height: 85px; border-radius: 16px; }
-            .item-name { font-size: 1.05rem; }
-            .qty-control { margin-top: 10px; }
-            .btn-remove { top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 10px; }
-            .pref-wrap { margin-top: 15px; padding-top: 12px; }
-            .pref-pill { padding: 6px 12px; font-size: 0.7rem; }
-            .ios-navbar-guest { width: 95%; max-width: 400px; justify-content: space-evenly; padding: 8px 5px; gap: 2px; }
-            .ios-nav-item { min-width: auto; padding: 6px 2px; flex: 1; text-align: center; }
-            .ios-nav-item span { font-size: 0.6rem; letter-spacing: 0; }
-            .cart-container { padding-bottom: 120px; margin-top: 25px; }
-        }
-
-        /* ─── iOS FLOATING BAR (GUEST) ─── */
-        .ios-navbar-guest {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            transform: none;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            gap: 2px;
-            padding: 10px 5px;
-            border-radius: 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            z-index: 9000;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            width: 100%;
-            max-width: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .ios-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none !important;
-            color: #6b8e7b;
-            padding: 6px 2px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-        }
-
-        .ios-nav-item i { font-size: 1.2rem; margin-bottom: 4px; transition: 0.3s; }
-        .ios-nav-item span { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
-        
-        .ios-nav-item:hover, .ios-nav-item.active { color: var(--green-dark); background: rgba(27, 59, 37, 0.05); }
-        .ios-nav-item.active i { transform: translateY(-2px); color: var(--green-main); }
-        .ios-nav-item.active span { opacity: 1; color: var(--green-main); }
-
-        @media (min-width: 992px) {
-            .ios-navbar-guest { display: none; }
+            body { padding-top: 80px; }
+            .cart-container { padding-bottom: 50px; margin-top: 30px; }
+            .summary-glass { margin-top: 30px; position: static; padding: 25px; border-radius: 24px; box-shadow: 0 10px 40px rgba(16, 36, 22, 0.15); }
+            
+            .cart-card { padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+            .item-row { gap: 15px; align-items: stretch; }
+            .item-img { width: 90px; height: 90px; border-radius: 16px; }
+            .item-info { display: flex; flex-direction: column; justify-content: center; }
+            .item-name { font-size: 1.1rem; line-height: 1.3; margin-bottom: 6px; }
+            .item-price { font-size: 0.95rem; margin-bottom: auto; }
+            
+            .qty-control { margin-top: 12px; }
+            .btn-remove { top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 12px; }
+            
+            .pref-wrap { margin-top: 15px; padding-top: 15px; }
+            .pref-pill { padding: 8px 14px; font-size: 0.75rem; border-radius: 12px; border: 1px solid #edf2ed; }
+            .pref-pill.active { border-color: var(--green-main); }
+            
+            .section-title { font-size: 1.8rem; margin-bottom: 20px; }
+            
+            /* Remove desktop specific features */
+            .text-end.d-none.d-md-block { display: none !important; }
         }
     </style>
 </head>
@@ -488,55 +449,7 @@
                     this.style.opacity = '0.7';
                 });
             }
-
-            // Auto-hide Nav on Scroll
-            let lastScrollY = window.scrollY;
-            window.addEventListener('scroll', () => {
-                const iosNav = document.getElementById('iosNav');
-                if (!iosNav) return;
-                if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                    gsap.to(iosNav, { y: 100, opacity: 0, duration: 0.3 });
-                } else {
-                    gsap.to(iosNav, { y: 0, opacity: 1, duration: 0.3 });
-                }
-                lastScrollY = window.scrollY;
-            });
         });
     </script>
-
-    <!-- iOS FLOATING BAR -->
-    <nav class="ios-navbar-guest" id="iosNav">
-        <a href="<?= base_url(); ?>" class="ios-nav-item">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
-        </a>
-        <a href="<?= base_url('shop'); ?>" class="ios-nav-item">
-            <i class="fa-solid fa-mug-hot"></i>
-            <span>Menu</span>
-        </a>
-        <a href="<?= base_url(); ?>#ulasan" class="ios-nav-item">
-            <i class="fa-solid fa-star"></i>
-            <span>Ulasan</span>
-        </a>
-        <a href="<?= base_url('shop/cart'); ?>" class="ios-nav-item active">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Cart</span>
-            <?php 
-                $cart_count = (isset($this->cart)) ? $this->cart->total_items() : 0;
-            ?>
-            <span class="fc-badge" style="<?= $cart_count > 0 ? 'display:flex; position:absolute; top:-5px; right:-5px; background:#e63946; color:#fff; border-radius:50%; min-width:18px; height:18px; font-size:0.6rem; align-items:center; justify-content:center; border:2px solid #fff;' : 'display:none' ?>"><?= $cart_count ?></span>
-        </a>
-        <?php if ($this->session->userdata('userid')): ?>
-            <a href="<?= ($this->session->userdata('role') == 'admin') ? base_url('dashboard') : base_url('user'); ?>" class="ios-nav-item">
-                <i class="fa-solid fa-user-circle"></i>
-                <span>Akun</span>
-            </a>
-        <?php else: ?>
-            <a href="<?= base_url('auth'); ?>" class="ios-nav-item">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                <span>Masuk</span>
-            </a>
-        <?php endif; ?>
-    </nav>
 </body>
 </html>
