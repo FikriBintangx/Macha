@@ -405,7 +405,7 @@
       -webkit-backdrop-filter: blur(20px);
       padding: 10px 5px;
       border-radius: 0;
-      z-index: 10000;
+      z-index: 1040;
       box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
       border-top: 1px solid rgba(255, 255, 255, 0.2);
       width: 100%;
