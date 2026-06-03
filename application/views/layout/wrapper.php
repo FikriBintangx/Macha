@@ -892,6 +892,12 @@ if (isset($CI->db)) {
                         <i class="bi bi-people-fill"></i> Pelanggan
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin_suppliers') ?>"
+                        class="nav-link <?= ($this->uri->segment(1) == 'admin_suppliers') ? 'active' : '' ?>">
+                        <i class="bi bi-truck"></i> Supplier
+                    </a>
+                </li>
 
                 <div class="nav-section">Laporan</div>
                 <li class="nav-item">
