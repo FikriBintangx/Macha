@@ -1499,15 +1499,17 @@
       }
     }
 
-    @media (max-width: 767px) {
-      .testi-item {
-        flex: 0 0 100%;
+      @media (max-width: 768px) {
+        .testi-item {
+          flex: 0 0 85%; /* Peek next/prev cards for better swipe affordance */
+        }
+        .testi-slider {
+          padding: 40px 0;
+        }
+        .testi-nav {
+          display: none; /* Hide buttons on mobile, native swipe is better */
+        }
       }
-
-      .testi-slider {
-        padding: 40px 0;
-      }
-    }
 
     .testi-stars {
       color: var(--accent);
@@ -3341,15 +3343,16 @@
 
       // 5. SCROLL PROGRESS & RESPONSIVE MENU
       // Testimonial Slider Navigation
-      function slideTesti(dir) {
+      window.slideTesti = function(dir) {
         const slider = document.getElementById('testiSlider');
-        const scrollAmount = slider.offsetWidth > 768 ? 400 : slider.offsetWidth;
+        if(!slider) return;
+        const scrollAmount = slider.offsetWidth > 768 ? 400 : slider.offsetWidth * 0.85;
         if (dir === 'left') {
           slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         } else {
           slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
-      }
+      };
 
       // Existing parallax & logic
       window.addEventListener('scroll', () => {
