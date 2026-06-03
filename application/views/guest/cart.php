@@ -212,9 +212,29 @@
         }
         .page-overlay.show { display: flex; }
 
+        /* Minimal Mobile Header */
+        .cart-mobile-header {
+            display: none;
+            padding: 15px 20px;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1040;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .cart-mobile-header .btn-back {
+            color: var(--green-dark);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
         @media (max-width: 768px) {
-            body { padding-top: 80px; }
-            .cart-container { padding-bottom: 50px; margin-top: 10px; padding-left: 15px; padding-right: 15px; }
+            body { padding-top: 70px; } /* Reduced padding since navbar is hidden */
+            .cart-mobile-header { display: flex; }
+            .cart-container { padding-bottom: 50px; margin-top: 5px; padding-left: 15px; padding-right: 15px; }
             .summary-glass { margin-top: 20px; position: static; padding: 20px; border-radius: 20px; box-shadow: 0 10px 40px rgba(16, 36, 22, 0.15); }
             
             .cart-card { padding: 15px; border-radius: 16px; margin-bottom: 15px; }
@@ -246,7 +266,16 @@
         </div>
     </div>
 
-    <!-- NAVBAR (Fixed Spacing & Spacing Bug Fix) -->
+    <!-- Minimal Mobile Header (Only visible on mobile) -->
+    <div class="cart-mobile-header">
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="fw-black" style="color: var(--green-dark); font-size: 1.1rem;">Keranjang</div>
+        <div style="width: 20px;"></div> <!-- Spacer for centering -->
+    </div>
+
+    <!-- NAVBAR (Hidden on mobile via CSS) -->
     <?php $this->load->view('layout/navbar'); ?>
 
     <div class="container cart-container">
