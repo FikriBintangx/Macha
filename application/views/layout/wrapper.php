@@ -256,15 +256,18 @@ if (isset($CI->db)) {
             left: var(--sidebar-w);
             right: 0;
             height: 68px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(233, 237, 233, 0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 28px;
             z-index: 900;
             gap: 16px;
+            transition: all 0.3s ease;
         }
 
         .page-title {
@@ -282,25 +285,30 @@ if (isset($CI->db)) {
         }
 
         .topbar-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             border: 1px solid #e5ebe5;
-            background: #f8fbf8;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6b9080;
+            color: #1a2e25;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none;
             position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .topbar-btn:hover {
             background: #e8f4ee;
             color: var(--green-main);
-            transform: scale(1.08);
+            transform: scale(1.05);
+        }
+
+        .topbar-btn:active {
+            transform: scale(0.95);
         }
 
         .notif-dot {
@@ -981,14 +989,19 @@ if (isset($CI->db)) {
     <!-- TOPBAR -->
         <header class="topbar">
             <!-- Mobile Toggle -->
-            <button id="mobileSidebarToggle" class="topbar-btn d-md-none me-2">
+            <button id="mobileSidebarToggle" class="topbar-btn d-md-none">
                 <i class="bi bi-list fs-4"></i>
             </button>
             
-            <div class="page-title"><?= $title ?></div>
+            <div class="page-title d-none d-md-block"><?= $title ?></div>
+            
+            <!-- Mobile Logo Center -->
+            <div class="d-md-none flex-grow-1 text-center fw-bold fs-5 text-success">
+                Macha UMKM
+            </div>
 
             <div class="topbar-actions">
-            <button onclick="toggleNotif()" class="topbar-btn">
+            <button onclick="toggleNotif()" class="topbar-btn position-relative">
                 <i class="bi bi-bell-fill"></i>
                 <?php if ($pending_count > 0): ?><span class="notif-dot"></span><?php endif; ?>
             </button>
@@ -996,7 +1009,7 @@ if (isset($CI->db)) {
                 <div class="name"><?= htmlspecialchars($this->session->userdata('full_name') ?? 'Admin') ?></div>
                 <div class="role">Administrator</div>
             </div>
-            <div class="avatar"><?= strtoupper(substr($this->session->userdata('full_name') ?? 'A', 0, 1)) ?></div>
+            <div class="avatar d-none d-md-flex"><?= strtoupper(substr($this->session->userdata('full_name') ?? 'A', 0, 1)) ?></div>
         </div>
 
         <!-- NOTIF DROPDOWN -->
@@ -1076,9 +1089,9 @@ if (isset($CI->db)) {
             }
 
             // Command Palette Activation
-            const paletteTrigger = document.getElementById('commandPaletteTrigger');
-        if (paletteEl) {
-            const cmdModal = new bootstrap.Modal(paletteEl);
+            const paletteEl = document.getElementById('commandPalette');
+            if (paletteEl) {
+                const cmdModal = new bootstrap.Modal(paletteEl);
             window.addEventListener('keydown', (e) => {
                 if (e.altKey && e.key === 'k') {
                     e.preventDefault();
