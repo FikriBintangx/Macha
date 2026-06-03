@@ -624,6 +624,7 @@ if (isset($CI->db)) {
             }
 
             .sidebar {
+                width: 280px;
                 transform: translateX(-100%);
                 box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
             }
