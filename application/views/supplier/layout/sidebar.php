@@ -1,5 +1,5 @@
     <!-- Sidebar -->
-    <aside class="w-64 glass flex-shrink-0 hidden md:flex flex-col">
+    <aside id="supplierSidebar" class="w-64 glass flex-shrink-0 flex flex-col fixed md:relative z-50 h-screen transition-transform transform -translate-x-full md:translate-x-0">
         <div class="h-16 flex items-center justify-center border-b border-gray-700">
             <h1 class="text-2xl font-bold text-matcha-light neon-text">Supplier<span class="text-white">Panel</span></h1>
         </div>
@@ -51,11 +51,36 @@
         </div>
     </aside>
 
+    <!-- Overlay for mobile sidebar -->
+    <div id="supplierOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('supplierSidebar');
+            const toggleBtn = document.getElementById('supplierSidebarToggle');
+            const overlay = document.getElementById('supplierOverlay');
+
+            if(toggleBtn && sidebar && overlay) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                });
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <!-- Top Navbar -->
         <header class="h-16 glass flex items-center justify-between px-6 z-10">
-            <div class="md:hidden">
+            <div class="flex items-center space-x-3 md:hidden">
+                <button id="supplierSidebarToggle" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
                 <h1 class="text-xl font-bold text-matcha-light">Supplier</h1>
             </div>
             <div class="hidden md:block text-xl font-semibold"><?= isset($title) ? $title : 'Dashboard' ?></div>

@@ -617,6 +617,7 @@ if (isset($CI->db)) {
 
             .sidebar.open {
                 transform: translateX(0);
+                z-index: 10001;
             }
 
             .topbar {
@@ -625,6 +626,7 @@ if (isset($CI->db)) {
                 height: 60px;
                 background: rgba(255, 255, 255, 0.98);
                 backdrop-filter: blur(10px);
+                z-index: 9999;
             }
 
             .main-content {
@@ -802,13 +804,15 @@ if (isset($CI->db)) {
             <span>Sistem</span>
         </a>
     </nav>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- SIDEBAR OVERLAY -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <!-- MAIN WRAPPER -->
+    <div class="d-flex w-100 h-100">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <a href="<?= base_url() ?>" class="sidebar-brand">
+        <!-- SIDEBAR COMPONENT -->
+        <aside class="sidebar" id="adminSidebar">
+            <a href="<?= base_url() ?>" class="sidebar-brand">
             <div class="brand-icon">
                 <?php if (!empty($shop_logo)): ?>
                     <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo"
@@ -934,12 +938,15 @@ if (isset($CI->db)) {
     </aside>
 
     <!-- TOPBAR -->
-    <header class="topbar">
-        <button class="topbar-btn d-md-none border-0" onclick="toggleSidebar()">
-            <i class="bi bi-list fs-5"></i>
-        </button>
-        <div class="page-title"><?= $title ?></div>
-        <div class="topbar-actions">
+        <header class="topbar">
+            <!-- Mobile Toggle -->
+            <button id="mobileSidebarToggle" class="topbar-btn d-md-none me-2">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+            
+            <div class="page-title"><?= $title ?></div>
+
+            <div class="topbar-actions">
             <button onclick="toggleNotif()" class="topbar-btn">
                 <i class="bi bi-bell-fill"></i>
                 <?php if ($pending_count > 0): ?><span class="notif-dot"></span><?php endif; ?>
@@ -1003,24 +1010,32 @@ if (isset($CI->db)) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+         <!-- Global UI Scripts -->
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
-        }
-
         function toggleNotif() {
             const drop = document.getElementById('notifDropdown');
             drop.style.display = (drop.style.display === 'flex') ? 'none' : 'flex';
         }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar Toggle Logic
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('mobileSidebarToggle');
 
+            if (toggleBtn && sidebar && overlay) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.add('open');
+                    overlay.classList.add('show');
+                });
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('show');
+                });
+            }
 
-        // Alt+K
-        const paletteEl = document.getElementById('commandPalette');
+            // Command Palette Activation
+            const paletteTrigger = document.getElementById('commandPaletteTrigger');
         if (paletteEl) {
             const cmdModal = new bootstrap.Modal(paletteEl);
             window.addEventListener('keydown', (e) => {

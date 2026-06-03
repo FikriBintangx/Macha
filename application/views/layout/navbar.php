@@ -303,11 +303,59 @@ if ($ci->session->flashdata('success')) {
             top: 15px;
             height: 60px;
         }
-        .nav-content-default { padding: 0 25px; }
+        .nav-content-default { padding: 0 15px; justify-content: space-between; }
         .navbar-macha.scrolled:not(.is-hovered) { width: 95%; }
         .nav-links-wrap, .search-container, .brand-text { display: none !important; }
         .right-actions .btn-macha-filled span { display: none; }
         .breadcrumb-area { margin-top: 85px; }
+        .mobile-menu-btn { display: flex !important; }
+    }
+    .mobile-menu-btn {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    /* MOBILE FULLSCREEN MENU */
+    .mobile-fullscreen-menu {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100vh;
+        background: rgba(16, 36, 22, 0.98);
+        backdrop-filter: blur(15px);
+        z-index: 1040;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.4s ease;
+    }
+    .mobile-fullscreen-menu.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .mobile-fullscreen-menu a {
+        color: #fff;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-decoration: none;
+        margin: 15px 0;
+        transition: 0.2s;
+    }
+    .mobile-fullscreen-menu a:hover { color: var(--tertiary); }
+    .mobile-menu-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
     }
 
     /* ─── DRIVER.JS CUSTOM THEME (MARIMATCHA PREMIUM) ─── */
@@ -399,12 +447,17 @@ if ($ci->session->flashdata('success')) {
 <nav class="navbar-macha" id="mainNav">
     <div class="nav-slot-wrapper" id="navSlotWrapper">
         <div class="nav-content-default" id="navContentDefault">
+            <!-- Mobile Menu Btn -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
             <!-- Brand -->
             <a class="navbar-brand" href="<?= base_url() ?>">
                 <?php if(!empty($global_shop_logo)): ?>
-                    <img src="<?= base_url('uploads/'.$global_shop_logo) ?>" alt="Logo">
+                    <img src="<?= base_url('uploads/'.$global_shop_logo) ?>" alt="Logo" class="d-none d-lg-block">
                 <?php else: ?>
-                    <i class="fa-solid fa-leaf" style="color: var(--tertiary); font-size: 1.5rem;"></i>
+                    <i class="fa-solid fa-leaf d-none d-lg-block" style="color: var(--tertiary); font-size: 1.5rem;"></i>
                 <?php endif; ?>
                 <span class="fw-bold fs-5 brand-text hide-on-scroll"><?= $this->M_settings->get_setting('shop_name') ?: 'MariMatcha' ?></span>
             </a>
@@ -735,5 +788,39 @@ document.addEventListener('DOMContentLoaded', function() {
     <?php if($has_notif): ?>
     window.showDynamicIslandNotif('<?= addslashes($notif_msg) ?>', '<?= $notif_type ?>');
     <?php endif; ?>
+});
+</script>
+
+<!-- Mobile Fullscreen Menu -->
+<div class="mobile-fullscreen-menu" id="mobileMenu">
+    <i class="fa-solid fa-xmark mobile-menu-close" id="mobileMenuClose"></i>
+    <a href="<?= base_url() ?>">Beranda</a>
+    <a href="<?= base_url('shop') ?>">Katalog</a>
+    <a href="<?= base_url('#tentang') ?>">Tentang</a>
+    <?php if($session_userid): ?>
+        <a href="<?= site_url('user/profile') ?>">Akun Saya</a>
+        <a href="<?= site_url('auth/logout') ?>" class="text-danger">Logout</a>
+    <?php else: ?>
+        <a href="<?= site_url('auth') ?>">Login</a>
+    <?php endif; ?>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+    }
 });
 </script>
