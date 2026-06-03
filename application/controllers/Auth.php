@@ -48,22 +48,24 @@ class Auth extends CI_Controller {
             }
 
             // Cek jika login sebagai Supplier (email atau name)
-            $supplier = $this->db->where('email', $username)->or_where('name', $username)->get('suppliers')->row_array();
-            if ($supplier && password_verify($password, $supplier['password'])) {
-                if ($supplier['status'] == 'active') {
-                    $session_data = [
-                        'supplier_id' => $supplier['id'],
-                        'supplier_name' => $supplier['name'],
-                        'supplier_email' => $supplier['email'],
-                        'supplier_logged_in' => TRUE
-                    ];
-                    $this->session->set_userdata($session_data);
-                    redirect('supplier/dashboard');
-                } else {
-                    $this->session->set_flashdata('error', 'Akun supplier tidak aktif.');
-                    redirect('auth');
+            if ($this->db->table_exists('suppliers')) {
+                $supplier = $this->db->where('email', $username)->or_where('name', $username)->get('suppliers')->row_array();
+                if ($supplier && password_verify($password, $supplier['password'])) {
+                    if ($supplier['status'] == 'active') {
+                        $session_data = [
+                            'supplier_id' => $supplier['id'],
+                            'supplier_name' => $supplier['name'],
+                            'supplier_email' => $supplier['email'],
+                            'supplier_logged_in' => TRUE
+                        ];
+                        $this->session->set_userdata($session_data);
+                        redirect('supplier/dashboard');
+                    } else {
+                        $this->session->set_flashdata('error', 'Akun supplier tidak aktif.');
+                        redirect('auth');
+                    }
+                    return;
                 }
-                return;
             }
 
             $this->session->set_flashdata('error', 'Username atau password salah.');
