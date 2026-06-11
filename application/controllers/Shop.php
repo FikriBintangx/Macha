@@ -64,6 +64,12 @@ class Shop extends CI_Controller
 
     public function add_to_cart($product_id)
     {
+        if (!$this->session->userdata('userid')) {
+            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk menambah ke keranjang.');
+            redirect('auth');
+            return;
+        }
+
         // Proteksi: Admin tidak boleh belanja
         if ($this->session->userdata('role') == 'admin') {
             $this->session->set_flashdata('error', 'Admin tidak diperbolehkan melakukan pemesanan.');
@@ -124,6 +130,11 @@ class Shop extends CI_Controller
             $reason = $this->M_settings->get_setting('shop_close_reason');
             $msg = $reason ? $reason : 'Maaf, toko sedang tutup. Silakan cek kembali nanti!';
             echo json_encode(['status' => 'error', 'message' => $msg]);
+            return;
+        }
+
+        if (!$this->session->userdata('userid')) {
+            echo json_encode(['status' => 'redirect', 'url' => site_url('auth')]);
             return;
         }
 

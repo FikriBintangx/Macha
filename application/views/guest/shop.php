@@ -436,6 +436,10 @@
         fetch('<?= site_url("shop/add_to_cart_ajax/") ?>' + id, { method: 'POST' })
             .then(r => r.json())
             .then(res => {
+                if(res.status === 'redirect') {
+                    window.location.href = res.url;
+                    return;
+                }
                 if(res.status === 'success') {
                     showToast(res.message, 'success');
                     syncCartBadge(res.cart_count);
