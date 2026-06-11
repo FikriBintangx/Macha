@@ -1,3 +1,0 @@
-deployment:
-  tasks:
-    - /bin/cp -R * /home/ti2b8143/public_html/macha.ti24se1.my.id/
