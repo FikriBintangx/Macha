@@ -31,8 +31,8 @@
             <div>
                 <label class="block text-sm font-medium text-gray-300 mb-1">Status</label>
                 <select name="status" class="w-full bg-dark-200 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-matcha-light">
-                    <option value="available">Available</option>
-                    <option value="out_of_stock">Out of Stock</option>
+                    <option value="active">Available</option>
+                    <option value="inactive">Out of Stock</option>
                 </select>
             </div>
         </div>

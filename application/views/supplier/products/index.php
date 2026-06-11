@@ -55,7 +55,7 @@
                             </span>
                         </td>
                         <td class="p-4">
-                            <?php if ($p['status'] == 'available'): ?>
+                            <?php if ($p['status'] == 'active'): ?>
                                 <span class="px-2 py-1 text-xs font-medium rounded-full border bg-matcha-dark/20 text-matcha-light border-matcha-dark/50">Available</span>
                             <?php else: ?>
                                 <span class="px-2 py-1 text-xs font-medium rounded-full border bg-red-500/20 text-red-500 border-red-500/50">Out of Stock</span>

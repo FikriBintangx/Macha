@@ -60,6 +60,21 @@ class Admin_suppliers extends CI_Controller {
     }
 
     /**
+     * Manajemen Bahan Produk Supplier
+     */
+    public function products() {
+        $this->load->model('Supplier_model');
+        $products = $this->Supplier_model->get_all_products();
+
+        $data = [
+            'title' => 'Bahan Produk dari Supplier',
+            'products' => $products,
+            'content' => 'admin/supplier_products_list'
+        ];
+        $this->load->view('layout/wrapper', $data);
+    }
+
+    /**
      * Simpan / Update Supplier
      */
     public function save() {

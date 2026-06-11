@@ -78,6 +78,14 @@ class Supplier_model extends CI_Model {
         return $this->db->get_where('supplier_products', ['supplier_id' => $supplier_id])->result_array();
     }
 
+    public function get_all_products() {
+        $this->db->select('supplier_products.*, suppliers.name as supplier_name');
+        $this->db->from('supplier_products');
+        $this->db->join('suppliers', 'suppliers.id = supplier_products.supplier_id', 'left');
+        $this->db->order_by('supplier_products.created_at', 'DESC');
+        return $this->db->get()->result_array();
+    }
+
     public function get_product($id, $supplier_id) {
         return $this->db->get_where('supplier_products', ['id' => $id, 'supplier_id' => $supplier_id])->row_array();
     }

@@ -933,8 +933,14 @@ if (isset($CI->db)) {
                 </li>
                 <li class="nav-item">
                     <a href="<?= site_url('admin_suppliers') ?>"
-                        class="nav-link <?= ($this->uri->segment(1) == 'admin_suppliers') ? 'active' : '' ?>">
-                        <i class="bi bi-truck"></i> Supplier
+                        class="nav-link <?= ($this->uri->segment(1) == 'admin_suppliers' && $this->uri->segment(2) != 'products') ? 'active' : '' ?>">
+                        <i class="bi bi-truck"></i> Data Supplier
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin_suppliers/products') ?>"
+                        class="nav-link <?= ($this->uri->segment(1) == 'admin_suppliers' && $this->uri->segment(2) == 'products') ? 'active' : '' ?>">
+                        <i class="bi bi-box-seam"></i> Bahan Supplier
                     </a>
                 </li>
 
@@ -1093,14 +1099,79 @@ if (isset($CI->db)) {
             const paletteEl = document.getElementById('commandPalette');
             if (paletteEl) {
                 const cmdModal = new bootstrap.Modal(paletteEl);
-            window.addEventListener('keydown', (e) => {
-                if (e.altKey && e.key === 'k') {
+                window.addEventListener('keydown', (e) => {
+                    if (e.altKey && e.key === 'k') {
+                        e.preventDefault();
+                        cmdModal.show();
+                        setTimeout(() => document.getElementById('cmdSearch').focus(), 400);
+                    }
+                });
+            }
+
+            // Smooth Page Transition (No Refresh) for Navigation
+            const mainContent = document.querySelector('.main-content');
+            document.querySelectorAll('.ios-nav-item, .nav-link:not(.logout)').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    const url = link.getAttribute('href');
+                    if (!url || url === '#' || url.startsWith('javascript') || url.includes('?')) return;
+                    
                     e.preventDefault();
-                    cmdModal.show();
-                    setTimeout(() => document.getElementById('cmdSearch').focus(), 400);
-                }
+                    
+                    // Set active states
+                    document.querySelectorAll('.ios-nav-item, .nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    // Visual feedback
+                    mainContent.style.transition = 'opacity 0.2s';
+                    mainContent.style.opacity = '0.4';
+
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        const html = await response.text();
+                        
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const newContent = doc.querySelector('.main-content');
+                        if (newContent) {
+                            mainContent.innerHTML = newContent.innerHTML;
+                            window.history.pushState({}, '', url);
+                            if(doc.title) document.title = doc.title;
+                            
+                            const newTitle = doc.querySelector('.page-title');
+                            if (newTitle && document.querySelector('.page-title')) {
+                                document.querySelector('.page-title').innerHTML = newTitle.innerHTML;
+                            }
+                            
+                            // execute scripts in new content if any
+                            Array.from(mainContent.querySelectorAll('script')).forEach(oldScript => {
+                                const newScript = document.createElement('script');
+                                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                                oldScript.parentNode.replaceChild(newScript, oldScript);
+                            });
+
+                            mainContent.style.opacity = '1';
+                            
+                            // Close mobile sidebar if open
+                            if(sidebar && sidebar.classList.contains('open')) {
+                                sidebar.classList.remove('open');
+                                overlay.classList.remove('show');
+                            }
+                        } else {
+                            window.location.href = url; // Fallback
+                        }
+                    } catch (err) {
+                        window.location.href = url; // Fallback
+                    }
+                });
             });
-        }
+
+            // Handle back/forward browser buttons
+            window.addEventListener('popstate', () => {
+                window.location.reload();
+            });
         });
     </script>
     </body>
