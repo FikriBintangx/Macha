@@ -3,6 +3,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Supplier_model extends CI_Model {
 
+    public function __construct() {
+        parent::__construct();
+        $this->_ensure_tables_exist();
+    }
+
+    private function _ensure_tables_exist() {
+        $this->load->dbforge();
+
+        if (!$this->db->table_exists('supplier_products')) {
+            $this->dbforge->add_field([
+                'id' => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => TRUE],
+                'supplier_id' => ['type' => 'INT', 'constraint' => 11],
+                'product_name' => ['type' => 'VARCHAR', 'constraint' => '100'],
+                'category' => ['type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE],
+                'description' => ['type' => 'TEXT', 'null' => TRUE],
+                'price' => ['type' => 'DECIMAL', 'constraint' => '10,2', 'default' => 0],
+                'stock' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
+                'unit' => ['type' => 'VARCHAR', 'constraint' => '20', 'null' => TRUE],
+                'image' => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
+                'status' => ['type' => 'ENUM("active","inactive")', 'default' => 'active'],
+                'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
+            ]);
+            $this->dbforge->add_key('id', TRUE);
+            $this->dbforge->create_table('supplier_products');
+        }
+
+        if (!$this->db->table_exists('supplier_requests')) {
+            $this->dbforge->add_field([
+                'id' => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => TRUE],
+                'supplier_id' => ['type' => 'INT', 'constraint' => 11],
+                'requested_by_admin_id' => ['type' => 'INT', 'constraint' => 11],
+                'product_name' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'quantity' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
+                'notes' => ['type' => 'TEXT', 'null' => TRUE],
+                'status' => ['type' => 'ENUM("pending","approved","rejected","processing","shipped","completed")', 'default' => 'pending'],
+                'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
+            ]);
+            $this->dbforge->add_key('id', TRUE);
+            $this->dbforge->create_table('supplier_requests');
+        }
+
+        if (!$this->db->table_exists('supplier_shipments')) {
+            $this->dbforge->add_field([
+                'id' => ['type' => 'INT', 'constraint' => 11, 'auto_increment' => TRUE],
+                'supplier_id' => ['type' => 'INT', 'constraint' => 11],
+                'request_id' => ['type' => 'INT', 'constraint' => 11],
+                'tracking_number' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'courier' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'estimated_arrival' => ['type' => 'DATE', 'null' => TRUE],
+                'notes' => ['type' => 'TEXT', 'null' => TRUE],
+                'status' => ['type' => 'ENUM("preparing","shipped","delivered")', 'default' => 'preparing'],
+                'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
+            ]);
+            $this->dbforge->add_key('id', TRUE);
+            $this->dbforge->create_table('supplier_shipments');
+        }
+    }
     // ─── SUPPLIER AUTH ──────────────────────────────────────────────
     public function get_supplier($email) {
         return $this->db->get_where('suppliers', ['email' => $email])->row_array();
