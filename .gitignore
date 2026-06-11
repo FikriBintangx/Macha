@@ -30,6 +30,38 @@ assets/uploads/*
 
 # IDE files
 .idea/
+# CodeIgniter gitignore
+/index.php
+license.txt
+user_guide/
+
+# Log files
+application/logs/*.html
+application/logs/log-*.php
+
+# Cache files
+application/cache/*
+!application/cache/index.html
+
+# Session storage
+application/sessions/*
+!application/sessions/index.html
+
+# Database config
+application/config/database.php
+
+# Vendor folder
+vendor/
+node_modules/
+
+# User uploads/assets
+uploads/*
+!uploads/index.html
+assets/uploads/*
+!assets/uploads/index.html
+
+# IDE files
+.idea/
 .vscode/
 
 # OS files
@@ -38,3 +70,7 @@ Thumbs.db
 
 # Docker env
 .env
+
+# Custom ignores
+diagram/
+*.sql
