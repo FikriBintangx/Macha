@@ -129,12 +129,22 @@ $rev_month_str = $revenue_month >= 1000000
                     <div class="status-indicator <?= $is_open ? 'bg-success' : 'bg-danger' ?> shadow-sm" style="width:12px; height:12px; border-radius:50%; animation: pulse 2s infinite;"></div>
                     <div>
                         <h6 class="fw-bold m-0"><?= $is_open ? 'Toko Sedang Buka' : 'Toko Sedang Tutup' ?></h6>
-                        <small class="text-muted">Mode: <strong id="current-shop-status"><?= strtoupper($shop_status) ?></strong></small>
+                        <small class="text-muted">
+                            Mode: <strong class="text-dark"><?= strtoupper($shop_status) ?></strong>
+                            <?php if ($shop_status == 'auto'): ?>
+                                <span class="ms-1">(<?= $shop_open_hour ?> - <?= $shop_close_hour ?>)</span>
+                            <?php elseif ($shop_status == 'paused'): ?>
+                                <span class="ms-1 text-danger fw-bold">Sampai <?= date('H:i', strtotime($shop_pause_until)) ?></span>
+                            <?php elseif ($shop_status == 'closed' && $shop_close_reason): ?>
+                                <span class="ms-1 text-danger fw-bold">Alasan: <?= htmlspecialchars($shop_close_reason) ?></span>
+                            <?php endif; ?>
+                            | Jam: <span id="server-time" class="fw-bold text-dark"></span>
+                        </small>
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <button onclick="toggleShopStatus()" class="btn btn-sm btn-primary rounded-pill px-3">
-                        <i class="bi bi-power me-1"></i> Toggle Manual
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#storeStatusModal">
+                        <i class="bi bi-gear me-1"></i> Kelola Status
                     </button>
                     <a href="<?= site_url('settings') ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Pengaturan Jam</a>
                 </div>
@@ -142,11 +152,63 @@ $rev_month_str = $revenue_month >= 1000000
         </div>
     </div>
 
+    <!-- Modal Kelola Status -->
+    <div class="modal fade" id="storeStatusModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow" style="border-radius: 16px;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Kelola Status Toko</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formStoreStatus">
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Pilih Status</label>
+                            <select class="form-select" id="inputStatus" name="status" onchange="toggleReasonInput()">
+                                <option value="open" <?= $shop_status == 'open' ? 'selected' : '' ?>>Buka (Open)</option>
+                                <option value="auto" <?= $shop_status == 'auto' ? 'selected' : '' ?>>Otomatis Sesuai Jadwal (Auto)</option>
+                                <option value="paused" <?= $shop_status == 'paused' ? 'selected' : '' ?>>Tutup Sementara (Pause)</option>
+                                <option value="closed" <?= $shop_status == 'closed' ? 'selected' : '' ?>>Tutup Penuh (Closed)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3" id="pauseDurationContainer" style="display: <?= $shop_status == 'paused' ? 'block' : 'none' ?>;">
+                            <label class="form-label text-muted small fw-bold">Durasi Tutup</label>
+                            <select class="form-select" name="pause_duration">
+                                <option value="30">30 Menit</option>
+                                <option value="60">1 Jam</option>
+                                <option value="120">2 Jam</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3" id="closeReasonContainer" style="display: <?= in_array($shop_status, ['closed', 'paused']) ? 'block' : 'none' ?>;">
+                            <label class="form-label text-muted small fw-bold">Pesan ke Pelanggan (Opsional)</label>
+                            <input type="text" class="form-control" name="reason" placeholder="Cth: Sedang istirahat sholat..." value="<?= htmlspecialchars($shop_close_reason ?? '') ?>">
+                            <small class="text-muted" style="font-size: 11px;">Akan ditampilkan di halaman pelanggan.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4" onclick="saveStoreStatus()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-    function toggleShopStatus() {
-        if(!confirm('Ubah status operasional toko sekarang?')) return;
-        
-        fetch('<?= site_url("dashboard/toggle_shop_status") ?>')
+    function toggleReasonInput() {
+        const val = document.getElementById('inputStatus').value;
+        document.getElementById('pauseDurationContainer').style.display = (val === 'paused') ? 'block' : 'none';
+        document.getElementById('closeReasonContainer').style.display = (val === 'paused' || val === 'closed') ? 'block' : 'none';
+    }
+
+    function saveStoreStatus() {
+        const formData = new FormData(document.getElementById('formStoreStatus'));
+        fetch('<?= site_url("dashboard/update_shop_status") ?>', {
+            method: 'POST',
+            body: formData
+        })
         .then(res => res.json())
         .then(res => {
             if(res.success) {
@@ -156,6 +218,15 @@ $rev_month_str = $revenue_month >= 1000000
             }
         });
     }
+
+    // Live Server Clock Simulator
+    setInterval(() => {
+        const el = document.getElementById('server-time');
+        if(el) {
+            const d = new Date();
+            el.innerText = d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (Lokal)';
+        }
+    }, 1000);
     </script>
 
     <!-- Header Stats -->

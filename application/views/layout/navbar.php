@@ -514,10 +514,12 @@ if ($ci->session->flashdata('success')) {
                 </div>
 
                 <!-- Cart -->
+                <?php if($ci->session->userdata('role') !== 'admin'): ?>
                 <a href="<?= site_url('shop/cart') ?>" class="btn-macha-outline">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="hide-on-scroll">Keranjang</span>
                 </a>
+                <?php endif; ?>
 
                 <!-- Auth -->
                 <?php if($session_userid): ?>

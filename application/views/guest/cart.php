@@ -465,14 +465,17 @@
                 btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
                 btn.disabled = true;
 
-                fetch('<?= base_url("shop/add_to_cart/") ?>' + productId, {
+                fetch('<?= base_url("shop/add_to_cart_ajax/") ?>' + productId, {
                     method: 'GET'
-                }).then(res => {
-                    if(res.ok) {
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === 'success') {
                         btn.innerHTML = '<i class="fa-solid fa-check"></i>';
                         btn.classList.add('bg-success', 'text-white');
                         setTimeout(() => window.location.reload(), 600);
                     } else {
+                        alert(data.message);
                         btn.innerHTML = ogHtml;
                         btn.disabled = false;
                     }

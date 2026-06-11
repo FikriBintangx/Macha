@@ -105,6 +105,17 @@ class M_settings extends CI_Model {
         if ($status == 'open') return true;
         if ($status == 'closed') return false;
         
+        // Handle Paused
+        if ($status == 'paused') {
+            $pause_until = $this->get_setting('shop_pause_until');
+            if ($pause_until && time() < strtotime($pause_until)) {
+                return false;
+            } else {
+                $this->update_setting('shop_status', 'auto');
+                $status = 'auto'; // Fallback
+            }
+        }
+        
         // Jika status = 'auto' (Jadwal)
         if ($status == 'auto') {
             date_default_timezone_set('Asia/Jakarta');

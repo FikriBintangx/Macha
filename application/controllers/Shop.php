@@ -72,7 +72,9 @@ class Shop extends CI_Controller
         }
 
         if (!$this->M_settings->is_shop_open()) {
-            $this->session->set_flashdata('error', 'Maaf, toko sedang tutup. Silakan cek kembali nanti!');
+            $reason = $this->M_settings->get_setting('shop_close_reason');
+            $msg = $reason ? $reason : 'Maaf, toko sedang tutup. Silakan cek kembali nanti!';
+            $this->session->set_flashdata('error', $msg);
             redirect('shop');
             return;
         }
@@ -119,7 +121,9 @@ class Shop extends CI_Controller
     {
         // Check shop status
         if (!$this->M_settings->is_shop_open()) {
-            echo json_encode(['status' => 'error', 'message' => 'Maaf, toko sedang tutup. Silakan cek kembali nanti!']);
+            $reason = $this->M_settings->get_setting('shop_close_reason');
+            $msg = $reason ? $reason : 'Maaf, toko sedang tutup. Silakan cek kembali nanti!';
+            echo json_encode(['status' => 'error', 'message' => $msg]);
             return;
         }
 

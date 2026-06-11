@@ -117,23 +117,37 @@ class Dashboard extends CI_Controller {
             'top_products'        => $top_products,
             'recent_transactions' => $recent_transactions,
             'is_open'             => $this->M_settings->is_shop_open(),
-            'shop_status'         => $this->M_settings->get_setting('shop_status') ?: 'open'
+            'shop_status'         => $this->M_settings->get_setting('shop_status') ?: 'open',
+            'shop_open_hour'      => $this->M_settings->get_setting('shop_open_hour') ?: '09:00',
+            'shop_close_hour'     => $this->M_settings->get_setting('shop_close_hour') ?: '21:00',
+            'shop_pause_until'    => $this->M_settings->get_setting('shop_pause_until'),
+            'shop_close_reason'   => $this->M_settings->get_setting('shop_close_reason')
         ];
 
         $this->load->view('layout/wrapper', $data);
     }
 
-    public function toggle_shop_status() {
+    public function update_shop_status() {
         $this->load->model('M_settings');
-        $current = $this->M_settings->get_setting('shop_status');
         
-        // Logic: If currently 'open' or 'auto', toggle to 'closed'. 
-        // If 'closed', toggle to 'open'.
-        $new_status = ($current == 'closed') ? 'open' : 'closed';
+        $status = $this->input->post('status');
+        $reason = $this->input->post('reason');
+        $pause_duration = $this->input->post('pause_duration'); // in minutes
         
-        $this->db->where('setting_key', 'shop_status');
-        $this->db->update('settings', ['setting_value' => $new_status]);
+        if ($status) {
+            $this->M_settings->update_setting('shop_status', $status);
+        }
+        if ($reason !== null) {
+            $this->M_settings->update_setting('shop_close_reason', $reason);
+        }
         
-        echo json_encode(['success' => true, 'new_status' => $new_status]);
+        if ($status == 'paused' && $pause_duration) {
+            $pause_until = date('Y-m-d H:i:s', strtotime("+$pause_duration minutes"));
+            $this->M_settings->update_setting('shop_pause_until', $pause_until);
+        } else {
+            $this->M_settings->update_setting('shop_pause_until', '');
+        }
+        
+        echo json_encode(['success' => true, 'new_status' => $status]);
     }
 }
