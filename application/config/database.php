@@ -76,10 +76,10 @@ $query_builder = TRUE;
 /** @var array $db */
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',        // Isikan 'root'
-	'password' => '',            // Kosongkan jika pakai Laragon default
-	'database' => 'db_macha_umkm', // Pastikan nama database sudah sesuai
+	'hostname' => getenv('DB_HOST') ?: 'localhost',
+	'username' => getenv('DB_USER') ?: 'root',
+	'password' => getenv('DB_PASS') !== false ? getenv('DB_PASS') : '',
+	'database' => getenv('DB_NAME') ?: 'db_macha_umkm',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

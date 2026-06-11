@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: macha_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: macha_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
