@@ -28,12 +28,20 @@ class Admin_suppliers extends CI_Controller {
                 'password'   => ['type' => 'VARCHAR', 'constraint' => '255'],
                 'phone'      => ['type' => 'VARCHAR', 'constraint' => '20', 'null' => TRUE],
                 'address'    => ['type' => 'TEXT', 'null' => TRUE],
+                'logo'       => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
                 'status'     => ['type' => 'ENUM("active","inactive")', 'default' => 'active'],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ];
             $this->dbforge->add_field($fields);
             $this->dbforge->add_key('id', TRUE);
             $this->dbforge->create_table('suppliers');
+        } else {
+            if (!$this->db->field_exists('logo', 'suppliers')) {
+                $this->load->dbforge();
+                $this->dbforge->add_column('suppliers', [
+                    'logo' => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE]
+                ]);
+            }
         }
     }
 
