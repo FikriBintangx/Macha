@@ -196,10 +196,10 @@ if (!empty($reports)) {
 
 <script>
     // Fitur JS Smart Filter Kombinasi + Accordion Grouping
-    const smartFilter = document.getElementById('smartFilter');
-    const startDate = document.getElementById('startDate');
-    const endDate = document.getElementById('endDate');
-    const userFilter = document.getElementById('userFilter');
+    var smartFilter = document.getElementById('smartFilter');
+    var startDate = document.getElementById('startDate');
+    var endDate = document.getElementById('endDate');
+    var userFilter = document.getElementById('userFilter');
 
     // Accordion UI Logic
     document.querySelectorAll('.group-header').forEach(header => {
