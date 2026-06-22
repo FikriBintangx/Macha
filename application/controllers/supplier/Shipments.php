@@ -53,6 +53,8 @@ class Shipments extends CI_Controller {
             if ($this->upload->do_upload('shipping_proof')) {
                 $uploadData = $this->upload->data();
                 $data['shipping_proof'] = $uploadData['file_name'];
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $data['shipping_proof'], $data['shipping_proof']);
             }
         }
 

@@ -102,6 +102,13 @@ if ($ci->session->flashdata('success')) {
         width: 95%;
         max-width: 480px;
     }
+    
+    .navbar-macha.confirm-active,
+    .navbar-macha.scrolled:not(.is-hovered).confirm-active {
+        width: 95% !important;
+        max-width: 480px !important;
+        height: 60px !important;
+    }
 
     .navbar-macha.scrolled:not(.is-hovered) .hide-on-scroll {
         opacity: 0;
@@ -313,6 +320,10 @@ if ($ci->session->flashdata('success')) {
         /* CART MENU SPECIAL LAYOUT: DISTRACTION-FREE CART */
         body.cart-page-body .navbar-macha {
             display: none !important;
+        }
+        body.cart-page-body .navbar-macha.confirm-active {
+            display: flex !important;
+            z-index: 9999 !important;
         }
         body.cart-page-body .breadcrumb-area {
             margin-top: 20px !important;
@@ -816,7 +827,101 @@ document.addEventListener('DOMContentLoaded', function() {
             // Revert back after 3 seconds
             notifHideTimeout = setTimeout(() => {
                 hideDynamicNotification();
-            }, 3500); 
+            }, 3500);
+        }, 50);
+    };
+
+    // Reusable Dynamic Island Confirmation Function (Option 2)
+    window.showDynamicIslandConfirm = function(msg, onConfirm, onCancel) {
+        const nav = document.getElementById('mainNav');
+        const navSlotWrapper = document.getElementById('navSlotWrapper');
+        const navContentDefault = document.getElementById('navContentDefault');
+        if(!nav || !navSlotWrapper || !navContentDefault) {
+            if(confirm(msg)) { if(onConfirm) onConfirm(); } else { if(onCancel) onCancel(); }
+            return;
+        }
+        
+        // Add confirm-active class to expand
+        nav.classList.add('confirm-active');
+        
+        // Remove existing if any
+        let existingSlot = document.getElementById('dynamicConfirmSlot');
+        let existingClone = document.getElementById('navContentDefaultCloneConfirm');
+        if (existingSlot) existingSlot.remove();
+        if (existingClone) existingClone.remove();
+        
+        navSlotWrapper.style.transition = 'none';
+        navSlotWrapper.style.transform = 'translateY(0)';
+        nav.style.overflow = 'hidden';
+        void navSlotWrapper.offsetWidth; // force reflow
+        navSlotWrapper.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+
+        // Create the confirm slot element
+        const confirmSlot = document.createElement('div');
+        confirmSlot.id = 'dynamicConfirmSlot';
+        confirmSlot.className = 'nav-notification-slot';
+        confirmSlot.style.justifyContent = 'space-between';
+        confirmSlot.style.padding = '0 25px';
+        confirmSlot.style.width = '100%';
+        
+        confirmSlot.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px; color:#fff; font-size:0.9rem; font-weight:700;">
+                <i class="fa-solid fa-circle-question" style="color: var(--tertiary);"></i>
+                <span>${msg}</span>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btnConfirmYes" style="background: #22c55e; border: none; color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Ya</button>
+                <button class="btnConfirmNo" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Batal</button>
+            </div>
+        `;
+        navSlotWrapper.appendChild(confirmSlot);
+
+        const btnYes = confirmSlot.querySelector('.btnConfirmYes');
+        const btnNo = confirmSlot.querySelector('.btnConfirmNo');
+
+        btnYes.addEventListener('mouseenter', function() { this.style.transform = 'scale(1.05)'; this.style.background = '#15803d'; });
+        btnYes.addEventListener('mouseleave', function() { this.style.transform = 'scale(1)'; this.style.background = '#22c55e'; });
+        btnNo.addEventListener('mouseenter', function() { this.style.transform = 'scale(1.05)'; this.style.background = 'rgba(255,255,255,0.2)'; });
+        btnNo.addEventListener('mouseleave', function() { this.style.transform = 'scale(1)'; this.style.background = 'rgba(255,255,255,0.1)'; });
+
+        function hideConfirm() {
+            navSlotWrapper.style.transform = 'translateY(-200%)';
+            setTimeout(() => {
+                navSlotWrapper.style.transition = 'none';
+                navSlotWrapper.style.transform = 'translateY(0)';
+                const clone = document.getElementById('navContentDefaultCloneConfirm');
+                if(clone) clone.remove();
+                if(confirmSlot) confirmSlot.remove();
+                
+                setTimeout(() => {
+                    navSlotWrapper.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    nav.classList.remove('confirm-active');
+                    nav.style.overflow = '';
+                }, 50);
+            }, 600);
+        }
+
+        btnYes.addEventListener('click', () => {
+            hideConfirm();
+            if (onConfirm) onConfirm();
+        });
+
+        btnNo.addEventListener('click', () => {
+            hideConfirm();
+            if (onCancel) onCancel();
+        });
+
+        setTimeout(() => {
+            navSlotWrapper.style.transform = 'translateY(-100%)';
+            
+            const clone = navContentDefault.cloneNode(true);
+            clone.id = 'navContentDefaultCloneConfirm';
+            clone.style.position = 'absolute';
+            clone.style.top = '200%';
+            clone.style.left = '0';
+            clone.style.width = '100%';
+            clone.style.height = '100%';
+            navSlotWrapper.appendChild(clone);
         }, 50);
     };
 

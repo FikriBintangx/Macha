@@ -53,6 +53,8 @@ class Products extends CI_Controller {
             if ($this->upload->do_upload('image')) {
                 $uploadData = $this->upload->data();
                 $data['image'] = $uploadData['file_name'];
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $data['image'], $data['image']);
             }
         }
 
@@ -97,6 +99,8 @@ class Products extends CI_Controller {
             if ($this->upload->do_upload('image')) {
                 $uploadData = $this->upload->data();
                 $data['image'] = $uploadData['file_name'];
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $data['image'], $data['image']);
             }
         }
 

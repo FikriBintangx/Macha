@@ -120,6 +120,8 @@ class Settings extends CI_Controller {
             if ($this->upload->do_upload('story_img_1')) {
                 $upload_data = $this->upload->data();
                 $this->M_settings->update_setting('story_img_1', $upload_data['file_name']);
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $upload_data['file_name'], $upload_data['file_name']);
             } else {
                 $errors[] = 'Story 1: ' . $this->upload->display_errors('','');
             }
@@ -131,6 +133,8 @@ class Settings extends CI_Controller {
             if ($this->upload->do_upload('story_img_2')) {
                 $upload_data = $this->upload->data();
                 $this->M_settings->update_setting('story_img_2', $upload_data['file_name']);
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $upload_data['file_name'], $upload_data['file_name']);
             } else {
                 $errors[] = 'Story 2: ' . $this->upload->display_errors('','');
             }
@@ -142,6 +146,8 @@ class Settings extends CI_Controller {
             if ($this->upload->do_upload('shop_logo')) {
                 $upload_data = $this->upload->data();
                 $this->M_settings->update_setting('shop_logo', $upload_data['file_name']);
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $upload_data['file_name'], $upload_data['file_name']);
             } else {
                 $errors[] = 'Logo: ' . $this->upload->display_errors('','');
             }
@@ -153,6 +159,8 @@ class Settings extends CI_Controller {
             if ($this->upload->do_upload('qris_barcode')) {
                 $upload_data = $this->upload->data();
                 $this->M_settings->update_setting('qris_barcode', $upload_data['file_name']);
+                $this->load->library('supabase');
+                $this->supabase->upload($config['upload_path'] . $upload_data['file_name'], $upload_data['file_name']);
             } else {
                 $errors[] = 'QRIS: ' . $this->upload->display_errors('','');
             }

@@ -259,6 +259,11 @@
             /* Remove desktop specific features */
             .text-end.d-none.d-md-block { display: none !important; }
         }
+        
+        .toast-wrap { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .toast-custom { background: var(--green-dark); color: white; padding: 16px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 15px 40px rgba(0,0,0,0.2); display: flex; align-items: center; border-left: 5px solid var(--tertiary); animation: slideDown 0.5s ease; }
+        .toast-custom.err { border-left-color: #ff4757; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body class="cart-page-body">
@@ -314,7 +319,7 @@
                 <?php if(!empty($cart)): ?>
                     <?php foreach($cart as $id => $item): ?>
                     <div class="cart-card invisible-init">
-                        <a href="<?= base_url('shop/remove_cart/'.$id) ?>" class="btn-remove" onclick="return confirm('Hapus item dari keranjang?')">
+                        <a href="<?= base_url('shop/remove_cart/'.$id) ?>" class="btn-remove btn-remove-item">
                             <i class="fa-solid fa-trash-can"></i>
                         </a>
                         <div class="item-row">
@@ -459,6 +464,21 @@
                 });
             };
 
+            function showToast(msg, type) {
+                if (typeof window.showDynamicIslandNotif === 'function') {
+                    window.showDynamicIslandNotif(msg, type);
+                } else {
+                    const t = document.createElement('div');
+                    t.className = 'toast-wrap';
+                    t.innerHTML = `<div class="toast-custom ${type==='error'?'err':''}"><i class="fa-solid fa-circle-info me-2"></i> ${msg}</div>`;
+                    document.body.appendChild(t);
+                    setTimeout(() => {
+                        t.style.opacity = '0';
+                        setTimeout(() => t.remove(), 500);
+                    }, 3000);
+                }
+            }
+
             // Add To Cart AJAX
             window.addToCartAjax = function(productId, btn) {
                 const ogHtml = btn.innerHTML;
@@ -470,16 +490,25 @@
                 })
                 .then(res => res.json())
                 .then(data => {
+                    if(data.status === 'redirect') {
+                        showToast('Silakan login terlebih dahulu untuk menambah ke keranjang.', 'error');
+                        setTimeout(() => {
+                            window.location.href = data.url;
+                        }, 2000);
+                        return;
+                    }
                     if(data.status === 'success') {
                         btn.innerHTML = '<i class="fa-solid fa-check"></i>';
                         btn.classList.add('bg-success', 'text-white');
-                        setTimeout(() => window.location.reload(), 600);
+                        showToast(data.message || 'Berhasil ditambahkan ke keranjang!', 'success');
+                        setTimeout(() => window.location.reload(), 2000);
                     } else {
-                        alert(data.message);
+                        showToast(data.message || 'Terjadi kesalahan', 'error');
                         btn.innerHTML = ogHtml;
                         btn.disabled = false;
                     }
                 }).catch(e => {
+                    showToast('Gagal menghubungi server.', 'error');
                     btn.innerHTML = ogHtml;
                     btn.disabled = false;
                 });
@@ -493,6 +522,25 @@
                     this.style.opacity = '0.7';
                 });
             }
+
+            // Bind remove cart item confirmation using Dynamic Island
+            document.querySelectorAll('.btn-remove-item').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    if (typeof window.showDynamicIslandConfirm === 'function') {
+                        window.showDynamicIslandConfirm('Hapus item dari keranjang?', function() {
+                            document.getElementById('pageOverlay').classList.add('show');
+                            window.location.href = url;
+                        });
+                    } else {
+                        if (confirm('Hapus item dari keranjang?')) {
+                            document.getElementById('pageOverlay').classList.add('show');
+                            window.location.href = url;
+                        }
+                    }
+                });
+            });
         });
     </script>
 </body>

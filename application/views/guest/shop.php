@@ -437,7 +437,10 @@
             .then(r => r.json())
             .then(res => {
                 if(res.status === 'redirect') {
-                    window.location.href = res.url;
+                    showToast('Silakan login terlebih dahulu untuk menambah ke keranjang.', 'error');
+                    setTimeout(() => {
+                        window.location.href = res.url;
+                    }, 2000);
                     return;
                 }
                 if(res.status === 'success') {
