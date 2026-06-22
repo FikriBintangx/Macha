@@ -77,10 +77,11 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => getenv('DB_HOST') ?: 'localhost',
+	'port'     => getenv('DB_PORT') ?: 5432,
 	'username' => getenv('DB_USER') ?: 'root',
 	'password' => getenv('DB_PASS') !== false ? getenv('DB_PASS') : '',
 	'database' => getenv('DB_NAME') ?: 'db_macha_umkm',
-	'dbdriver' => 'mysqli',
+	'dbdriver' => getenv('DB_DRIVER') ?: 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -93,5 +94,6 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE,
+	'schema'   => getenv('DB_SCHEMA') ?: 'public'
 );
