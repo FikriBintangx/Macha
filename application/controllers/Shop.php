@@ -64,12 +64,6 @@ class Shop extends CI_Controller
 
     public function add_to_cart($product_id)
     {
-        if (!$this->session->userdata('userid')) {
-            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk menambah ke keranjang.');
-            redirect('auth');
-            return;
-        }
-
         // Proteksi: Admin tidak boleh belanja
         if ($this->session->userdata('role') == 'admin') {
             $this->session->set_flashdata('error', 'Admin tidak diperbolehkan melakukan pemesanan.');
@@ -130,11 +124,6 @@ class Shop extends CI_Controller
             $reason = $this->M_settings->get_setting('shop_close_reason');
             $msg = $reason ? $reason : 'Maaf, toko sedang tutup. Silakan cek kembali nanti!';
             echo json_encode(['status' => 'error', 'message' => $msg]);
-            return;
-        }
-
-        if (!$this->session->userdata('userid')) {
-            echo json_encode(['status' => 'redirect', 'url' => site_url('auth')]);
             return;
         }
 
@@ -278,12 +267,6 @@ class Shop extends CI_Controller
 
     public function checkout()
     {
-        if (!$this->session->userdata('userid')) {
-            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk melakukan pesanan.');
-            redirect('auth');
-            return;
-        }
-        
         if ($this->session->userdata('role') == 'admin') {
             redirect('dashboard');
             return;
@@ -300,10 +283,18 @@ class Shop extends CI_Controller
             $total += $item['subtotal'];
         }
 
+        // Get user data if logged in
+        $user_id = $this->session->userdata('userid');
+        $user = null;
+        if ($user_id) {
+            $user = $this->db->where('id', $user_id)->get('users')->row_array();
+        }
+
         $data = [
             'title'           => 'Checkout Pesanan',
             'cart'            => $cart,
             'total'           => $total,
+            'user'            => $user ?: [],
             'order_types'     => $this->M_settings->get_order_types(true),
             'payment_methods' => $this->M_settings->get_payment_methods(true),
             'shop_logo'       => $this->M_settings->get_setting('shop_logo'),
