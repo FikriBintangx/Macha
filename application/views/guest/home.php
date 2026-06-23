@@ -646,6 +646,14 @@
       margin-bottom: 24px;
       box-shadow: var(--shadow-sm);
       border: 1px solid rgba(52, 132, 74, 0.1);
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+    }
+
+    .hero-tag:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 15px 30px rgba(52, 132, 74, 0.12);
+      border-color: rgba(52, 132, 74, 0.25);
     }
 
     .hero h1 {
@@ -2048,6 +2056,8 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(52, 132, 74, 0.1);
       margin-bottom: 25px;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
     }
 
     .hero-stats {
@@ -2256,7 +2266,7 @@
   <div class="m-preloader" id="preloader">
     <div class="preloader-logo-box" id="preloaderLogo">
       <?php if (!empty($shop_logo)): ?>
-        <img src="<?= base_url('uploads/' . $shop_logo) ?>" alt="Logo">
+        <img src="<?= base_url('uploads/' . $shop_logo) ?>" id="preloaderLogoImg" alt="Logo">
       <?php else: ?>
         <i class="fa-solid fa-leaf"></i>
       <?php endif; ?>
@@ -3295,20 +3305,38 @@
       let progress = 0;
       const pNum = document.getElementById('preloaderNum');
       const pBar = document.getElementById('preloaderBar');
+      const preloaderLogoImg = document.getElementById('preloaderLogoImg');
 
-      const progressInterval = setInterval(() => {
-        progress += Math.floor(Math.random() * 15) + 5;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(progressInterval);
-          clearTimeout(forceReveal);
-          revealSite();
+      function startProgress() {
+        if (window.progressIntervalStarted) return;
+        window.progressIntervalStarted = true;
+        const progressInterval = setInterval(() => {
+          progress += Math.floor(Math.random() * 15) + 5;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(progressInterval);
+            clearTimeout(forceReveal);
+            revealSite();
+          }
+          if (pNum) pNum.innerText = progress + "%";
+          if (pBar && typeof gsap !== 'undefined') {
+            gsap.to(pBar, { width: progress + "%", duration: 0.1 });
+          }
+        }, 50);
+      }
+
+      if (preloaderLogoImg) {
+        if (preloaderLogoImg.complete) {
+          startProgress();
+        } else {
+          preloaderLogoImg.addEventListener('load', startProgress);
+          preloaderLogoImg.addEventListener('error', startProgress);
+          // Safety fallback if it takes longer than 1.5 seconds to load the image
+          setTimeout(startProgress, 1500);
         }
-        if (pNum) pNum.innerText = progress + "%";
-        if (pBar && typeof gsap !== 'undefined') {
-          gsap.to(pBar, { width: progress + "%", duration: 0.1 });
-        }
-      }, 50);
+      } else {
+        startProgress();
+      }
 
       function revealSite() {
         if (typeof gsap === 'undefined') {
