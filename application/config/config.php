@@ -246,7 +246,7 @@ $config['log_threshold'] = isset($_SERVER['VERCEL']) ? 0 : 4;
 | application/logs/ directory. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+$config['log_path'] = isset($_SERVER['VERCEL']) ? '/tmp/' : '';
 
 /*
 |--------------------------------------------------------------------------
