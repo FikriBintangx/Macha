@@ -80,6 +80,9 @@ class Home extends CI_Controller {
      * Cek & tambah kolom featured jika belum ada (auto-migrasi)
      */
     private function _ensure_featured_columns() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $db_name = $this->db->database;
         $table   = 'products';
 
@@ -108,6 +111,9 @@ class Home extends CI_Controller {
      * Pastikan tabel testimonials ada & up-to-date
      */
     private function _ensure_testimonials_table() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $db_name = $this->db->database;
         $table   = 'testimonials';
 
