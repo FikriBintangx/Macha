@@ -9,15 +9,18 @@ class Uploads extends CI_Controller {
             show_404();
         }
 
-        $local_path = FCPATH . 'uploads/' . $filename;
+        $is_vercel = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH));
 
-        // If file exists locally (e.g. during local development)
-        if (file_exists($local_path) && is_file($local_path)) {
-            $this->load->helper('file');
-            $mime = get_mime_by_extension($local_path) ?: 'application/octet-stream';
-            header("Content-Type: " . $mime);
-            readfile($local_path);
-            exit;
+        // If not on Vercel and file exists locally (e.g. during local development)
+        if (!$is_vercel) {
+            $local_path = FCPATH . 'uploads/' . $filename;
+            if (file_exists($local_path) && is_file($local_path)) {
+                $this->load->helper('file');
+                $mime = get_mime_by_extension($local_path) ?: 'application/octet-stream';
+                header("Content-Type: " . $mime);
+                readfile($local_path);
+                exit;
+            }
         }
 
         // If file does not exist locally (e.g. on Vercel), redirect to Supabase Storage
