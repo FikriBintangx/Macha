@@ -35,11 +35,11 @@ if ($ci->session->flashdata('success')) {
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         height: var(--navbar-height);
-        transition: width 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                    height 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                    top 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                    border-radius 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                    padding 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    height 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    top 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    border-radius 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    padding 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         will-change: width, height, top, border-radius, padding;
         border: 1px solid rgba(255,255,255,0.08);
         z-index: 1050;
@@ -128,7 +128,7 @@ if ($ci->session->flashdata('success')) {
     }
 
     .hide-on-scroll {
-        transition: opacity 0.5s ease, visibility 0.5s, max-width 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        transition: opacity 0.8s ease, visibility 0.8s, max-width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         opacity: 1;
         visibility: visible;
         max-width: 600px; /* Arbitrary large max-width for transition */
