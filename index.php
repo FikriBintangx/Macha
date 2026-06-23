@@ -66,9 +66,9 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		// CI3 + PHP 8.x: suppress deprecated & notice warnings
+// CI3 + PHP 8.x: suppress deprecated & notice warnings
 		// agar session tidak gagal karena "headers already sent"
-		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE & ~E_STRICT);
+		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE);
 		ini_set('display_errors', 1);
 	break;
 
@@ -77,11 +77,11 @@ switch (ENVIRONMENT)
 		ini_set('display_errors', 0);
 		if (version_compare(PHP_VERSION, '5.3', '>='))
 		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
+			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
 		}
 		else
 		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
+			error_reporting(E_ALL & ~E_NOTICE & ~E_USER_NOTICE);
 		}
 	break;
 
@@ -99,7 +99,7 @@ switch (ENVIRONMENT)
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	$system_path = 'system';
+	$system_path = __DIR__ . DIRECTORY_SEPARATOR . 'system';
 
 /*
  *---------------------------------------------------------------
@@ -116,7 +116,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'application';
+	$application_folder = __DIR__ . DIRECTORY_SEPARATOR . 'application';
 
 /*
  *---------------------------------------------------------------
@@ -232,7 +232,31 @@ switch (ENVIRONMENT)
 	define('BASEPATH', $system_path);
 
 	// Path to the front controller (this file) directory
-	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	defined('FCPATH') OR define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+
+	// Load environment variables from .env file if it exists
+	if (file_exists(FCPATH . '.env')) {
+		$lines = file(FCPATH . '.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		foreach ($lines as $line) {
+			$line = trim($line);
+			if (empty($line) || strpos($line, '#') === 0) {
+				continue;
+			}
+			if (strpos($line, '=') !== false) {
+				list($name, $value) = explode('=', $line, 2);
+				$name = trim($name);
+				$value = trim($value);
+				if (preg_match('/^"([^"]*)"$/', $value, $matches) || preg_match("/^'([^']*)'$/", $value, $matches)) {
+					$value = $matches[1];
+				}
+				if (getenv($name) === false) {
+					putenv("{$name}={$value}");
+					$_ENV[$name] = $value;
+					$_SERVER[$name] = $value;
+				}
+			}
+		}
+	}
 
 	// Name of the "system" directory
 	define('SYSDIR', basename(BASEPATH));
