@@ -98,9 +98,13 @@ if ($ci->session->flashdata('success')) {
         padding: 0 25px;
     }
     
+    .navbar-macha.notif-active,
     .navbar-macha.scrolled:not(.is-hovered).notif-active {
-        width: 95%;
-        max-width: 480px;
+        width: 95% !important;
+        max-width: 480px !important;
+        height: 60px !important;
+        border-radius: 40px !important;
+        padding: 0 25px !important;
     }
     
     .navbar-macha.confirm-active,
@@ -108,8 +112,12 @@ if ($ci->session->flashdata('success')) {
         width: 95% !important;
         max-width: 480px !important;
         height: 60px !important;
+        border-radius: 40px !important;
+        padding: 0 25px !important;
     }
 
+    .navbar-macha.notif-active .hide-on-scroll,
+    .navbar-macha.confirm-active .hide-on-scroll,
     .navbar-macha.scrolled:not(.is-hovered) .hide-on-scroll {
         opacity: 0;
         visibility: hidden;
@@ -119,10 +127,14 @@ if ($ci->session->flashdata('success')) {
         overflow: hidden;
     }
 
+    .navbar-macha.notif-active .btn-macha-outline span,
+    .navbar-macha.confirm-active .btn-macha-outline span,
     .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline span {
         display: none;
     }
     
+    .navbar-macha.notif-active .btn-macha-outline,
+    .navbar-macha.confirm-active .btn-macha-outline,
     .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline {
         padding: 8px 12px;
     }
@@ -147,6 +159,8 @@ if ($ci->session->flashdata('success')) {
         border-radius: 50px;
         transition: height 0.4s ease;
     }
+    .navbar-macha.notif-active .navbar-brand img,
+    .navbar-macha.confirm-active .navbar-brand img,
     .navbar-macha.scrolled:not(.is-hovered) .navbar-brand img {
         height: 35px;
     }
@@ -587,21 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('mainNav');
     let debounce;
 
-    // Scroll Effect - Dynamic Island Shrink
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                if(window.scrollY > 50) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
+    // Scroll Effect - Dynamic Island Shrink Disabled (Navbar remains expanded)
 
     // Hover logic with delay to prevent stuttering
     let hoverTimeout;
