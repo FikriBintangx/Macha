@@ -5,6 +5,7 @@ class Uploads extends CI_Controller {
 
     public function serve($filename = NULL)
     {
+        echo "SERVE_CALLED_WITH:" . $filename; exit;
         if (empty($filename)) {
             show_404();
         }

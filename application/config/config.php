@@ -26,8 +26,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? "https" : "http";
 $root     = $protocol."://".$_SERVER['HTTP_HOST'];
-$root    .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-$config['base_url'] = $root;
+$is_vercel = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH));
+if ($is_vercel) {
+    $config['base_url'] = $root . '/';
+} else {
+    $root    .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+    $config['base_url'] = $root;
+}
 
 // ==========================================
 // PUSAT KENDALI NOMOR WA ADMIN (GANTI DISINI)
