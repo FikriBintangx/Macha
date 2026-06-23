@@ -235,7 +235,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = isset($_SERVER['VERCEL']) ? 0 : 4;
+$config['log_threshold'] = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH)) ? 0 : 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -246,7 +246,7 @@ $config['log_threshold'] = isset($_SERVER['VERCEL']) ? 0 : 4;
 | application/logs/ directory. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = isset($_SERVER['VERCEL']) ? '/tmp/' : '';
+$config['log_path'] = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH)) ? '/tmp/' : '';
 
 /*
 |--------------------------------------------------------------------------
@@ -397,7 +397,7 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = isset($_SERVER['VERCEL']) ? '/tmp' : APPPATH . 'cache';
+$config['sess_save_path'] = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH)) ? '/tmp' : APPPATH . 'cache';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
