@@ -64,6 +64,12 @@ class Shop extends CI_Controller
 
     public function add_to_cart($product_id)
     {
+        if (!$this->session->userdata('userid')) {
+            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk menambah ke keranjang.');
+            redirect('auth');
+            return;
+        }
+
         // Proteksi: Admin tidak boleh belanja
         if ($this->session->userdata('role') == 'admin') {
             $this->session->set_flashdata('error', 'Admin tidak diperbolehkan melakukan pemesanan.');
@@ -124,6 +130,11 @@ class Shop extends CI_Controller
             $reason = $this->M_settings->get_setting('shop_close_reason');
             $msg = $reason ? $reason : 'Maaf, toko sedang tutup. Silakan cek kembali nanti!';
             echo json_encode(['status' => 'error', 'message' => $msg]);
+            return;
+        }
+
+        if (!$this->session->userdata('userid')) {
+            echo json_encode(['status' => 'redirect', 'url' => site_url('auth')]);
             return;
         }
 
@@ -267,6 +278,12 @@ class Shop extends CI_Controller
 
     public function checkout()
     {
+        if (!$this->session->userdata('userid')) {
+            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu untuk melakukan pesanan.');
+            redirect('auth');
+            return;
+        }
+
         if ($this->session->userdata('role') == 'admin') {
             redirect('dashboard');
             return;
@@ -326,21 +343,21 @@ class Shop extends CI_Controller
             'address'         => $this->input->post('address'),
             'google_maps_link'=> $this->input->post('google_maps_link'),
             'notes'           => $this->input->post('notes'),
-            'total_price'     => $total_price,
+            'total_price'     => (int) $total_price,
             'status'          => 'pending',
             'order_type'      => $this->input->post('order_type'),
             'payment_method'  => $this->input->post('payment_method'),
-            'user_id'         => $this->session->userdata('userid') ?: 0,
+            'user_id'         => (int) ($this->session->userdata('userid') ?: 0),
             'created_at'      => date('Y-m-d H:i:s')
         ];
 
         $details = [];
         foreach ($cart as $item) {
             $details[] = [
-                'product_id' => $item['id'],
-                'qty'        => $item['qty'],
-                'price'      => $item['price'],
-                'subtotal'   => $item['price'] * $item['qty'],
+                'product_id' => (int) $item['id'],
+                'qty'        => (int) $item['qty'],
+                'price'      => (int) $item['price'],
+                'subtotal'   => (int) ($item['price'] * $item['qty']),
                 'item_notes' => $item['preferences'] ?? '' 
             ];
         }
