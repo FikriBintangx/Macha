@@ -55,6 +55,15 @@
  */
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
+if (strpos($_SERVER['REQUEST_URI'], '/uploads/') !== false) {
+    header('Content-Type: text/plain');
+    echo "REQUEST_URI: " . $_SERVER['REQUEST_URI'] . "\n";
+    echo "SCRIPT_NAME: " . $_SERVER['SCRIPT_NAME'] . "\n";
+    echo "PATH_INFO: " . (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : 'not set') . "\n";
+    echo "QUERY_STRING: " . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : 'not set') . "\n";
+    exit;
+}
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
