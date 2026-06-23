@@ -604,6 +604,9 @@ class Shop extends CI_Controller
 
     private function _ensure_sales_columns()
     {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $this->load->dbforge();
         if (!$this->db->table_exists('sales')) return;
         
@@ -622,6 +625,9 @@ class Shop extends CI_Controller
 
     private function _ensure_product_columns()
     {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $this->load->dbforge();
         if (!$this->db->field_exists('description', 'products')) {
             $this->dbforge->add_column('products', [
