@@ -19,6 +19,9 @@ class Admin_suppliers extends CI_Controller {
     }
 
     private function _ensure_table_exists() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         if (!$this->db->table_exists('suppliers')) {
             $this->load->dbforge();
             $fields = [

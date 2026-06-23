@@ -9,6 +9,9 @@ class Supplier_model extends CI_Model {
     }
 
     private function _ensure_tables_exist() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $this->load->dbforge();
 
         if (!$this->db->table_exists('supplier_products')) {

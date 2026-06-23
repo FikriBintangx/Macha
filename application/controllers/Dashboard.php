@@ -25,21 +25,21 @@ class Dashboard extends CI_Controller {
 
         // ─── Revenue Today ───
         $row = $this->db->query(
-            "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE DATE(created_at) = ? AND status != 'canceled'",
+            "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE CAST(created_at AS DATE) = ? AND status != 'canceled'",
             [$today]
         )->row();
         $revenue_today = $row ? (float)$row->total : 0;
 
         // ─── Revenue This Month ───
         $row = $this->db->query(
-            "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE MONTH(created_at) = ? AND YEAR(created_at) = ? AND status != 'canceled'",
-            [$month, $year]
+            "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ? AND status != 'canceled'",
+            [(int)$month, (int)$year]
         )->row();
         $revenue_month = $row ? (float)$row->total : 0;
 
         // ─── Orders Today ───
         $row = $this->db->query(
-            "SELECT COUNT(*) AS total FROM sales WHERE DATE(created_at) = ?",
+            "SELECT COUNT(*) AS total FROM sales WHERE CAST(created_at AS DATE) = ?",
             [$today]
         )->row();
         $orders_today = $row ? (int)$row->total : 0;
@@ -59,12 +59,12 @@ class Dashboard extends CI_Controller {
             $date = date('Y-m-d', strtotime("-$i days"));
 
             $cnt_row = $this->db->query(
-                "SELECT COUNT(*) AS total FROM sales WHERE DATE(created_at) = ?",
+                "SELECT COUNT(*) AS total FROM sales WHERE CAST(created_at AS DATE) = ?",
                 [$date]
             )->row();
 
             $rev_row = $this->db->query(
-                "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE DATE(created_at) = ? AND status != 'canceled'",
+                "SELECT COALESCE(SUM(total_price), 0) AS total FROM sales WHERE CAST(created_at AS DATE) = ? AND status != 'canceled'",
                 [$date]
             )->row();
 

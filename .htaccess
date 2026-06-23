@@ -2,8 +2,8 @@
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} ^/macha/ [NC]
-    RewriteRule ^(.*)$ /macha/index.php/$1 [L]
+    RewriteCond %{REQUEST_URI} ^/Macha/ [NC]
+    RewriteRule ^(.*)$ /Macha/index.php/$1 [L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

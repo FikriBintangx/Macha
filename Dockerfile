@@ -5,10 +5,11 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libpq-dev \
     zip \
     unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql
+    && docker-php-ext-install gd pgsql pdo pdo_pgsql
 
 # Enable Apache mod_rewrite for CodeIgniter URLs
 RUN a2enmod rewrite

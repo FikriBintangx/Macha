@@ -20,6 +20,9 @@ class User extends CI_Controller {
     }
 
     private function _ensure_payment_columns() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $fields = $this->db->list_fields('sales');
         $needed = [
             'payment_proof' => 'VARCHAR(255) AFTER payment_method',
@@ -33,6 +36,9 @@ class User extends CI_Controller {
     }
 
     private function _ensure_user_columns() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $fields = $this->db->list_fields('users');
         $needed = [
             'phone'         => 'VARCHAR(20) NULL AFTER full_name',

@@ -169,6 +169,9 @@ class Auth extends CI_Controller {
     }
 
     private function _ensure_user_columns() {
+        if ($this->db->dbdriver === 'postgre') {
+            return;
+        }
         $this->load->dbforge();
         if ($this->db->table_exists('users')) {
             $fields_to_add = [];
