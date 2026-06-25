@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pgsql pdo pdo_pgsql
+    && docker-php-ext-install gd pgsql pdo pdo_pgsql mysqli pdo_mysql
 
 # Enable Apache mod_rewrite for CodeIgniter URLs
 RUN a2enmod rewrite
