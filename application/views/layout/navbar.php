@@ -88,18 +88,9 @@ if ($ci->session->flashdata('success')) {
         background: transparent;
     }
 
-    /* SCROLLED / SHRINK STATE */
-    .navbar-macha.scrolled:not(.is-hovered) {
-        width: 90%;
-        max-width: 330px;
-        height: 60px;
-        top: 15px;
-        border-radius: 40px;
-        padding: 0 25px;
-    }
+    /* SCROLLED / SHRINK STATE - DISABLED */
     
-    .navbar-macha.notif-active,
-    .navbar-macha.scrolled:not(.is-hovered).notif-active {
+    .navbar-macha.notif-active {
         width: 95% !important;
         max-width: 480px !important;
         height: 60px !important;
@@ -107,8 +98,7 @@ if ($ci->session->flashdata('success')) {
         padding: 0 25px !important;
     }
     
-    .navbar-macha.confirm-active,
-    .navbar-macha.scrolled:not(.is-hovered).confirm-active {
+    .navbar-macha.confirm-active {
         width: 95% !important;
         max-width: 480px !important;
         height: 60px !important;
@@ -117,8 +107,7 @@ if ($ci->session->flashdata('success')) {
     }
 
     .navbar-macha.notif-active .hide-on-scroll,
-    .navbar-macha.confirm-active .hide-on-scroll,
-    .navbar-macha.scrolled:not(.is-hovered) .hide-on-scroll {
+    .navbar-macha.confirm-active .hide-on-scroll {
         opacity: 0;
         visibility: hidden;
         max-width: 0;
@@ -128,14 +117,12 @@ if ($ci->session->flashdata('success')) {
     }
 
     .navbar-macha.notif-active .btn-macha-outline span,
-    .navbar-macha.confirm-active .btn-macha-outline span,
-    .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline span {
+    .navbar-macha.confirm-active .btn-macha-outline span {
         display: none;
     }
     
     .navbar-macha.notif-active .btn-macha-outline,
-    .navbar-macha.confirm-active .btn-macha-outline,
-    .navbar-macha.scrolled:not(.is-hovered) .btn-macha-outline {
+    .navbar-macha.confirm-active .btn-macha-outline {
         padding: 8px 12px;
     }
 
@@ -160,8 +147,7 @@ if ($ci->session->flashdata('success')) {
         transition: height 0.4s ease;
     }
     .navbar-macha.notif-active .navbar-brand img,
-    .navbar-macha.confirm-active .navbar-brand img,
-    .navbar-macha.scrolled:not(.is-hovered) .navbar-brand img {
+    .navbar-macha.confirm-active .navbar-brand img {
         height: 35px;
     }
     .brand-text {
@@ -349,21 +335,9 @@ if ($ci->session->flashdata('success')) {
 
         .nav-content-default { padding: 0 15px; justify-content: space-between; }
         
-        .navbar-macha.scrolled:not(.is-hovered) { 
-            width: 260px !important; 
-            max-width: calc(100% - 30px) !important;
-            left: 0 !important; 
-            right: 0 !important;
-            transform: none !important; 
-            margin: 0 auto !important; 
-        }
-        
         .nav-links-wrap, .brand-text { display: none !important; }
         
         .search-container { display: block !important; margin-right: 0; }
-        .navbar-macha.scrolled:not(.is-hovered) .search-container.hide-on-scroll {
-            opacity: 1; visibility: visible; max-width: 200px; overflow: visible;
-        }
         
         .search-input-group { background: transparent; padding: 6px; cursor: pointer; display: flex; align-items: center; }
         .search-input-group input { width: 0; padding: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }

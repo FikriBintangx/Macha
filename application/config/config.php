@@ -1,6 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// Normalize REQUEST_URI subdirectory case to match SCRIPT_NAME (physical folder case on Windows)
+if (isset($_SERVER['REQUEST_URI']) && isset($_SERVER['SCRIPT_NAME'])) {
+    $script_dir = dirname($_SERVER['SCRIPT_NAME']);
+    if ($script_dir !== '/' && $script_dir !== '\\') {
+        $script_dir_len = strlen($script_dir);
+        if (strncasecmp($_SERVER['REQUEST_URI'], $script_dir, $script_dir_len) === 0) {
+            $_SERVER['REQUEST_URI'] = $script_dir . substr($_SERVER['REQUEST_URI'], $script_dir_len);
+        }
+    }
+}
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -427,8 +438,8 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_secure']	= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$config['cookie_httponly'] 	= TRUE;
 $config['cookie_samesite'] 	= 'Lax';
 
 /*

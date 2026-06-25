@@ -1134,42 +1134,103 @@
       position: relative;
       max-width: 1000px;
       margin: 0 auto;
-      padding: 20px;
-      padding-top: 40px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
+      padding: 40px 0;
+      background: linear-gradient(to right, #c5d7b5 0%, #ebf1e4 6%, #f8fbf5 50%, #ebf1e4 94%, #c5d7b5 100%);
+      border-radius: 6px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), inset 0 0 40px rgba(27, 59, 37, 0.15);
+      border: 1px solid rgba(139, 170, 124, 0.35);
       z-index: 2;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .map-scroll-wrapper {
+      width: 900px;
+      position: relative;
+      flex-shrink: 0;
+      padding: 0 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (max-width: 992px) {
+      .map-scroll-wrapper {
+        width: 700px;
+      }
+    }
+    @media (max-width: 768px) {
+      .map-scroll-wrapper {
+        width: 500px;
+      }
+    }
+    @media (max-width: 500px) {
+      .map-scroll-wrapper {
+        width: 360px;
+        padding: 0 10px;
+      }
+    }
+
+    /* Scroll Roller Pillars on Left & Right */
+    .premium-map-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 100%;
+      background: linear-gradient(to right, #2d4031, #8baa7c, #53725d, #1b2e21);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 5;
+    }
+
+    .premium-map-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 16px;
+      height: 100%;
+      background: linear-gradient(to left, #2d4031, #8baa7c, #53725d, #1b2e21);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+      z-index: 5;
     }
 
     .id-map-organic-svg {
       width: 100%;
       height: auto;
       display: block;
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+      filter: drop-shadow(0 4px 10px rgba(27, 59, 37, 0.15));
     }
 
     .map-curve,
     .map-curve-dot {
-      fill: transparent;
-      stroke: var(--green-light);
+      fill: #e9f0e3;
+      stroke: #53725D;
       stroke-width: 1.5;
       stroke-linejoin: round;
       stroke-linecap: round;
+      transition: all 0.4s ease;
     }
 
-    .map-curve-dot {
+    .map-curve:hover {
       fill: var(--green-light);
       stroke: none;
     }
 
+    @keyframes dashflow {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+
     .map-connection {
       fill: transparent;
-      stroke: rgba(255, 255, 255, 0.4);
+      stroke: rgba(139, 170, 124, 0.6);
       stroke-width: 1.5;
-      stroke-dasharray: 6 6;
+      stroke-dasharray: 6 4;
       stroke-linecap: round;
+      animation: dashflow 1.5s linear infinite;
     }
 
     .premium-marker {
@@ -1183,7 +1244,7 @@
       height: 12px;
       background-color: #fff;
       border-radius: 50%;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 0 4px var(--tertiary);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 0 4px var(--green-main);
     }
 
     .marker-pulse {
@@ -1197,6 +1258,65 @@
       transform: translate(-50%, -50%);
       animation: gentlePulse 2s infinite ease-out;
       z-index: -1;
+    }
+
+    /* Destination Dots */
+    .dest-dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 8;
+      transition: all 0.3s ease;
+    }
+
+    .dest-dot::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--tertiary);
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+      box-shadow: 0 0 8px rgba(139, 170, 124, 0.8);
+      transition: all 0.2s ease;
+    }
+
+    .dest-dot:hover {
+      z-index: 15;
+    }
+
+    .dest-dot:hover::before {
+      transform: scale(1.4);
+      background: #fff;
+      border-color: var(--green-main);
+      box-shadow: 0 0 12px #fff;
+    }
+
+    .dest-dot::after {
+      content: attr(data-city);
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(5px);
+      background: rgba(16, 36, 22, 0.95);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .dest-dot:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
     }
 
     @keyframes gentlePulse {
@@ -1213,9 +1333,9 @@
 
     .location-card {
       position: absolute;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       padding: 12px 20px;
-      border-radius: 12px;
+      border-radius: 16px;
       box-shadow: var(--shadow-lg);
       transform: translate(-50%, -130%);
       pointer-events: none;
@@ -1223,6 +1343,7 @@
       text-align: center;
       min-width: 150px;
       white-space: nowrap;
+      border: 1px solid rgba(0,0,0,0.05);
     }
 
     .location-card::after {
@@ -1233,7 +1354,9 @@
       transform: translateX(-50%) rotate(45deg);
       width: 10px;
       height: 10px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
+      border-right: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .loc-title {
@@ -2776,47 +2899,93 @@
       </div>
 
       <div class="premium-map-container">
-        <!-- Elegant Minimalist Map of Indonesia SVG -->
-        <svg class="id-map-organic-svg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid meet">
-          <!-- Flowing elegant paths instead of rigid polygons -->
-          <path class="map-curve" d="M120,80 Q180,120 220,180 Q180,240 100,200 Q80,140 120,80 Z" />
-          <!-- Sumatra (organic) -->
-          <path class="map-curve" d="M230,280 Q350,320 500,340 Q580,350 450,360 Q300,340 230,280 Z" />
-          <!-- Jawa (organic) -->
-          <path class="map-curve" d="M380,80 Q450,50 500,120 Q550,220 450,240 Q350,220 380,80 Z" />
-          <!-- Kalimantan (organic) -->
-          <path class="map-curve" d="M580,100 Q630,80 650,150 Q600,200 560,240 Q520,200 560,150 Z" />
-          <!-- Sulawesi (organic) -->
-          <path class="map-curve" d="M780,150 Q900,160 960,240 Q900,320 820,300 Q760,240 780,150 Z" />
-          <!-- Papua (organic) -->
+        <div class="map-scroll-wrapper">
+          <!-- Elegant Minimalist Map of Indonesia SVG -->
+          <svg class="id-map-organic-svg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid meet">
+            
+            <!-- Subtle Coordinate Grid Lines -->
+            <line x1="100" y1="0" x2="100" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="200" y1="0" x2="200" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="300" y1="0" x2="300" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="400" y1="0" x2="400" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="500" y1="0" x2="500" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="600" y1="0" x2="600" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="700" y1="0" x2="700" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="800" y1="0" x2="800" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="900" y1="0" x2="900" y2="400" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            
+            <line x1="0" y1="50" x2="1000" y2="50" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="100" x2="1000" y2="100" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="150" x2="1000" y2="150" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="200" x2="1000" y2="200" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="250" x2="1000" y2="250" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="300" x2="1000" y2="300" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
+            <line x1="0" y1="350" x2="1000" y2="350" stroke="rgba(83, 114, 93, 0.08)" stroke-width="0.8" />
 
-          <!-- Smaller Islands as elegant curves -->
-          <circle cx="500" cy="360" r="4" class="map-curve-dot" />
-          <circle cx="530" cy="365" r="5" class="map-curve-dot" />
-          <circle cx="560" cy="368" r="4" class="map-curve-dot" />
-          <circle cx="600" cy="370" r="6" class="map-curve-dot" />
-          <path class="map-curve" d="M650,370 Q700,380 750,360 Q700,365 650,370 Z" /> <!-- Maluku / Nusa Tenggara -->
+            <!-- Flowing elegant paths representing Indonesia's 5 major islands -->
+            <!-- Sumatra -->
+            <path class="map-curve" d="M90,70 C140,90 200,160 260,230 C280,250 300,285 295,295 C285,295 260,270 230,240 C170,180 110,130 85,90 C80,80 85,75 90,70 Z" />
+            <!-- Jawa -->
+            <path class="map-curve" d="M295,300 C330,305 380,310 440,312 C490,315 520,318 520,325 C500,332 440,332 380,330 C340,325 300,315 295,300 Z" />
+            <!-- Kalimantan -->
+            <path class="map-curve" d="M400,90 C430,70 480,75 510,95 C530,120 540,150 525,185 C510,215 450,225 410,200 C370,170 380,120 400,90 Z" />
+            <!-- Sulawesi -->
+            <path class="map-curve" d="M570,120 Q610,115 650,115 Q610,130 595,145 Q620,155 640,160 Q610,170 590,175 Q605,200 620,220 Q590,210 580,185 Q570,205 565,225 Q560,195 570,175 Q540,175 525,170 Q555,160 575,150 Q565,135 570,120 Z" />
+            <!-- Papua -->
+            <path class="map-curve" d="M770,195 C750,180 770,165 800,165 C840,165 870,180 890,185 C925,190 945,195 940,210 C930,235 900,240 880,240 C850,240 830,230 810,235 C790,240 780,220 770,195 Z" />
 
-          <!-- Connection Lines radiating from Tangerang -->
-          <path class="map-connection c1" d="M260,290 Q180,220 150,150" /> <!-- To Sumatra -->
-          <path class="map-connection c2" d="M260,290 Q350,200 420,160" /> <!-- To Kalimantan -->
-          <path class="map-connection c3" d="M260,290 Q400,240 580,180" /> <!-- To Sulawesi -->
-          <path class="map-connection c4" d="M260,290 Q500,310 820,240" /> <!-- To Papua -->
-        </svg>
+            <!-- Smaller Islands / Nusa Tenggara & Maluku -->
+            <circle cx="530" cy="328" r="3" class="map-curve-dot" />
+            <circle cx="550" cy="329" r="4" class="map-curve-dot" />
+            <circle cx="575" cy="331" r="3.5" class="map-curve-dot" />
+            <circle cx="600" cy="332" r="5" class="map-curve-dot" />
+            <path class="map-curve" d="M640,332 Q680,335 720,325 Q680,328 640,332 Z" />
 
-        <!-- Elegant Location Marker (Tangerang) -->
-        <div class="premium-marker" style="top: 72%; left: 26%;">
-          <div class="marker-pulse"></div>
-          <div class="marker-core"></div>
+            <!-- Connection Lines radiating from Tangerang (320, 305) -->
+            <path class="map-connection c1" d="M320,305 Q220,200 150,130" /> <!-- To Medan -->
+            <path class="map-connection c2" d="M320,305 Q380,220 470,165" /> <!-- To Balikpapan -->
+            <path class="map-connection c3" d="M320,305 Q450,230 580,180" /> <!-- To Makassar -->
+            <path class="map-connection c4" d="M320,305 Q600,200 900,205" /> <!-- To Jayapura -->
+            <path class="map-connection c5" d="M320,305 Q390,315 450,320" /> <!-- To Surabaya -->
+
+            <!-- Elegant Compass Rose in Top Right -->
+            <g transform="translate(880, 80) scale(0.8)" opacity="0.45">
+              <circle cx="0" cy="0" r="40" fill="none" stroke="#53725D" stroke-width="1.2" stroke-dasharray="2 2" />
+              <circle cx="0" cy="0" r="34" fill="none" stroke="#53725D" stroke-width="1" />
+              <path d="M 0,-44 L 6,-10 L 0,0 L -6,-10 Z" fill="#2d4031" />
+              <path d="M 0,44 L 6,10 L 0,0 L -6,10 Z" fill="#8baa7c" />
+              <path d="M 44,0 L 10,6 L 0,0 L 10,-6 Z" fill="#2d4031" />
+              <path d="M -44,0 L -10,6 L 0,0 L -10,-6 Z" fill="#8baa7c" />
+              <text x="-4" y="-48" font-size="10" font-family="Outfit" font-weight="900" fill="#2d4031">N</text>
+            </g>
+
+            <!-- Vintage Red X Tangerang Marker -->
+            <g transform="translate(320, 305)">
+              <line x1="-7" y1="-7" x2="7" y2="7" stroke="#d63031" stroke-width="2.5" stroke-linecap="round" />
+              <line x1="7" y1="-7" x2="-7" y2="7" stroke="#d63031" stroke-width="2.5" stroke-linecap="round" />
+              <text x="-18" y="24" font-size="9" font-family="monospace" font-weight="800" fill="#1b2e21" letter-spacing="1">TNG-ID</text>
+            </g>
+          </svg>
+
+          <!-- Elegant Location Marker Glow (Pulsing around the X) -->
+          <div class="premium-marker" style="top: 76.25%; left: 32%;">
+            <div class="marker-pulse" style="background: rgba(214, 48, 49, 0.45);"></div>
+          </div>
+
+          <!-- Destination Cities (Interactive Dots with Tooltips) -->
+          <div class="dest-dot" style="top: 32.5%; left: 15%;" data-city="Medan (2-3 Hari)"></div>
+          <div class="dest-dot" style="top: 80%; left: 45%;" data-city="Surabaya (1-2 Hari)"></div>
+          <div class="dest-dot" style="top: 41.25%; left: 47%;" data-city="Balikpapan (2-3 Hari)"></div>
+          <div class="dest-dot" style="top: 45%; left: 58%;" data-city="Makassar (2-3 Hari)"></div>
+          <div class="dest-dot" style="top: 51.25%; left: 90%;" data-city="Jayapura (4-5 Hari)"></div>
+
+          <!-- Hover Location Card (Tangerang) -->
+          <div class="location-card" style="top: 59%; left: 32%;">
+            <div class="loc-title">MariMatcha</div>
+            <div class="loc-desc"><i class="fa-solid fa-location-dot me-1"></i> Tangerang, Banten</div>
+          </div>
         </div>
-
-        <!-- Hover Location Card -->
-        <div class="location-card" style="top: 55%; left: 23%;">
-          <div class="loc-title">MariMatcha</div>
-          <div class="loc-desc"><i class="fa-solid fa-location-dot me-1"></i> Tangerang, Banten</div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -3226,21 +3395,16 @@
         }
       }, 5000);
 
-      // 2. MOUSE FOLLOWER (Magnetic Effect)
+      // 2. SMOOTH SCROLL (Lenis synced with GSAP Ticker for 120Hz+ displays)
       const lenis = new Lenis({
-        duration: 1.4,
+        duration: 1.1, // Snappier and more responsive
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         smoothTouch: false
       });
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
       lenis.on('scroll', ScrollTrigger.update);
+      
       gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
       });
@@ -3276,20 +3440,7 @@
         ScrollTrigger.config({ ignoreMobileResize: true });
       }
 
-      // 3. LENIS (Desktop Only)
-      if (window.innerWidth > 1024) {
-        const lenis = new Lenis({
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          smoothWheel: true,
-          smoothTouch: false,
-        });
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-      }
+
 
       // 4. MOUSE CURSOR (Desktop Only)
       if (window.innerWidth > 1024) {
@@ -3552,6 +3703,41 @@
 
       // Storytelling trigger for the Wa Section
       gsap.fromTo(".gs-wa-card", { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, scrollTrigger: commonTrigger(".wa-section") });
+
+      // Immersive Map Scroll Unrolling Animation (Parchment Effect)
+      const mapScrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".premium-map-section",
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 1.2,
+          invalidateOnRefresh: true
+        }
+      });
+
+      mapScrollTl.fromTo(".premium-map-container", 
+        { 
+          width: "32px",
+          opacity: 0.7 
+        }, 
+        { 
+          width: "100%", 
+          opacity: 1, 
+          ease: "power2.inOut" 
+        }
+      )
+      .fromTo(".map-scroll-wrapper", 
+        { 
+          opacity: 0,
+          scale: 0.95
+        }, 
+        { 
+          opacity: 1,
+          scale: 1,
+          ease: "power2.out" 
+        }, 
+        "-=0.4"
+      );
 
       // 3D TILT EFFECT REFINED
       document.querySelectorAll('.perspective-card').forEach(card => {

@@ -234,8 +234,8 @@ switch (ENVIRONMENT)
 	// Path to the front controller (this file) directory
 	defined('FCPATH') OR define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 
-	// Load environment variables from .env file if it exists
-	if (file_exists(FCPATH . '.env')) {
+	// Load environment variables from .env file if it exists and is readable
+	if (file_exists(FCPATH . '.env') && is_readable(FCPATH . '.env')) {
 		$lines = file(FCPATH . '.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		foreach ($lines as $line) {
 			$line = trim($line);
