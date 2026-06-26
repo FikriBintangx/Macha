@@ -108,7 +108,7 @@ $db['default'] = array(
 	'swap_pre' => '',
 	'encrypt' => get_db_env('DB_SSL', 'false') === 'true' ? array('ssl_verify' => FALSE) : FALSE,
 	'compress' => FALSE,
-	'stricton' => FALSE,
+	'stricton' => get_db_env('DB_STRICT') === 'true' ? TRUE : (get_db_env('DB_STRICT') === 'false' ? FALSE : NULL),
 	'failover' => array(),
 	'save_queries' => TRUE,
 	'schema'   => get_db_env('DB_SCHEMA', 'public')
