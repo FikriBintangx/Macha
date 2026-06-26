@@ -1,6 +1,67 @@
 <style>
 /* Force text colors in table to be dark */
 table.table tbody td { color: #000 !important; opacity: 1 !important; visibility: visible !important; }
+
+/* Shimmer Skeleton Styles */
+.skeleton-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.skeleton-block {
+    background: #e2e8f0;
+    background-image: linear-gradient(
+        90deg,
+        #e2e8f0 0px,
+        #f1f5f9 40px,
+        #e2e8f0 80px
+    );
+    background-size: 200% 100%;
+    animation: shimmer-anim 1.5s infinite linear;
+    border-radius: 8px;
+    height: 20px;
+}
+@keyframes shimmer-anim {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Horizontal scrollable quick actions for mobile view */
+.scrollable-actions {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+.scrollable-actions::-webkit-scrollbar {
+    display: none;
+}
+.scrollable-actions .btn, .scrollable-actions .badge {
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .skeleton-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 16px;
+        background: #fff;
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+}
 </style>
 
 <div class="container py-4">
@@ -19,7 +80,7 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
                 <h4 class="fw-bold text-success mb-1"><i class="bi bi-pc-display-horizontal me-2"></i>Kasir Online monitoring</h4>
                 <p class="text-muted small mb-0">Pemantauan orderan masuk secara real-time.</p>
             </div>
-            <div class="d-flex gap-2">
+            <div class="scrollable-actions">
                 <button type="button" class="btn btn-sm btn-white border shadow-sm px-3 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#calcModal">
                     <i class="bi bi-calculator me-1 text-info"></i> Kalkulator
                 </button>
@@ -89,110 +150,131 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
                 <h5 class="mb-0 text-success fw-bold"><i class="bi bi-box-seam me-2"></i>Pesanan Masuk</h5>
                 <p class="text-muted small mb-0 mt-1">Daftar pesanan online khusus tanggal <?= date('d M Y', strtotime($date_filter)) ?>. (Debug: <?= count($orders) ?> found)</p>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive responsive-card-table" style="min-height: 450px; padding-bottom: 100px;">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="" style="background: #f8faf9;">
-                            <tr>
-                                <th class="ps-4 py-3 border-0 text-muted small fw-bold">JAM</th>
-                                <th class="py-3 border-0 text-muted small fw-bold">INVOICE</th>
-                                <th class="py-3 border-0 text-muted small fw-bold">PELANGGAN</th>
-                                <th class="py-3 border-0 text-muted small fw-bold">TIPE/BAYAR</th>
-                                <th class="py-3 border-0 text-muted small fw-bold">TOTAL</th>
-                                <th class="py-3 border-0 text-muted small fw-bold">BUKTI</th>
-                                <th class="py-3 text-center border-0 text-muted small fw-bold">STATUS</th>
-                                <th class="pe-4 py-3 text-center border-0 text-muted small fw-bold">AKSI</th>
-                            </tr>
-                        </thead>
-                        <tbody class="border-top-0" id="orderTbody">
-                            <?php if(!empty($orders)): ?>
-                                <?php foreach($orders as $o): ?>
-                                    <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s; opacity: 1 !important; visibility: visible !important; color: #000 !important;">
-                                        <td class="ps-4 py-4 fw-bold" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
-                                        <td class="py-4" data-label="INVOICE">
-                                            <span class="badge bg-white border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace; color: #000 !important;"><?= $o['invoice_no'] ?></span>
-                                        </td>
-                                        <td class="py-4" data-label="PELANGGAN">
-                                            <div class="fw-bold customer-name-item" style="font-size: 0.95rem; color: #000 !important;">
-                                                <?= htmlspecialchars($o['user_name'] ? $o['user_name'] : $o['customer_name']) ?>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 text-nowrap" data-label="TIPE/BAYAR">
-                                            <div class="small fw-bold text-uppercase d-flex align-items-center gap-1 mb-1" style="font-size: 0.65rem; color: #8aa898;">
-                                                <?php if($o['order_type'] == 'delivery'): ?>
-                                                    <i class="bi bi-truck text-primary"></i> ANTAR
-                                                <?php elseif($o['order_type'] == 'dinein'): ?>
-                                                    <i class="bi bi-chair text-info"></i> MAKAN SINI
-                                                <?php else: ?>
-                                                    <i class="bi bi-bag-check text-success"></i> AMBIL
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="small fw-semibold" style="color: #000 !important;">
-                                                <i class="bi bi-credit-card-2-back me-1 opacity-50"></i><?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
-                                            </div>
-                                        </td>
-                                        <td class="fw-bold text-success text-nowrap py-4" style="font-size: 1rem;" data-label="TOTAL">
-                                            Rp <?= number_format($o['total_price'],0,',','.') ?>
-                                        </td>
-                                        <td class="py-4 text-center" data-label="BUKTI">
-                                            <?php if(!empty($o['payment_proof'])): ?>
-                                                <button type="button" onclick="viewProof('<?= base_url('uploads/payments/'.$o['payment_proof']) ?>')" class="btn btn-sm btn-light border text-info p-2 rounded-circle shadow-sm" title="Lihat Bukti"><i class="bi bi-image"></i></button>
-                                            <?php else: ?>
-                                                <span class="text-muted opacity-50" style="font-size: 0.75rem; font-style: italic;">None</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center py-4" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
-                                            <?php 
-                                            $st = $o['status'];
-                                            $class = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
-                                            $text = ucfirst($st);
-                                            
-                                            if($st == 'pending') { $class = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; $text = 'Menunggu'; }
-                                            if($st == 'paid') { $class = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; $text = 'Dibayar'; }
-                                            if($st == 'shipped') { 
-                                                $class = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; 
-                                                $text = ($o['order_type'] == 'delivery') ? 'Dikirim' : 'Siap Ambil'; 
-                                            }
-                                            if($st == 'completed') { $class = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; $text = 'Selesai'; }
-                                            if($st == 'canceled') { $class = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; $text = 'Batal'; }
-                                            ?>
-                                            <span class="badge <?= $class ?> rounded-pill px-3 py-2 fw-bold" style="font-size: 0.75rem; letter-spacing: 0.3px;"><?= $text ?></span>
-                                        </td>
-                                        <td class="pe-4 py-4 text-center" data-label="AKSI">
-                                            <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <button type="button" onclick="showDetail(<?= $o['id'] ?>, this)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-bold" style="font-size: 0.85rem;">
-                                                    Detail
-                                                </button>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-sm btn-white border dropdown-toggle fw-bold p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false" style="font-size: 0.8rem;">
-                                                        Manage
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" style="border-radius: 12px; font-size: 0.85rem; min-width: 180px;">
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Konfirmasi Bayar</a></li>
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i><?= ($o['order_type'] == 'delivery') ? 'Update: Sedang Diantar' : 'Update: Siap Diambil' ?></a></li>
-                                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Selesaikan Pesanan</a></li>
-                                                    <li><hr class="dropdown-divider mx-2"></li>
-                                                    <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan Pesanan</a></li>
-                                                    <?php if(in_array($o['status'], ['pending', 'canceled'])): ?>
-                                                        <li><hr class="dropdown-divider mx-2"></li>
-                                                        <li><a class="dropdown-item text-danger py-2 fw-bold" href="<?= site_url('order/delete/'.$o['id']) ?>" onclick="return confirm('⚠️ Hapus pesanan permanen?\n\nStok akan dikembalikan.')"><i class="bi bi-trash3 me-2"></i>Hapus Permanen</a></li>
-                                                    <?php endif; ?>
-                                                    </ul>
+            <div class="card-body p-0" style="position: relative;">
+                <!-- SKELETON SHIMMER LOADER -->
+                <div id="skeleton-loader" class="skeleton-container" style="min-height: 450px; transition: opacity 0.25s ease;">
+                    <?php for($i = 0; $i < 5; $i++): ?>
+                    <div class="skeleton-row">
+                        <div class="d-flex align-items-center gap-3 flex-grow-1 me-4">
+                            <div class="skeleton-block" style="width: 50px;"></div>
+                            <div class="skeleton-block" style="width: 110px;"></div>
+                            <div class="skeleton-block flex-grow-1" style="max-width: 200px;"></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="skeleton-block" style="width: 80px;"></div>
+                            <div class="skeleton-block" style="width: 70px;"></div>
+                            <div class="skeleton-block" style="width: 90px; border-radius: 20px; height: 32px;"></div>
+                        </div>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+
+                <!-- ACTUAL CONTENT -->
+                <div id="actual-content" style="opacity: 0; display: none; transition: opacity 0.3s ease;">
+                    <div class="table-responsive responsive-card-table" style="min-height: 450px; padding-bottom: 100px;">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="" style="background: #f8faf9;">
+                                <tr>
+                                    <th class="ps-4 py-3 border-0 text-muted small fw-bold">JAM</th>
+                                    <th class="py-3 border-0 text-muted small fw-bold">INVOICE</th>
+                                    <th class="py-3 border-0 text-muted small fw-bold">PELANGGAN</th>
+                                    <th class="py-3 border-0 text-muted small fw-bold">TIPE/BAYAR</th>
+                                    <th class="py-3 border-0 text-muted small fw-bold">TOTAL</th>
+                                    <th class="py-3 border-0 text-muted small fw-bold">BUKTI</th>
+                                    <th class="py-3 text-center border-0 text-muted small fw-bold">STATUS</th>
+                                    <th class="pe-4 py-3 text-center border-0 text-muted small fw-bold">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0" id="orderTbody">
+                                <?php if(!empty($orders)): ?>
+                                    <?php foreach($orders as $o): ?>
+                                        <tr class="order-row" id="row-<?= $o['id'] ?>" style="transition: all 0.2s; opacity: 1 !important; visibility: visible !important; color: #000 !important;">
+                                            <td class="ps-4 py-4 fw-bold" style="font-size: 1.05rem;" data-label="JAM"><?= date('H:i', strtotime($o['created_at'])) ?></td>
+                                            <td class="py-4" data-label="INVOICE">
+                                                <span class="badge bg-white border px-2 py-1 shadow-sm" style="font-size: 0.8rem; font-family: monospace; color: #000 !important;"><?= $o['invoice_no'] ?></span>
+                                            </td>
+                                            <td class="py-4" data-label="PELANGGAN">
+                                                <div class="fw-bold customer-name-item" style="font-size: 0.95rem; color: #000 !important;">
+                                                    <?= htmlspecialchars($o['user_name'] ? $o['user_name'] : $o['customer_name']) ?>
                                                 </div>
-                                            </div>
+                                            </td>
+                                            <td class="py-4 text-nowrap" data-label="TIPE/BAYAR">
+                                                <div class="small fw-bold text-uppercase d-flex align-items-center gap-1 mb-1" style="font-size: 0.65rem; color: #8aa898;">
+                                                    <?php if($o['order_type'] == 'delivery'): ?>
+                                                        <i class="bi bi-truck text-primary"></i> ANTAR
+                                                    <?php elseif($o['order_type'] == 'dinein'): ?>
+                                                        <i class="bi bi-chair text-info"></i> MAKAN SINI
+                                                    <?php else: ?>
+                                                        <i class="bi bi-bag-check text-success"></i> AMBIL
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="small fw-semibold" style="color: #000 !important;">
+                                                    <i class="bi bi-credit-card-2-back me-1 opacity-50"></i><?= htmlspecialchars($o['payment_method'] ?? 'Transfer') ?>
+                                                </div>
+                                            </td>
+                                            <td class="fw-bold text-success text-nowrap py-4" style="font-size: 1rem;" data-label="TOTAL">
+                                                Rp <?= number_format($o['total_price'],0,',','.') ?>
+                                            </td>
+                                            <td class="py-4 text-center" data-label="BUKTI">
+                                                <?php if(!empty($o['payment_proof'])): ?>
+                                                    <button type="button" onclick="viewProof('<?= base_url('uploads/payments/'.$o['payment_proof']) ?>')" class="btn btn-sm btn-light border text-info p-2 rounded-circle shadow-sm" title="Lihat Bukti"><i class="bi bi-image"></i></button>
+                                                <?php else: ?>
+                                                    <span class="text-muted opacity-50" style="font-size: 0.75rem; font-style: italic;">None</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="text-center py-4" data-label="STATUS" id="status-cell-<?= $o['id'] ?>">
+                                                <?php 
+                                                $st = $o['status'];
+                                                $class = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
+                                                $text = ucfirst($st);
+                                                
+                                                if($st == 'pending') { $class = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; $text = 'Menunggu'; }
+                                                if($st == 'paid') { $class = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; $text = 'Dibayar'; }
+                                                if($st == 'shipped') { 
+                                                    $class = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; 
+                                                    $text = ($o['order_type'] == 'delivery') ? 'Dikirim' : 'Siap Ambil'; 
+                                                }
+                                                if($st == 'completed') { $class = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; $text = 'Selesai'; }
+                                                if($st == 'canceled') { $class = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; $text = 'Batal'; }
+                                                ?>
+                                                <span class="badge <?= $class ?> rounded-pill px-3 py-2 fw-bold" style="font-size: 0.75rem; letter-spacing: 0.3px;"><?= $text ?></span>
+                                            </td>
+                                            <td class="pe-4 py-4 text-center" data-label="AKSI">
+                                                <div class="d-flex align-items-center justify-content-center gap-2">
+                                                    <button type="button" onclick="showDetail(<?= $o['id'] ?>, this)" class="btn btn-sm btn-success rounded-pill px-3 shadow-none fw-bold" style="font-size: 0.85rem;">
+                                                        Detail
+                                                    </button>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-sm btn-white border dropdown-toggle fw-bold p-1 px-2 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false" style="font-size: 0.8rem;">
+                                                            Manage
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" style="border-radius: 12px; font-size: 0.85rem; min-width: 180px;">
+                                                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'paid')"><i class="bi bi-check-circle text-warning me-2"></i>Konfirmasi Bayar</a></li>
+                                                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'shipped')"><i class="bi bi-truck text-primary me-2"></i><?= ($o['order_type'] == 'delivery') ? 'Update: Sedang Diantar' : 'Update: Siap Diambil' ?></a></li>
+                                                        <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'completed')"><i class="bi bi-check2-all text-success me-2"></i>Selesaikan Pesanan</a></li>
+                                                        <li><hr class="dropdown-divider mx-2"></li>
+                                                        <li><a class="dropdown-item text-danger py-2" href="javascript:void(0)" onclick="updateStatus(<?= $o['id'] ?>, 'canceled')"><i class="bi bi-x-circle me-2"></i>Batalkan Pesanan</a></li>
+                                                        <?php if(in_array($o['status'], ['pending', 'canceled'])): ?>
+                                                            <li><hr class="dropdown-divider mx-2"></li>
+                                                            <li><a class="dropdown-item text-danger py-2 fw-bold" href="<?= site_url('order/delete/'.$o['id']) ?>" onclick="return confirm('⚠️ Hapus pesanan permanen?\n\nStok akan dikembalikan.')"><i class="bi bi-trash3 me-2"></i>Hapus Permanen</a></li>
+                                                        <?php endif; ?>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="8" class="text-center py-5 text-muted">
+                                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                                            <p class="mb-0">Belum ada pesanan masuk hari ini.</p>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="8" class="text-center py-5 text-muted">
-                                        <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
-                                        <p class="mb-0">Belum ada pesanan masuk hari ini.</p>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -347,6 +429,22 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        // Shimmer skeleton fade-out and actual content fade-in
+        const skeleton = document.getElementById('skeleton-loader');
+        const content = document.getElementById('actual-content');
+        if (skeleton && content) {
+            skeleton.style.opacity = '0';
+            setTimeout(() => {
+                skeleton.style.display = 'none';
+                content.style.display = 'block';
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(content, { opacity: 1, duration: 0.35, ease: "power2.out" });
+                } else {
+                    content.style.opacity = '1';
+                }
+            }, 250);
+        }
+
         const userFilter = document.getElementById('userFilter');
         const smartFilter = document.getElementById('smartFilter');
         const dateFilter = document.getElementById('dateFilter');
@@ -393,12 +491,14 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
             row.style.display = "table-row";
         });
 
-        // Apply filters on page load
-        // Apply filters on page load - disabled to ensure everything shows up
-        // applyFilters();
-
         // Set up event listeners
         dateFilter.addEventListener('change', function() {
+            // Show skeleton loader again during redirection to feel premium
+            if (skeleton && content) {
+                content.style.opacity = '0';
+                skeleton.style.display = 'block';
+                skeleton.style.opacity = '1';
+            }
             window.location.href = "<?= site_url('order') ?>?date=" + this.value;
         });
 
