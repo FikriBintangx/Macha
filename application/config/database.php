@@ -73,15 +73,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+/**
+ * Helper function to safely get environment variables from $_ENV, $_SERVER, or getenv()
+ */
+if ( ! function_exists('get_db_env')) {
+	function get_db_env($name, $default = '') {
+		if (isset($_ENV[$name])) {
+			return $_ENV[$name];
+		}
+		if (isset($_SERVER[$name])) {
+			return $_SERVER[$name];
+		}
+		$val = getenv($name);
+		return ($val !== FALSE) ? $val : $default;
+	}
+}
+
 /** @var array $db */
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => getenv('DB_HOST') ?: 'localhost',
-	'port'     => getenv('DB_PORT') ?: 5432,
-	'username' => getenv('DB_USER') ?: 'root',
-	'password' => getenv('DB_PASS') !== false ? getenv('DB_PASS') : '',
-	'database' => getenv('DB_NAME') ?: 'postgres',
-	'dbdriver' => getenv('DB_DRIVER') ?: 'postgre',
+	'hostname' => get_db_env('DB_HOST', 'localhost'),
+	'port'     => get_db_env('DB_PORT', 5432),
+	'username' => get_db_env('DB_USER', 'root'),
+	'password' => get_db_env('DB_PASS', ''),
+	'database' => get_db_env('DB_NAME', 'postgres'),
+	'dbdriver' => get_db_env('DB_DRIVER', 'postgre'),
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -95,5 +111,5 @@ $db['default'] = array(
 	'stricton' => FALSE,
 	'failover' => array(),
 	'save_queries' => TRUE,
-	'schema'   => getenv('DB_SCHEMA') ?: 'public'
+	'schema'   => get_db_env('DB_SCHEMA', 'public')
 );

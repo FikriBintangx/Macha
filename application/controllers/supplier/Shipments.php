@@ -63,5 +63,29 @@ class Shipments extends CI_Controller {
         $this->session->set_flashdata('success', 'Shipment recorded successfully.');
         redirect('supplier/shipments');
     }
+
+    /** DataTables AJAX source */
+    public function dt_json() {
+        $supplier_id = $this->session->userdata('supplier_id');
+        $shipments = $this->Supplier_model->get_shipments($supplier_id);
+        $rows = [];
+        foreach ($shipments as $ship) {
+            $status_html = $ship['status'] == 'shipped'
+                ? '<span style="background:#ede9fe;color:#5b21b6;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">Shipped</span>'
+                : '<span style="background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">Delivered</span>';
+            $proof = !empty($ship['shipping_proof'])
+                ? '<a href="'.base_url('uploads/'.$ship['shipping_proof']).'" target="_blank" style="color:#8BAA7C;font-weight:600;font-size:0.8rem;text-decoration:none;"><i class="fas fa-external-link-alt"></i> View</a>'
+                : '<span style="color:#94a3b8;font-size:0.8rem;">-</span>';
+            $rows[] = [
+                '<span style="font-family:monospace;font-weight:700;color:#1B3B25;">'.htmlspecialchars($ship['tracking_number']).'</span>',
+                '#REQ-'.str_pad($ship['request_id'], 4, '0', STR_PAD_LEFT),
+                date('d M Y', strtotime($ship['shipped_at'])),
+                $status_html,
+                $proof,
+            ];
+        }
+        $this->output->set_content_type('application/json')
+            ->set_output(json_encode(['data' => $rows]));
+    }
 }
 

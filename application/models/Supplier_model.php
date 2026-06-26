@@ -208,4 +208,33 @@ class Supplier_model extends CI_Model {
         $stats['completed']        = $this->db->where('status', 'completed')->count_all_results('supplier_requests');
         return $stats;
     }
+
+    // ─── ANALYTICS ──────────────────────────────────────────────────
+    /** Count supplier_requests per month for the current year. Returns 12-element array (Jan=index 0). */
+    public function get_monthly_requests($supplier_id) {
+        $year = date('Y');
+        $this->db->select('MONTH(created_at) as m, COUNT(*) as cnt');
+        $this->db->from('supplier_requests');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->where('YEAR(created_at)', $year);
+        $this->db->group_by('MONTH(created_at)');
+        $rows = $this->db->get()->result_array();
+        $result = array_fill(1, 12, 0);
+        foreach ($rows as $r) { $result[(int)$r['m']] = (int)$r['cnt']; }
+        return array_values($result);
+    }
+
+    /** Count supplier_shipments per month for the current year. Returns 12-element array (Jan=index 0). */
+    public function get_monthly_shipments($supplier_id) {
+        $year = date('Y');
+        $this->db->select('MONTH(created_at) as m, COUNT(*) as cnt');
+        $this->db->from('supplier_shipments');
+        $this->db->where('supplier_id', $supplier_id);
+        $this->db->where('YEAR(created_at)', $year);
+        $this->db->group_by('MONTH(created_at)');
+        $rows = $this->db->get()->result_array();
+        $result = array_fill(1, 12, 0);
+        foreach ($rows as $r) { $result[(int)$r['m']] = (int)$r['cnt']; }
+        return array_values($result);
+    }
 }

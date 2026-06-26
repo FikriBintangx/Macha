@@ -249,11 +249,9 @@ switch (ENVIRONMENT)
 				if (preg_match('/^"([^"]*)"$/', $value, $matches) || preg_match("/^'([^']*)'$/", $value, $matches)) {
 					$value = $matches[1];
 				}
-				if (getenv($name) === false) {
-					putenv("{$name}={$value}");
-					$_ENV[$name] = $value;
-					$_SERVER[$name] = $value;
-				}
+				putenv("{$name}={$value}");
+				$_ENV[$name] = $value;
+				$_SERVER[$name] = $value;
 			}
 		}
 	}

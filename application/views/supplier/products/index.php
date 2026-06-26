@@ -1,80 +1,79 @@
-<div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-white"><?= $title ?></h1>
-    <a href="<?= base_url('supplier/products/create') ?>" class="bg-matcha-dark hover:bg-matcha-light text-white hover:text-dark-200 px-4 py-2 rounded-lg transition-colors font-medium flex items-center gap-2">
+<style>
+/* Shared DataTable card styles matching admin panel */
+.dt-card { background:#fff; border:1px solid #e2e8f0; border-radius:18px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.07); overflow:hidden; }
+.dt-head  { padding:1rem 1.25rem; border-bottom:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; }
+.dt-title { font-weight:700; color:#1e293b; font-size:0.95rem; margin:0; }
+table.dataTable thead th { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:#94a3b8; font-weight:700; padding:0.75rem 1rem; border-bottom:1px solid #f1f5f9 !important; background:#fff; }
+table.dataTable tbody td { padding:0.85rem 1rem; font-size:0.875rem; color:#1e293b; border-bottom:1px solid #f8fafc !important; vertical-align:middle; }
+table.dataTable tbody tr:hover td { background:#f8faf8; }
+table.dataTable tbody tr:last-child td { border-bottom:none !important; }
+.dataTables_wrapper .dataTables_filter input { border:1px solid #e2e8f0; border-radius:10px; padding:6px 12px; font-size:0.85rem; outline:none; font-family:'Outfit',sans-serif; }
+.dataTables_wrapper .dataTables_filter input:focus { border-color:#8BAA7C; box-shadow:0 0 0 3px rgba(139,170,124,0.15); }
+.dataTables_wrapper .dataTables_length select { border:1px solid #e2e8f0; border-radius:10px; padding:5px 10px; font-size:0.85rem; font-family:'Outfit',sans-serif; }
+.dataTables_wrapper .dataTables_paginate .paginate_button { border-radius:8px !important; border:none !important; font-size:0.82rem; padding:5px 11px !important; }
+.dataTables_wrapper .dataTables_paginate .paginate_button.current { background:#1B3B25 !important; color:#fff !important; }
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover { background:#f1f5f9 !important; color:#1B3B25 !important; }
+.dataTables_wrapper .dataTables_info { font-size:0.8rem; color:#94a3b8; }
+</style>
+
+<!-- Page Header -->
+<div style="margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+        <h4 style="font-weight:800; color:#1a2e25; margin-bottom:0.2rem;">My Products</h4>
+        <p style="color:#64748b; font-size:0.875rem; margin:0;">Kelola katalog produk Anda.</p>
+    </div>
+    <a href="<?= base_url('supplier/products/create') ?>" style="
+        background:#1B3B25; color:#fff; padding:9px 18px; border-radius:12px;
+        text-decoration:none; font-size:0.85rem; font-weight:700;
+        display:inline-flex; align-items:center; gap:8px;
+        box-shadow:0 4px 12px rgba(27,59,37,0.2); transition:all 0.2s;
+    " onmouseover="this.style.background='#53725D';" onmouseout="this.style.background='#1B3B25';">
         <i class="fas fa-plus"></i> Add Product
     </a>
 </div>
 
-<?php if ($this->session->flashdata('success')): ?>
-    <div class="bg-green-500/20 border border-green-500/50 text-green-500 p-4 rounded-lg mb-6">
-        <?= $this->session->flashdata('success') ?>
+<div class="dt-card">
+    <div class="dt-head">
+        <h6 class="dt-title"><i class="fas fa-box" style="color:#8BAA7C; margin-right:6px;"></i> Product Catalog</h6>
     </div>
-<?php endif; ?>
-
-<div class="glass rounded-xl border border-gray-700 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left">
+    <div style="padding:1rem;">
+        <table id="tblProducts" class="w-100" style="width:100%;">
             <thead>
-                <tr class="bg-gray-800/50 text-gray-400 text-sm border-b border-gray-700">
-                    <th class="p-4">Image</th>
-                    <th class="p-4">Product Name</th>
-                    <th class="p-4">Category</th>
-                    <th class="p-4">Price</th>
-                    <th class="p-4">Stock</th>
-                    <th class="p-4">Status</th>
-                    <th class="p-4 text-right">Actions</th>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (empty($products)): ?>
-                <tr>
-                    <td colspan="7" class="p-8 text-center text-gray-500">
-                        <i class="fas fa-box-open fa-3x mb-3 opacity-50"></i>
-                        <p>No products found in your catalog.</p>
-                        <p class="text-sm mt-1">Click "Add Product" to start adding items.</p>
-                    </td>
-                </tr>
-                <?php else: ?>
-                    <?php foreach ($products as $p): ?>
-                    <tr class="border-b border-gray-800 last:border-0 hover:bg-gray-800/30 transition-colors">
-                        <td class="p-4">
-                            <?php if (!empty($p['image'])): ?>
-                                <img src="<?= base_url('uploads/' . $p['image']) ?>" alt="<?= htmlspecialchars($p['product_name']) ?>" class="w-12 h-12 object-cover rounded-lg border border-gray-700">
-                            <?php else: ?>
-                                <div class="w-12 h-12 bg-gray-800 rounded-lg border border-gray-700 flex items-center justify-center text-gray-500">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                            <?php endif; ?>
-                        </td>
-                        <td class="p-4 font-medium text-white"><?= htmlspecialchars($p['product_name']) ?></td>
-                        <td class="p-4 text-gray-400"><?= htmlspecialchars($p['category']) ?></td>
-                        <td class="p-4 text-white">Rp <?= number_format($p['price'], 0, ',', '.') ?> <span class="text-xs text-gray-500">/ <?= htmlspecialchars($p['unit']) ?></span></td>
-                        <td class="p-4">
-                            <span class="<?= $p['stock'] < 10 ? 'text-yellow-500 font-bold' : 'text-gray-300' ?>">
-                                <?= $p['stock'] ?>
-                            </span>
-                        </td>
-                        <td class="p-4">
-                            <?php if ($p['status'] == 'active'): ?>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full border bg-matcha-dark/20 text-matcha-light border-matcha-dark/50">Available</span>
-                            <?php else: ?>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full border bg-red-500/20 text-red-500 border-red-500/50">Out of Stock</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="p-4 text-right">
-                            <div class="flex justify-end gap-2">
-                                <a href="<?= base_url('supplier/products/edit/'.$p['id']) ?>" class="w-8 h-8 rounded bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white flex items-center justify-center transition-colors" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="<?= base_url('supplier/products/delete/'.$p['id']) ?>" onclick="return confirm('Are you sure you want to delete this product?');" class="w-8 h-8 rounded bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
         </table>
     </div>
 </div>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$(function(){
+    $('#tblProducts').DataTable({
+        ajax: { url: '<?= base_url('supplier/products/dt_json') ?>', dataSrc: 'data' },
+        columns: [
+            { title:'Image',        orderable:false },
+            { title:'Product Name' },
+            { title:'Category' },
+            { title:'Price' },
+            { title:'Stock' },
+            { title:'Status' },
+            { title:'Actions',      orderable:false, className:'text-end' },
+        ],
+        pageLength: 10,
+        language: { search:'', searchPlaceholder:'Cari produk...', emptyTable:'Belum ada produk.', zeroRecords:'Produk tidak ditemukan.' },
+        order: [[1,'asc']],
+    });
+});
+</script>

@@ -426,41 +426,49 @@ $rev_month_str = $revenue_month >= 1000000
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('mainDashboardChart');
-    if (ctx) {
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
-                datasets: [{
-                    label: 'Omset',
-                    data: <?= json_encode(array_column($recent_7_days, 'revenue')) ?>,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3
-                }, {
-                    label: 'Pesanan',
-                    data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
-                    borderColor: '#3b82f6',
-                    borderWidth: 2,
-                    fill: false,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top' }
+(function() {
+    const initChart = () => {
+        const ctx = document.getElementById('mainDashboardChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: <?= json_encode(array_column($recent_7_days, 'label')) ?>,
+                    datasets: [{
+                        label: 'Omset',
+                        data: <?= json_encode(array_column($recent_7_days, 'revenue')) ?>,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }, {
+                        label: 'Pesanan',
+                        data: <?= json_encode(array_column($recent_7_days, 'count')) ?>,
+                        borderColor: '#3b82f6',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.3
+                    }]
                 },
-                scales: {
-                    y: { beginAtZero: true }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
                 }
-            }
-        });
+            });
+        }
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initChart();
+    } else {
+        document.addEventListener('DOMContentLoaded', initChart);
     }
-});
+})();
 </script>

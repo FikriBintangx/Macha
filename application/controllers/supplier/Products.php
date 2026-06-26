@@ -115,5 +115,36 @@ class Products extends CI_Controller {
         $this->session->set_flashdata('success', 'Product deleted successfully.');
         redirect('supplier/products');
     }
+
+    /** DataTables AJAX source */
+    public function dt_json() {
+        $supplier_id = $this->session->userdata('supplier_id');
+        $products = $this->Supplier_model->get_products($supplier_id);
+        $rows = [];
+        foreach ($products as $p) {
+            $img = !empty($p['image'])
+                ? '<img src="'.base_url('uploads/'.$p['image']).'" style="width:40px;height:40px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;">'
+                : '<div style="width:40px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image" style="color:#94a3b8;"></i></div>';
+            $stock_color = $p['stock'] < 10 ? '#d97706' : '#1B3B25';
+            $status_html = $p['status'] == 'active'
+                ? '<span style="background:#dcfce7;color:#166534;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">Available</span>'
+                : '<span style="background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">Out of Stock</span>';
+            $actions = '<div style="display:flex;gap:6px;justify-content:flex-end;">'
+                .'<a href="'.base_url('supplier/products/edit/'.$p['id']).'" style="width:32px;height:32px;border-radius:8px;background:#dbeafe;color:#1e40af;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;" title="Edit"><i class="fas fa-edit"></i></a>'
+                .'<a href="'.base_url('supplier/products/delete/'.$p['id']).'" onclick="return confirm(\"Delete this product?\")" style="width:32px;height:32px;border-radius:8px;background:#fee2e2;color:#991b1b;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;" title="Delete"><i class="fas fa-trash"></i></a>'
+                .'</div>';
+            $rows[] = [
+                $img,
+                htmlspecialchars($p['product_name']),
+                htmlspecialchars($p['category']),
+                'Rp '.number_format($p['price'], 0, ',', '.'),
+                '<span style="font-weight:700;color:'.$stock_color.';">'.$p['stock'].'</span>',
+                $status_html,
+                $actions,
+            ];
+        }
+        $this->output->set_content_type('application/json')
+            ->set_output(json_encode(['data' => $rows]));
+    }
 }
 

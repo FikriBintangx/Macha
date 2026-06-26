@@ -20,9 +20,8 @@ class Analytics extends CI_Controller {
         $supplier_id = $this->session->userdata('supplier_id');
         $data['title'] = 'Analytics';
         
-        // Dummy data for analytics, can be expanded later
-        $data['monthly_requests'] = [10, 20, 15, 25, 30, 40, 35, 45, 50, 60, 55, 70];
-        $data['monthly_supply'] = [5, 10, 8, 12, 15, 20, 18, 22, 25, 30, 28, 35];
+        $data['monthly_requests'] = $this->Supplier_model->get_monthly_requests($supplier_id);
+        $data['monthly_supply'] = $this->Supplier_model->get_monthly_shipments($supplier_id);
         
         $this->load->view('supplier/layout/header', $data);
         $this->load->view('supplier/layout/sidebar');

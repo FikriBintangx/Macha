@@ -31,6 +31,11 @@ if (isset($CI->db)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        if (localStorage.getItem('sidebar-collapsed') === 'true' && window.innerWidth >= 1200) {
+            document.documentElement.classList.add('sidebar-collapsed-init');
+        }
+    </script>
 
     <style>
         :root {
@@ -105,6 +110,44 @@ if (isset($CI->db)) {
             overflow: hidden;
         }
 
+        @media (min-width: 1200px) {
+            .sidebar {
+                top: 20px !important;
+                bottom: 20px !important;
+                left: 20px !important;
+                height: auto !important;
+                border-radius: 30px !important;
+                box-shadow: 0 10px 30px rgba(16, 36, 22, 0.15) !important;
+                transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s !important;
+            }
+            .topbar {
+                left: 300px !important;
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+            .main-content {
+                margin-left: 300px !important;
+                width: calc(100% - 300px) !important;
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+
+            /* Collapsed State */
+            body.sidebar-collapsed .sidebar,
+            html.sidebar-collapsed-init body .sidebar {
+                transform: translateX(-340px) !important;
+                opacity: 0;
+                pointer-events: none;
+            }
+            body.sidebar-collapsed .topbar,
+            html.sidebar-collapsed-init body .topbar {
+                left: 20px !important;
+            }
+            body.sidebar-collapsed .main-content,
+            html.sidebar-collapsed-init body .main-content {
+                margin-left: 20px !important;
+                width: calc(100% - 40px) !important;
+            }
+        }
+
         .sidebar-brand {
             padding: 24px 20px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, .08);
@@ -149,42 +192,61 @@ if (isset($CI->db)) {
             overflow-y: auto;
             overflow-x: hidden;
             padding: 16px 12px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .sidebar-scroll::-webkit-scrollbar {
-            width: 4px;
+            display: none;
         }
 
-        .sidebar-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, .15);
-            border-radius: 4px;
+        /* Sidebar Section Headers */
+        .sidebar-section-title {
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            color: var(--tertiary) !important;
+            margin: 20px 0 10px 10px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
         }
 
-        .nav-section {
-            font-size: .68rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: rgba(255, 255, 255, .35);
-            padding: 16px 14px 6px;
-            font-weight: 600;
+        .sidebar-section-title::before {
+            content: '' !important;
+            display: block !important;
+            width: 18px !important;
+            height: 1.5px !important;
+            background: rgba(139, 170, 124, 0.45) !important;
+            border-radius: 2px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .sidebar-section-title::after {
+            content: '' !important;
+            flex: 1 !important;
+            height: 1.5px !important;
+            background: rgba(139, 170, 124, 0.2) !important;
+            border-radius: 2px !important;
         }
 
         .nav-item {
             list-style: none;
-            margin-bottom: 2px;
+            margin-bottom: 6px !important;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 11px 14px;
-            border-radius: 12px;
+            padding: 12px 18px !important;
+            border-radius: 16px !important;
             color: rgba(255, 255, 255, .65) !important;
             text-decoration: none;
             font-weight: 500;
             font-size: .9rem;
-            transition: all .2s ease;
+            transition: all .25s ease;
             position: relative;
         }
 
@@ -195,14 +257,16 @@ if (isset($CI->db)) {
         }
 
         .nav-link:hover {
-            background: rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .08) !important;
             color: #fff !important;
+            transform: translateX(4px) !important;
         }
 
         .nav-link.active {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff !important;
-            box-shadow: inset 4px 0 0 var(--tertiary), inset 15px 0 20px rgba(139, 170, 124, 0.05);
+            background: rgba(139, 170, 124, 0.15) !important;
+            color: var(--tertiary) !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 12px rgba(139, 170, 124, 0.1) !important;
         }
 
         .nav-badge {
@@ -218,15 +282,64 @@ if (isset($CI->db)) {
         .sidebar-footer {
             padding: 16px 12px;
             border-top: 1px solid rgba(255, 255, 255, .08);
+            background: transparent;
         }
 
-        .nav-link.logout {
-            color: rgba(239, 68, 68, .8) !important;
+        /* Sidebar Profile Card Container at the bottom */
+        .sidebar-profile-card {
+            background: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 20px !important;
+            padding: 15px !important;
+            margin-bottom: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            transition: all 0.3s ease !important;
         }
 
-        .nav-link.logout:hover {
-            background: rgba(239, 68, 68, .12);
-            color: #ef4444 !important;
+        .sidebar-profile-card:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .sidebar-profile-card .avatar {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            background: var(--tertiary) !important;
+            color: var(--green-main) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            box-shadow: 0 4px 10px rgba(139, 170, 124, 0.2) !important;
+            flex-shrink: 0 !important;
+        }
+
+        .sidebar-profile-card .info {
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        .sidebar-profile-card .info .name {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: #fff !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+
+        .sidebar-profile-card .info .role {
+            font-size: 11px !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            margin: 0 !important;
+            font-weight: 500 !important;
+            text-transform: capitalize !important;
         }
 
         .sidebar-overlay {
@@ -872,8 +985,8 @@ if (isset($CI->db)) {
         </a>
 
         <div class="sidebar-scroll">
-            <ul class="nav flex-column">
-                <div class="nav-section">Utama</div>
+            <ul class="nav flex-column" style="padding-left: 0;">
+                <span class="sidebar-section-title">Utama</span>
                 <li class="nav-item">
                     <a href="<?= site_url('dashboard') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'dashboard') ? 'active' : '' ?>">
@@ -881,7 +994,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <div class="nav-section">Katalog & Menu</div>
+                <span class="sidebar-section-title">Katalog & Menu</span>
                 <li class="nav-item">
                     <a href="<?= site_url('product') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'product' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
@@ -901,7 +1014,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <div class="nav-section">Transaksi</div>
+                <span class="sidebar-section-title">Transaksi</span>
                 <li class="nav-item">
                     <a href="<?= site_url('order') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
@@ -918,7 +1031,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <div class="nav-section">Users</div>
+                <span class="sidebar-section-title">Users</span>
                 <li class="nav-item">
                     <a href="<?= site_url('admin_users') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'admin_users' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
@@ -944,7 +1057,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <div class="nav-section">Laporan</div>
+                <span class="sidebar-section-title">Laporan</span>
                 <li class="nav-item">
                     <a href="<?= site_url('report/daily') ?>"
                         class="nav-link <?= ($this->uri->segment(2) == 'daily') ? 'active' : '' ?>">
@@ -964,7 +1077,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <div class="nav-section">Sistem</div>
+                <span class="sidebar-section-title">Sistem</span>
                 <li class="nav-item">
                     <a href="<?= site_url('settings') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'settings' && !$this->input->get('tab')) ? 'active' : '' ?>">
@@ -986,8 +1099,15 @@ if (isset($CI->db)) {
             </ul>
         </div>
 
-        <div class="sidebar-footer">
-            <a href="<?= site_url('auth/logout') ?>" class="nav-link logout">
+        <div class="sidebar-footer" style="padding: 20px;">
+            <div class="sidebar-profile-card">
+                <div class="avatar"><?= strtoupper(substr($this->session->userdata('full_name') ?? 'A', 0, 1)) ?></div>
+                <div class="info">
+                    <span class="name"><?= htmlspecialchars($this->session->userdata('full_name') ?? 'Admin') ?></span>
+                    <span class="role">Administrator</span>
+                </div>
+            </div>
+            <a href="<?= site_url('auth/logout') ?>" class="nav-link logout" style="color: rgba(239, 68, 68, .8) !important; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.1); border-radius: 16px !important; display: flex; align-items: center; justify-content: center; gap: 8px;">
                 <i class="bi bi-box-arrow-left"></i> Logout
             </a>
         </div>
@@ -995,8 +1115,8 @@ if (isset($CI->db)) {
 
     <!-- TOPBAR -->
         <header class="topbar">
-            <!-- Mobile Toggle -->
-            <button id="mobileSidebarToggle" class="topbar-btn d-md-none">
+            <!-- Sidebar Toggle -->
+            <button id="sidebarToggle" class="topbar-btn">
                 <i class="bi bi-list fs-4"></i>
             </button>
             
@@ -1082,12 +1202,19 @@ if (isset($CI->db)) {
             // Sidebar Toggle Logic
             const sidebar = document.getElementById('adminSidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            const toggleBtn = document.getElementById('mobileSidebarToggle');
+            const toggleBtn = document.getElementById('sidebarToggle');
 
             if (toggleBtn && sidebar && overlay) {
                 toggleBtn.addEventListener('click', () => {
-                    sidebar.classList.add('open');
-                    overlay.classList.add('show');
+                    if (window.innerWidth < 1200) {
+                        sidebar.classList.add('open');
+                        overlay.classList.add('show');
+                    } else {
+                        // Remove initial class if present, so JS can toggle it normally
+                        document.documentElement.classList.remove('sidebar-collapsed-init');
+                        document.body.classList.toggle('sidebar-collapsed');
+                        localStorage.setItem('sidebar-collapsed', document.body.classList.contains('sidebar-collapsed'));
+                    }
                 });
                 overlay.addEventListener('click', () => {
                     sidebar.classList.remove('open');
