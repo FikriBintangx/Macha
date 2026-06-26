@@ -106,7 +106,7 @@ $db['default'] = array(
 	'char_set' => 'utf8',
 	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
+	'encrypt' => get_db_env('DB_SSL', 'false') === 'true' ? array('ssl_verify' => FALSE) : FALSE,
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
