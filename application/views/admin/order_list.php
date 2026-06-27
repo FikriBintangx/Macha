@@ -430,8 +430,17 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.text())
+        .then(text => {
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch(e) {
+                // Server returned HTML (likely DB error / PHP crash)
+                console.error('Non-JSON response:', text.substring(0, 300));
+                throw new Error('bad_response');
+            }
+
             if (data.success) {
                 const orderType = row.querySelector('[data-label="TIPE/BAYAR"]').innerText.toLowerCase();
 
@@ -458,12 +467,11 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
         .catch(error => {
             console.error('updateStatus error:', error);
             if (!_retry) {
-                // 1x auto-retry setelah 3 detik (kasih waktu DB Aiven wake up)
-                showAdminToast('Koneksi gagal, mencoba ulang dalam 3 detik...', 'info');
-                setTimeout(() => updateStatus(id, status, true), 3000);
+                showAdminToast('Database sedang booting, mencoba lagi dalam 4 detik...', 'info');
+                setTimeout(() => updateStatus(id, status, true), 4000);
             } else {
-                cell.innerHTML = '<span class="badge bg-danger-subtle text-danger">Gagal</span>';
-                showAdminToast('Kesalahan jaringan. Coba refresh halaman.', 'error');
+                // Restore original badge from page
+                location.reload();
             }
         });
     }

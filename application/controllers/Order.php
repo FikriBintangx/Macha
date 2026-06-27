@@ -101,14 +101,26 @@ class Order extends CI_Controller {
 
     // Update Status Pesanan via AJAX
     public function ajax_update_status() {
-        $id = $this->input->post('id');
+        header('Content-Type: application/json');
+
+        $id     = $this->input->post('id');
         $status = $this->input->post('status');
 
         $valid_status = ['pending', 'paid', 'shipped', 'completed', 'canceled'];
-        if(in_array($status, $valid_status)) {
+        if (!in_array($status, $valid_status)) {
+            echo json_encode(['success' => false, 'message' => 'Status tidak valid.']);
+            return;
+        }
+
+        try {
             // Get current order info for points awarding
             $order = $this->db->where('id', $id)->get('sales')->row();
-            
+
+            if (!$order) {
+                echo json_encode(['success' => false, 'message' => 'Pesanan tidak ditemukan.']);
+                return;
+            }
+
             if ($status == 'completed' && $order->status != 'completed' && !empty($order->user_id)) {
                 $points = floor($order->total_price / 10000);
                 if ($points > 0) {
@@ -120,21 +132,18 @@ class Order extends CI_Controller {
 
             $this->db->where('id', $id);
             $this->db->update('sales', ['status' => $status]);
-            
-            $response = [
-                'success' => true,
-                'message' => 'Status pesanan berhasil diperbarui menjadi: ' . strtoupper($status),
+
+            echo json_encode([
+                'success'    => true,
+                'message'    => 'Status berhasil diperbarui menjadi: ' . strtoupper($status),
                 'new_status' => $status
-            ];
-        } else {
-            $response = [
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
                 'success' => false,
-                'message' => 'Status tidak valid.'
-            ];
+                'message' => 'Database error: ' . $e->getMessage()
+            ]);
         }
-        
-        header('Content-Type: application/json');
-        echo json_encode($response);
     }
 
     // Hapus pesanan (hanya pending/canceled yang boleh dihapus)
