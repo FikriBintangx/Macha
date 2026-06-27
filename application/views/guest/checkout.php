@@ -723,10 +723,10 @@
                                     required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Nomor WhatsApp</label>
-                                <input type="text" name="phone" id="phone_field" class="form-control"
+                                <label class="form-label">Nomor WhatsApp / Telepon</label>
+                                <input type="tel" name="phone" id="phone_field" class="form-control"
                                     value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="08xxxxxxxxxx"
-                                    required>
+                                    autocomplete="tel" required>
                             </div>
 
                             <div id="addressSection" class="d-none">
