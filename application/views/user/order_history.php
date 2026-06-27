@@ -403,8 +403,8 @@
         <!-- Two Column Unified Layout -->
         <div class="row g-4 mt-2">
             <!-- Left Column: Profil Settings -->
-            <div class="col-lg-5 col-12">
-                <div class="profile-card" style="background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%); border-radius:24px; border:none; padding:30px; box-shadow:0 10px 32px rgba(16,36,22,0.15); position:relative; overflow:hidden; color:#fff;">
+            <div class="col-lg-5 col-12 profile-column">
+                <div class="profile-card" style="background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%) !important; border-radius:24px; border:none; padding:30px; box-shadow:0 10px 32px rgba(16,36,22,0.15); position:relative; overflow:hidden; color:#fff;">
                     <div style="position:absolute; top:0; right:0; width:120px; height:120px; background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
                     
                     <div class="profile-header d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid rgba(255,255,255,0.15);">
@@ -542,8 +542,11 @@
                                     <a href="<?= base_url('shop/invoice/'.$o['id']) ?>" class="btn-act btn-act-primary">
                                         <i class="fa-solid fa-receipt"></i> Lihat Nota
                                     </a>
-                                    <?php if ($o['status'] == 'pending'): ?>
-                                    <a href="<?= base_url('user/payment/'.$o['id']) ?>" class="btn-act btn-act-amber">
+                                    <?php 
+                                    $is_cod = (stripos($o['payment_method'], 'cod') !== false || stripos($o['payment_method'], 'tempat') !== false);
+                                    if ($o['status'] == 'pending' && !$is_cod): 
+                                    ?>
+                                    <a href="<?= base_url('shop/payment/'.$o['id']) ?>" class="btn-act btn-act-amber">
                                         <i class="fa-solid fa-upload"></i> Upload Bukti
                                     </a>
                                     <?php elseif ($o['status'] == 'completed'): ?>
@@ -577,7 +580,19 @@
         </div>
 
         <style>
-            .profile-card { transition: all 0.3s ease; }
+            .profile-card { 
+                background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%) !important;
+                color: #fff !important;
+                border: none !important;
+                transition: all 0.3s ease; 
+            }
+            @media (min-width: 992px) {
+                .profile-column {
+                    position: sticky;
+                    top: 110px;
+                    align-self: start;
+                }
+            }
             .form-control:focus { box-shadow: none !important; border-color: var(--green-soft) !important; background: #fff !important; }
             .input-group:focus-within { box-shadow: 0 0 0 3px rgba(149,213,178,0.25) !important; border-radius: 12px; }
             .input-group:focus-within .input-group-text, .input-group:focus-within .form-control { border-color: var(--green-main) !important; }
