@@ -448,8 +448,10 @@ class Shop extends CI_Controller
             'Content-Type: application/json',
             'Authorization: Basic ' . base64_encode($secret_key . ':')
         ]);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Fix for Vercel missing certificate authority bundle
 
         $response = curl_exec($ch);
+        $curl_error = curl_error($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -458,7 +460,7 @@ class Shop extends CI_Controller
             return $result;
         }
         
-        log_message('error', 'Xendit Invoice Creation Failed: Code ' . $http_code . ' Response: ' . $response);
+        log_message('error', 'Xendit Invoice Creation Failed: Code ' . $http_code . ' Error: ' . $curl_error . ' Response: ' . $response);
         return null;
     }
 
