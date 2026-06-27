@@ -404,15 +404,15 @@
         <div class="row g-4 mt-2">
             <!-- Left Column: Profil Settings -->
             <div class="col-lg-5 col-12">
-                <div class="profile-card" style="background:#fff; border-radius:24px; border:1px solid #edf1ed; padding:30px; box-shadow:0 10px 32px rgba(45,90,39,0.03); position:relative; overflow:hidden;">
-                    <div style="position:absolute; top:0; right:0; width:120px; height:120px; background:radial-gradient(circle, rgba(149,213,178,0.15) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
+                <div class="profile-card" style="background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%); border-radius:24px; border:none; padding:30px; box-shadow:0 10px 32px rgba(16,36,22,0.15); position:relative; overflow:hidden; color:#fff;">
+                    <div style="position:absolute; top:0; right:0; width:120px; height:120px; background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
                     
-                    <div class="profile-header d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid #f0f4f1;">
+                    <div class="profile-header d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid rgba(255,255,255,0.15);">
                         <div class="position-relative p-avatar-wrap">
                             <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
                                 <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" id="avatarPreview">
                             <?php else: ?>
-                                <div class="uh-avatar" style="width:80px; height:80px; border-radius:20px; font-size:2rem; background:linear-gradient(135deg, var(--green-main), var(--green-dark)); color:#fff; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.1);" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
+                                <div class="uh-avatar" style="width:80px; height:80px; border-radius:20px; font-size:2rem; background:linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)); color:#fff; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.1);" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
                                 <img src="" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="d-none" id="avatarPreview">
                             <?php endif; ?>
                             <label for="profileInput" class="p-avatar-edit" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
@@ -420,8 +420,8 @@
                             </label>
                         </div>
                         <div>
-                            <h5 class="fw-bold mb-0" style="color: var(--green-ultra); font-size: 1.2rem; letter-spacing: -0.3px;">Profil Pengaturan Terpadu</h5>
-                            <p class="text-muted small mb-0" style="font-size:0.8rem;">Kelola data pribadi & alamat pengiriman</p>
+                            <h5 class="fw-bold mb-0 text-white" style="font-size: 1.2rem; letter-spacing: -0.3px;">Profil Pengaturan Terpadu</h5>
+                            <p class="text-white-50 small mb-0" style="font-size:0.8rem; opacity:0.85;">Kelola data pribadi & alamat pengiriman</p>
                         </div>
                     </div>
 
@@ -429,45 +429,45 @@
                         <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nama Lengkap</label>
+                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nama Lengkap</label>
                                 <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
+                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
                                     <input type="text" name="full_name" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['full_name'] ?? '') ?>" required>
                                 </div>
                             </div>
                             
                             <div class="col-md-12">
-                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Username / ID Login</label>
+                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Username / ID Login</label>
                                 <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-at"></i></span>
-                                    <input type="text" class="form-control border-start-0 ps-0 text-muted" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; background:#f4f7f4; cursor:not-allowed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
+                                    <span class="input-group-text border-end-0 bg-transparent text-white-50" style="border-radius: 12px 0 0 12px; border:2px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.6);"><i class="fa-solid fa-at"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0 text-white-50" style="border-radius:0 12px 12px 0; border:2px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.15); cursor:not-allowed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nomor WhatsApp / HP</label>
+                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nomor WhatsApp / HP</label>
                                 <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
+                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
                                     <input type="text" name="phone" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="Misal: 0812...">
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Alamat Lengkap Pengiriman Default</label>
+                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Alamat Lengkap Pengiriman Default</label>
                                 <textarea name="address" rows="3" class="form-control" style="border-radius:12px; border:2px solid #edf1ed; padding:12px; resize:none; font-weight:500; font-size:.9rem;" placeholder="Tuliskan nama blok, RT/RW, gang, atau detail lainnya..."><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
                             </div>
 
-                            <div class="col-12 mt-3 pt-3 border-top">
-                                <label class="form-label" style="font-weight:600; color:#b91c1c; font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;"><i class="fa-solid fa-lock me-1"></i>Ubah Password Baru (Opsional)</label>
+                            <div class="col-12 mt-3 pt-3 border-top" style="border-top-color: rgba(255,255,255,0.15) !important;">
+                                <label class="form-label" style="font-weight:600; color:#ff8787; font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;"><i class="fa-solid fa-lock me-1"></i>Ubah Password Baru (Opsional)</label>
                                 <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
+                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
                                     <input type="password" name="password" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #fee2e2; padding:10px; font-weight:500; font-size:.9rem;" placeholder="Kosongkan jika tidak ingin diubah">
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold" style="background:var(--green-main); border:none; padding:12px; font-size:.95rem; box-shadow: 0 4px 15px rgba(27,59,37,.15);">
+                            <button type="submit" class="btn btn-light w-100 rounded-pill fw-bold" style="background:#fff; color:var(--green-dark); border:none; padding:12px; font-size:.95rem; box-shadow: 0 4px 15px rgba(0,0,0,.15); transition:.2s;">
                                 <i class="fa-solid fa-save me-1"></i> Simpan Profil
                             </button>
                         </div>

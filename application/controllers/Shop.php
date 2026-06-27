@@ -374,19 +374,86 @@ class Shop extends CI_Controller
     }
 
     public function payment($sales_id) {
+        $this->_ensure_sales_columns();
         $this->load->model('M_sales');
-        $data['order'] = $this->db->where('id', $sales_id)->get('sales')->row_array();
+        $order = $this->db->where('id', $sales_id)->get('sales')->row_array();
         
-        if(!$data['order']) {
+        if(!$order) {
             redirect('shop');
         }
+
+        // Check if Xendit is active and it's not a COD order
+        $is_cod = (stripos($order['payment_method'], 'cod') !== false || stripos($order['payment_method'], 'tempat') !== false);
+        if (!$is_cod && empty($order['xendit_invoice_url'])) {
+            $xendit_invoice = $this->_create_xendit_invoice($order);
+            if ($xendit_invoice && !empty($xendit_invoice['invoice_url'])) {
+                $this->db->where('id', $sales_id)->update('sales', [
+                    'xendit_invoice_id' => $xendit_invoice['id'],
+                    'xendit_invoice_url' => $xendit_invoice['invoice_url']
+                ]);
+                $order['xendit_invoice_id'] = $xendit_invoice['id'];
+                $order['xendit_invoice_url'] = $xendit_invoice['invoice_url'];
+            }
+        }
         
+        $data['order'] = $order;
         // Cek admin phone dan setting
         $data['admin_phone'] = $this->M_settings->get_setting('admin_whatsapp');
         $data['shop_logo'] = $this->M_settings->get_setting('shop_logo');
         $data['qris_barcode'] = $this->M_settings->get_setting('qris_barcode');
         
         $this->load->view('guest/payment', $data);
+    }
+
+    public function payment_success($sales_id) {
+        $order = $this->db->where('id', $sales_id)->get('sales')->row_array();
+        if ($order) {
+            $this->session->set_flashdata('success', 'Pembayaran Anda berhasil diproses! Terima kasih.');
+        }
+        redirect('shop/invoice/' . $sales_id);
+    }
+
+    private function _create_xendit_invoice($order) {
+        $secret_key = getenv('XENDIT_SECRET_KEY') ?: $_ENV['XENDIT_SECRET_KEY'] ?? '';
+        if (empty($secret_key)) {
+            return null;
+        }
+
+        $url = 'https://api.xendit.co/v2/invoices';
+        
+        $payload = [
+            'external_id' => $order['invoice_no'],
+            'amount' => (int)$order['total_price'],
+            'description' => 'Pembayaran Pesanan MariMatcha - ' . $order['invoice_no'],
+            'customer' => [
+                'given_names' => $order['customer_name'] ?: 'Customer MariMatcha',
+                'mobile_number' => $order['phone'] ?: ''
+            ],
+            'success_redirect_url' => base_url('shop/payment_success/' . $order['id']),
+            'failure_redirect_url' => base_url('shop/payment/' . $order['id'])
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Basic ' . base64_encode($secret_key . ':')
+        ]);
+
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($http_code >= 200 && $http_code < 300) {
+            $result = json_decode($response, true);
+            return $result;
+        }
+        
+        log_message('error', 'Xendit Invoice Creation Failed: Code ' . $http_code . ' Response: ' . $response);
+        return null;
     }
 
     public function upload_payment() {
@@ -627,6 +694,12 @@ class Shop extends CI_Controller
         if (!$this->db->field_exists('item_notes', 'sales_detail')) {
             $this->dbforge->add_column('sales_detail', [
                 'item_notes' => ['type' => 'TEXT', 'null' => TRUE]
+            ]);
+        }
+        if (!$this->db->field_exists('xendit_invoice_id', 'sales')) {
+            $this->dbforge->add_column('sales', [
+                'xendit_invoice_id' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'xendit_invoice_url' => ['type' => 'TEXT', 'null' => TRUE]
             ]);
         }
     }

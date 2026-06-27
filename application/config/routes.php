@@ -71,3 +71,6 @@ $route['supplier/profile/update'] = 'supplier/profile/update';
 
 // Redirect missing uploads to Supabase Storage
 $route['uploads/(:any)'] = 'uploads/serve/$1';
+
+$route['xendit_callback'] = 'xendit_callback';
+

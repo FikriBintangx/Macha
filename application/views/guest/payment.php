@@ -124,12 +124,29 @@
                                 <i class="fa-solid fa-clock me-1"></i> Selesaikan pembayaran dalam: <span id="paymentTimer" style="font-family:monospace; font-size:1.1rem; color:#d97706;">15:00</span>
                             </div>
 
-                            <!-- Jumlah -->
-                            <div class="amount-box">
-                                <div class="label">Total Tagihan (Termasuk Ongkir)</div>
-                                <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
-                                <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
-                            </div>
+                             <!-- Jumlah -->
+                             <div class="amount-box">
+                                 <div class="label">Total Tagihan (Termasuk Ongkir)</div>
+                                 <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
+                                 <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
+                             </div>
+
+                             <?php if (!empty($order['xendit_invoice_url'])): ?>
+                             <!-- Xendit Payment Button -->
+                             <div class="text-center mb-4 p-4" style="background:#f0faf4; border:2px solid #86efac; border-radius:20px;">
+                                 <div class="fs-1 text-success mb-3"><i class="fa-solid fa-shield-halved"></i></div>
+                                 <h5 class="fw-bold text-success mb-2">Bayar Instan & Otomatis</h5>
+                                 <p class="text-muted small mb-3">Gunakan Pembayaran Online Terintegrasi (QRIS, E-Wallet, Virtual Account Bank, Alfamart, dll) untuk konfirmasi instan tanpa harus upload bukti transfer manual.</p>
+                                 <a href="<?= $order['xendit_invoice_url'] ?>" target="_blank" class="btn btn-success w-100 rounded-pill p-3 fw-bold d-flex align-items-center justify-content-center gap-2" style="background:var(--green-main); border:none; box-shadow:0 6px 20px rgba(27, 59, 37, 0.25);">
+                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> Bayar Sekarang via Xendit
+                                 </a>
+                             </div>
+                             
+                             <div class="text-center my-3 text-muted position-relative">
+                                 <hr style="border-top: 1px dashed #ccc;">
+                                 <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #fff; padding: 0 15px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #aaa;">Atau Upload Bukti Manual</span>
+                             </div>
+                             <?php endif; ?>
 
                             <?php if(!empty($qris_barcode)): ?>
                             <!-- QRIS Section -->
