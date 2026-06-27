@@ -127,8 +127,11 @@ if (!empty($reports)) {
                             <small class="text-muted"><?= htmlspecialchars($r['item_details'] ?? '-') ?></small>
                         </td>
                         <td class="align-middle" data-label="METODE">
-                            <span class="badge <?= $r['payment_method'] == 'QRIS' ? 'bg-primary' : 'bg-success' ?> bg-opacity-10 <?= $r['payment_method'] == 'QRIS' ? 'text-primary' : 'text-success' ?> border-0 rounded-pill px-3 py-2">
-                                <?= $r['payment_method'] == 'QRIS' ? '<i class="bi bi-qr-code-scan me-1"></i>' : '<i class="bi bi-cash me-1"></i>' ?> <?= $r['payment_method'] ?>
+                            <?php 
+                            $is_online = (stripos($r['payment_method'], 'QRIS') !== false || stripos($r['payment_method'], 'Online') !== false);
+                            ?>
+                            <span class="badge <?= $is_online ? 'bg-primary' : 'bg-success' ?> bg-opacity-10 <?= $is_online ? 'text-primary' : 'text-success' ?> border-0 rounded-pill px-3 py-2">
+                                <?= $is_online ? '<i class="bi bi-qr-code-scan me-1"></i>' : '<i class="bi bi-cash me-1"></i>' ?> <?= htmlspecialchars($r['payment_method']) ?>
                             </span>
                         </td>
                         <td class="text-end fw-semibold align-middle text-dark trx-price" data-label="TOTAL" data-price="<?= $r['total_price'] ?>">Rp <?= number_format($r['total_price'], 0, ',', '.') ?></td>
