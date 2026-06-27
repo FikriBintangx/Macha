@@ -1079,12 +1079,12 @@
     }
 
     .btn-add-cart {
-      background: #f0f3f1;
-      color: var(--green-dark);
+      background: var(--green-dark);
+      color: #fff;
       border: none;
-      border-radius: 50px;
+      border-radius: 16px;
       padding: 14px 24px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -1102,11 +1102,14 @@
     .btn-add-cart:hover {
       background: var(--green-main);
       color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(27, 59, 37, 0.25);
     }
 
     .btn-add-cart.sold-out {
       background: #F0F2F5;
       color: #A0AEC0;
+      border-radius: 16px;
       pointer-events: none;
     }
 
@@ -2609,12 +2612,12 @@
                   </div>
                   <?php if ($prod['stock'] > 0): ?>
                     <?php if ($this->session->userdata('role') == 'admin'): ?>
-                      <div class="btn-add-cart shimmer-btn text-center"
+                      <div class="btn-add-cart text-center"
                         style="background:#eef3eb; color:#8aa898; cursor:default; box-shadow:none;">
                         <i class="fa-solid fa-lock me-1"></i> Mode Kelola
                       </div>
                     <?php else: ?>
-                      <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart shimmer-btn">
+                      <a href="<?= base_url('shop/add_to_cart/' . $prod['id']) ?>" class="btn-add-cart">
                         <i class="fa-solid fa-cart-shopping me-1"></i> Tambah Keranjang
                       </a>
                     <?php endif; ?>
