@@ -338,25 +338,7 @@
             <div class="flash-error"><i class="fa-solid fa-xmark-circle me-2"></i><?= $this->session->flashdata('error') ?></div>
         <?php endif; ?>
 
-        <!-- Profile Hero -->
-        <div class="user-hero">
-            <div class="uh-left">
-                <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
-                    <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" class="uh-avatar">
-                <?php else: ?>
-                    <div class="uh-avatar"><?= strtoupper(substr($user['full_name'], 0, 1)) ?></div>
-                <?php endif; ?>
-                <div class="uh-info">
-                    <h4>Hai, <?= htmlspecialchars($this->session->userdata('full_name')) ?>! 👋</h4>
-                    <p>Semoga harimu menyenangkan dan penuh rasa matcha! ☕</p>
-                </div>
-            </div>
-            <div class="d-flex gap-2 flex-wrap" style="position: relative; z-index: 2;">
-                <a href="<?= site_url('shop') ?>" class="btn-shop-hero" style="background:#fff; color:var(--green-ultra); border:none; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-                    <i class="fa-solid fa-bag-shopping"></i>Belanja Sekarang
-                </a>
-            </div>
-        </div>
+
 
         <!-- Summary Chips -->
         <?php
