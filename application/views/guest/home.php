@@ -455,7 +455,7 @@
       }
 
       .ios-navbar-guest {
-        display: flex;
+        display: none !important;
       }
 
       .navbar-macha {

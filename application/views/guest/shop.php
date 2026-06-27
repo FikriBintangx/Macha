@@ -117,7 +117,7 @@
   .ios-navbar-guest {
     position: fixed; bottom: 0; left: 0; transform: none;
     background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 0;
-    padding: 10px 5px; display: flex; justify-content: space-evenly; align-items: center; width: 100%; max-width: none; z-index: 1040; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.2); gap: 2px;
+    padding: 10px 5px; display: none !important; justify-content: space-evenly; align-items: center; width: 100%; max-width: none; z-index: 1040; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.2); gap: 2px;
   }
   .ios-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--green-light); text-decoration: none; font-size: 0.6rem; font-weight: 700; transition: all 0.3s ease; position: relative; padding: 6px 2px; border-radius: 20px; gap: 3px; flex: 1; text-align: center; }
   .ios-nav-item i { font-size: 1.3rem; margin-bottom: 2px; transition: all 0.3s ease; }

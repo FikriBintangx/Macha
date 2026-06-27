@@ -724,7 +724,7 @@
                     <div
                         style="margin-top:16px;padding:14px;background:rgba(255,255,255,.08);border-radius:14px;font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.7)">
                         <i class="fa-solid fa-circle-info me-1"></i>
-                        Setelah checkout, Anda akan diarahkan ke <strong>Halaman Pembayaran</strong> untuk scan QRIS dan Upload Bukti Transfer.
+                        <span id="checkoutInstructions">Setelah checkout, Anda akan diarahkan ke Halaman Pembayaran untuk scan QRIS dan Upload Bukti Transfer.</span>
                     </div>
                 </div>
             </div>
@@ -770,6 +770,7 @@
             const infoBox = document.getElementById('paymentInfoBox');
             const infoText = document.getElementById('paymentInfoText');
             const infoTitle = document.getElementById('paymentInfoTitle');
+            const instr = document.getElementById('checkoutInstructions');
 
             if (desc && desc.trim() !== "") {
                 infoBox.classList.remove('d-none');
@@ -779,7 +780,13 @@
                 infoBox.classList.add('d-none');
             }
 
-
+            if (instr) {
+                if (method === 'cod') {
+                    instr.innerHTML = "Setelah checkout, Anda akan diarahkan ke Halaman Ringkasan/Nota Pending untuk konfirmasi pesanan Anda.";
+                } else {
+                    instr.innerHTML = "Setelah checkout, Anda akan diarahkan ke Halaman Pembayaran untuk scan QRIS dan Upload Bukti Transfer.";
+                }
+            }
         }
         // REAL-TIME VALIDATION
         document.querySelectorAll('.form-control[required]').forEach(function (inp) {

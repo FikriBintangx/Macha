@@ -73,3 +73,5 @@ Thumbs.db
 
 # Custom ignores
 diagram/
+
+.vercel

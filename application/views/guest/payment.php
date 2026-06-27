@@ -72,74 +72,113 @@
                     <div class="flash-err"><i class="fa-solid fa-triangle-exclamation me-2"></i><?= $this->session->flashdata('error') ?></div>
                 <?php endif; ?>
 
+                <?php 
+                $is_cod = (stripos($order['payment_method'], 'cod') !== false || stripos($order['payment_method'], 'tempat') !== false);
+                ?>
                 <div class="upload-card">
-                    <div class="upload-header">
-                        <h4><i class="fa-solid fa-upload me-2"></i>Upload Bukti Pembayaran</h4>
-                        <div style="opacity:.8;font-size:.9rem;margin-top:4px">Invoice: <?= htmlspecialchars($order['invoice_no']) ?></div>
+                    <div class="upload-header" style="<?= $is_cod ? 'background: linear-gradient(135deg, #1b4d3e, #2ea043);' : '' ?>">
+                        <?php if($is_cod): ?>
+                            <h4><i class="fa-solid fa-circle-check me-2"></i>Pesanan Berhasil Diajukan</h4>
+                            <div style="opacity:.8;font-size:.9rem;margin-top:4px">Invoice: <?= htmlspecialchars($order['invoice_no']) ?></div>
+                        <?php else: ?>
+                            <h4><i class="fa-solid fa-upload me-2"></i>Upload Bukti Pembayaran</h4>
+                            <div style="opacity:.8;font-size:.9rem;margin-top:4px">Invoice: <?= htmlspecialchars($order['invoice_no']) ?></div>
+                        <?php endif; ?>
                     </div>
                     <div class="upload-body">
 
-                        <!-- Urgency Timer -->
-                        <div style="background:rgba(251,191,36,.1); border:1px solid rgba(251,191,36,.3); border-radius:14px; padding:12px; text-align:center; font-weight:700; color:#b45309; margin-bottom:24px;">
-                            <i class="fa-solid fa-clock me-1"></i> Selesaikan pembayaran dalam: <span id="paymentTimer" style="font-family:monospace; font-size:1.1rem; color:#d97706;">15:00</span>
-                        </div>
-
-                        <!-- Jumlah -->
-                        <div class="amount-box">
-                            <div class="label">Total Tagihan (Termasuk Ongkir)</div>
-                            <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
-                            <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
-                        </div>
-
-                        <?php if(!empty($qris_barcode)): ?>
-                        <!-- QRIS Section -->
-                        <div class="text-center mb-4 p-4" style="background:#fafcf9; border:2px dashed #c8d8c0; border-radius:20px;">
-                            <h6 class="fw-bold mb-3" style="color:var(--green-dark)"><i class="bi bi-qr-code-scan me-2"></i>Scan QRIS MariMatcha</h6>
-                            <div style="background:#fff; padding:12px; display:inline-block; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06);">
-                                <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS" style="width:200px; height:200px; border-radius:8px;">
+                        <?php if($is_cod): ?>
+                            <!-- COD PENDING RECEIPT / NOTA -->
+                            <div class="text-center mb-4 p-4" style="background:#f8faf7; border:2px solid #d2e4d3; border-radius:20px;">
+                                <div class="fs-1 text-success mb-3"><i class="fa-solid fa-truck-dot"></i></div>
+                                <h5 class="fw-bold text-success mb-2">Metode: Bayar di Tempat (COD)</h5>
+                                <p class="text-muted small mb-0">Pesanan Anda telah diterima dan berstatus <span class="badge bg-warning text-dark rounded-pill px-2 py-1">Pending</span> menunggu verifikasi admin.</p>
                             </div>
-                            <p class="mt-3 mb-0" style="font-size:0.85rem; color:#7a9080;">Scan menggunakan e-wallet atau m-banking favoritmu.</p>
-                        </div>
-                        <?php endif; ?>
 
+                            <div class="amount-box" style="background: #f4faf6; border-color: #a3e2ad;">
+                                <div class="label">Total Tagihan Yang Harus Dibayar</div>
+                                <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
+                                <div class="mt-2 text-muted small"><i class="fa-solid fa-circle-info me-1"></i>Silakan siapkan uang tunai yang pas saat pesanan diantarkan/diambil.</div>
+                            </div>
 
+                            <?php 
+                            // WhatsApp Send Link
+                            $admin_wa = $this->M_settings->get_setting('whatsapp_number') ?: '6285881705459';
+                            $message_text = "Halo Admin MariMatcha, saya baru saja melakukan pemesanan COD dengan nomor Invoice: " . $order['invoice_no'] . " senilai Rp " . number_format($order['total_price'],0,',','.') . ". Harap konfirmasi pesanan saya ya. Terima kasih!";
+                            $wa_link = "https://wa.me/" . preg_replace('/[^0-9]/', '', $admin_wa) . "?text=" . urlencode($message_text);
+                            ?>
 
-                        <!-- Enhanced Confirmation Form -->
-                        <form action="<?= base_url('shop/upload_payment') ?>" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="sales_id" value="<?= $order['id'] ?>">
-                            <input type="hidden" name="expected_nominal" value="<?= $order['total_price'] ?>">
+                            <div class="d-flex flex-column gap-2 mt-4">
+                                <a href="<?= $wa_link ?>" target="_blank" class="btn btn-success rounded-pill p-3 fw-bold d-flex align-items-center justify-content-center gap-2" style="background:#25D366; border:none; box-shadow:0 6px 20px rgba(37, 211, 102, 0.25);">
+                                    <i class="fa-brands fa-whatsapp fs-5"></i> Konfirmasi Pesanan via WhatsApp
+                                </a>
+                                <a href="<?= base_url('shop/invoice/'.$order['id']) ?>" class="btn btn-outline-success rounded-pill p-3 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fa-solid fa-receipt"></i> Lihat Nota Pesanan Lengkap
+                                </a>
+                            </div>
 
-                            <input type="hidden" name="bank_dest" value="QRIS">
+                        <?php else: ?>
+                            <!-- STANDARD QRIS/TRANSFER CONFIRMATION FORM -->
+                            <!-- Urgency Timer -->
+                            <div style="background:rgba(251,191,36,.1); border:1px solid rgba(251,191,36,.3); border-radius:14px; padding:12px; text-align:center; font-weight:700; color:#b45309; margin-bottom:24px;">
+                                <i class="fa-solid fa-clock me-1"></i> Selesaikan pembayaran dalam: <span id="paymentTimer" style="font-family:monospace; font-size:1.1rem; color:#d97706;">15:00</span>
+                            </div>
 
-                            <div class="mb-4">
-                                <label class="form-label" style="font-weight:700;color:var(--green-dark);">1. Masukkan Nominal Pembayaran</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background:#f0faef; border-color:#e8ede8; font-weight:700;">Rp</span>
-                                    <input type="number" name="nominal" class="form-control" placeholder="Contoh: 55000" value="<?= $order['total_price'] ?>" required style="border-radius:0 12px 12px 0; padding:12px; border:2px solid #e8ede8; border-left:none;">
+                            <!-- Jumlah -->
+                            <div class="amount-box">
+                                <div class="label">Total Tagihan (Termasuk Ongkir)</div>
+                                <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
+                                <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
+                            </div>
+
+                            <?php if(!empty($qris_barcode)): ?>
+                            <!-- QRIS Section -->
+                            <div class="text-center mb-4 p-4" style="background:#fafcf9; border:2px dashed #c8d8c0; border-radius:20px;">
+                                <h6 class="fw-bold mb-3" style="color:var(--green-dark)"><i class="bi bi-qr-code-scan me-2"></i>Scan QRIS MariMatcha</h6>
+                                <div style="background:#fff; padding:12px; display:inline-block; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06);">
+                                    <img src="<?= base_url('uploads/'.$qris_barcode) ?>" alt="QRIS" style="width:200px; height:200px; border-radius:8px;">
                                 </div>
-                                <div class="form-text text-danger" style="font-size:.8rem; font-weight:600;">*Harus sesuai dengan total tagihan untuk konfirmasi otomatis</div>
+                                <p class="mt-3 mb-0" style="font-size:0.85rem; color:#7a9080;">Scan menggunakan e-wallet atau m-banking favoritmu.</p>
                             </div>
+                            <?php endif; ?>
 
-                            <p style="font-weight:700;color:var(--green-dark);margin-bottom:12px"><i class="fa-solid fa-image me-2"></i>2. Upload Foto/Screenshot Bukti Transfer</p>
-                            
-                            <div class="file-zone mb-3" onclick="document.getElementById('payFile').click()">
-                                <input type="file" id="payFile" name="payment_proof" accept="image/*,.pdf" required
-                                       onchange="document.getElementById('fName').textContent='📎 '+this.files[0].name">
-                                <div class="zone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                                <p>Klik untuk memilih file<br><small>JPG, PNG, atau PDF – Maks 2MB</small></p>
-                                <div class="file-name" id="fName"></div>
+                            <!-- Enhanced Confirmation Form -->
+                            <form action="<?= base_url('shop/upload_payment') ?>" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="sales_id" value="<?= $order['id'] ?>">
+                                <input type="hidden" name="expected_nominal" value="<?= $order['total_price'] ?>">
+
+                                <input type="hidden" name="bank_dest" value="QRIS">
+
+                                <div class="mb-4">
+                                    <label class="form-label" style="font-weight:700;color:var(--green-dark);">1. Masukkan Nominal Pembayaran</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="background:#f0faef; border-color:#e8ede8; font-weight:700;">Rp</span>
+                                        <input type="number" name="nominal" class="form-control" placeholder="Contoh: 55000" value="<?= $order['total_price'] ?>" required style="border-radius:0 12px 12px 0; padding:12px; border:2px solid #e8ede8; border-left:none;">
+                                    </div>
+                                    <div class="form-text text-danger" style="font-size:.8rem; font-weight:600;">*Harus sesuai dengan total tagihan untuk konfirmasi otomatis</div>
+                                </div>
+
+                                <p style="font-weight:700;color:var(--green-dark);margin-bottom:12px"><i class="fa-solid fa-image me-2"></i>2. Upload Foto/Screenshot Bukti Transfer</p>
+                                
+                                <div class="file-zone mb-3" onclick="document.getElementById('payFile').click()">
+                                    <input type="file" id="payFile" name="payment_proof" accept="image/*,.pdf" required
+                                           onchange="document.getElementById('fName').textContent='📎 '+this.files[0].name">
+                                    <div class="zone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                    <p>Klik untuk memilih file<br><small>JPG, PNG, atau PDF – Maks 2MB</small></p>
+                                    <div class="file-name" id="fName"></div>
+                                </div>
+
+                                <button type="submit" class="btn-submit">
+                                    <i class="fa-solid fa-shield-check me-2"></i>Verifikasi Pembayaran
+                                </button>
+                            </form>
+
+                            <div class="text-center mt-4">
+                                <a href="<?= base_url('shop/invoice/'.$order['id']) ?>" class="btn-back">
+                                    <i class="fa-solid fa-receipt me-1"></i>Lihat Nota Pesanan
+                                </a>
                             </div>
-
-                            <button type="submit" class="btn-submit">
-                                <i class="fa-solid fa-shield-check me-2"></i>Verifikasi Pembayaran
-                            </button>
-                        </form>
-
-                        <div class="text-center mt-4">
-                            <a href="<?= base_url('shop/invoice/'.$order['id']) ?>" class="btn-back">
-                                <i class="fa-solid fa-receipt me-1"></i>Lihat Nota Pesanan
-                            </a>
-                        </div>
+                        <?php endif; ?>
 
                     </div>
                 </div>

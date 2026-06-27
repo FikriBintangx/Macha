@@ -761,7 +761,7 @@ if (isset($CI->db)) {
                 width: 100%;
                 padding: 15px;
                 padding-top: 80px;
-                padding-bottom: 85px; /* Added for ios-navbar */
+                padding-bottom: 28px;
                 min-height: calc(100vh - 100px);
             }
 
@@ -845,7 +845,7 @@ if (isset($CI->db)) {
 
         @media (max-width: 768px) {
             .ios-navbar {
-                display: flex;
+                display: none !important;
                 position: fixed;
                 bottom: 0;
                 left: 0;
