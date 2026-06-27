@@ -13,7 +13,15 @@ class Order extends CI_Controller {
         parent::__construct();
         // Proteksi: Hanya Admin / Owner
         $role = $this->session->userdata('role');
-        if(!$this->session->userdata('userid') || $role == 'user') {
+        $is_ajax = $this->input->server('HTTP_X_REQUESTED_WITH') === 'XMLHttpRequest'
+                || strpos($this->uri->uri_string(), 'ajax') !== false;
+
+        if (!$this->session->userdata('userid') || $role == 'user') {
+            if ($is_ajax) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Sesi habis, silakan login ulang.', 'redirect' => site_url('auth')]);
+                exit;
+            }
             redirect('auth');
         }
         $this->load->model('M_sales');

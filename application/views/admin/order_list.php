@@ -428,7 +428,8 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
 
         fetch('<?= site_url('order/ajax_update_status') ?>', {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
         .then(response => response.text())
         .then(text => {
@@ -436,9 +437,15 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
             try {
                 data = JSON.parse(text);
             } catch(e) {
-                // Server returned HTML (likely DB error / PHP crash)
                 console.error('Non-JSON response:', text.substring(0, 300));
                 throw new Error('bad_response');
+            }
+
+            // Session expired → redirect ke login
+            if (data.redirect) {
+                showAdminToast('Sesi habis, mengalihkan ke halaman login...', 'error');
+                setTimeout(() => window.location.href = data.redirect, 1500);
+                return;
             }
 
             if (data.success) {
