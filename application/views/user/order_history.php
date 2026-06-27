@@ -398,62 +398,92 @@
                                 <img src="" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="d-none" id="avatarPreview">
                             <?php endif; ?>
                             <label for="profileInput" class="p-avatar-edit" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
+                            <label for="profileInput" class="p-avatar-edit" id="avatarEditLabel" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
                                 <i class="fa-solid fa-camera" style="font-size:11px"></i>
                             </label>
                         </div>
-                        <div>
-                            <h5 class="fw-bold mb-0 text-white" style="font-size: 1.2rem; letter-spacing: -0.3px;">Profil Pengaturan Terpadu</h5>
-                            <p class="text-white-50 small mb-0" style="font-size:0.8rem; opacity:0.85;">Kelola data pribadi & alamat pengiriman</p>
+                        <div class="flex-grow-1">
+                            <h5 class="fw-bold mb-0 text-white" style="font-size: 1.1rem; letter-spacing: -0.3px;" id="profileCardTitle">Profil Saya</h5>
+                            <p class="text-white-50 small mb-0" style="font-size:0.78rem; opacity:0.85;" id="profileCardSubtitle">Data pribadi &amp; alamat pengiriman</p>
+                        </div>
+                        <!-- Toggle Button -->
+                        <button type="button" id="profileModeToggle" onclick="toggleProfileMode()" style="background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.3); color:#fff; border-radius:50px; padding:6px 16px; font-size:0.8rem; font-weight:700; cursor:pointer; transition:all .25s; white-space:nowrap; backdrop-filter:blur(6px);">
+                            <i class="fa-solid fa-pen-to-square me-1"></i>Edit
+                        </button>
+                    </div>
+
+                    <!-- ═══ VIEW MODE ═══ -->
+                    <div id="profileViewMode">
+                        <div class="pv-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <span class="pv-label" style="font-size:0.85rem; opacity:0.8;"><i class="fa-regular fa-user me-2"></i> Nama</span>
+                            <span class="pv-val" id="pv-name" style="font-weight:600;"><?= htmlspecialchars($user['full_name'] ?? '-') ?></span>
+                        </div>
+                        <div class="pv-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <span class="pv-label" style="font-size:0.85rem; opacity:0.8;"><i class="fa-solid fa-at me-2"></i> Username</span>
+                            <span class="pv-val" style="font-weight:600;"><?= htmlspecialchars($user['username'] ?? '-') ?></span>
+                        </div>
+                        <div class="pv-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <span class="pv-label" style="font-size:0.85rem; opacity:0.8;"><i class="fa-solid fa-phone me-2"></i> WhatsApp</span>
+                            <span class="pv-val" id="pv-phone" style="font-weight:600;"><?= !empty($user['phone']) ? htmlspecialchars($user['phone']) : '<span style="opacity:.5;font-style:italic;">Belum diisi</span>' ?></span>
+                        </div>
+                        <div class="pv-row" style="display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <span class="pv-label" style="font-size:0.85rem; opacity:0.8; padding-top:2px;"><i class="fa-solid fa-location-dot me-2"></i> Alamat</span>
+                            <span class="pv-val" id="pv-address" style="font-weight:600; text-align:right; max-width:60%;"><?= !empty($user['address']) ? htmlspecialchars($user['address']) : '<span style="opacity:.5;font-style:italic;">Belum diisi</span>' ?></span>
+                        </div>
+                        <div class="pv-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
+                            <span class="pv-label" style="font-size:0.85rem; opacity:0.8;"><i class="fa-solid fa-lock me-2"></i> Password</span>
+                            <span class="pv-val" style="letter-spacing:3px; opacity:.6; font-weight:600;">••••••••</span>
                         </div>
                     </div>
 
-                    <form id="profileForm" action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
-                        <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nama Lengkap</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
-                                    <input type="text" name="full_name" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['full_name'] ?? '') ?>" required>
+                    <!-- ═══ EDIT MODE ═══ -->
+                    <div id="profileEditMode" style="display:none;">
+                        <form id="profileForm" action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
+                            <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="pf-label" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:5px; opacity:0.8;">Nama Lengkap</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text border-end-0 bg-white" style="border-radius:12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
+                                        <input type="text" name="full_name" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['full_name'] ?? '') ?>" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="pf-label" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:5px; opacity:0.8;">Username / ID Login</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text border-end-0 bg-transparent text-white-50" style="border-radius:12px 0 0 12px; border:2px solid rgba(255,255,255,0.25);"><i class="fa-solid fa-at"></i></span>
+                                        <input type="text" class="form-control border-start-0 ps-0 text-white-50" style="border-radius:0 12px 12px 0; border:2px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.15); cursor:not-allowed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="pf-label" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:5px; opacity:0.8;">Nomor WhatsApp / HP</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text border-end-0 bg-white" style="border-radius:12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
+                                        <input type="tel" name="phone" class="form-control border-start-0 ps-0" autocomplete="tel" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="Misal: 0812...">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="pf-label" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:5px; opacity:0.8;">Alamat Pengiriman Default</label>
+                                    <textarea name="address" rows="3" class="form-control" style="border-radius:12px; border:2px solid #edf1ed; padding:12px; resize:none; font-weight:500; font-size:.9rem;" placeholder="Tuliskan nama blok, RT/RW, gang, atau detail lainnya..."><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mt-1 pt-3 border-top" style="border-top-color: rgba(255,255,255,0.15) !important;">
+                                    <label class="pf-label" style="color:#ff8787; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:5px;"><i class="fa-solid fa-lock me-1"></i>Ubah Password (Opsional)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text border-end-0 bg-white" style="border-radius:12px 0 0 12px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
+                                        <input type="password" name="password" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #fee2e2; padding:10px; font-weight:500; font-size:.9rem;" placeholder="Kosongkan jika tidak ingin diubah">
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="col-md-12">
-                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Username / ID Login</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-transparent text-white-50" style="border-radius: 12px 0 0 12px; border:2px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.6);"><i class="fa-solid fa-at"></i></span>
-                                    <input type="text" class="form-control border-start-0 ps-0 text-white-50" style="border-radius:0 12px 12px 0; border:2px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.15); cursor:not-allowed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
-                                </div>
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="button" onclick="toggleProfileMode()" style="flex:1; background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.8); border-radius:50px; padding:11px; font-size:.88rem; font-weight:700; cursor:pointer; transition:.2s;">
+                                    <i class="fa-solid fa-xmark me-1"></i>Batal
+                                </button>
+                                <button type="submit" style="flex:2; background:#fff; color:var(--green-dark); border:none; border-radius:50px; padding:11px; font-size:.9rem; font-weight:800; box-shadow:0 4px 15px rgba(0,0,0,.15); cursor:pointer; transition:.2s;">
+                                    <i class="fa-solid fa-save me-1"></i>Simpan Profil
+                                </button>
                             </div>
-
-                            <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nomor WhatsApp / HP</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
-                                    <input type="text" name="phone" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="Misal: 0812...">
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label" style="font-weight:600; color:rgba(255,255,255,0.9); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Alamat Lengkap Pengiriman Default</label>
-                                <textarea name="address" rows="3" class="form-control" style="border-radius:12px; border:2px solid #edf1ed; padding:12px; resize:none; font-weight:500; font-size:.9rem;" placeholder="Tuliskan nama blok, RT/RW, gang, atau detail lainnya..."><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
-                            </div>
-
-                            <div class="col-12 mt-3 pt-3 border-top" style="border-top-color: rgba(255,255,255,0.15) !important;">
-                                <label class="form-label" style="font-weight:600; color:#ff8787; font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;"><i class="fa-solid fa-lock me-1"></i>Ubah Password Baru (Opsional)</label>
-                                <div class="input-group">
-                                    <span class="input-group-text border-end-0 bg-white" style="border-radius: 12px 0 0 12px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
-                                    <input type="password" name="password" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #fee2e2; padding:10px; font-weight:500; font-size:.9rem;" placeholder="Kosongkan jika tidak ingin diubah">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-light w-100 rounded-pill fw-bold" style="background:#fff; color:var(--green-dark); border:none; padding:12px; font-size:.95rem; box-shadow: 0 4px 15px rgba(0,0,0,.15); transition:.2s;">
-                                <i class="fa-solid fa-save me-1"></i> Simpan Profil
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -616,12 +646,43 @@
             .p-avatar-edit:hover { background: var(--green-main) !important; color:#fff !important; transform: scale(1.1); }
             @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
             .animate-fade { animation: fadeIn 0.4s ease; }
+            /* View/Edit mode transitions */
+            #profileViewMode, #profileEditMode { animation: fadeIn 0.3s ease; }
+            .pf-label { display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:rgba(255,255,255,0.85); margin-bottom:5px; }
+            #profileModeToggle:hover { background:rgba(255,255,255,0.28) !important; }
         </style>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ── Profile View / Edit Mode Toggle ──
+        let _isEditMode = false;
+        function toggleProfileMode() {
+            _isEditMode = !_isEditMode;
+            const viewEl  = document.getElementById('profileViewMode');
+            const editEl  = document.getElementById('profileEditMode');
+            const toggleBtn = document.getElementById('profileModeToggle');
+            const camBtn  = document.getElementById('avatarEditLabel');
+            const title   = document.getElementById('profileCardTitle');
+            const sub     = document.getElementById('profileCardSubtitle');
+            if (_isEditMode) {
+                viewEl.style.display = 'none';
+                editEl.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fa-solid fa-eye me-1"></i>Lihat';
+                if (camBtn) camBtn.style.display = 'flex';
+                if (title) title.textContent = 'Edit Profil';
+                if (sub)   sub.textContent   = 'Ubah data pribadi & alamat';
+            } else {
+                viewEl.style.display = 'block';
+                editEl.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fa-solid fa-pen-to-square me-1"></i>Edit';
+                if (camBtn) camBtn.style.display = 'none';
+                if (title) title.textContent = 'Profil Saya';
+                if (sub)   sub.textContent   = 'Data pribadi & alamat pengiriman';
+            }
+        }
+
         // Filter tabs
         document.querySelectorAll('.ftab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -716,6 +777,26 @@
                             } else {
                                 alert(data.message || 'Profil berhasil diperbarui!');
                             }
+
+                            // Update view-mode display values
+                            const nameInput = document.querySelector('#profileForm [name="full_name"]');
+                            const phoneInput = document.querySelector('#profileForm [name="phone"]');
+                            const addrInput = document.querySelector('#profileForm [name="address"]');
+                            if (nameInput) {
+                                const pvName = document.getElementById('pv-name');
+                                if (pvName) pvName.textContent = nameInput.value;
+                            }
+                            if (phoneInput) {
+                                const pvPhone = document.getElementById('pv-phone');
+                                if (pvPhone) pvPhone.textContent = phoneInput.value || '';
+                            }
+                            if (addrInput) {
+                                const pvAddr = document.getElementById('pv-address');
+                                if (pvAddr) pvAddr.textContent = addrInput.value || '';
+                            }
+
+                            // Switch back to view mode
+                            if (_isEditMode) toggleProfileMode();
                             
                             // Update Hero text name if changed
                             const heroName = document.querySelector('.uh-info h4');
