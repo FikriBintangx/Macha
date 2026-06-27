@@ -726,7 +726,7 @@
                                 <label class="form-label">Nomor WhatsApp / Telepon</label>
                                 <input type="tel" name="phone" id="phone_field" class="form-control"
                                     value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="08xxxxxxxxxx"
-                                    autocomplete="tel" required>
+                                    autocomplete="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                             </div>
 
                             <div id="addressSection" class="d-none">
@@ -820,7 +820,7 @@
                     </div>
 
                     <button type="submit" form="checkoutForm" class="btn-pay" id="btnPay">
-                        <span><i class="fa-solid fa-lock me-2"></i>Selesaikan Pesanan</span>
+                        <span>Lanjut Pembayaran<i class="fa-solid fa-arrow-right ms-2"></i></span>
                     </button>
                     <div class="trust-row">
                         <div class="trust-item"><i class="fa-solid fa-shield-halved"></i>Aman & Terenkripsi</div>
@@ -846,7 +846,7 @@
             <span class="value">Rp <?= number_format($total, 0, ',', '.') ?></span>
         </div>
         <button type="submit" form="checkoutForm" class="mobile-btn-pay" id="btnPayMobile">
-            <span>Selesaikan Pesanan</span>
+            <span>Lanjut Pembayaran</span>
         </button>
     </div>
 
@@ -905,6 +905,17 @@
                 } else {
                     instr.innerHTML = "Setelah checkout, Anda akan diarahkan ke Halaman Pembayaran untuk scan QRIS dan Upload Bukti Transfer.";
                 }
+            }
+
+            // Update Button Text dynamically based on payment method
+            const btnPay = document.getElementById('btnPay');
+            const btnPayMobile = document.getElementById('btnPayMobile');
+            if (method === 'cod') {
+                if (btnPay) btnPay.innerHTML = '<span><i class="fa-solid fa-lock me-2"></i>Selesaikan Pesanan</span>';
+                if (btnPayMobile) btnPayMobile.innerHTML = '<span>Selesaikan Pesanan</span>';
+            } else {
+                if (btnPay) btnPay.innerHTML = '<span>Lanjut Pembayaran<i class="fa-solid fa-arrow-right ms-2"></i></span>';
+                if (btnPayMobile) btnPayMobile.innerHTML = '<span>Lanjut Pembayaran</span>';
             }
         }
         // REAL-TIME VALIDATION

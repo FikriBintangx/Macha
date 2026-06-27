@@ -395,6 +395,12 @@ class Shop extends CI_Controller
                 $order['xendit_invoice_url'] = $xendit_invoice['invoice_url'];
             }
         }
+
+        // Auto-redirect to Xendit payment link if online payment and invoice URL exists
+        if (!$is_cod && !empty($order['xendit_invoice_url'])) {
+            redirect($order['xendit_invoice_url']);
+            return;
+        }
         
         $data['order'] = $order;
         // Cek admin phone dan setting
