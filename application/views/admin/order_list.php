@@ -2,6 +2,23 @@
 /* Force text colors in table to be dark */
 table.table tbody td { color: #000 !important; opacity: 1 !important; visibility: visible !important; }
 
+/* Admin Toast Notification */
+#adminToast {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+    min-width: 280px; max-width: 380px;
+    padding: 14px 20px; border-radius: 16px;
+    font-size: 0.88rem; font-weight: 600;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    transform: translateY(20px); opacity: 0;
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+}
+#adminToast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+#adminToast.toast-success { background: #1a4731; color: #fff; }
+#adminToast.toast-error   { background: #7f1d1d; color: #fff; }
+#adminToast.toast-info    { background: #1e3a5f; color: #fff; }
+
 /* Shimmer Skeleton Styles */
 .skeleton-container {
     padding: 24px;
@@ -379,9 +396,31 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
     // Image View - unified to use the one defined at the bottom
     // function viewProof(url) is defined at the end of the file
 
-    // AJAX Update Status
-    function updateStatus(id, status) {
-        if (!confirm('Apakah Anda yakin ingin mengubah status pesanan ini?')) return;
+    // ── Admin Toast Helper ──
+    function showAdminToast(msg, type) {
+        let toast = document.getElementById('adminToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'adminToast';
+            document.body.appendChild(toast);
+        }
+        toast.className = 'toast-' + (type || 'info');
+        toast.innerHTML = `<i class="bi bi-${type==='success'?'check-circle-fill':type==='error'?'x-circle-fill':'info-circle-fill'}" style="font-size:1.1rem;"></i><span>${msg}</span>`;
+        // show
+        requestAnimationFrame(() => toast.classList.add('show'));
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // AJAX Update Status — dengan 1x auto-retry saat DB cold-start
+    function updateStatus(id, status, _retry) {
+        if (!_retry && !confirm('Apakah Anda yakin ingin mengubah status pesanan ini?')) return;
+
+        const row  = document.getElementById('row-' + id);
+        const cell = document.getElementById('status-cell-' + id);
+
+        // Loading indicator di cell
+        if (!_retry) cell.innerHTML = '<span class="spinner-border spinner-border-sm text-success"></span>';
 
         const formData = new FormData();
         formData.append('id', id);
@@ -394,37 +433,38 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Update specific row status cell with new badge
-                const cell = document.getElementById('status-cell-' + id);
-                const row = document.getElementById('row-' + id);
                 const orderType = row.querySelector('[data-label="TIPE/BAYAR"]').innerText.toLowerCase();
-                
-                let badgeClass = 'bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25';
-                let statusText = data.new_status.charAt(0).toUpperCase() + data.new_status.slice(1);
 
-                if (data.new_status === 'pending') { badgeClass = 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; statusText = 'Menunggu'; }
-                if (data.new_status === 'paid') { badgeClass = 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50'; statusText = 'Dibayar'; }
-                if (data.new_status === 'shipped') { 
-                    badgeClass = 'bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25'; 
-                    statusText = orderType.includes('antar') ? 'Dikirim' : 'Siap Ambil'; 
+                const badgeMap = {
+                    pending:   ['bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25', 'Menunggu'],
+                    paid:      ['bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-50', 'Dibayar'],
+                    shipped:   ['bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25', orderType.includes('antar') ? 'Dikirim' : 'Siap Ambil'],
+                    completed: ['bg-success bg-opacity-10 text-success border border-success border-opacity-25', 'Selesai'],
+                    canceled:  ['bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25', 'Batal'],
+                };
+                const [cls, txt] = badgeMap[data.new_status] || ['bg-secondary bg-opacity-10 text-secondary border', data.new_status];
+                cell.innerHTML = `<span class="badge ${cls} rounded-pill px-3 py-2 fw-bold" style="font-size:0.75rem;">${txt}</span>`;
+
+                showAdminToast('Status diubah → ' + txt, 'success');
+
+                if (typeof gsap !== 'undefined') {
+                    gsap.fromTo(row, { backgroundColor: 'rgba(25,135,84,0.2)' }, { backgroundColor: 'rgba(255,255,255,0)', duration: 1.5, ease: 'power2.out' });
                 }
-                if (data.new_status === 'completed') { badgeClass = 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'; statusText = 'Selesai'; }
-                if (data.new_status === 'canceled') { badgeClass = 'bg-dark bg-opacity-10 text-dark border border-dark border-opacity-25'; statusText = 'Batal'; }
-
-                cell.innerHTML = `<span class="badge ${badgeClass} rounded-pill px-3 py-2 fw-bold animate__animated animate__fadeInUp" style="font-size: 0.75rem;">${statusText}</span>`;
-                
-                // Premium GSAP Flash Feedback
-                gsap.fromTo(row, 
-                    { backgroundColor: 'rgba(25, 135, 84, 0.2)' }, 
-                    { backgroundColor: 'rgba(255, 255, 255, 0)', duration: 1.5, ease: "power2.out" }
-                );
             } else {
-                alert('Gagal memperbarui status: ' + data.message);
+                cell.innerHTML = '<span class="badge bg-danger-subtle text-danger">Error</span>';
+                showAdminToast('Gagal: ' + data.message, 'error');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan jaringan.');
+            console.error('updateStatus error:', error);
+            if (!_retry) {
+                // 1x auto-retry setelah 3 detik (kasih waktu DB Aiven wake up)
+                showAdminToast('Koneksi gagal, mencoba ulang dalam 3 detik...', 'info');
+                setTimeout(() => updateStatus(id, status, true), 3000);
+            } else {
+                cell.innerHTML = '<span class="badge bg-danger-subtle text-danger">Gagal</span>';
+                showAdminToast('Kesalahan jaringan. Coba refresh halaman.', 'error');
+            }
         });
     }
 
