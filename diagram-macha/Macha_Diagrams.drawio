@@ -2480,7 +2480,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: VerifikasiPembayaran" id="page_19">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="484" dy="351" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2534,13 +2534,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e5" edge="1" parent="1" source="w2" target="a3">
+        <mxCell id="e4" edge="1" parent="1" source="a2" style="exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="w2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="420" y="360" />
+              <mxPoint x="420" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" style="exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="a3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
               <mxPoint x="220" y="360" />
             </Array>
           </mxGeometry>

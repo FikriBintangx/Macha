@@ -469,16 +469,125 @@
             box-shadow: 0 4px 10px rgba(27, 77, 62, .2);
         }
         @media (max-width: 768px) {
-            body { padding-top: 80px; }
+            body { 
+                padding-top: 120px; 
+                padding-bottom: 100px;
+            }
             .navbar-macha { padding: 10px 0; }
             .navbar-brand { font-size: 1.2rem; }
-            .steps-bar { padding: 15px 0; margin-bottom: 20px; }
-            .form-card { padding: 20px; border-radius: 18px; margin-bottom: 15px; }
-            .summary-card { padding: 20px; border-radius: 20px; margin-top: 10px; }
-            .pay-option { padding: 12px 15px; }
+            .steps-bar { 
+                padding: 12px 16px; 
+                margin: 15px 15px 20px 15px; 
+                background: #fff;
+                border-radius: 50px;
+                border: 1px solid #edf1ed;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            }
+            .form-card { 
+                padding: 20px; 
+                border-radius: 24px; 
+                margin-bottom: 15px; 
+            }
+            .summary-card { 
+                padding: 20px; 
+                border-radius: 24px; 
+                margin-top: 10px; 
+                margin-bottom: 24px;
+            }
+            .pay-option { padding: 12px 15px; border-radius: 18px; }
             .pay-icon { width: 40px; height: 40px; font-size: 1.1rem; }
             .btn-pay { padding: 15px; font-size: 1rem; }
             .trust-row { flex-wrap: wrap; gap: 8px; }
+
+            /* Sticky Bottom Bar */
+            .mobile-bottom-bar {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                justify-content: space-between;
+                position: fixed;
+                bottom: 20px;
+                left: 15px;
+                right: 15px;
+                z-index: 1000;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                padding: 10px 12px;
+                border-radius: 24px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(0,0,0,0.05);
+                animation: slideUp 0.4s ease-out;
+            }
+            
+            @keyframes slideUp {
+                from { transform: translateY(100px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            .mobile-price-pill {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: #f0faf4;
+                border: 1.5px solid var(--gl);
+                border-radius: 18px;
+                padding: 10px 8px;
+                height: 52px;
+            }
+            
+            .mobile-price-pill .label {
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: var(--gl);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                line-height: 1.2;
+            }
+            
+            .mobile-price-pill .value {
+                font-size: 0.95rem;
+                font-weight: 800;
+                color: var(--gm);
+                line-height: 1.2;
+                margin-top: 1px;
+            }
+            
+            .mobile-btn-pay {
+                flex: 2;
+                background: var(--gm);
+                color: #fff;
+                border-radius: 18px;
+                height: 52px;
+                border: none;
+                font-weight: 800;
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                box-shadow: 0 4px 15px rgba(27, 77, 62, 0.2);
+                transition: transform 0.2s, background-color 0.2s;
+            }
+            
+            .mobile-btn-pay:active {
+                transform: scale(0.97);
+            }
+            
+            .mobile-btn-pay:disabled {
+                background: #4a6050 !important;
+                color: rgba(255, 255, 255, .4) !important;
+                box-shadow: none;
+                cursor: not-allowed;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-bottom-bar {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -728,7 +837,17 @@
                     </div>
                 </div>
             </div>
+    </div>
+
+    <!-- Mobile Sticky Bottom Bar -->
+    <div class="mobile-bottom-bar">
+        <div class="mobile-price-pill">
+            <span class="label">Total Bayar</span>
+            <span class="value">Rp <?= number_format($total, 0, ',', '.') ?></span>
         </div>
+        <button type="submit" form="checkoutForm" class="mobile-btn-pay" id="btnPayMobile">
+            <span>Selesaikan Pesanan</span>
+        </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -798,8 +917,17 @@
         // PREVENT DOUBLE SUBMIT
         document.getElementById('checkoutForm').addEventListener('submit', function () {
             var btn = document.getElementById('btnPay');
-            btn.disabled = true;
-            btn.innerHTML = '<span><i class="fa-solid fa-spinner fa-spin me-2"></i>Memproses pesanan...</span>';
+            var btnMobile = document.getElementById('btnPayMobile');
+            var loadingHtml = '<span><i class="fa-solid fa-spinner fa-spin me-2"></i>Memproses...</span>';
+            
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = loadingHtml;
+            }
+            if (btnMobile) {
+                btnMobile.disabled = true;
+                btnMobile.innerHTML = loadingHtml;
+            }
         });
         function getLocation() {
             if (navigator.geolocation) {
