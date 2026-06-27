@@ -7,23 +7,30 @@ class Dbtest extends CI_Controller {
         try {
             $this->load->database();
             
-            // Check if column 'points' exists in 'users'
+            // 1. Ensure 'points' column exists in 'users'
             $fields = $this->db->list_fields('users');
             $has_points = in_array('points', $fields);
             
+            $points_msg = "";
             if (!$has_points) {
-                // Add the missing column
                 $this->db->query("ALTER TABLE users ADD COLUMN points INT DEFAULT 0 AFTER role");
-                $fields = $this->db->list_fields('users');
-                $message = "Column 'points' added successfully!";
+                $points_msg = "Column 'points' added successfully.";
             } else {
-                $message = "Column 'points' already exists.";
+                $points_msg = "Column 'points' already exists.";
             }
 
+            // 2. Update QRIS Payment Method to Online Payment
+            $this->db->where('id', 1);
+            $this->db->update('payment_methods', [
+                'method_name' => 'Online Payment',
+                'description' => 'Bayar instan otomatis (QRIS, E-Wallet, Virtual Account)'
+            ]);
+            
             echo json_encode([
                 'status' => 'success',
-                'message' => $message,
-                'users_columns' => $fields
+                'points_column' => $points_msg,
+                'payment_methods_updated' => true,
+                'message' => 'Database updates applied successfully!'
             ]);
         } catch (Exception $e) {
             echo json_encode([
