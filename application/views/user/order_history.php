@@ -328,7 +328,7 @@
     <!-- NAVBAR -->
     <?php $this->load->view('layout/navbar'); ?>
 
-    <div class="container py-3 flex-grow-1" style="max-width:860px">
+    <div class="container py-3 flex-grow-1" style="max-width:1200px">
 
         <!-- Flash Messages -->
         <?php if($this->session->flashdata('success')): ?>
@@ -352,11 +352,8 @@
                 </div>
             </div>
             <div class="d-flex gap-2 flex-wrap" style="position: relative; z-index: 2;">
-                <a href="#" onclick="document.querySelector('[data-filter=\'profile-settings\']').click(); return false;" class="btn-shop-hero" style="background:rgba(255,255,255,0.15); color:#fff; border:1.5px solid rgba(255,255,255,0.3); backdrop-filter:blur(4px);">
-                    <i class="fa-solid fa-user-circle"></i>Profil
-                </a>
                 <a href="<?= site_url('shop') ?>" class="btn-shop-hero" style="background:#fff; color:var(--green-ultra); border:none; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-                    <i class="fa-solid fa-bag-shopping"></i>Belanja
+                    <i class="fa-solid fa-bag-shopping"></i>Belanja Sekarang
                 </a>
             </div>
         </div>
@@ -403,178 +400,191 @@
             </div>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="filter-tabs" id="filterTabs">
-            <div class="ftab active" data-filter="all"><i class="fa-solid fa-list me-1"></i>Semua (<?= $total_orders ?>)</div>
-            <div class="ftab" data-filter="pending">⏳ Pending (<?= $pending_orders ?>)</div>
-            <div class="ftab" data-filter="paid">✅ Diterima</div>
-            <div class="ftab" data-filter="shipped">🔥 Dimasak</div>
-            <div class="ftab" data-filter="completed">🎉 Selesai (<?= $done_orders ?>)</div>
-            <div class="ftab" data-filter="profile-settings" style="margin-left:auto; border-color:var(--green-main); color:var(--green-main);"><i class="fa-solid fa-user-gear me-1"></i>Pengaturan Akun</div>
-        </div>
-
-        <!-- ORDER CARDS -->
-        <?php if (!empty($orders)): ?>
-            <?php
-            $status_map = [
-                'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
-                'paid'      => ['sb-paid',       'Pesanan Diterima', 'fa-check-circle',    2],
-                'shipped'   => ['sb-shipped',    'Sedang Dimasak',   'fa-fire-burner',     3],
-                'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
-                'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
-            ];
-            $step_labels = ['Pesan', 'Diterima', 'Dimasak', 'Selesai'];
-            ?>
-            <div id="orderList">
-            <?php foreach ($orders as $o): ?>
-                <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1]; ?>
-                <div class="order-card skel-loading" data-status="<?= $o['status'] ?>">
-                    <div class="skel-overlay"></div><div class="skel-shimmer"></div>
-                    <div class="order-head">
-                        <div>
-                            <div class="invoice-no"><i class="fa-solid fa-file-invoice me-1" style="color:var(--green-main)"></i><?= htmlspecialchars($o['invoice_no']) ?></div>
-                            <div class="order-date"><i class="fa-regular fa-calendar me-1"></i><?= date('d M Y, H:i', strtotime($o['created_at'])) ?> WIB</div>
-                        </div>
-                        <span class="sbadge <?= $sm[0] ?>">
-                            <i class="fa-solid <?= $sm[2] ?>"></i> <?= $sm[1] ?>
-                        </span>
-                    </div>
-
-                    <!-- Progress tracker (hanya jika tidak canceled) -->
-                    <?php if ($o['status'] !== 'canceled'): ?>
-                    <div class="order-progress">
-                        <div class="progress-steps">
-                            <?php for ($s = 1; $s <= 4; $s++): ?>
-                            <div class="ps-step <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
-                                <div class="ps-dot <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
-                                    <?php if ($sm[3] >= $s): ?><i class="fa-solid fa-check" style="font-size:.6rem"></i><?php else: ?><?= $s ?><?php endif; ?>
-                                </div>
-                                <div class="ps-label"><?= $step_labels[$s-1] ?></div>
-                            </div>
-                            <?php endfor; ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
-
-                    <div class="order-body">
-                        <div>
-                            <div class="order-total">Rp <?= number_format($o['total_price'], 0, ',', '.') ?></div>
-                            <div class="order-method"><i class="fa-solid fa-wallet me-1"></i>via <?= htmlspecialchars($o['payment_method'] ?? '-') ?></div>
-                        </div>
-                        <div class="order-actions">
-                            <a href="<?= base_url('shop/invoice/'.$o['id']) ?>" class="btn-act btn-act-primary">
-                                <i class="fa-solid fa-receipt"></i> Lihat Nota
-                            </a>
-                            <?php if ($o['status'] == 'pending'): ?>
-                            <a href="<?= base_url('user/payment/'.$o['id']) ?>" class="btn-act btn-act-amber">
-                                <i class="fa-solid fa-upload"></i> Upload Bukti
-                            </a>
-                            <?php elseif ($o['status'] == 'completed'): ?>
-                            <a href="<?= site_url('shop/reorder/'.$o['id']) ?>" class="btn-act btn-act-outline">
-                                <i class="fa-solid fa-rotate-left"></i> Pesan Lagi
-                            </a>
+        <!-- Two Column Unified Layout -->
+        <div class="row g-4 mt-2">
+            <!-- Left Column: Profil Settings -->
+            <div class="col-lg-5 col-12">
+                <div class="profile-card" style="background:#fff; border-radius:24px; border:1px solid #edf1ed; padding:30px; box-shadow:0 10px 32px rgba(45,90,39,0.03); position:relative; overflow:hidden;">
+                    <div style="position:absolute; top:0; right:0; width:120px; height:120px; background:radial-gradient(circle, rgba(149,213,178,0.15) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
+                    
+                    <div class="profile-header d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid #f0f4f1;">
+                        <div class="position-relative p-avatar-wrap">
+                            <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
+                                <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" id="avatarPreview">
+                            <?php else: ?>
+                                <div class="uh-avatar" style="width:80px; height:80px; border-radius:20px; font-size:2rem; background:linear-gradient(135deg, var(--green-main), var(--green-dark)); color:#fff; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.1);" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
+                                <img src="" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="d-none" id="avatarPreview">
                             <?php endif; ?>
+                            <label for="profileInput" class="p-avatar-edit" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
+                                <i class="fa-solid fa-camera" style="font-size:11px"></i>
+                            </label>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0" style="color: var(--green-ultra); font-size: 1.2rem; letter-spacing: -0.3px;">Profil Pengaturan Terpadu</h5>
+                            <p class="text-muted small mb-0" style="font-size:0.8rem;">Kelola data pribadi & alamat pengiriman</p>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-            </div>
 
-        <?php else: ?>
-            <div class="empty-state">
-                <div class="empty-icon-circle">🛍️</div>
-                <h5 style="color:var(--green-ultra);font-weight:800;margin-bottom:8px">Belum Ada Pesanan</h5>
-                <p class="text-muted mb-4" style="font-size:.9rem">Kamu belum pernah memesan. Yuk mulai nikmati matcha sekarang!</p>
-                <a href="<?= base_url('shop') ?>" class="btn-act btn-act-primary" style="font-size:.95rem;padding:12px 28px">
-                    <i class="fa-solid fa-bag-shopping"></i> Mulai Belanja
-                </a>
-            </div>
-        <?php endif; ?>
-
-        <!-- PROFILE SETTINGS TAB CONTENT -->
-        <div id="profileSettings" style="display:none; animation: fadeIn .4s ease;">
-            <div class="profile-card" style="background:#fff; border-radius:24px; border:none; padding:40px; box-shadow:0 12px 40px rgba(27,77,62,0.06); position:relative; overflow:hidden;">
-                
-                <!-- Decorative background accent -->
-                <div style="position:absolute; top:0; right:0; width:150px; height:150px; background:radial-gradient(circle, rgba(149,213,178,0.15) 0%, rgba(255,255,255,0) 70%); border-radius:50%; transform:translate(30%, -30%); pointer-events:none;"></div>
-
-                <div class="profile-header d-flex flex-column flex-md-row align-items-center gap-4" style="margin-bottom:35px; padding-bottom:30px; border-bottom:1px solid #f0f4f1;">
-                    <div class="position-relative">
-                        <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
-                            <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" style="width:100px; height:100px; border-radius:24px; object-fit:cover; border:4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,.1);">
-                        <?php else: ?>
-                            <div class="p-avatar shadow-sm" style="width:100px; height:100px; border-radius:24px; background:linear-gradient(135deg, var(--green-main), var(--green-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:800; border:4px solid #fff; box-shadow: 0 4px 12px rgba(45,90,39,0.15) !important;">
-                                <?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?>
+                    <form action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
+                        <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nama Lengkap</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
+                                    <input type="text" name="full_name" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['full_name'] ?? '') ?>" required>
+                                </div>
                             </div>
-                        <?php endif; ?>
-                        <a href="<?= base_url('user/profile') ?>" class="btn btn-sm btn-light position-absolute bottom-0 end-0 rounded-circle shadow-sm" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:2px solid #fff;">
-                            <i class="fa-solid fa-camera text-success" style="font-size:12px"></i>
+                            
+                            <div class="col-md-12">
+                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Username / ID Login</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-at"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0 text-muted" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; background:#f4f7f4; cursor:not-allowed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Nomor WhatsApp / HP</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #edf1ed; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
+                                    <input type="text" name="phone" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #edf1ed; padding:10px; font-weight:500; font-size:.9rem;" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="Misal: 0812...">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;">Alamat Lengkap Pengiriman Default</label>
+                                <textarea name="address" rows="3" class="form-control" style="border-radius:12px; border:2px solid #edf1ed; padding:12px; resize:none; font-weight:500; font-size:.9rem;" placeholder="Tuliskan nama blok, RT/RW, gang, atau detail lainnya..."><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
+                            </div>
+
+                            <div class="col-12 mt-3 pt-3 border-top">
+                                <label class="form-label" style="font-weight:600; color:#b91c1c; font-size:.8rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:4px;"><i class="fa-solid fa-lock me-1"></i>Ubah Password Baru (Opsional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
+                                    <input type="password" name="password" class="form-control border-start-0 ps-0" style="border-radius:0 12px 12px 0; border:2px solid #fee2e2; padding:10px; font-weight:500; font-size:.9rem;" placeholder="Kosongkan jika tidak ingin diubah">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold" style="background:var(--green-main); border:none; padding:12px; font-size:.95rem; box-shadow: 0 4px 15px rgba(27,59,37,.15);">
+                                <i class="fa-solid fa-save me-1"></i> Simpan Profil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Histori -->
+            <div class="col-lg-7 col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0" style="color:var(--green-ultra);"><i class="fa-solid fa-clock-rotate-left text-success me-1"></i> Riwayat Pesanan</h5>
+                </div>
+                
+                <!-- Filter Tabs -->
+                <div class="filter-tabs" id="filterTabs" style="margin-bottom: 20px;">
+                    <div class="ftab active" data-filter="all">Semua (<?= $total_orders ?>)</div>
+                    <div class="ftab" data-filter="pending">⏳ Pending (<?= $pending_orders ?>)</div>
+                    <div class="ftab" data-filter="paid">✅ Diterima</div>
+                    <div class="ftab" data-filter="shipped">🔥 Dimasak</div>
+                    <div class="ftab" data-filter="completed">🎉 Selesai</div>
+                </div>
+
+                <!-- ORDER CARDS -->
+                <?php if (!empty($orders)): ?>
+                    <?php
+                    $status_map = [
+                        'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
+                        'paid'      => ['sb-paid',       'Pesanan Diterima', 'fa-check-circle',    2],
+                        'shipped'   => ['sb-shipped',    'Sedang Dimasak',   'fa-fire-burner',     3],
+                        'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
+                        'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
+                    ];
+                    $step_labels = ['Pesan', 'Diterima', 'Dimasak', 'Selesai'];
+                    ?>
+                    <div id="orderList">
+                    <?php foreach ($orders as $o): ?>
+                        <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1]; ?>
+                        <div class="order-card skel-loading" data-status="<?= $o['status'] ?>">
+                            <div class="skel-overlay"></div><div class="skel-shimmer"></div>
+                            <div class="order-head">
+                                <div>
+                                    <div class="invoice-no"><i class="fa-solid fa-file-invoice me-1" style="color:var(--green-main)"></i><?= htmlspecialchars($o['invoice_no']) ?></div>
+                                    <div class="order-date"><i class="fa-regular fa-calendar me-1"></i><?= date('d M Y, H:i', strtotime($o['created_at'])) ?> WIB</div>
+                                </div>
+                                <span class="sbadge <?= $sm[0] ?>">
+                                    <i class="fa-solid <?= $sm[2] ?>"></i> <?= $sm[1] ?>
+                                </span>
+                            </div>
+
+                            <!-- Progress tracker (hanya jika tidak canceled) -->
+                            <?php if ($o['status'] !== 'canceled'): ?>
+                            <div class="order-progress">
+                                <div class="progress-steps">
+                                    <?php for ($s = 1; $s <= 4; $s++): ?>
+                                    <div class="ps-step <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
+                                        <div class="ps-dot <?= $sm[3] >= $s ? 'done' : ($sm[3] + 1 == $s ? 'current' : '') ?>">
+                                            <?php if ($sm[3] >= $s): ?><i class="fa-solid fa-check" style="font-size:.6rem"></i><?php else: ?><?= $s ?><?php endif; ?>
+                                        </div>
+                                        <div class="ps-label"><?= $step_labels[$s-1] ?></div>
+                                    </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+
+                            <div class="order-body">
+                                <div>
+                                    <div class="order-total">Rp <?= number_format($o['total_price'], 0, ',', '.') ?></div>
+                                    <div class="order-method"><i class="fa-solid fa-wallet me-1"></i>via <?= htmlspecialchars($o['payment_method'] ?? '-') ?></div>
+                                </div>
+                                <div class="order-actions">
+                                    <a href="<?= base_url('shop/invoice/'.$o['id']) ?>" class="btn-act btn-act-primary">
+                                        <i class="fa-solid fa-receipt"></i> Lihat Nota
+                                    </a>
+                                    <?php if ($o['status'] == 'pending'): ?>
+                                    <a href="<?= base_url('user/payment/'.$o['id']) ?>" class="btn-act btn-act-amber">
+                                        <i class="fa-solid fa-upload"></i> Upload Bukti
+                                    </a>
+                                    <?php elseif ($o['status'] == 'completed'): ?>
+                                    <a href="<?= site_url('shop/reorder/'.$o['id']) ?>" class="btn-act btn-act-outline">
+                                        <i class="fa-solid fa-rotate-left"></i> Pesan Lagi
+                                    </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    </div>
+
+                <?php else: ?>
+                    <div class="empty-state">
+                        <div class="empty-icon-circle">🛍️</div>
+                        <h5 style="color:var(--green-ultra);font-weight:800;margin-bottom:8px">Belum Ada Pesanan</h5>
+                        <p class="text-muted mb-4" style="font-size:.9rem">Kamu belum pernah memesan. Yuk mulai nikmati matcha sekarang!</p>
+                        <a href="<?= base_url('shop') ?>" class="btn-act btn-act-primary" style="font-size:.95rem;padding:12px 28px">
+                            <i class="fa-solid fa-bag-shopping"></i> Mulai Belanja
                         </a>
                     </div>
-                    <div class="p-info text-center text-md-start">
-                        <h4 style="font-weight:800; color:var(--green-ultra); margin:0; font-size: 1.6rem; letter-spacing: -0.5px;">Pengaturan Terpadu</h4>
-                        <p style="margin:6px 0 0; color:#6b8e7b; font-size:.95rem; font-weight:400;">Kelola data pribadi, preferensi logistik, dan kredensial keamanan Anda.</p>
-                    </div>
+                <?php endif; ?>
+                
+                <div id="emptyFilteredState" class="empty-state animate-fade" style="display:none; padding: 40px 20px;">
+                    <div class="empty-icon-circle" style="width: 70px; height: 70px; font-size: 1.8rem;">🍵</div>
+                    <h6 style="color:var(--green-ultra);font-weight:800;margin-bottom:4px">Tidak Ada Transaksi</h6>
+                    <p class="text-muted small mb-0">Belum ada pesanan dengan status ini.</p>
                 </div>
-
-                <form action="<?= base_url('user/update_profile') ?>" method="POST">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.85rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:8px;">Nama Lengkap</label>
-                            <div class="input-group" style="box-shadow: 0 2px 6px rgba(0,0,0,0.02); border-radius:14px;">
-                                <span class="input-group-text border-end-0 bg-white" style="border-radius:14px 0 0 14px; border:2px solid #e9eee9; color:var(--green-main);"><i class="fa-regular fa-user"></i></span>
-                                <input type="text" name="full_name" class="form-control border-start-0 ps-0" style="border-radius:0 14px 14px 0; border:2px solid #e9eee9; font-weight:500; padding:14px;" value="<?= htmlspecialchars($user['full_name'] ?? '') ?>" required>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.85rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:8px;">Username / ID Login</label>
-                            <div class="input-group" style="box-shadow: 0 2px 6px rgba(0,0,0,0.02); border-radius:14px;">
-                                <span class="input-group-text border-end-0" style="border-radius:14px 0 0 14px; border:2px solid #e9eee9; border-right:none; background:#f9fbf9; color:#a2b1a6;"><i class="fa-solid fa-at"></i></span>
-                                <input type="text" class="form-control border-start-0 ps-0" style="border-radius:0 14px 14px 0; border:2px solid #e9eee9; border-left:none; background:#f9fbf9; color:#8ea395; font-weight:500; padding:14px; cursor:not-allowed;" value="<?= htmlspecialchars($user['username'] ?? '') ?>" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.85rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:8px;">Nomor WhatsApp / Telepon</label>
-                            <div class="input-group" style="box-shadow: 0 2px 6px rgba(0,0,0,0.02); border-radius:14px;">
-                                <span class="input-group-text border-end-0 bg-white" style="border-radius:14px 0 0 14px; border:2px solid #e9eee9; color:var(--green-main);"><i class="fa-solid fa-phone"></i></span>
-                                <input type="text" name="phone" class="form-control border-start-0 ps-0" style="border-radius:0 14px 14px 0; border:2px solid #e9eee9; font-weight:500; padding:14px;" value="<?= htmlspecialchars($user['phone'] ?? '') ?>" placeholder="Misal: 0812...">
-                            </div>
-                            <div class="form-text mt-2" style="font-size:.85rem; color:#7d9e8b;"><i class="fa-solid fa-bolt me-1 text-warning"></i>Sinkronisasi otomatis di ringkasan checkout Anda.</div>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label" style="font-weight:600; color:var(--green-ultra); font-size:.85rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:8px;">Alamat Pengiriman Default</label>
-                            <textarea name="address" rows="3" class="form-control" style="border-radius:14px; border:2px solid #e9eee9; padding:16px; font-weight:500; box-shadow: 0 2px 6px rgba(0,0,0,0.02); resize:none;" placeholder="Tuliskan nama blok, jalan, rincian lokasi..."><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
-                        </div>
-
-                        <div class="col-12 mt-5">
-                            <div style="background:linear-gradient(90deg, #fff7f7, #fff); border-left:4px solid #f87171; border-radius:12px; padding:20px; box-shadow:0 4px 15px rgba(248,113,113,0.05);">
-                                <h6 class="fw-bold mb-3" style="color:#b91c1c;"><i class="fa-solid fa-shield-halved me-2"></i>Kredensial Keamanan</h6>
-                                <label class="form-label" style="font-weight:600; color:#7f1d1d; font-size:.85rem; letter-spacing: 0.5px; text-transform:uppercase; margin-bottom:8px;">Setel Password Baru</label>
-                                <div class="input-group" style="border-radius:14px;">
-                                    <span class="input-group-text border-end-0 bg-white" style="border-radius:14px 0 0 14px; border:2px solid #fee2e2; color:#f87171;"><i class="fa-solid fa-key"></i></span>
-                                    <input type="password" name="password" class="form-control border-start-0 ps-0" style="border-radius:0 14px 14px 0; border:2px solid #fee2e2; padding:14px; font-weight:500;" placeholder="Abaikan field ini jika tidak ingin mengubah sandi">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 text-end">
-                        <button type="submit" class="btn-act btn-act-primary" style="padding:14px 34px; font-size:1.05rem; letter-spacing:0.5px; box-shadow: 0 8px 25px rgba(74,124,89,0.3); border-radius:50px;">
-                            Simpan Profil <i class="fa-solid fa-arrow-right ms-2"></i>
-                        </button>
-                    </div>
-                </form>
             </div>
-            <style>
-                @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-                .form-control:focus { box-shadow: none !important; border-color: var(--green-soft) !important; background: #fff !important; }
-                .input-group:focus-within { box-shadow: 0 0 0 4px rgba(149,213,178,0.2) !important; border-radius: 14px; }
-                .input-group:focus-within .input-group-text, .input-group:focus-within .form-control { border-color: var(--green-main) !important; }
-            </style>
         </div>
+
+        <style>
+            .profile-card { transition: all 0.3s ease; }
+            .form-control:focus { box-shadow: none !important; border-color: var(--green-soft) !important; background: #fff !important; }
+            .input-group:focus-within { box-shadow: 0 0 0 3px rgba(149,213,178,0.25) !important; border-radius: 12px; }
+            .input-group:focus-within .input-group-text, .input-group:focus-within .form-control { border-color: var(--green-main) !important; }
+            .p-avatar-edit:hover { background: var(--green-main) !important; color:#fff !important; transform: scale(1.1); }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+            .animate-fade { animation: fadeIn 0.4s ease; }
+        </style>
 
     </div>
 
@@ -587,25 +597,58 @@
                 tab.classList.add('active');
                 
                 const filter = tab.dataset.filter;
+                let visibleCount = 0;
                 
-                if(filter === 'profile-settings') {
-                    document.getElementById('orderList') ? document.getElementById('orderList').style.display = 'none' : '';
+                if(document.getElementById('orderList')) {
+                    document.querySelectorAll('.order-card').forEach(card => {
+                        const show = (filter === 'all' || card.dataset.status === filter);
+                        card.style.display = show ? 'block' : 'none';
+                        if (show) visibleCount++;
+                    });
+                    
                     const emptyState = document.querySelector('.empty-state');
-                    if(emptyState) emptyState.style.display = 'none';
-                    document.getElementById('profileSettings').style.display = 'block';
-                } else {
-                    document.getElementById('profileSettings').style.display = 'none';
-                    const emptyState = document.querySelector('.empty-state');
-                    if(emptyState) emptyState.style.display = 'block';
-                    if(document.getElementById('orderList')) {
-                        document.getElementById('orderList').style.display = 'block';
-                        document.querySelectorAll('.order-card').forEach(card => {
-                            card.style.display = (filter === 'all' || card.dataset.status === filter) ? 'block' : 'none';
-                        });
+                    const emptyFilteredState = document.getElementById('emptyFilteredState');
+                    
+                    if (emptyState) {
+                        if (filter === 'all' && visibleCount === 0) {
+                            emptyState.style.display = 'block';
+                            if (emptyFilteredState) emptyFilteredState.style.display = 'none';
+                        } else {
+                            emptyState.style.display = 'none';
+                            if (emptyFilteredState) {
+                                emptyFilteredState.style.display = (visibleCount === 0) ? 'block' : 'none';
+                            }
+                        }
                     }
                 }
             });
         });
+
+        // Image Preview logic
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var preview = document.getElementById('avatarPreview');
+                    var initial = document.getElementById('avatarInitial');
+                    
+                    if (preview) {
+                        preview.src = e.target.result;
+                        preview.classList.remove('d-none');
+                    }
+                    if (initial) {
+                        initial.classList.add('d-none');
+                    }
+                }
+                reader.readAsDataURL(input.files[0]);
+                
+                const wrap = document.querySelector('.p-avatar-wrap');
+                if (wrap) {
+                    wrap.style.transform = 'scale(1.05)';
+                    setTimeout(() => { wrap.style.transform = 'scale(1)'; }, 300);
+                }
+            }
+        }
     </script>
     <script>
         // Skeleton Loader Handler
@@ -634,7 +677,7 @@
                             <i class="fa-solid fa-mug-hot"></i>
                             <span>Lanjut Belanja</span>
                         </a>
-                        <a href="<?= base_url('user/profile'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.2s;">
+                        <a href="<?= base_url('user'); ?>" class="command-item" style="padding: 12px 20px; border-radius: 14px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.2s;">
                             <i class="fa-solid fa-user-gear"></i>
                             <span>Pengaturan Akun</span>
                         </a>

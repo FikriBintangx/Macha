@@ -522,7 +522,7 @@ if ($ci->session->flashdata('success')) {
 
                 <!-- Auth -->
                 <?php if($session_userid): ?>
-                    <a href="<?= site_url('user/profile') ?>" class="btn-macha-filled hide-on-scroll">
+                    <a href="<?= site_url('user') ?>" class="btn-macha-filled hide-on-scroll">
                         <i class="fa-solid fa-circle-user"></i> <span>Akun</span>
                     </a>
                     <a href="<?= site_url('auth/logout') ?>" class="text-danger ms-2 hide-on-scroll" title="Logout" style="text-decoration:none;">
@@ -911,7 +911,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="<?= base_url('shop') ?>">Katalog</a>
     <a href="<?= base_url('#tentang') ?>">Tentang</a>
     <?php if($session_userid): ?>
-        <a href="<?= site_url('user/profile') ?>">Akun Saya</a>
+        <a href="<?= site_url('user') ?>">Akun Saya</a>
         <a href="<?= site_url('auth/logout') ?>" class="text-danger">Logout</a>
     <?php else: ?>
         <a href="<?= site_url('auth') ?>">Login</a>

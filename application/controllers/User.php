@@ -69,9 +69,7 @@ class User extends CI_Controller {
 
     // Tampilkan Profil
     public function profile() {
-        $user_id = $this->session->userdata('userid');
-        $data['user'] = $this->db->where('id', $user_id)->get('users')->row_array();
-        $this->load->view('user/profile', $data);
+        redirect('user');
     }
 
     // Update Profil & Upload Foto
@@ -124,7 +122,7 @@ class User extends CI_Controller {
             }
             else {
                 $this->session->set_flashdata('error', $this->upload->display_errors());
-                redirect('user/profile');
+                redirect('user');
                 return;
             }
         }
@@ -142,6 +140,6 @@ class User extends CI_Controller {
             $this->session->set_flashdata('error', 'Gagal memperbarui profil.');
         }
 
-        redirect('user/profile');
+        redirect('user');
     }
 }
