@@ -76,3 +76,5 @@ $route['xendit_callback'] = 'xendit_callback';
 
 // DB Keepalive endpoint — dipanggil GitHub Actions setiap 5 menit
 $route['ping'] = 'keepalive';
+$route['dbtest'] = 'dbtest';
+
