@@ -90,29 +90,31 @@ class User extends CI_Controller {
 
         // 1. Logika Upload Foto Profil
         if (!empty($_FILES['image']['name'])) {
-            $config['upload_path']   = FCPATH . 'uploads/profile/';
+            $local_path = FCPATH . 'uploads/profile/';
+            $is_writable = is_dir($local_path) && is_writable($local_path);
+            if (!$is_writable) {
+                $is_writable = @mkdir($local_path, 0777, true);
+            }
+            $config['upload_path']   = $is_writable ? $local_path : sys_get_temp_dir() . DIRECTORY_SEPARATOR;
             $config['allowed_types'] = 'jpg|jpeg|png|webp';
             $config['max_size']      = 2048;
             $config['file_name']     = 'user_' . $user_id . '_' . time();
-
-            if (!is_dir($config['upload_path'])) {
-                mkdir($config['upload_path'], 0777, TRUE);
-            }
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('image')) {
-                // Hapus foto lama jika bukan default dan ada filenya
+                $upload_data = $this->upload->data();
+                
+                // Hapus foto lama jika bukan default dan ada filenya secara lokal
                 $old_img = $user['profile_image'] ?? 'default_user.png';
-                if ($old_img != 'default_user.png' && !empty($old_img)) {
-                    $old_path = $config['upload_path'] . $old_img;
+                if ($is_writable && $old_img != 'default_user.png' && !empty($old_img)) {
+                    $old_path = $local_path . $old_img;
                     if (is_file($old_path) && file_exists($old_path)) {
                         unlink($old_path);
                     }
                 }
                 
-                $upload_data = $this->upload->data();
                 $update_data['profile_image'] = $upload_data['file_name'];
                 $this->session->set_userdata('profile_image', $upload_data['file_name']); // Update session
 

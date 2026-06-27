@@ -471,14 +471,15 @@ class Shop extends CI_Controller
             redirect('shop/payment/'.$sales_id);
         }
 
-        $config['upload_path']          = FCPATH . 'uploads/payments/';
+        $local_path = FCPATH . 'uploads/payments/';
+        $is_writable = is_dir($local_path) && is_writable($local_path);
+        if (!$is_writable) {
+            $is_writable = @mkdir($local_path, 0777, true);
+        }
+        $config['upload_path']          = $is_writable ? $local_path : sys_get_temp_dir() . DIRECTORY_SEPARATOR;
         $config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
         $config['max_size']             = 2048; // 2MB
         $config['file_name']            = 'PAY-'.$order->invoice_no.'-'.time();
-
-        if (!is_dir($config['upload_path'])) {
-            mkdir($config['upload_path'], 0777, TRUE);
-        }
 
         $this->load->library('upload');
         $this->upload->initialize($config);
