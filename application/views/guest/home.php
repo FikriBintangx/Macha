@@ -3439,7 +3439,6 @@
 
       // 2. MOBILE OPTIMIZATION
       if (window.innerWidth <= 1024) {
-        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
         ScrollTrigger.config({ ignoreMobileResize: true });
       }
 
@@ -3562,7 +3561,6 @@
       
       // Normalize scroll for mobile to prevent stuttering
       if (window.innerWidth <= 1024) {
-        ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
         ScrollTrigger.config({ ignoreMobileResize: true });
       }
 
