@@ -4,39 +4,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Dbtest extends CI_Controller {
     public function index() {
         header('Content-Type: application/json');
-        try {
-            $this->load->database();
-            
-            // 1. Ensure 'points' column exists in 'users'
-            $fields = $this->db->list_fields('users');
-            $has_points = in_array('points', $fields);
-            
-            $points_msg = "";
-            if (!$has_points) {
-                $this->db->query("ALTER TABLE users ADD COLUMN points INT DEFAULT 0 AFTER role");
-                $points_msg = "Column 'points' added successfully.";
-            } else {
-                $points_msg = "Column 'points' already exists.";
-            }
+        
+        $secret_key = getenv('XENDIT_SECRET_KEY') ?: $_ENV['XENDIT_SECRET_KEY'] ?? '';
+        $key_status = empty($secret_key) ? 'empty' : 'exists (length: ' . strlen($secret_key) . ')';
 
-            // 2. Update QRIS Payment Method to Online Payment
-            $this->db->where('id', 1);
-            $this->db->update('payment_methods', [
-                'method_name' => 'Online Payment',
-                'description' => 'Bayar instan otomatis (QRIS, E-Wallet, Virtual Account)'
-            ]);
-            
-            echo json_encode([
-                'status' => 'success',
-                'points_column' => $points_msg,
-                'payment_methods_updated' => true,
-                'message' => 'Database updates applied successfully!'
-            ]);
-        } catch (Exception $e) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ]);
-        }
+        $url = 'https://api.xendit.co/v2/invoices';
+        $payload = [
+            'external_id' => 'TEST-' . time(),
+            'amount' => 10000,
+            'description' => 'Test Invoice MariMatcha',
+            'success_redirect_url' => base_url(),
+            'failure_redirect_url' => base_url()
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Basic ' . base64_encode($secret_key . ':')
+        ]);
+        
+        // Temporarily disable SSL verification to check if it's the issue
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = curl_exec($ch);
+        $curl_error = curl_error($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        echo json_encode([
+            'xendit_key_status' => $key_status,
+            'http_code' => $http_code,
+            'curl_error' => $curl_error,
+            'response' => json_decode($response, true) ?: $response
+        ]);
     }
 }
