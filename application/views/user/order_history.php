@@ -425,7 +425,7 @@
                         </div>
                     </div>
 
-                    <form action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
+                    <form id="profileForm" action="<?= base_url('user/update_profile') ?>" method="POST" enctype="multipart/form-data">
                         <input type="file" id="profileInput" name="image" class="d-none" accept="image/*" onchange="previewImage(this)">
                         <div class="row g-3">
                             <div class="col-12">
@@ -593,6 +593,41 @@
                     align-self: start;
                 }
             }
+            @media (max-width: 768px) {
+                body {
+                    padding-top: 85px !important;
+                }
+                .user-hero {
+                    padding: 20px !important;
+                    border-radius: 16px !important;
+                    margin-bottom: 16px !important;
+                }
+                .uh-left {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+                .btn-shop-hero {
+                    width: 100%;
+                    justify-content: center;
+                }
+                .summary-chips {
+                    gap: 8px !important;
+                    margin-bottom: 16px !important;
+                }
+                .chip {
+                    padding: 10px 14px !important;
+                    border-radius: 12px !important;
+                    font-size: 0.85rem;
+                }
+                .profile-card {
+                    padding: 20px !important;
+                    border-radius: 16px !important;
+                }
+                .row.g-4 {
+                    --bs-gutter-y: 1rem !important;
+                }
+            }
             .form-control:focus { box-shadow: none !important; border-color: var(--green-soft) !important; background: #fff !important; }
             .input-group:focus-within { box-shadow: 0 0 0 3px rgba(149,213,178,0.25) !important; border-radius: 12px; }
             .input-group:focus-within .input-group-text, .input-group:focus-within .form-control { border-color: var(--green-main) !important; }
@@ -664,6 +699,100 @@
                 }
             }
         }
+
+        // AJAX Profile Update
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalBtnHtml = submitBtn.innerHTML;
+                    
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Menyimpan...';
+                    
+                    const formData = new FormData(this);
+                    
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnHtml;
+                        
+                        if (data.status === 'success') {
+                            // Show premium Dynamic Island notification
+                            if (typeof window.showDynamicIslandNotif === 'function') {
+                                window.showDynamicIslandNotif(data.message || 'Profil berhasil diperbarui!', 'success');
+                            } else {
+                                alert(data.message || 'Profil berhasil diperbarui!');
+                            }
+                            
+                            // Update Hero text name if changed
+                            const heroName = document.querySelector('.uh-info h4');
+                            if (heroName && data.full_name) {
+                                heroName.textContent = `Hai, ${data.full_name}! 👋`;
+                            }
+                            
+                            // Update avatars if changed
+                            if (data.profile_image) {
+                                const newAvatarUrl = '<?= base_url("uploads/profile/") ?>' + data.profile_image;
+                                const heroAvatar = document.querySelector('.uh-avatar img, img.uh-avatar');
+                                const previewAvatar = document.getElementById('avatarPreview');
+                                const initialAvatar = document.getElementById('avatarInitial');
+                                
+                                const heroAvatarWrap = document.querySelector('.uh-left');
+                                if (heroAvatarWrap) {
+                                    let img = heroAvatarWrap.querySelector('img.uh-avatar, .uh-avatar img');
+                                    if (img) {
+                                        img.src = newAvatarUrl;
+                                    } else {
+                                        const initialDiv = heroAvatarWrap.querySelector('.uh-avatar');
+                                        if (initialDiv) {
+                                            const newImg = document.createElement('img');
+                                            newImg.src = newAvatarUrl;
+                                            newImg.className = 'uh-avatar';
+                                            initialDiv.replaceWith(newImg);
+                                        }
+                                    }
+                                }
+                                
+                                if (previewAvatar) {
+                                    previewAvatar.src = newAvatarUrl;
+                                    previewAvatar.classList.remove('d-none');
+                                }
+                                if (initialAvatar) {
+                                    initialAvatar.classList.add('d-none');
+                                }
+                            }
+                        } else {
+                            if (typeof window.showDynamicIslandNotif === 'function') {
+                                window.showDynamicIslandNotif(data.message || 'Gagal memperbarui profil.', 'error');
+                            } else {
+                                alert(data.message || 'Gagal memperbarui profil.');
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnHtml;
+                        console.error("Profile Update Error:", err);
+                        if (typeof window.showDynamicIslandNotif === 'function') {
+                            window.showDynamicIslandNotif('Terjadi kesalahan jaringan.', 'error');
+                        } else {
+                            alert('Terjadi kesalahan jaringan.');
+                        }
+                    });
+                });
+            }
+        });
     </script>
     <script>
         // Skeleton Loader Handler

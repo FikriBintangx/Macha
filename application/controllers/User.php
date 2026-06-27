@@ -142,6 +142,17 @@ class User extends CI_Controller {
             $this->session->set_flashdata('error', 'Gagal memperbarui profil.');
         }
 
+        $is_ajax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || $this->input->is_ajax_request();
+        if ($is_ajax) {
+            echo json_encode([
+                'status' => $this->session->flashdata('success') ? 'success' : 'error',
+                'message' => $this->session->flashdata('success') ?: $this->session->flashdata('error'),
+                'profile_image' => $update_data['profile_image'] ?? null,
+                'full_name' => $full_name
+            ]);
+            return;
+        }
+
         redirect('user');
     }
 }
