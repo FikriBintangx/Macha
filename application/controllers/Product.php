@@ -54,6 +54,11 @@ class Product extends CI_Controller {
      */
     public function save() { 
         $post   = $this->input->post();
+        if (!$post) {
+            $this->session->set_flashdata('error', 'Gagal! Data form kosong. Ukuran gambar mungkin melebihi batas server.');
+            redirect('product/add');
+            return;
+        }
         $price  = $post['price']; 
         $stock  = $post['stock']; 
         $preset = $post['image_preset']; 
@@ -138,6 +143,11 @@ class Product extends CI_Controller {
         if (!$id) { redirect('product'); }
 
         $post  = $this->input->post(null, TRUE);
+        if (!$post) {
+            $this->session->set_flashdata('error', 'Gagal! Data form kosong. Ukuran gambar mungkin melebihi batas server.');
+            redirect('product/edit/' . $id);
+            return;
+        }
         $price = (float)$post['price'];
         $stock = (int)$post['stock'];
 

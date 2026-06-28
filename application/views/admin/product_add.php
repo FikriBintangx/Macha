@@ -199,9 +199,57 @@
             document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
             imagePreset.value = "";
 
-            imagePreview.src = URL.createObjectURL(file);
-            imagePreview.style.display = 'block';
-            placeholderText.style.display = 'none';
+            if (file.size <= 500 * 1024) {
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreview.style.display = 'block';
+                placeholderText.style.display = 'none';
+                return;
+            }
+
+            // ponytail: compress image client-side if it exceeds 500KB to prevent Vercel body limits (4.5MB)
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var max_size = 1200;
+                    var width = img.width;
+                    var height = img.height;
+
+                    if (width > height) {
+                        if (width > max_size) {
+                            height *= max_size / width;
+                            width = max_size;
+                        }
+                    } else {
+                        if (height > max_size) {
+                            width *= max_size / height;
+                            height = max_size;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob(function(blob) {
+                        var compressedFile = new File([blob], file.name, {
+                            type: 'image/jpeg',
+                            lastModified: Date.now()
+                        });
+
+                        var dt = new DataTransfer();
+                        dt.items.add(compressedFile);
+                        imageInput.files = dt.files;
+
+                        imagePreview.src = URL.createObjectURL(compressedFile);
+                        imagePreview.style.display = 'block';
+                        placeholderText.style.display = 'none';
+                    }, 'image/jpeg', 0.85);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     };
 </script>

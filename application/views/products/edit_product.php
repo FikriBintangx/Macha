@@ -56,16 +56,68 @@
                             function previewImg(input) {
                                 if(!input.files||!input.files[0])return;
                                 var f=input.files[0];
-                                // ponytail: removed size restriction check on frontend
-                                var reader=new FileReader();
-                                reader.onload=function(e){
-                                    document.getElementById('imgPreview').src=e.target.result;
-                                    document.getElementById('imgPreview').style.borderColor='#40916c';
-                                    document.getElementById('newPhotoTag').style.display='block';
-                                    document.getElementById('dropLabel').innerHTML='<strong style="color:#2d5a27">'+f.name+'</strong><br><span style="font-size:.72rem;color:#8aa898">'+(f.size/1024).toFixed(0)+' KB</span>';
-                                    document.getElementById('dropZone').style.borderColor='#40916c';
-                                    document.getElementById('dropZone').style.background='#e8f5e9';
-                                    document.getElementById('removeNewPhoto').style.display='block';
+                                
+                                // ponytail: compress image client-side if it exceeds 500KB to prevent Vercel payload limits (4.5MB)
+                                if (f.size <= 500 * 1024) {
+                                    var reader=new FileReader();
+                                    reader.onload=function(e){
+                                        document.getElementById('imgPreview').src=e.target.result;
+                                        document.getElementById('imgPreview').style.borderColor='#40916c';
+                                        document.getElementById('newPhotoTag').style.display='block';
+                                        document.getElementById('dropLabel').innerHTML='<strong style="color:#2d5a27">'+f.name+'</strong><br><span style="font-size:.72rem;color:#8aa898">'+(f.size/1024).toFixed(0)+' KB</span>';
+                                        document.getElementById('dropZone').style.borderColor='#40916c';
+                                        document.getElementById('dropZone').style.background='#e8f5e9';
+                                        document.getElementById('removeNewPhoto').style.display='block';
+                                    };
+                                    reader.readAsDataURL(f);
+                                    return;
+                                }
+
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    var img = new Image();
+                                    img.onload = function() {
+                                        var canvas = document.createElement('canvas');
+                                        var max_size = 1200;
+                                        var width = img.width;
+                                        var height = img.height;
+
+                                        if (width > height) {
+                                            if (width > max_size) {
+                                                height *= max_size / width;
+                                                width = max_size;
+                                            }
+                                        } else {
+                                            if (height > max_size) {
+                                                width *= max_size / height;
+                                                height = max_size;
+                                            }
+                                        }
+                                        canvas.width = width;
+                                        canvas.height = height;
+                                        var ctx = canvas.getContext('2d');
+                                        ctx.drawImage(img, 0, 0, width, height);
+
+                                        canvas.toBlob(function(blob) {
+                                            var compressedFile = new File([blob], f.name, {
+                                                type: 'image/jpeg',
+                                                lastModified: Date.now()
+                                            });
+
+                                            var dt = new DataTransfer();
+                                            dt.items.add(compressedFile);
+                                            input.files = dt.files;
+
+                                            document.getElementById('imgPreview').src = URL.createObjectURL(compressedFile);
+                                            document.getElementById('imgPreview').style.borderColor='#40916c';
+                                            document.getElementById('newPhotoTag').style.display='block';
+                                            document.getElementById('dropLabel').innerHTML='<strong style="color:#2d5a27">'+f.name+' (Compressed)</strong><br><span style="font-size:.72rem;color:#8aa898">'+(compressedFile.size/1024).toFixed(0)+' KB</span>';
+                                            document.getElementById('dropZone').style.borderColor='#40916c';
+                                            document.getElementById('dropZone').style.background='#e8f5e9';
+                                            document.getElementById('removeNewPhoto').style.display='block';
+                                        }, 'image/jpeg', 0.85);
+                                    };
+                                    img.src = e.target.result;
                                 };
                                 reader.readAsDataURL(f);
                             }
