@@ -483,7 +483,7 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    function initOrderList() {
         // Shimmer skeleton fade-out and actual content fade-in
         const skeleton = document.getElementById('skeleton-loader');
         const content = document.getElementById('actual-content');
@@ -547,24 +547,32 @@ table.table tbody td { color: #000 !important; opacity: 1 !important; visibility
         });
 
         // Set up event listeners
-        dateFilter.addEventListener('change', function() {
-            // Show skeleton loader again during redirection to feel premium
-            if (skeleton && content) {
-                content.style.opacity = '0';
-                skeleton.style.display = 'block';
-                skeleton.style.opacity = '1';
-            }
-            window.location.href = "<?= site_url('order') ?>?date=" + this.value;
-        });
+        if (dateFilter) {
+            dateFilter.addEventListener('change', function() {
+                // Show skeleton loader again during redirection to feel premium
+                if (skeleton && content) {
+                    content.style.opacity = '0';
+                    skeleton.style.display = 'block';
+                    skeleton.style.opacity = '1';
+                }
+                window.location.href = "<?= site_url('order') ?>?date=" + this.value;
+            });
+        }
 
-        userFilter.addEventListener('change', applyFilters);
-        smartFilter.addEventListener('input', applyFilters);
+        if (userFilter) userFilter.addEventListener('change', applyFilters);
+        if (smartFilter) smartFilter.addEventListener('input', applyFilters);
 
         // Staggered Entrance for Rows - removed GSAP to prevent opacity:0 hangups
         document.querySelectorAll('.order-row').forEach(row => {
             row.style.opacity = "1";
         });
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initOrderList);
+    } else {
+        initOrderList();
+    }
 
     /* ── KALKULATOR MINI LOGIC ── */
     let calcCurrent = '';
