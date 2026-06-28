@@ -683,7 +683,7 @@
                                             <?= $index === 0 ? 'checked' : '' ?>>
                                         <div class="pay-icon" style="background:#1B3B2515;color:#1B3B25">
                                             <i
-                                                class="fa-solid <?= $pm['method_code'] == 'cod' ? 'fa-money-bill-wave' : 'fa-building-columns' ?>"></i>
+                                                class="fa-solid <?= $pm['method_code'] == 'cod' ? 'fa-money-bill-wave' : (strcasecmp($pm['method_code'], 'qris') == 0 ? 'fa-qrcode' : 'fa-building-columns') ?>"></i>
                                         </div>
                                         <div>
                                             <div style="font-weight:700;color:var(--green-dark)"><?= $pm['method_name'] ?>

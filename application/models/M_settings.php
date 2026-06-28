@@ -6,6 +6,37 @@ class M_settings extends CI_Model {
     public function __construct() {
         parent::__construct();
         // $this->ensure_tables();
+        
+        // Enforce only QRIS and COD payment methods
+        if ($this->db->table_exists('payment_methods')) {
+            $this->db->where_not_in('method_code', ['qris', 'cod', 'QRIS']);
+            $this->db->delete('payment_methods');
+            
+            $has_cod = $this->db->where('method_code', 'cod')->get('payment_methods')->num_rows() > 0;
+            if (!$has_cod) {
+                $this->db->insert('payment_methods', [
+                    'method_name' => 'Bayar di Tempat (COD)',
+                    'method_code' => 'cod',
+                    'description' => 'Bayar saat menerima pesanan',
+                    'is_active' => 1
+                ]);
+            }
+            
+            $has_qris = $this->db->where('method_code', 'qris')->or_where('method_code', 'QRIS')->get('payment_methods')->num_rows() > 0;
+            if (!$has_qris) {
+                $this->db->insert('payment_methods', [
+                    'method_name' => 'QRIS',
+                    'method_code' => 'qris',
+                    'description' => 'Scan QRIS untuk pembayaran otomatis instan',
+                    'is_active' => 1
+                ]);
+            } else {
+                $this->db->where('method_code', 'qris')->or_where('method_code', 'QRIS')->update('payment_methods', [
+                    'method_name' => 'QRIS',
+                    'method_code' => 'qris'
+                ]);
+            }
+        }
     }
 
     // Ambil setting berdasarkan key
@@ -66,7 +97,7 @@ class M_settings extends CI_Model {
             $this->dbforge->create_table('payment_methods');
 
             $this->db->insert_batch('payment_methods', [
-                ['method_name' => 'Transfer Bank / QRIS', 'method_code' => 'transfer', 'description' => 'BCA 1234567890 a/n MariMatcha'],
+                ['method_name' => 'QRIS', 'method_code' => 'qris', 'description' => 'Scan QRIS untuk pembayaran otomatis instan'],
                 ['method_name' => 'Bayar di Tempat (COD)', 'method_code' => 'cod', 'description' => 'Bayar saat menerima pesanan']
             ]);
         } else {

@@ -128,7 +128,7 @@
                              <div class="amount-box">
                                  <div class="label">Total Tagihan (Termasuk Ongkir)</div>
                                  <div class="amount">Rp <?= number_format($order['total_price'],0,',','.') ?></div>
-                                 <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'Transfer / QRIS' ?></strong></div>
+                                 <div class="mt-2 text-muted" style="font-size:0.8rem;">Metode Pilihan Anda: <strong><?= $order['payment_method'] ?: 'QRIS' ?></strong></div>
                              </div>
 
                              <?php if (!empty($order['xendit_invoice_url'])): ?>
