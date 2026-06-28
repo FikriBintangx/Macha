@@ -382,25 +382,8 @@ class Shop extends CI_Controller
             redirect('shop');
         }
 
-        // Check if Xendit is active and it's not a COD order
+        // Check if it's COD order
         $is_cod = (stripos($order['payment_method'], 'cod') !== false || stripos($order['payment_method'], 'tempat') !== false);
-        if (!$is_cod && empty($order['xendit_invoice_url'])) {
-            $xendit_invoice = $this->_create_xendit_invoice($order);
-            if ($xendit_invoice && !empty($xendit_invoice['invoice_url'])) {
-                $this->db->where('id', $sales_id)->update('sales', [
-                    'xendit_invoice_id' => $xendit_invoice['id'],
-                    'xendit_invoice_url' => $xendit_invoice['invoice_url']
-                ]);
-                $order['xendit_invoice_id'] = $xendit_invoice['id'];
-                $order['xendit_invoice_url'] = $xendit_invoice['invoice_url'];
-            }
-        }
-
-        // Auto-redirect to Xendit payment link if online payment and invoice URL exists
-        if (!$is_cod && !empty($order['xendit_invoice_url'])) {
-            redirect($order['xendit_invoice_url']);
-            return;
-        }
         
         $data['order'] = $order;
         // Cek admin phone dan setting
