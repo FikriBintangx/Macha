@@ -497,26 +497,30 @@
                 <div class="filter-tabs" id="filterTabs" style="margin-bottom: 20px;">
                     <div class="ftab active" data-filter="all">Semua (<?= $total_orders ?>)</div>
                     <div class="ftab" data-filter="pending">⏳ Pending (<?= $pending_orders ?>)</div>
-                    <div class="ftab" data-filter="paid">✅ Diterima</div>
-                    <div class="ftab" data-filter="shipped">🔥 Dimasak</div>
+                    <div class="ftab" data-filter="paid">🍳 Dimasak</div>
+                    <div class="ftab" data-filter="shipped">📦 Siap Ambil / Kirim</div>
                     <div class="ftab" data-filter="completed">🎉 Selesai</div>
                 </div>
 
                 <!-- ORDER CARDS -->
                 <?php if (!empty($orders)): ?>
-                    <?php
-                    $status_map = [
-                        'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
-                        'paid'      => ['sb-paid',       'Pesanan Diterima', 'fa-check-circle',    2],
-                        'shipped'   => ['sb-shipped',    'Sedang Dimasak',   'fa-fire-burner',     3],
-                        'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
-                        'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
-                    ];
-                    $step_labels = ['Pesan', 'Diterima', 'Dimasak', 'Selesai'];
-                    ?>
                     <div id="orderList">
                     <?php foreach ($orders as $o): ?>
-                        <?php $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1]; ?>
+                        <?php
+                        $is_delivery = ($o['order_type'] == 'delivery');
+                        $shipped_text = $is_delivery ? 'Dikirim' : 'Siap Ambil';
+                        $shipped_icon = $is_delivery ? 'fa-truck' : 'fa-box';
+                        
+                        $status_map = [
+                            'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
+                            'paid'      => ['sb-paid',       'Sedang Dimasak',   'fa-fire-burner',     2],
+                            'shipped'   => ['sb-shipped',    $shipped_text,      $shipped_icon,        3],
+                            'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
+                            'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
+                        ];
+                        $step_labels = ['Pesan', 'Dimasak', $shipped_text, 'Selesai'];
+                        $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1];
+                        ?>
                         <div class="order-card skel-loading" data-status="<?= $o['status'] ?>">
                             <div class="skel-overlay"></div><div class="skel-shimmer"></div>
                             <div class="order-head">
