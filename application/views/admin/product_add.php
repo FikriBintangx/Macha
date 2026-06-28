@@ -233,7 +233,9 @@
                     ctx.drawImage(img, 0, 0, width, height);
 
                     canvas.toBlob(function(blob) {
-                        var compressedFile = new File([blob], file.name, {
+                        var nameWithoutExt = file.name.includes('.') ? file.name.substring(0, file.name.lastIndexOf('.')) : file.name;
+                        var newName = nameWithoutExt + '.jpg';
+                        var compressedFile = new File([blob], newName, {
                             type: 'image/jpeg',
                             lastModified: Date.now()
                         });
