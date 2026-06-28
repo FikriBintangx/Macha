@@ -139,10 +139,14 @@ class Admin_suppliers extends CI_Controller {
     public function requests() {
         $this->load->model('Supplier_model');
         $requests = $this->Supplier_model->get_all_requests();
+        $suppliers = $this->db->get_where('suppliers', ['status' => 'active'])->result_array();
+        $products = $this->Supplier_model->get_all_products();
 
         $data = [
             'title' => 'Permintaan & Pengiriman Supply',
             'requests' => $requests,
+            'suppliers' => $suppliers,
+            'products' => $products,
             'content' => 'admin/supplier_requests_list'
         ];
         $this->load->view('layout/wrapper', $data);

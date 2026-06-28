@@ -4,6 +4,11 @@
             <h3 class="fw-bold text-success mb-0">Daftar Permintaan & Pengiriman Supply</h3>
             <p class="text-muted small mb-0">Kelola dan pantau status pengadaan bahan dari supplier.</p>
         </div>
+        <div class="col-md-auto col-12 text-md-end text-center ms-auto">
+            <button class="btn btn-success rounded-pill px-4 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#createRequestModal">
+                <i class="bi bi-plus-lg me-2"></i> Buat Permintaan
+            </button>
+        </div>
     </div>
 
     <!-- Flash Messages -->
@@ -125,3 +130,88 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Buat Permintaan Supply -->
+<div class="modal fade" id="createRequestModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 p-4 pb-0">
+                <h5 class="fw-bold text-success"><i class="bi bi-envelope-plus me-2"></i>Buat Permintaan Supply</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="<?= base_url('admin_suppliers/create_supply_request') ?>" method="POST">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Pilih Supplier <span class="text-danger">*</span></label>
+                        <select name="supplier_id" id="formSupplierId" class="form-select rounded-3" required onchange="filterProductsBySupplier()">
+                            <option value="">-- Pilih Supplier --</option>
+                            <?php if(!empty($suppliers)): ?>
+                                <?php foreach ($suppliers as $s): ?>
+                                    <option value="<?= $s['id'] ?>"><?= htmlspecialchars($s['name']) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Pilih Produk/Bahan <span class="text-danger">*</span></label>
+                        <select name="product_name" id="formProductName" class="form-select rounded-3" required disabled>
+                            <option value="">-- Pilih Produk/Bahan --</option>
+                            <?php if(!empty($products)): ?>
+                                <?php foreach ($products as $p): ?>
+                                    <option value="<?= htmlspecialchars($p['product_name']) ?>" data-supplier="<?= $p['supplier_id'] ?>">
+                                        <?= htmlspecialchars($p['product_name']) ?> (Stok: <?= $p['stock'] ?>)
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Jumlah Permintaan <span class="text-danger">*</span></label>
+                        <input type="number" name="quantity" class="form-control rounded-3" min="1" value="10" required>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label fw-bold small text-muted">Catatan Tambahan</label>
+                        <textarea name="notes" class="form-control rounded-3" rows="3" placeholder="Tulis instruksi atau spesifikasi bahan..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold">Kirim Permintaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterProductsBySupplier() {
+    var supplierId = document.getElementById('formSupplierId').value;
+    var productSelect = document.getElementById('formProductName');
+    var options = productSelect.options;
+    
+    // Reset product selection
+    productSelect.value = "";
+    
+    if (supplierId === "") {
+        productSelect.disabled = true;
+        return;
+    }
+    
+    productSelect.disabled = false;
+    
+    // Show/hide options based on data-supplier attribute
+    for (var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        if (opt.value === "") continue;
+        
+        var optSupplierId = opt.getAttribute('data-supplier');
+        if (optSupplierId === supplierId) {
+            opt.style.display = "block";
+            opt.disabled = false;
+        } else {
+            opt.style.display = "none";
+            opt.disabled = true;
+        }
+    }
+}
+</script>
