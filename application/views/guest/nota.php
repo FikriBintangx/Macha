@@ -240,7 +240,7 @@
                 }
             ?>
 
-            <?php if(!empty($payment_desc)): ?>
+            <?php if(!empty($payment_desc) && empty($sales['payment_proof'])): ?>
             <div class="pay-instructions">
                 <h6 class="fw-bold"><i class="fa-solid fa-circle-info me-2"></i>Instruksi Pembayaran</h6>
                 <div class="small text-secondary mb-0">
