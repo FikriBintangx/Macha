@@ -474,6 +474,38 @@ if ($ci->session->flashdata('success')) {
     
     /* Arrow styling */
     .driver-popover-arrow { border-color: #fdfcf8 !important; }
+
+    /* ─── SMOOTH UI OPTIMIZATIONS ─── */
+    /* Point 2: GPU-Accelerated Hover Effect */
+    .card, .product-card, .order-card, .menu-item, .info-box {
+        will-change: transform;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .card:hover, .product-card:hover, .order-card:hover, .menu-item:hover, .info-box:hover {
+        transform: translateY(-5px) !important;
+    }
+
+    /* Point 3: Active State Click Micro-interactions */
+    .btn, button, .btn-act, .topbar-btn {
+        transition: transform 0.15s ease-in-out !important;
+    }
+    .btn:active, button:active, .btn-act:active, .topbar-btn:active {
+        transform: scale(0.95) !important;
+    }
+
+    /* Point 4: Shimmering Skeleton Loader */
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    .skeleton-loading, .skeleton {
+        background: linear-gradient(90deg, #f0f3f1 25%, #e1e7e3 50%, #f0f3f1 75%) !important;
+        background-size: 200% 100% !important;
+        animation: shimmer 1.5s infinite !important;
+        border-radius: 8px;
+        color: transparent !important;
+        pointer-events: none;
+    }
 </style>
 
 <nav class="navbar-macha" id="mainNav">
