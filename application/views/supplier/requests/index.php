@@ -64,4 +64,28 @@ $(function(){
         order: [[4,'desc']],
     });
 });
+
+function rejectRequest(id) {
+    var reason = prompt("Masukkan alasan penolakan permintaan supply:");
+    if (reason === null) return; // User batal
+    reason = reason.trim();
+    if (reason === "") {
+        alert("Alasan penolakan tidak boleh kosong!");
+        return;
+    }
+    
+    // Kirim menggunakan form post dinamis
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '<?= base_url('supplier/requests/reject/') ?>' + id;
+    
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'rejection_reason';
+    input.value = reason;
+    
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+}
 </script>

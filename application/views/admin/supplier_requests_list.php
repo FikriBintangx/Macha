@@ -91,6 +91,12 @@
                                             <?= $status_label ?>
                                         </span>
                                         
+                                        <?php if ($r['status'] == 'rejected' && !empty($r['rejection_reason'])): ?>
+                                            <div class="mt-1 small text-danger" style="max-width: 150px; margin: 0 auto; white-space: normal; line-height: 1.2;">
+                                                <small>Alasan: <strong><?= htmlspecialchars($r['rejection_reason']) ?></strong></small>
+                                            </div>
+                                        <?php endif; ?>
+                                        
                                         <?php if (!empty($r['tracking_number'])): ?>
                                             <div class="mt-1 small text-muted">
                                                 <small><?= htmlspecialchars($r['courier'] ?? 'Kurir') ?>: <strong><?= htmlspecialchars($r['tracking_number']) ?></strong></small>

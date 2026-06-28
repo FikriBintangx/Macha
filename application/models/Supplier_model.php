@@ -41,10 +41,20 @@ class Supplier_model extends CI_Model {
                 'quantity' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
                 'notes' => ['type' => 'TEXT', 'null' => TRUE],
                 'status' => ['type' => "ENUM('pending','approved','rejected','processing','shipped','completed')", 'default' => 'pending'],
+                'rejection_reason' => ['type' => 'TEXT', 'null' => TRUE],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ]);
             $this->dbforge->add_key('id', TRUE);
             $this->dbforge->create_table('supplier_requests');
+        }
+
+        // Migration: ensure 'rejection_reason' column exists in 'supplier_requests' table
+        if ($this->db->table_exists('supplier_requests')) {
+            if (!$this->db->field_exists('rejection_reason', 'supplier_requests')) {
+                $this->dbforge->add_column('supplier_requests', [
+                    'rejection_reason' => ['type' => 'TEXT', 'null' => TRUE]
+                ]);
+            }
         }
 
         if (!$this->db->table_exists('supplier_shipments')) {
@@ -164,6 +174,15 @@ class Supplier_model extends CI_Model {
             $this->db->where('supplier_id', $supplier_id);
         }
         return $this->db->update('supplier_requests', ['status' => $status]);
+    }
+
+    public function reject_request($id, $supplier_id, $reason) {
+        $this->db->where('id', $id);
+        $this->db->where('supplier_id', $supplier_id);
+        return $this->db->update('supplier_requests', [
+            'status' => 'rejected',
+            'rejection_reason' => $reason
+        ]);
     }
 
     // ─── SUPPLIER SHIPMENTS ─────────────────────────────────────────
