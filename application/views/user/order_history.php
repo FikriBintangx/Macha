@@ -497,7 +497,7 @@
                 <div class="filter-tabs" id="filterTabs" style="margin-bottom: 20px;">
                     <div class="ftab active" data-filter="all">Semua (<?= $total_orders ?>)</div>
                     <div class="ftab" data-filter="pending">⏳ Pending (<?= $pending_orders ?>)</div>
-                    <div class="ftab" data-filter="paid">🍳 Dimasak</div>
+                    <div class="ftab" data-filter="paid">🍳 Dipersiapkan</div>
                     <div class="ftab" data-filter="shipped">📦 Siap Ambil / Kirim</div>
                     <div class="ftab" data-filter="completed">🎉 Selesai</div>
                 </div>
@@ -513,12 +513,12 @@
                         
                         $status_map = [
                             'pending'   => ['sb-pending',   'Menunggu Bayar',   'fa-clock',           1],
-                            'paid'      => ['sb-paid',       'Sedang Dimasak',   'fa-fire-burner',     2],
+                            'paid'      => ['sb-paid',       'Sedang Dipersiapkan', 'fa-fire-burner',     2],
                             'shipped'   => ['sb-shipped',    $shipped_text,      $shipped_icon,        3],
                             'completed' => ['sb-completed',  'Selesai',          'fa-flag-checkered',  4],
                             'canceled'  => ['sb-canceled',   'Dibatalkan',       'fa-ban',             0],
                         ];
-                        $step_labels = ['Pesan', 'Dimasak', $shipped_text, 'Selesai'];
+                        $step_labels = ['Pesan', 'Dipersiapkan', $shipped_text, 'Selesai'];
                         $sm = $status_map[$o['status']] ?? ['sb-pending', ucfirst($o['status']), 'fa-circle', 1];
                         ?>
                         <div class="order-card skel-loading" data-status="<?= $o['status'] ?>">

@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
-<mxfile pages="18"><diagram id="9OLIiqbKK4xm6ZIQFixd" name="Class: Page-2">
+<mxfile host="Electron" pages="18">
+  <diagram id="9OLIiqbKK4xm6ZIQFixd" name="Class: Page-2">
     <mxGraphModel dx="2580" dy="1873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -402,7 +402,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Use Case Diagram Macha UMKM" id="0">
-    <mxGraphModel dx="645" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
+    <mxGraphModel dx="1548" dy="1124" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -516,7 +516,7 @@
         <mxCell id="ak_selesaikan_pengiriman" edge="1" parent="system" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_selesaikan_pengiriman">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="User&#10;(Buyer/Seller)" vertex="1">
+        <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="User&#xa;(Buyer/Seller)" vertex="1">
           <mxGeometry height="80" width="40" x="60" y="260" as="geometry" />
         </mxCell>
         <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Admin" vertex="1">
@@ -564,4 +564,892 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram name="Activity: Login" id="page_login"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Login" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1"><mxGeometry height="600" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="600" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengakses Halaman Login" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Email &amp; Password" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="u3" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Kirim / Submit" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="530" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Form Login" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Valid?" vertex="1"><mxGeometry height="80" width="80" x="60" y="380" as="geometry" /></mxCell><mxCell id="w3" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Notifikasi Error" vertex="1"><mxGeometry height="40" width="140" x="30" y="490" as="geometry" /></mxCell><mxCell id="w4" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Set Session &amp; Redirect" vertex="1"><mxGeometry height="40" width="140" x="30" y="490" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="u2" target="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="u3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="w2" target="w4" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e7" edge="1" parent="1" source="w2" target="w3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e8" edge="1" parent="1" source="w3" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e9" edge="1" parent="1" source="w4" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Logout" id="page_logout"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Logout" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1"><mxGeometry height="400" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="400" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Tombol Logout" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="310" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Destroy Session &amp; Hapus Data Login" vertex="1"><mxGeometry height="40" width="140" x="30" y="170" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Redirect ke Halaman Utama / Login" vertex="1"><mxGeometry height="40" width="140" x="30" y="240" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Cari &amp; Lihat Produk" id="page_cari"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Cari &amp; Lihat Produk" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Kata Kunci Pencarian" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Hasil &amp; Detail Produk" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mencari Produk di Database" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Daftar Produk Sesuai Filter" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="w2" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="u2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Lihat Daftar Produk" id="page_lihat_daftar"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Lihat Daftar Produk" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="400" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="400" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengakses Halaman Catalog / Menu" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Daftar &amp; Foto Produk" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="310" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Fetch Data Produk dari DB &amp; Tampilkan" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="u2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Beli Produk" id="page_beli"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Beli Produk" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Jumlah &amp; Klik 'Add to Cart'" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengisi Detail Alamat &amp; Metode Bayar" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="u3" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Checkout'" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="450" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Item ke Keranjang Belanja" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuat Order &amp; Potong Stok Sementara" vertex="1"><mxGeometry height="40" width="140" x="30" y="390" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="u2" target="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="u3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Melakukan Pembayaran" id="page_melakukan_bayar"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Melakukan Pembayaran" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Scan QRIS / Melakukan Transfer COD" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Unggah Foto Bukti Transfer" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Barcode QRIS &amp; Intruksi" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Gambar Bukti Pembayaran ke DB" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="w1" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="u1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="u2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Pantau Status Pesanan" id="page_pantau"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Pantau Status Pesanan" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="400" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1"><mxGeometry height="400" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Masuk Menu Riwayat Pesanan" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Status Tracking Terkini" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="310" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Status (Pending/Dimasak/Siap/Selesai)" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="u2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Batalkan Pesanan" id="page_batal"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Batalkan Pesanan" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Website / Sistem" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Tombol Batalkan Pesanan" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Status Pending?" vertex="1"><mxGeometry height="80" width="80" x="60" y="170" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: 'Canceled' &amp; Restore Stok" vertex="1"><mxGeometry height="40" width="140" x="30" y="280" as="geometry" /></mxCell><mxCell id="w3" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Notif Gagal (Sudah Diproses)" vertex="1"><mxGeometry height="40" width="140" x="30" y="350" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="w2" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="w1" target="w3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="w3" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Kelola Data Produk" id="page_kelola_prod"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Data Produk" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Tambah / Edit / Hapus Produk" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Isi Form Data &amp; Klik Simpan" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form / Load Data Existing" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tulis Perubahan ke DB &amp; Tampilkan Sukses" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Kelola Transaksi" id="page_kelola_trans"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Transaksi" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Memantau Daftar Transaksi Masuk" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengubah Status Order ke 'Dimasak'/'Siap'/'Kirim'" vertex="1"><mxGeometry height="50" width="150" x="25" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Rincian Seluruh Transaksi" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update DB &amp; Kirim Notif Perubahan Status" vertex="1"><mxGeometry height="40" width="140" x="30" y="330" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Verifikasi Pembayaran" id="page_verif_pembayaran"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Verifikasi Pembayaran" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1"><mxGeometry height="550" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Website / Sistem" vertex="1"><mxGeometry height="550" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuka Menu Verifikasi &amp; Lihat Bukti Gambar" vertex="1"><mxGeometry height="50" width="150" x="25" y="110" as="geometry" /></mxCell><mxCell id="a2" parent="lane_admin" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Valid?" vertex="1"><mxGeometry height="80" width="80" x="60" y="250" as="geometry" /></mxCell><mxCell id="a3" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Konfirmasi Pembayaran'" vertex="1"><mxGeometry height="40" width="140" x="30" y="360" as="geometry" /></mxCell><mxCell id="a4" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Batalkan / Tolak'" vertex="1"><mxGeometry height="40" width="140" x="30" y="430" as="geometry" /></mxCell><mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="490" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Detail &amp; Bukti Pembayaran" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update DB Status Order menjadi 'Paid'" vertex="1"><mxGeometry height="40" width="140" x="30" y="410" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="a2" target="a3" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="a2" target="a4" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="a3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e7" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e8" edge="1" parent="1" source="a4" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Membuat Permintaan Supply" id="page_buat_supply"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Membuat Permintaan Supply" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Supplier &amp; Jumlah Bahan Baku" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Kirim Permintaan Supply'" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Halaman Form Request" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Status 'Requested' ke DB &amp; Notif" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Kelola Permintaan &amp; Pengiriman" id="page_kelola_supply"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Permintaan &amp; Pengiriman Supply" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Memonitor Status Pengiriman Supply" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Selesai / Barang Diterima'" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="410" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan List &amp; Bukti Pengiriman" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: 'Completed' &amp; Tambah Stok Gudang" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Terima Permintaan Supply" id="page_terima_supply"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Terima Permintaan Supply" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1"><mxGeometry height="550" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="550" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuka Menu Request Supply Baru" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="s2" parent="lane_supplier" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Approve?" vertex="1"><mxGeometry height="80" width="80" x="60" y="250" as="geometry" /></mxCell><mxCell id="s3" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Terima Permintaan'" vertex="1"><mxGeometry height="40" width="140" x="30" y="360" as="geometry" /></mxCell><mxCell id="s4" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Tolak Permintaan'" vertex="1"><mxGeometry height="40" width="140" x="30" y="430" as="geometry" /></mxCell><mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="490" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form Konfirmasi Pilihan" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: 'Approved' / 'Rejected' di DB" vertex="1"><mxGeometry height="40" width="140" x="30" y="410" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="s1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="s2" target="s3" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="s2" target="s4" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="s3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e7" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e8" edge="1" parent="1" source="s4" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Proses Permintaan Supply" id="page_proses_supply"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Proses Permintaan Supply" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1"><mxGeometry height="400" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="400" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mempersiapkan Bahan Baku yang Diminta" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="s2" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Siap Dikirim'" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="310" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status Order menjadi 'Prepared'" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="s1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="s2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram><diagram name="Activity: Kirim Pasokan &amp; Unggah Bukti" id="page_kirim_pasokan"><mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /><mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kirim Pasokan &amp; Unggah Bukti" vertex="1"><mxGeometry height="40" width="400" x="120" y="0" as="geometry" /></mxCell><mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1"><mxGeometry height="500" width="200" x="120" y="40" as="geometry" /></mxCell><mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1"><mxGeometry height="500" width="200" x="320" y="40" as="geometry" /></mxCell><mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="50" as="geometry" /></mxCell><mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melakukan Pengiriman Fisik" vertex="1"><mxGeometry height="40" width="140" x="30" y="110" as="geometry" /></mxCell><mxCell id="s2" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Resi &amp; Unggah Bukti Kirim" vertex="1"><mxGeometry height="40" width="140" x="30" y="250" as="geometry" /></mxCell><mxCell id="s3" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik 'Kirim Pasokan'" vertex="1"><mxGeometry height="40" width="140" x="30" y="320" as="geometry" /></mxCell><mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1"><mxGeometry height="30" width="30" x="85" y="440" as="geometry" /></mxCell><mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form Upload Bukti" vertex="1"><mxGeometry height="40" width="140" x="30" y="180" as="geometry" /></mxCell><mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: 'Shipped' &amp; Kirim Notif ke Admin" vertex="1"><mxGeometry height="40" width="140" x="30" y="380" as="geometry" /></mxCell><mxCell id="e1" edge="1" parent="1" source="start" target="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e2" edge="1" parent="1" source="s1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e3" edge="1" parent="1" source="w1" target="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e4" edge="1" parent="1" source="s2" target="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e5" edge="1" parent="1" source="s3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="e6" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;"><mxGeometry relative="1" as="geometry" /></mxCell></root></mxGraphModel></diagram></mxfile>
+  <diagram name="Activity: Login" id="page_login">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Login" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1">
+          <mxGeometry height="600" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="600" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengakses Halaman Login" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Email &amp; Password" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="u3" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Kirim / Submit" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Form Login" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Valid?" vertex="1">
+          <mxGeometry height="80" width="80" x="60" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="w3" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Notifikasi Error" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="w4" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Set Session &amp; Redirect" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="u2" target="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="u3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="w2" target="w4" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="w2" target="w3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="w3" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="w4" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Logout" id="page_logout">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Logout" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1">
+          <mxGeometry height="400" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Tombol Logout" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Destroy Session &amp; Hapus Data Login" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Redirect ke Halaman Utama / Login" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Cari &amp; Lihat Produk" id="page_cari">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Cari &amp; Lihat Produk" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Kata Kunci Pencarian" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Hasil &amp; Detail Produk" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mencari Produk di Database" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Daftar Produk Sesuai Filter" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="w2" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="u2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Lihat Daftar Produk" id="page_lihat_daftar">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Lihat Daftar Produk" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="400" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengakses Halaman Catalog / Menu" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Daftar &amp; Foto Produk" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Fetch Data Produk dari DB &amp; Tampilkan" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="u2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Beli Produk" id="page_beli">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Beli Produk" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Jumlah &amp; Klik &#39;Add to Cart&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengisi Detail Alamat &amp; Metode Bayar" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="u3" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Checkout&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Item ke Keranjang Belanja" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuat Order &amp; Potong Stok Sementara" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="u2" target="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="u3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Melakukan Pembayaran" id="page_melakukan_bayar">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Melakukan Pembayaran" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Scan QRIS / Melakukan Transfer COD" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Unggah Foto Bukti Transfer" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Barcode QRIS &amp; Intruksi" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Gambar Bukti Pembayaran ke DB" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="w1" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="u1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="u2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Pantau Status Pesanan" id="page_pantau">
+    <mxGraphModel dx="774" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Pantau Status Pesanan" vertex="1">
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="400" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Masuk Menu Riwayat Pesanan" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melihat Status Tracking Terkini" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Status Pesanan" vertex="1">
+          <mxGeometry height="40" width="150" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Batalkan Pesanan" id="page_batal">
+    <mxGraphModel dx="911" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Batalkan Pesanan" vertex="1">
+          <mxGeometry height="40" width="410" x="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="lane_user" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik Tombol Batalkan Pesanan" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Website / Sistem" vertex="1">
+          <mxGeometry height="500" width="210" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Status Pending?" vertex="1">
+          <mxGeometry height="80" width="80" x="60" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: &#39;Canceled&#39; &amp; Restore Stok" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="w3" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Notif Gagal (Sudah Diproses)" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2" value="Ya">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w3" value="Tidak">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="250.0000000000001" />
+              <mxPoint x="510" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="w3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Kelola Data Produk" id="page_kelola_prod">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Data Produk" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Tambah / Edit / Hapus Produk" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Isi Form Data &amp; Klik Simpan" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form / Load Data Existing" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tulis Perubahan ke DB &amp; Tampilkan Sukses" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Kelola Transaksi" id="page_kelola_trans">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Transaksi" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Memantau Daftar Transaksi Masuk" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mengubah Status Order ke &#39;Dimasak&#39;/&#39;Siap&#39;/&#39;Kirim&#39;" vertex="1">
+          <mxGeometry height="50" width="150" x="25" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Rincian Seluruh Transaksi" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update DB &amp; Kirim Notif Perubahan Status" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Verifikasi Pembayaran" id="page_verif_pembayaran">
+    <mxGraphModel dx="1407" dy="1022" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Verifikasi Pembayaran" vertex="1">
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
+          <mxGeometry height="550" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuka Menu Verifikasi &amp; Lihat Bukti Gambar" vertex="1">
+          <mxGeometry height="50" width="150" x="25" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="lane_admin" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Valid?" vertex="1">
+          <mxGeometry height="80" width="80" x="60" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Batalkan / Tolak&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="35" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="ZqLZJiyJHK-YhGDy0Q50-9" edge="1" parent="lane_admin" source="ZqLZJiyJHK-YhGDy0Q50-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="a2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZqLZJiyJHK-YhGDy0Q50-6" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Konfirmasi Pembayaran&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ZqLZJiyJHK-YhGDy0Q50-7" edge="1" parent="lane_admin" source="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="418" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZqLZJiyJHK-YhGDy0Q50-8" connectable="0" parent="ZqLZJiyJHK-YhGDy0Q50-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Tidak" vertex="1">
+          <mxGeometry relative="1" x="-0.2699" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Website / Sistem" vertex="1">
+          <mxGeometry height="550" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Detail &amp; Bukti Pembayaran" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update DB Status Order menjadi &#39;Paid&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="w2" value="Ya">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="330" />
+            </Array>
+            <mxPoint x="278.52" y="403.03999999999996" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="545" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="510" />
+              <mxPoint x="220" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Membuat Permintaan Supply" id="page_buat_supply">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Membuat Permintaan Supply" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pilih Supplier &amp; Jumlah Bahan Baku" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Kirim Permintaan Supply&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Halaman Form Request" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Status &#39;Requested&#39; ke DB &amp; Notif" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Kelola Permintaan &amp; Pengiriman" id="page_kelola_supply">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Permintaan &amp; Pengiriman Supply" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Memonitor Status Pengiriman Supply" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="lane_admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Selesai / Barang Diterima&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan List &amp; Bukti Pengiriman" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: &#39;Completed&#39; &amp; Tambah Stok Gudang" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Terima Permintaan Supply" id="page_terima_supply">
+    <mxGraphModel dx="704" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Terima Permintaan Supply" vertex="1">
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1">
+          <mxGeometry height="600" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Membuka Menu Request Supply Baru" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="lane_supplier" style="rhombus;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Approve?" vertex="1">
+          <mxGeometry height="80" width="80" x="70" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="av2OIBCGZepFx0HtZl7v-1" edge="1" parent="lane_supplier" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Terima Permintaan&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="40" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Tolak Permintaan&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="40" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: &#39;Approved&#39; / &#39;Rejected&#39; di DB" vertex="1">
+          <mxGeometry height="40" width="140" x="230" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="lane_supplier" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="lane_supplier" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="545" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="lane_supplier" source="s4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="600" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form Konfirmasi Pilihan" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="s1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="s3" value="Ya">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="s4" value="">
+          <mxGeometry relative="1" x="-0.0011" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="140" y="330" />
+              <mxPoint x="140" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="av2OIBCGZepFx0HtZl7v-2" connectable="0" parent="e5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Tidak" vertex="1">
+          <mxGeometry relative="1" x="-0.3566" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Proses Permintaan Supply" id="page_proses_supply">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Proses Permintaan Supply" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1">
+          <mxGeometry height="400" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Mempersiapkan Bahan Baku yang Diminta" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Siap Dikirim&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status Order menjadi &#39;Prepared&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="s1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="s2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Activity: Kirim Pasokan &amp; Unggah Bukti" id="page_kirim_pasokan">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kirim Pasokan &amp; Unggah Bukti" vertex="1">
+          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_supplier" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Supplier" vertex="1">
+          <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="lane_supplier" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Melakukan Pengiriman Fisik" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Input Resi &amp; Unggah Bukti Kirim" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="lane_supplier" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Klik &#39;Kirim Pasokan&#39;" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="lane_supplier" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Tampilkan Form Upload Bukti" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: &#39;Shipped&#39; &amp; Kirim Notif ke Admin" vertex="1">
+          <mxGeometry height="40" width="140" x="30" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" target="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="s1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="w1" target="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="s2" target="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="s3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -2546,10 +2546,14 @@
             <div class="story-label">PHASE 03: EXPERIENCE</div>
             <h2 class="story-h2 lg">PESAN <br><span class="highlight">SEKARANG</span></h2>
             <p class="story-p center">MATCHA YG BERKELAZ</p>
-            <div class="final-cta-wrap">
+            <div class="final-cta-wrap d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3 mt-4">
+              <a href="<?= base_url('shop') ?>" class="btn-macha-white">
+                <i class="fa-solid fa-mug-hot me-2"></i> Lihat Katalog
+              </a>
               <a href="https://wa.me/<?= $this->config->item('admin_wa') ?>?text=Halo+MariMatcha,+saya+ingin+tanya+produk"
-                class="btn-macha-white" target="_blank" rel="noopener noreferrer">Order via WhatsApp <i
-                  class="fa-solid fa-arrow-right ms-2"></i></a>
+                class="btn-macha-outline" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-whatsapp me-2"></i> Order via WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -3193,6 +3197,27 @@
       color: #fff;
     }
 
+    .btn-macha-outline {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: #fff;
+      padding: 20px 45px;
+      border: 2px solid #fff;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-macha-outline:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: #fff;
+      color: var(--green-dark);
+    }
+
     .floating-elements {
       position: absolute;
       width: 100%;
@@ -3274,9 +3299,12 @@
         font-size: 1.4rem;
       }
 
-      .btn-macha-white {
+      .btn-macha-white,
+      .btn-macha-outline {
         padding: 15px 35px;
         font-size: 1.1rem;
+        width: 100%;
+        justify-content: center;
       }
 
       .floating-cart {
