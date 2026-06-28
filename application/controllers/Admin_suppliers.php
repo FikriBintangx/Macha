@@ -32,7 +32,7 @@ class Admin_suppliers extends CI_Controller {
                 'phone'      => ['type' => 'VARCHAR', 'constraint' => '20', 'null' => TRUE],
                 'address'    => ['type' => 'TEXT', 'null' => TRUE],
                 'logo'       => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
-                'status'     => ['type' => 'ENUM("active","inactive")', 'default' => 'active'],
+                'status'     => ['type' => "ENUM('active','inactive')", 'default' => 'active'],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ];
             $this->dbforge->add_field($fields);

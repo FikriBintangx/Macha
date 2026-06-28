@@ -25,7 +25,7 @@ class Supplier_model extends CI_Model {
                 'stock' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
                 'unit' => ['type' => 'VARCHAR', 'constraint' => '20', 'null' => TRUE],
                 'image' => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
-                'status' => ['type' => 'ENUM("active","inactive")', 'default' => 'active'],
+                'status' => ['type' => "ENUM('active','inactive')", 'default' => 'active'],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ]);
             $this->dbforge->add_key('id', TRUE);
@@ -40,7 +40,7 @@ class Supplier_model extends CI_Model {
                 'product_name' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
                 'quantity' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
                 'notes' => ['type' => 'TEXT', 'null' => TRUE],
-                'status' => ['type' => 'ENUM("pending","approved","rejected","processing","shipped","completed")', 'default' => 'pending'],
+                'status' => ['type' => "ENUM('pending','approved','rejected','processing','shipped','completed')", 'default' => 'pending'],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ]);
             $this->dbforge->add_key('id', TRUE);
@@ -56,7 +56,7 @@ class Supplier_model extends CI_Model {
                 'courier' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
                 'estimated_arrival' => ['type' => 'DATE', 'null' => TRUE],
                 'notes' => ['type' => 'TEXT', 'null' => TRUE],
-                'status' => ['type' => 'ENUM("preparing","shipped","delivered")', 'default' => 'preparing'],
+                'status' => ['type' => "ENUM('preparing','shipped','delivered')", 'default' => 'preparing'],
                 'created_at' => ['type' => 'DATETIME', 'null' => TRUE]
             ]);
             $this->dbforge->add_key('id', TRUE);
