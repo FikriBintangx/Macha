@@ -402,7 +402,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Use Case Diagram Macha UMKM" id="0">
-    <mxGraphModel dx="860" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
+    <mxGraphModel dx="815" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -482,7 +482,7 @@
           <mxGeometry height="60" width="180" x="517" y="841" as="geometry" />
         </mxCell>
         <mxCell id="uc_kelola_pengiriman" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Kelola Permintaan &amp; Pengiriman Supply" vertex="1">
-          <mxGeometry height="60" width="180" x="566" y="935" as="geometry" />
+          <mxGeometry height="60" width="180" x="540" y="1010" as="geometry" />
         </mxCell>
         <mxCell id="inc_tugas_update" edge="1" parent="system" source="uc_terima_tugas" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fontColor=light-dark(#000000, #ffffff);labelBackgroundColor=light-dark(#ffffff, #121212);fontStyle=1;" target="uc_update_progress" value="&amp;lt;include&amp;gt;">
           <mxGeometry relative="1" as="geometry" />
