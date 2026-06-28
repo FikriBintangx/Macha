@@ -35,11 +35,17 @@ class Shipments extends CI_Controller {
     public function create() {
         $supplier_id = $this->session->userdata('supplier_id');
         $request_id = $this->input->post('request_id');
+        $tracking_number = $this->input->post('tracking_number');
+
+        // Auto-generate jika kosong
+        if (empty($tracking_number)) {
+            $tracking_number = 'MMCH' . strtoupper(substr(uniqid(), -8));
+        }
         
         $data = [
             'supplier_id' => $supplier_id,
             'request_id' => $request_id,
-            'tracking_number' => $this->input->post('tracking_number'),
+            'tracking_number' => $tracking_number,
             'shipped_at' => date('Y-m-d H:i:s'),
             'status' => 'shipped'
         ];
@@ -59,8 +65,8 @@ class Shipments extends CI_Controller {
         }
 
         $this->Supplier_model->add_shipment($data);
-        $this->Supplier_model->update_request_status($request_id, $supplier_id, 'shipped');
-        $this->session->set_flashdata('success', 'Shipment recorded successfully.');
+        $this->Supplier_model->update_request_status($request_id, 'shipped', $supplier_id);
+        $this->session->set_flashdata('success', 'Shipment berhasil dicatat! Nomor resi: <strong>' . $tracking_number . '</strong>');
         redirect('supplier/shipments');
     }
 

@@ -53,8 +53,19 @@ table.dataTable tbody tr:last-child td { border-bottom:none !important; }
                         </select>
                     </div>
                     <div style="margin-bottom:1rem;">
-                        <label class="form-label-s">Tracking Number / Resi</label>
-                        <input type="text" name="tracking_number" required class="form-input-s" placeholder="e.g. JNE123456789">
+                        <label class="form-label-s">Tracking Number / Resi
+                            <span style="font-weight:400;color:#94a3b8;"> (auto-generate)</span>
+                        </label>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <input type="text" name="tracking_number" id="trackingNumberInput" class="form-input-s"
+                                placeholder="Akan dibuat otomatis" style="flex:1;font-family:monospace;font-weight:700;color:#1B3B25;background:#f8faf8;">
+                            <button type="button" onclick="generateTracking()"
+                                title="Generate ulang nomor resi"
+                                style="background:#e2e8f0;border:none;border-radius:10px;padding:9px 12px;cursor:pointer;flex-shrink:0;">
+                                <i class="fas fa-sync-alt" style="color:#475569;"></i>
+                            </button>
+                        </div>
+                        <small style="color:#94a3b8;font-size:0.75rem;margin-top:4px;display:block;">Kamu bisa edit manual jika perlu mengisi nomor resi dari kurir.</small>
                     </div>
                     <div style="margin-bottom:1rem;">
                         <label class="form-label-s">Shipping Proof (Receipt/Photo)</label>
@@ -96,6 +107,25 @@ table.dataTable tbody tr:last-child td { border-bottom:none !important; }
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
+function generateTracking() {
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var result = 'MMCH';
+    for (var i = 0; i < 8; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    document.getElementById('trackingNumberInput').value = result;
+}
+
+// Auto-generate saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('trackingNumberInput');
+    if (input && !input.value) generateTracking();
+
+    // Generate ulang saat request berubah
+    var reqSelect = document.querySelector('select[name="request_id"]');
+    if (reqSelect) reqSelect.addEventListener('change', function() { generateTracking(); });
+});
+
 $(function(){
     $('#tblShipments').DataTable({
         ajax: { url: '<?= base_url('supplier/shipments/dt_json') ?>', dataSrc: 'data' },
