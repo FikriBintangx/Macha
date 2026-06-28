@@ -117,12 +117,16 @@ if ($ci->session->flashdata('success')) {
     }
 
     .navbar-macha.notif-active .btn-macha-outline span,
-    .navbar-macha.confirm-active .btn-macha-outline span {
+    .navbar-macha.confirm-active .btn-macha-outline span,
+    .navbar-macha.notif-active .btn-nav-cart-outline span,
+    .navbar-macha.confirm-active .btn-nav-cart-outline span {
         display: none;
     }
     
     .navbar-macha.notif-active .btn-macha-outline,
-    .navbar-macha.confirm-active .btn-macha-outline {
+    .navbar-macha.confirm-active .btn-macha-outline,
+    .navbar-macha.notif-active .btn-nav-cart-outline,
+    .navbar-macha.confirm-active .btn-nav-cart-outline {
         padding: 8px 12px;
     }
 
@@ -276,6 +280,24 @@ if ($ci->session->flashdata('success')) {
         border-color: var(--tertiary);
         color: var(--green-dark);
     }
+    .btn-nav-cart-outline {
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border-radius: 50px;
+        padding: 8px 18px;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-nav-cart-outline:hover {
+        background: var(--tertiary);
+        border-color: var(--tertiary);
+        color: var(--green-dark);
+    }
     .btn-macha-filled {
         background: var(--tertiary);
         color: var(--green-dark) !important;
@@ -345,7 +367,8 @@ if ($ci->session->flashdata('success')) {
         .search-input-group:focus-within input { width: 130px; padding-left: 8px; opacity: 1; }
 
         .right-actions .btn-macha-filled span,
-        .right-actions .btn-macha-outline span { display: none !important; }
+        .right-actions .btn-macha-outline span,
+        .right-actions .btn-nav-cart-outline span { display: none !important; }
         .right-actions .text-danger { display: none !important; }
         .breadcrumb-area { margin-top: 85px; }
         .mobile-menu-btn { display: flex !important; }
@@ -546,7 +569,7 @@ if ($ci->session->flashdata('success')) {
 
                 <!-- Cart -->
                 <?php if($ci->session->userdata('role') !== 'admin'): ?>
-                <a href="<?= site_url('shop/cart') ?>" class="btn-macha-outline">
+                <a href="<?= site_url('shop/cart') ?>" class="btn-nav-cart-outline">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="hide-on-scroll">Keranjang</span>
                 </a>
