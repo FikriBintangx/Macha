@@ -107,7 +107,7 @@ class Settings extends CI_Controller {
         }
 
         // Setup upload configuration
-        $config['upload_path']   = FCPATH . 'uploads/';
+        $config['upload_path']   = is_dir('/tmp') ? '/tmp/' : FCPATH . 'uploads/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png|webp|svg';
         $config['max_size']      = 2048; // 2MB max
         

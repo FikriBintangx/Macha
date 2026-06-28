@@ -45,7 +45,7 @@ class Shipments extends CI_Controller {
         ];
 
         if (!empty($_FILES['shipping_proof']['name'])) {
-            $config['upload_path'] = './uploads/';
+            $config['upload_path'] = is_dir('/tmp') ? '/tmp/' : './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['encrypt_name'] = TRUE;
             $this->upload->initialize($config);

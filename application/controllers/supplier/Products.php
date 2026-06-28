@@ -45,7 +45,7 @@ class Products extends CI_Controller {
         ];
 
         if (!empty($_FILES['image']['name'])) {
-            $config['upload_path'] = './uploads/';
+            $config['upload_path'] = is_dir('/tmp') ? '/tmp/' : './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['encrypt_name'] = TRUE;
             $this->upload->initialize($config);
@@ -91,7 +91,7 @@ class Products extends CI_Controller {
         ];
 
         if (!empty($_FILES['image']['name'])) {
-            $config['upload_path'] = './uploads/';
+            $config['upload_path'] = is_dir('/tmp') ? '/tmp/' : './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['encrypt_name'] = TRUE;
             $this->upload->initialize($config);

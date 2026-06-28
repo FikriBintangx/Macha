@@ -71,7 +71,7 @@ class Product extends CI_Controller {
         if (!empty($preset)) { 
             $gambar = $preset; 
         } elseif (!empty($_FILES['image']['name'])) { 
-            $config['upload_path']   = './uploads/'; 
+            $config['upload_path']   = is_dir('/tmp') ? '/tmp/' : './uploads/'; 
             $config['allowed_types'] = 'jpg|jpeg|png|webp'; 
             $config['max_size']      = 2048; 
             $config['file_name']     = 'macha_' . time(); 
@@ -162,7 +162,7 @@ class Product extends CI_Controller {
         // Ganti gambar jika ada upload baru
         if (!empty($_FILES['image']['name'])) {
             $config = [
-                'upload_path'   => './uploads/',
+                'upload_path'   => is_dir('/tmp') ? '/tmp/' : './uploads/',
                 'allowed_types' => 'jpg|jpeg|png|webp',
                 'max_size'      => 2048,
                 'file_name'     => 'macha_' . time(),
