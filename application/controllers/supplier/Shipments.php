@@ -46,7 +46,7 @@ class Shipments extends CI_Controller {
             'supplier_id' => $supplier_id,
             'request_id' => $request_id,
             'tracking_number' => $tracking_number,
-            'created_at' => date('Y-m-d H:i:s'),
+            'shipped_at' => date('Y-m-d H:i:s'),
             'status' => 'shipped'
         ];
 
@@ -85,7 +85,7 @@ class Shipments extends CI_Controller {
             $rows[] = [
                 '<span style="font-family:monospace;font-weight:700;color:#1B3B25;">'.htmlspecialchars($ship['tracking_number']).'</span>',
                 '#REQ-'.str_pad($ship['request_id'], 4, '0', STR_PAD_LEFT),
-                date('d M Y', strtotime($ship['created_at'])),
+                date('d M Y', strtotime($ship['shipped_at'] ?? $ship['created_at'])),
                 $status_html,
                 $proof,
             ];

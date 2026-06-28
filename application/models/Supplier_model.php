@@ -86,6 +86,16 @@ class Supplier_model extends CI_Model {
                     ]
                 ]);
             }
+            // Migration: ensure 'shipped_at' column exists
+            if (!$this->db->field_exists('shipped_at', 'supplier_shipments')) {
+                $this->dbforge->add_column('supplier_shipments', [
+                    'shipped_at' => [
+                        'type' => 'DATETIME',
+                        'null' => TRUE,
+                        'after' => 'shipping_proof'
+                    ]
+                ]);
+            }
         }
     }
     // ─── SUPPLIER AUTH ──────────────────────────────────────────────
