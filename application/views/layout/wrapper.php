@@ -1056,6 +1056,12 @@ if (isset($CI->db)) {
                         <i class="bi bi-box-seam"></i> Bahan Supplier
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin_suppliers/requests') ?>"
+                        class="nav-link <?= ($this->uri->segment(1) == 'admin_suppliers' && $this->uri->segment(2) == 'requests') ? 'active' : '' ?>">
+                        <i class="bi bi-chat-left-quote"></i> Permintaan Supply
+                    </a>
+                </li>
 
                 <span class="sidebar-section-title">Laporan</span>
                 <li class="nav-item">

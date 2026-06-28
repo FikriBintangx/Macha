@@ -132,4 +132,74 @@ class Admin_suppliers extends CI_Controller {
         $this->session->set_flashdata('success', 'Supplier berhasil dihapus!');
         redirect('admin_suppliers');
     }
+
+    /**
+     * Manajemen Permintaan Supply
+     */
+    public function requests() {
+        $this->load->model('Supplier_model');
+        $requests = $this->Supplier_model->get_all_requests();
+
+        $data = [
+            'title' => 'Permintaan & Pengiriman Supply',
+            'requests' => $requests,
+            'content' => 'admin/supplier_requests_list'
+        ];
+        $this->load->view('layout/wrapper', $data);
+    }
+
+    /**
+     * Kirim Request Supply Baru
+     */
+    public function create_supply_request() {
+        $this->load->model('Supplier_model');
+        
+        $supplier_id = $this->input->post('supplier_id');
+        $product_name = $this->input->post('product_name');
+        $quantity = $this->input->post('quantity');
+        $notes = $this->input->post('notes');
+        $admin_id = $this->session->userdata('userid');
+
+        $data = [
+            'supplier_id' => $supplier_id,
+            'requested_by_admin_id' => $admin_id,
+            'product_name' => $product_name,
+            'quantity' => $quantity,
+            'notes' => $notes,
+            'status' => 'pending',
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+
+        $this->Supplier_model->create_request($data);
+        $this->session->set_flashdata('success', 'Permintaan supply berhasil dikirim ke supplier!');
+        redirect('admin_suppliers/requests');
+    }
+
+    /**
+     * Konfirmasi Terima Pengiriman (Complete Request)
+     */
+    public function complete_supply_request($id) {
+        $this->load->model('Supplier_model');
+        
+        // Update status di request
+        $this->Supplier_model->update_request_status($id, 'completed');
+        
+        // Update status di shipment juga jika ada
+        $this->db->where('request_id', $id)->update('supplier_shipments', ['status' => 'delivered']);
+
+        $this->session->set_flashdata('success', 'Pasokan berhasil diterima! Status diperbarui menjadi Selesai.');
+        redirect('admin_suppliers/requests');
+    }
+
+    /**
+     * Batalkan Permintaan Supply (Jika masih pending)
+     */
+    public function cancel_supply_request($id) {
+        $this->db->where('id', $id);
+        $this->db->where('status', 'pending');
+        $this->db->delete('supplier_requests');
+
+        $this->session->set_flashdata('success', 'Permintaan supply berhasil dibatalkan.');
+        redirect('admin_suppliers/requests');
+    }
 }

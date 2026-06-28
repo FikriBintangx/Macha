@@ -122,10 +122,11 @@ class Supplier_model extends CI_Model {
     }
 
     public function get_all_requests() {
-        $this->db->select('supplier_requests.*, suppliers.name as supplier_name, users.full_name as admin_name');
+        $this->db->select('supplier_requests.*, suppliers.name as supplier_name, users.full_name as admin_name, supplier_shipments.tracking_number, supplier_shipments.courier, supplier_shipments.shipping_proof');
         $this->db->from('supplier_requests');
         $this->db->join('suppliers', 'suppliers.id = supplier_requests.supplier_id', 'left');
         $this->db->join('users', 'users.id = supplier_requests.requested_by_admin_id', 'left');
+        $this->db->join('supplier_shipments', 'supplier_shipments.request_id = supplier_requests.id', 'left');
         $this->db->order_by('supplier_requests.created_at', 'DESC');
         return $this->db->get()->result_array();
     }

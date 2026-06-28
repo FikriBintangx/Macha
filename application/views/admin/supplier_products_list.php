@@ -18,7 +18,8 @@
                             <th class="py-3 text-uppercase small fw-bold text-center">Kategori</th>
                             <th class="py-3 text-uppercase small fw-bold text-end">Harga</th>
                             <th class="py-3 text-uppercase small fw-bold text-center">Stok</th>
-                            <th class="pe-4 py-3 text-uppercase small fw-bold text-center">Status</th>
+                            <th class="py-3 text-uppercase small fw-bold text-center">Status</th>
+                            <th class="pe-4 py-3 text-uppercase small fw-bold text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,18 +56,23 @@
                                             <span class="text-dark fw-bold"><?= $p['stock'] ?></span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="text-center pe-4" data-label="STATUS">
+                                    <td class="text-center" data-label="STATUS">
                                         <?php if ($p['status'] == 'active'): ?>
                                             <span class="badge bg-success rounded-pill px-3">Tersedia</span>
                                         <?php else: ?>
                                             <span class="badge bg-danger rounded-pill px-3">Habis</span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="text-center pe-4" data-label="AKSI">
+                                        <button class="btn btn-sm btn-success rounded-pill px-3 fw-bold" onclick="openRequestModal(<?= $p['supplier_id'] ?>, '<?= addslashes($p['supplier_name'] ?? '') ?>', '<?= addslashes($p['product_name']) ?>')">
+                                            <i class="bi bi-envelope me-1"></i> Minta Supply
+                                        </button>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="7" class="text-center py-5 text-muted">
+                                <td colspan="8" class="text-center py-5 text-muted">
                                     <i class="bi bi-inbox fs-1 d-block mb-2"></i>
                                     Belum ada data bahan dari supplier.
                                 </td>
@@ -78,3 +84,51 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Minta Supply -->
+<div class="modal fade" id="requestSupplyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 p-4 pb-0">
+                <h5 class="fw-bold text-success"><i class="bi bi-envelope-plus me-2"></i>Buat Permintaan Supply</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="<?= base_url('admin_suppliers/create_supply_request') ?>" method="POST">
+                <div class="modal-body p-4">
+                    <input type="hidden" name="supplier_id" id="reqSupplierId">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Nama Supplier</label>
+                        <input type="text" id="reqSupplierName" class="form-control rounded-3" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Nama Produk/Bahan</label>
+                        <input type="text" name="product_name" id="reqProductName" class="form-control rounded-3" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Jumlah Permintaan <span class="text-danger">*</span></label>
+                        <input type="number" name="quantity" class="form-control rounded-3" min="1" value="10" required>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label fw-bold small text-muted">Catatan Tambahan</label>
+                        <textarea name="notes" class="form-control rounded-3" rows="3" placeholder="Tulis instruksi atau spesifikasi bahan..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold">Kirim Permintaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openRequestModal(supplierId, supplierName, productName) {
+    document.getElementById('reqSupplierId').value = supplierId;
+    document.getElementById('reqSupplierName').value = supplierName;
+    document.getElementById('reqProductName').value = productName;
+    
+    var myModal = new bootstrap.Modal(document.getElementById('requestSupplyModal'));
+    myModal.show();
+}
+</script>
