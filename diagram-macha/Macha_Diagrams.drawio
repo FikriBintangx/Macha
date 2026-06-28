@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="Electron" agent="Mozilla/5.0" pages="18">
   <diagram id="9OLIiqbKK4xm6ZIQFixd" name="Class: Page-2">
-    <mxGraphModel dx="1191" dy="865" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -403,12 +403,12 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Use Case Diagram Macha UMKM" id="0">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
+    <mxGraphModel dx="1407" dy="1022" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="system" parent="1" style="swimlane;startSize=30;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);align=center;fontStyle=1;" value="Sistem Macha UMKM" vertex="1">
-          <mxGeometry height="1550" width="850" x="350" y="40" as="geometry" />
+          <mxGeometry height="1130" width="850" x="350" y="40" as="geometry" />
         </mxCell>
         <mxCell id="uc_login" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Login" vertex="1">
           <mxGeometry height="60" width="160" x="220" y="37" as="geometry" />
@@ -452,39 +452,6 @@
         <mxCell id="uc_verif_pembayaran" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Verifikasi Pembayaran" vertex="1">
           <mxGeometry height="60" width="180" x="400" y="440" as="geometry" />
         </mxCell>
-        <mxCell id="sep_sales_line" edge="1" parent="system" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint y="750" as="sourcePoint" />
-            <mxPoint x="850" y="750" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="sep_sales_label" parent="system" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=2;fontSize=11;" value="-- MODUL PENJUALAN (SALES MODULE) --" vertex="1">
-          <mxGeometry height="30" width="250" x="300" y="735" as="geometry" />
-        </mxCell>
-        <mxCell id="sep_delivery_line" edge="1" parent="system" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint y="1200" as="sourcePoint" />
-            <mxPoint x="850" y="1200" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="sep_delivery_label" parent="system" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=2;fontSize=11;" value="-- MODUL PENGIRIMAN (DELIVERY MODULE) --" vertex="1">
-          <mxGeometry height="30" width="250" x="300" y="1185" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_terima_tugas" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Terima Tugas Pengiriman" vertex="1">
-          <mxGeometry height="60" width="200" x="50" y="1250" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_update_progress" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Update Progres Pengiriman" vertex="1">
-          <mxGeometry height="60" width="200" x="50" y="1340" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_selesaikan_pengiriman" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Selesaikan Pengiriman" vertex="1">
-          <mxGeometry height="60" width="200" x="50" y="1430" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_tugaskan_supplier" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Menugaskan Supplier" vertex="1">
-          <mxGeometry height="60" width="180" x="517" y="1246" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_kelola_pengiriman" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Kelola Pengiriman" vertex="1">
-          <mxGeometry height="60" width="180" x="566" y="1340" as="geometry" />
-        </mxCell>
         <mxCell id="inc_login_logout" edge="1" parent="system" source="uc_login" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fontColor=light-dark(#000000, #ffffff);labelBackgroundColor=light-dark(#ffffff, #121212);fontStyle=1;" target="uc_logout" value="&amp;lt;include&amp;gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -503,6 +470,21 @@
         <mxCell id="inc_transaksi_verif" edge="1" parent="system" source="uc_kelola_transaksi" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fontColor=light-dark(#000000, #ffffff);labelBackgroundColor=light-dark(#ffffff, #121212);fontStyle=1;" target="uc_verif_pembayaran" value="&amp;lt;include&amp;gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="uc_terima_tugas" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Terima Permintaan Supply" vertex="1">
+          <mxGeometry height="60" width="200" x="50" y="845" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_update_progress" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Proses Permintaan Supply" vertex="1">
+          <mxGeometry height="60" width="200" x="50" y="935" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_selesaikan_pengiriman" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Kirim Pasokan &amp; Unggah Bukti" vertex="1">
+          <mxGeometry height="60" width="200" x="50" y="1025" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_tugaskan_supplier" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Membuat Permintaan Supply" vertex="1">
+          <mxGeometry height="60" width="180" x="517" y="841" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_kelola_pengiriman" parent="system" style="ellipse;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Kelola Permintaan &amp; Pengiriman Supply" vertex="1">
+          <mxGeometry height="60" width="180" x="566" y="935" as="geometry" />
+        </mxCell>
         <mxCell id="inc_tugas_update" edge="1" parent="system" source="uc_terima_tugas" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fontColor=light-dark(#000000, #ffffff);labelBackgroundColor=light-dark(#ffffff, #121212);fontStyle=1;" target="uc_update_progress" value="&amp;lt;include&amp;gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -515,14 +497,31 @@
         <mxCell id="inc_supplier_kelola" edge="1" parent="system" source="uc_tugaskan_supplier" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);fontColor=light-dark(#000000, #ffffff);labelBackgroundColor=light-dark(#ffffff, #121212);fontStyle=1;" target="uc_kelola_pengiriman" value="&amp;lt;include&amp;gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="actor_supplier" parent="system" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Supplier" vertex="1">
+          <mxGeometry height="80" width="40" x="-250" y="855" as="geometry" />
+        </mxCell>
+        <mxCell id="ak_login" edge="1" parent="system" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_login">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-300" y="895" />
+              <mxPoint x="-310" y="60" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ak_terima_tugas" edge="1" parent="system" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_terima_tugas">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ak_update_progress" edge="1" parent="system" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_update_progress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ak_selesaikan_pengiriman" edge="1" parent="system" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_selesaikan_pengiriman">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="User&#10;(Buyer/Seller)" vertex="1">
           <mxGeometry height="80" width="40" x="60" y="260" as="geometry" />
         </mxCell>
         <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Admin" vertex="1">
           <mxGeometry height="80" width="40" x="1550" y="360" as="geometry" />
-        </mxCell>
-        <mxCell id="actor_supplier" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=light-dark(#ffffff, #121212);fontColor=light-dark(#000000, #ffffff);fontStyle=1;" value="Supplier" vertex="1">
-          <mxGeometry height="80" width="40" x="100" y="1300" as="geometry" />
         </mxCell>
         <mxCell id="au_login" edge="1" parent="1" source="actor_user" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_login">
           <mxGeometry relative="1" as="geometry" />
@@ -561,23 +560,6 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="aa_kelola_pengiriman" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_kelola_pengiriman">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ak_login" edge="1" parent="1" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_login">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="40" y="1340" />
-              <mxPoint x="40" y="100" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ak_terima_tugas" edge="1" parent="1" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_terima_tugas">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ak_update_progress" edge="1" parent="1" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_update_progress">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ak_selesaikan_pengiriman" edge="1" parent="1" source="actor_supplier" style="endArrow=none;html=1;rounded=0;strokeColor=light-dark(#000000, #ffffff);" target="uc_selesaikan_pengiriman">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
@@ -849,7 +831,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram name="Activity: KelolaPengirimanAdmin" id="page_3">
+  <diagram name="Activity: KelolaPermintaanSupplyAdmin" id="page_3">
     <mxGraphModel dx="774" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -909,7 +891,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="header_box_KelolaPengirimanAdmin" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;align=center;verticalAlign=middle;" value="Kelola Pengiriman Admin" vertex="1">
+        <mxCell id="header_box_KelolaPengirimanAdmin" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;align=center;verticalAlign=middle;" value="Kelola Permintaan &amp; Pengiriman Supply Admin" vertex="1">
           <mxGeometry height="40" width="400" x="120" as="geometry" />
         </mxCell>
       </root>
@@ -1478,7 +1460,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: Pembayaran" id="page_12">
-    <mxGraphModel dx="815" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1300" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1643,7 +1625,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: PengirimanAmbil" id="page_14">
-    <mxGraphModel dx="673" dy="489" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1734,7 +1716,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: PengirimanAntar" id="page_15">
-    <mxGraphModel dx="645" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1985,7 +1967,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: VerifikasiPembayaran" id="page_19">
-    <mxGraphModel dx="484" dy="351" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
