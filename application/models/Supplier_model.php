@@ -54,6 +54,7 @@ class Supplier_model extends CI_Model {
                 'request_id' => ['type' => 'INT', 'constraint' => 11],
                 'tracking_number' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
                 'courier' => ['type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE],
+                'shipping_proof' => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
                 'estimated_arrival' => ['type' => 'DATE', 'null' => TRUE],
                 'notes' => ['type' => 'TEXT', 'null' => TRUE],
                 'status' => ['type' => "ENUM('preparing','shipped','delivered')", 'default' => 'preparing'],
@@ -61,6 +62,20 @@ class Supplier_model extends CI_Model {
             ]);
             $this->dbforge->add_key('id', TRUE);
             $this->dbforge->create_table('supplier_shipments');
+        }
+
+        // Migration: ensure 'shipping_proof' column exists in 'supplier_shipments' table
+        if ($this->db->table_exists('supplier_shipments')) {
+            if (!$this->db->field_exists('shipping_proof', 'supplier_shipments')) {
+                $this->dbforge->add_column('supplier_shipments', [
+                    'shipping_proof' => [
+                        'type' => 'VARCHAR',
+                        'constraint' => '255',
+                        'null' => TRUE,
+                        'after' => 'courier'
+                    ]
+                ]);
+            }
         }
     }
     // ─── SUPPLIER AUTH ──────────────────────────────────────────────
