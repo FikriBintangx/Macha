@@ -744,10 +744,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const iconColor = type === 'success' ? '#4ade80' : '#f87171';
         const iconClass = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
         
+        let cartBtn = '';
+        if (msg.toLowerCase().includes('keranjang') && type === 'success') {
+            cartBtn = `<a href="<?= site_url('shop/cart') ?>" class="btn btn-sm btn-light rounded-pill px-3 py-1 ms-2 fw-bold text-success" style="font-size: 0.75rem; text-decoration: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #4ade80;">Lihat Keranjang</a>`;
+        }
         notifSlot.innerHTML = `
             <div style="display:flex; align-items:center; gap:10px;">
                 <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
                 <span>${msg}</span>
+                ${cartBtn}
             </div>
             <button class="btnHideNotifDynamic" style="background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.9); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; position: absolute; right: 25px;">
                 <i class="fa-solid fa-xmark"></i>
