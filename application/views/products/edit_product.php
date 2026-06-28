@@ -40,7 +40,7 @@
                                 <div style="font-size:1.8rem;margin-bottom:6px;">📁</div>
                                 <div id="dropLabel" style="font-size:.8rem;color:#6b9080;font-weight:600;line-height:1.4">
                                     Klik atau drag foto baru di sini<br>
-                                    <span style="font-size:.72rem;color:#aaa">JPG, PNG, WEBP • Max 2MB</span>
+                                    <span style="font-size:.72rem;color:#aaa">JPG, PNG, WEBP</span>
                                 </div>
                             </div>
 
@@ -56,7 +56,7 @@
                             function previewImg(input) {
                                 if(!input.files||!input.files[0])return;
                                 var f=input.files[0];
-                                if(f.size>2*1024*1024){alert('Ukuran foto max 2MB!');input.value='';return;}
+                                // ponytail: removed size restriction check on frontend
                                 var reader=new FileReader();
                                 reader.onload=function(e){
                                     document.getElementById('imgPreview').src=e.target.result;
@@ -87,7 +87,7 @@
                                 document.getElementById('imgPreview').src='<?= base_url('uploads/' . $product['image']) ?>';
                                 document.getElementById('imgPreview').style.borderColor='#e0e8e0';
                                 document.getElementById('newPhotoTag').style.display='none';
-                                document.getElementById('dropLabel').innerHTML='Klik atau drag foto baru di sini<br><span style="font-size:.72rem;color:#aaa">JPG, PNG, WEBP • Max 2MB</span>';
+                                document.getElementById('dropLabel').innerHTML='Klik atau drag foto baru di sini<br><span style="font-size:.72rem;color:#aaa">JPG, PNG, WEBP</span>';
                                 document.getElementById('dropZone').style.borderColor='#a8d5b5';
                                 document.getElementById('dropZone').style.background='#f8fdf8';
                                 document.getElementById('removeNewPhoto').style.display='none';

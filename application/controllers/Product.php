@@ -73,7 +73,7 @@ class Product extends CI_Controller {
         } elseif (!empty($_FILES['image']['name'])) { 
             $config['upload_path']   = is_dir('/tmp') ? '/tmp/' : './uploads/'; 
             $config['allowed_types'] = 'jpg|jpeg|png|webp'; 
-            $config['max_size']      = 2048; 
+            $config['max_size']      = 0; // ponytail: 0 means no limit for menu image uploads 
             $config['file_name']     = 'macha_' . time(); 
 
             $this->upload->initialize($config); 
@@ -164,7 +164,7 @@ class Product extends CI_Controller {
             $config = [
                 'upload_path'   => is_dir('/tmp') ? '/tmp/' : './uploads/',
                 'allowed_types' => 'jpg|jpeg|png|webp',
-                'max_size'      => 2048,
+                'max_size'      => 0, // ponytail: 0 means no limit for menu image uploads
                 'file_name'     => 'macha_' . time(),
             ];
             $this->upload->initialize($config);
