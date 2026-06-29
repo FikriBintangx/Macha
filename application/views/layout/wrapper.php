@@ -1099,7 +1099,7 @@ if (isset($CI->db)) {
                 <li class="nav-item">
                     <a href="<?= site_url('report/daily') ?>"
                         class="nav-link <?= ($this->uri->segment(2) == 'daily') ? 'active' : '' ?>">
-                        <i class="bi bi-calendar-check-fill"></i> Hari Ini
+                        <i class="bi bi-calendar-check-fill"></i> Laporan Daily
                     </a>
                 </li>
                 <li class="nav-item">

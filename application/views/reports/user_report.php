@@ -100,9 +100,8 @@ if (!empty($reports)) {
                             $groupTotal = array_sum(array_column($transactions, 'total_price'));
                             $totalSemua += $groupTotal;
                     ?>
-                    <!-- Baris Header Grup -->
                     <tr class="group-header cursor-pointer collapsed-group" style="background-color: #f8fbf8; cursor: pointer; border-left: 4px solid #198754;" data-group-id="<?= $gId ?>">
-                        <td colspan="5" class="py-3 border-bottom-0">
+                        <td colspan="5" class="py-3 border-bottom-0 text-start" style="text-align: left !important; padding-left: 1.5rem !important;">
                             <i class="bi bi-chevron-down me-2 toggle-icon d-inline-block text-success fw-bold" style="transition: transform 0.2s; transform: rotate(-90deg);"></i>
                             <strong class="text-dark fs-6 customer-group-name"><?= htmlspecialchars($cname) ?></strong> 
                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill ms-2 px-2 trx-count"><?= count($transactions) ?> trx</span>
