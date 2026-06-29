@@ -30,14 +30,11 @@ class Report extends CI_Controller {
 
     // Laporan harian
     public function daily() {
-        $today = date('Y-m-d');
-        $where = ['DATE(sales.created_at)' => $today];
-
         $data = [
             'title'   => 'Laporan Penjualan Hari Ini',
             'date'    => date('d M Y'),
             'content' => 'reports/daily_report',
-            'reports' => $this->M_sales->get_report($where)
+            'reports' => $this->M_sales->get_report()
         ];
         $this->load->view('layout/wrapper', $data);
     }

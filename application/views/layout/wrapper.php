@@ -1339,6 +1339,7 @@ if (isset($CI->db)) {
             });
         });
     </script>
+    </div>
     </body>
 
 </html>
