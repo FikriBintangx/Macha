@@ -1063,7 +1063,7 @@ if (isset($CI->db)) {
                     </a>
                 </li>
 
-                <span class="sidebar-section-title">Users</span>
+                <span class="sidebar-section-title">Pengguna</span>
                 <li class="nav-item">
                     <a href="<?= site_url('admin_users') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'admin_users' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
@@ -1099,13 +1099,13 @@ if (isset($CI->db)) {
                 <li class="nav-item">
                     <a href="<?= site_url('report/daily') ?>"
                         class="nav-link <?= ($this->uri->segment(2) == 'daily') ? 'active' : '' ?>">
-                        <i class="bi bi-calendar-check-fill"></i> Laporan Daily
+                        <i class="bi bi-calendar-check-fill"></i> Laporan Harian
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="<?= site_url('report/pending') ?>"
                         class="nav-link <?= ($this->uri->segment(2) == 'pending') ? 'active' : '' ?>">
-                        <i class="bi bi-clock-history"></i> Pending
+                        <i class="bi bi-clock-history"></i> Tertunda
                     </a>
                 </li>
                 <li class="nav-item">
@@ -1146,7 +1146,7 @@ if (isset($CI->db)) {
                 </div>
             </div>
             <a href="<?= site_url('auth/logout') ?>" class="nav-link logout" style="color: rgba(239, 68, 68, .8) !important; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.1); border-radius: 16px !important; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <i class="bi bi-box-arrow-left"></i> Logout
+                <i class="bi bi-box-arrow-left"></i> Keluar
             </a>
         </div>
     </aside>

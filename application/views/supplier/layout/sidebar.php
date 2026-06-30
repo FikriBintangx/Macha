@@ -61,7 +61,7 @@
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.transform='translateX(4px)';"
                onmouseout="this.style.background='<?= (isset($title) && strpos($title, 'Product') !== false) ? 'rgba(139,170,124,0.15)' : 'transparent' ?>'; this.style.color='<?= (isset($title) && strpos($title, 'Product') !== false) ? '#8BAA7C' : 'rgba(255,255,255,0.65)' ?>'; this.style.transform='translateX(0)';">
                 <i class="fas fa-box" style="width:18px; text-align:center;"></i>
-                My Products
+                Produk Saya
             </a>
 
             <!-- Transaksi -->
@@ -79,7 +79,7 @@
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.transform='translateX(4px)';"
                onmouseout="this.style.background='<?= (isset($title) && strpos($title, 'Request') !== false) ? 'rgba(139,170,124,0.15)' : 'transparent' ?>'; this.style.color='<?= (isset($title) && strpos($title, 'Request') !== false) ? '#8BAA7C' : 'rgba(255,255,255,0.65)' ?>'; this.style.transform='translateX(0)';">
                 <i class="fas fa-clipboard-list" style="width:18px; text-align:center;"></i>
-                Requests
+                Permintaan
             </a>
             <a href="<?= base_url('supplier/shipments') ?>" style="
                 display:flex; align-items:center; gap:12px;
@@ -90,7 +90,7 @@
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.transform='translateX(4px)';"
                onmouseout="this.style.background='<?= (isset($title) && strpos($title, 'Shipment') !== false) ? 'rgba(139,170,124,0.15)' : 'transparent' ?>'; this.style.color='<?= (isset($title) && strpos($title, 'Shipment') !== false) ? '#8BAA7C' : 'rgba(255,255,255,0.65)' ?>'; this.style.transform='translateX(0)';">
                 <i class="fas fa-truck" style="width:18px; text-align:center;"></i>
-                Shipments
+                Pengiriman
             </a>
 
             <!-- Laporan -->
@@ -108,7 +108,7 @@
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.transform='translateX(4px)';"
                onmouseout="this.style.background='<?= (isset($title) && $title == 'Analytics') ? 'rgba(139,170,124,0.15)' : 'transparent' ?>'; this.style.color='<?= (isset($title) && $title == 'Analytics') ? '#8BAA7C' : 'rgba(255,255,255,0.65)' ?>'; this.style.transform='translateX(0)';">
                 <i class="fas fa-chart-line" style="width:18px; text-align:center;"></i>
-                Analytics
+                Analitik
             </a>
 
             <!-- Pengaturan -->
@@ -126,7 +126,7 @@
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.transform='translateX(4px)';"
                onmouseout="this.style.background='<?= (isset($title) && $title == 'Profile') ? 'rgba(139,170,124,0.15)' : 'transparent' ?>'; this.style.color='<?= (isset($title) && $title == 'Profile') ? '#8BAA7C' : 'rgba(255,255,255,0.65)' ?>'; this.style.transform='translateX(0)';">
                 <i class="fas fa-user" style="width:18px; text-align:center;"></i>
-                Profile
+                Profil
             </a>
         </nav>
 
@@ -151,7 +151,7 @@
                 transition:all 0.2s;
             " onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff';"
                onmouseout="this.style.background='transparent'; this.style.color='rgba(255,255,255,0.55)';">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> Keluar
             </a>
         </div>
     </aside>

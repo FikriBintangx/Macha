@@ -85,8 +85,6 @@ class Product extends CI_Controller {
 
             if ($this->upload->do_upload('image')) { 
                 $gambar = $this->upload->data('file_name'); 
-                $this->load->library('supabase');
-                $this->supabase->upload($config['upload_path'] . $gambar, $gambar);
             } else { 
                 $this->session->set_flashdata('error', $this->upload->display_errors()); 
                 redirect('product/add'); 
@@ -180,8 +178,6 @@ class Product extends CI_Controller {
             $this->upload->initialize($config);
             if ($this->upload->do_upload('image')) {
                 $data['image'] = $this->upload->data('file_name');
-                $this->load->library('supabase');
-                $this->supabase->upload($config['upload_path'] . $data['image'], $data['image']);
             } else {
                 $this->session->set_flashdata('error', $this->upload->display_errors());
                 redirect('product/edit/' . $id);

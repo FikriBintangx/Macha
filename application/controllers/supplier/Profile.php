@@ -44,8 +44,6 @@ class Profile extends CI_Controller {
             if ($this->upload->do_upload('logo')) {
                 $uploadData = $this->upload->data();
                 $data['logo'] = $uploadData['file_name'];
-                $this->load->library('supabase');
-                $this->supabase->upload($config['upload_path'] . $data['logo'], $data['logo']);
             }
         }
 

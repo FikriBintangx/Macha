@@ -5,8 +5,6 @@ if ( ! function_exists('base_url'))
 {
     function base_url($uri = '', $protocol = NULL)
     {
-        $is_vercel = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH));
-        
         if (!empty($uri)) {
             $uri_str = is_array($uri) ? implode('/', $uri) : (string) $uri;
             $uri_str = ltrim($uri_str, '/');
@@ -15,12 +13,6 @@ if ( ! function_exists('base_url'))
                 $filename = basename($uri_str);
                 if (!empty($filename) && file_exists(FCPATH . 'assets/img/' . $filename)) {
                     return get_instance()->config->base_url('assets/img/' . $filename, $protocol);
-                }
-                
-                if ($is_vercel) {
-                    $supabase_url = getenv('NEXT_PUBLIC_SUPABASE_URL') ?: 'https://bowoobqjaaajuthccsrm.supabase.co';
-                    $bucket = 'macha';
-                    return rtrim($supabase_url, '/') . '/storage/v1/object/public/' . $bucket . '/' . $uri_str;
                 }
             }
         }

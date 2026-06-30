@@ -570,13 +570,10 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Login" vertex="1">
-          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
         </mxCell>
         <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1">
           <mxGeometry height="600" width="200" x="120" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
-          <mxGeometry height="600" width="200" x="320" y="40" as="geometry" />
         </mxCell>
         <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
@@ -593,6 +590,9 @@
         <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="530" as="geometry" />
         </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="600" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
         <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Form Login" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
         </mxCell>
@@ -605,31 +605,31 @@
         <mxCell id="w4" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Set Session &amp; Redirect" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="490" as="geometry" />
         </mxCell>
-        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e2" edge="1" parent="1" source="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" edge="1" parent="1" source="w1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" edge="1" parent="1" source="u2" target="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e4" edge="1" parent="1" source="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e5" edge="1" parent="1" source="u3" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e5" edge="1" parent="1" source="u3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e6" edge="1" parent="1" source="w2" target="w4" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e6" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w4" value="Ya">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e7" edge="1" parent="1" source="w2" target="w3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e7" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w3" value="Tidak">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e8" edge="1" parent="1" source="w3" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e8" edge="1" parent="1" source="w3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e9" edge="1" parent="1" source="w4" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e9" edge="1" parent="1" source="w4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
@@ -641,13 +641,10 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Logout" vertex="1">
-          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
         </mxCell>
         <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="User" vertex="1">
           <mxGeometry height="400" width="200" x="120" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
-          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
         </mxCell>
         <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
@@ -658,22 +655,25 @@
         <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="310" as="geometry" />
         </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="400" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
         <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Destroy Session &amp; Hapus Data Login" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="170" as="geometry" />
         </mxCell>
         <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Redirect ke Halaman Utama / Login" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="240" as="geometry" />
         </mxCell>
-        <mxCell id="e1" edge="1" parent="1" source="start" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" edge="1" parent="1" source="u1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e2" edge="1" parent="1" source="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" edge="1" parent="1" source="w1" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e4" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
@@ -830,18 +830,15 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: Melakukan Pembayaran" id="page_melakukan_bayar">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="774" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Melakukan Pembayaran" vertex="1">
-          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
         </mxCell>
         <mxCell id="lane_user" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Pelanggan" vertex="1">
           <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
-          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
         </mxCell>
         <mxCell id="start" parent="lane_user" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
@@ -855,25 +852,28 @@
         <mxCell id="end" parent="lane_user" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
         </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Website" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
         <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan Barcode QRIS &amp; Intruksi" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="110" as="geometry" />
         </mxCell>
         <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Simpan Gambar Bukti Pembayaran ke DB" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
         </mxCell>
-        <mxCell id="e1" edge="1" parent="1" source="start" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" edge="1" parent="1" source="w1" target="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e2" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" edge="1" parent="1" source="u1" target="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e3" edge="1" parent="1" source="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="u2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" edge="1" parent="1" source="u2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e4" edge="1" parent="1" source="u2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e5" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
@@ -1225,13 +1225,10 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;align=center;verticalAlign=middle;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Aktivitas: Kelola Permintaan &amp; Pengiriman Supply" vertex="1">
-          <mxGeometry height="40" width="400" x="120" y="0" as="geometry" />
+          <mxGeometry height="40" width="400" x="120" as="geometry" />
         </mxCell>
         <mxCell id="lane_admin" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Admin" vertex="1">
           <mxGeometry height="500" width="200" x="120" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
-          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
         </mxCell>
         <mxCell id="start" parent="lane_admin" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=light-dark(#000000, #ffffff);strokeColor=light-dark(#000000, #ffffff);" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="50" as="geometry" />
@@ -1245,32 +1242,35 @@
         <mxCell id="end" parent="lane_admin" style="ellipse;html=1;shape=endState;fillColor=light-dark(#000000, #ffffff);strokeColor=#ff0000;strokeWidth=2;" value="" vertex="1">
           <mxGeometry height="30" width="30" x="85" y="410" as="geometry" />
         </mxCell>
+        <mxCell id="e1" edge="1" parent="lane_admin" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_web" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Sistem / Database" vertex="1">
+          <mxGeometry height="500" width="200" x="320" y="40" as="geometry" />
+        </mxCell>
         <mxCell id="w1" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Menampilkan List &amp; Bukti Pengiriman" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="180" as="geometry" />
         </mxCell>
         <mxCell id="w2" parent="lane_web" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;fontColor=light-dark(#000000, #ffffff);" value="Update Status: &#39;Completed&#39; &amp; Tambah Stok Gudang" vertex="1">
           <mxGeometry height="40" width="140" x="30" y="320" as="geometry" />
         </mxCell>
-        <mxCell id="e1" edge="1" parent="1" source="start" target="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e2" edge="1" parent="1" source="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" edge="1" parent="1" source="a1" target="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e3" edge="1" parent="1" source="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="a2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e3" edge="1" parent="1" source="w1" target="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e4" edge="1" parent="1" source="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="w2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e4" edge="1" parent="1" source="a2" target="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e5" edge="1" parent="1" source="w2" target="end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;">
+        <mxCell id="e5" edge="1" parent="1" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000, #ffffff);fillColor=none;" target="end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram name="Activity: Terima Permintaan Supply" id="page_terima_supply">
-    <mxGraphModel dx="704" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1106" dy="803" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />

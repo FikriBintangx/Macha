@@ -117,10 +117,6 @@ class User extends CI_Controller {
                 
                 $update_data['profile_image'] = $upload_data['file_name'];
                 $this->session->set_userdata('profile_image', $upload_data['file_name']); // Update session
-
-                // Upload to Supabase Storage
-                $this->load->library('supabase');
-                $this->supabase->upload($config['upload_path'] . $upload_data['file_name'], $upload_data['file_name'], 'uploads/profile');
             }
             else {
                 $this->session->set_flashdata('error', $this->upload->display_errors());

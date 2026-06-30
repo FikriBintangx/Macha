@@ -481,8 +481,6 @@ class Shop extends CI_Controller
         } else {
             $data = $this->upload->data();
             $file_name = $data['file_name'];
-            $this->load->library('supabase');
-            $this->supabase->upload($config['upload_path'] . $file_name, $file_name, 'uploads/payments');
 
             $this->db->where('id', $sales_id);
             $this->db->update('sales', [

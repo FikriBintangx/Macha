@@ -134,7 +134,7 @@
                 <div class="s-icon-wrap icon-green"><i class="fas fa-box"></i></div>
                 <span class="s-badge" style="background: rgba(27,59,37,0.08); color:#1B3B25;">Katalog</span>
             </div>
-            <div class="s-metric-label">Total Products</div>
+            <div class="s-metric-label">Total Produk</div>
             <div class="s-metric-value color-green"><?= $stats['total_products'] ?></div>
             <div class="s-metric-sub">Produk terdaftar</div>
             <a href="<?= base_url('supplier/products') ?>" class="s-metric-link">Lihat Detail <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
@@ -148,7 +148,7 @@
                 <div class="s-icon-wrap icon-amber"><i class="fas fa-clock"></i></div>
                 <span class="s-badge badge-pending">Menunggu</span>
             </div>
-            <div class="s-metric-label">Pending Requests</div>
+            <div class="s-metric-label">Permintaan Pending</div>
             <div class="s-metric-value color-amber"><?= $stats['pending_requests'] ?></div>
             <div class="s-metric-sub">Permintaan menunggu</div>
             <a href="<?= base_url('supplier/requests') ?>" class="s-metric-link">Lihat Detail <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
@@ -162,7 +162,7 @@
                 <div class="s-icon-wrap icon-matcha"><i class="fas fa-check-circle"></i></div>
                 <span class="s-badge badge-approved">Disetujui</span>
             </div>
-            <div class="s-metric-label">Approved Requests</div>
+            <div class="s-metric-label">Permintaan Disetujui</div>
             <div class="s-metric-value color-matcha"><?= $stats['approved_requests'] ?></div>
             <div class="s-metric-sub">Permintaan disetujui</div>
             <a href="<?= base_url('supplier/requests') ?>" class="s-metric-link">Lihat Detail <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
@@ -176,7 +176,7 @@
                 <div class="s-icon-wrap icon-slate"><i class="fas fa-truck"></i></div>
                 <span class="s-badge" style="background:#dbeafe; color:#1e40af;">Pengiriman</span>
             </div>
-            <div class="s-metric-label">Total Shipments</div>
+            <div class="s-metric-label">Total Pengiriman</div>
             <div class="s-metric-value color-slate"><?= $stats['total_shipments'] ?></div>
             <div class="s-metric-sub">Total pengiriman</div>
             <a href="<?= base_url('supplier/shipments') ?>" class="s-metric-link">Lihat Detail <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
@@ -190,8 +190,8 @@
     <div class="col-lg-8">
         <div class="s-card">
             <div class="s-section-head">
-                <h6 class="s-section-title"><i class="fas fa-list-alt" style="color:#8BAA7C; margin-right:6px;"></i> Recent Requests</h6>
-                <a href="<?= base_url('supplier/requests') ?>" class="s-view-all">View All <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
+                <h6 class="s-section-title"><i class="fas fa-list-alt" style="color:#8BAA7C; margin-right:6px;"></i> Permintaan Terbaru</h6>
+                <a href="<?= base_url('supplier/requests') ?>" class="s-view-all">Lihat Semua <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i></a>
             </div>
             <div style="overflow-x: auto;">
                 <table class="s-table w-100" style="width:100%; border-collapse:collapse;">
