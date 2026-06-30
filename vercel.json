@@ -7,8 +7,12 @@
   },
   "routes": [
     {
-      "src": "/(assets|uploads)/(.*)",
-      "dest": "/$1/$2"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/api/index.php"
     },
     {
       "src": "/(.*)",
