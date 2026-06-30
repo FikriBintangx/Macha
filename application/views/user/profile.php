@@ -176,10 +176,12 @@
             <div class="profile-header">
                 <div class="p-avatar-wrap">
                     <?php 
-                    $has_profile = !empty($user['profile_image']) && $user['profile_image'] != 'default_user.png';
+                    $pi = $user['profile_image'] ?? '';
+                    $has_profile = !empty($pi) && $pi !== 'default_user.png';
+                    $img_src = $has_profile ? (strncmp($pi, 'data:', 5) === 0 || strncmp($pi, 'http', 4) === 0 ? $pi : base_url('uploads/profile/'.$pi)) : '';
                     ?>
                     <div class="p-avatar <?= $has_profile ? 'd-none' : '' ?>" id="avatarInitial" style="display:flex; align-items:center; justify-content:center;"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
-                    <img src="<?= $has_profile ? base_url('uploads/profile/'.$user['profile_image']) : '' ?>" class="p-avatar <?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
+                    <img src="<?= htmlspecialchars($img_src) ?>" class="p-avatar <?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
                     <label for="profileInput" class="p-avatar-edit">
                         <i class="fa-solid fa-camera"></i>
                     </label>

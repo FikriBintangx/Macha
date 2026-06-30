@@ -43,13 +43,15 @@ class User extends CI_Controller {
         $needed = [
             'phone'         => 'VARCHAR(20) NULL AFTER full_name',
             'address'       => 'TEXT NULL AFTER phone',
-            'profile_image' => "VARCHAR(255) NULL DEFAULT 'default_user.png' AFTER address"
+            'profile_image' => "TEXT NULL AFTER address"
         ];
         foreach ($needed as $col => $def) {
             if (!in_array($col, $fields)) {
                 $this->db->query("ALTER TABLE users ADD $col $def");
             }
         }
+        // Widen profile_image to TEXT so it can hold base64 data URIs
+        $this->db->query("ALTER TABLE users MODIFY COLUMN profile_image TEXT NULL");
     }
 
     // Dashboard User (Riwayat Pesanan)
@@ -75,54 +77,43 @@ class User extends CI_Controller {
     // Update Profil & Upload Foto
     public function update_profile() {
         $user_id = $this->session->userdata('userid');
-        $user = $this->db->where('id', $user_id)->get('users')->row_array();
         
         $full_name = $this->input->post('full_name');
-        $phone = $this->input->post('phone');
-        $address = $this->input->post('address');
-        $password = $this->input->post('password');
+        $phone     = $this->input->post('phone');
+        $address   = $this->input->post('address');
+        $password  = $this->input->post('password');
 
         $update_data = [
             'full_name' => $full_name,
-            'phone' => $phone,
-            'address' => $address
+            'phone'     => $phone,
+            'address'   => $address
         ];
 
-        // 1. Logika Upload Foto Profil
-        if (!empty($_FILES['image']['name'])) {
-            $local_path = FCPATH . 'uploads/profile/';
-            $is_writable = is_dir($local_path) && is_writable($local_path);
-            if (!$is_writable) {
-                $is_writable = @mkdir($local_path, 0777, true);
-            }
-            $config['upload_path']   = $is_writable ? $local_path : sys_get_temp_dir() . DIRECTORY_SEPARATOR;
-            $config['allowed_types'] = 'jpg|jpeg|png|webp';
-            $config['max_size']      = 2048;
-            $config['file_name']     = 'user_' . $user_id . '_' . time();
+        // 1. Foto Profil — simpan sebagai base64 data URI langsung ke DB
+        //    Tidak perlu menulis ke disk sama sekali, kompatibel dengan Vercel.
+        if (!empty($_FILES['image']['tmp_name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $allowed_mime = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+            $mime = mime_content_type($_FILES['image']['tmp_name']);
 
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-
-            if ($this->upload->do_upload('image')) {
-                $upload_data = $this->upload->data();
-                
-                // Hapus foto lama jika bukan default dan ada filenya secara lokal
-                $old_img = $user['profile_image'] ?? 'default_user.png';
-                if ($is_writable && $old_img != 'default_user.png' && !empty($old_img)) {
-                    $old_path = $local_path . $old_img;
-                    if (is_file($old_path) && file_exists($old_path)) {
-                        unlink($old_path);
-                    }
-                }
-                
-                $update_data['profile_image'] = $upload_data['file_name'];
-                $this->session->set_userdata('profile_image', $upload_data['file_name']); // Update session
-            }
-            else {
-                $this->session->set_flashdata('error', $this->upload->display_errors());
+            if (!in_array($mime, $allowed_mime)) {
+                $this->session->set_flashdata('error', 'Tipe file tidak didukung. Gunakan JPG, PNG, atau WEBP.');
                 redirect('user');
                 return;
             }
+
+            $max_bytes = 2 * 1024 * 1024; // 2 MB
+            if ($_FILES['image']['size'] > $max_bytes) {
+                $this->session->set_flashdata('error', 'Ukuran foto maksimal 2 MB.');
+                redirect('user');
+                return;
+            }
+
+            $raw      = file_get_contents($_FILES['image']['tmp_name']);
+            $b64      = base64_encode($raw);
+            $data_uri = 'data:' . $mime . ';base64,' . $b64;
+
+            $update_data['profile_image'] = $data_uri;
+            $this->session->set_userdata('profile_image', $data_uri);
         }
 
         // 2. Update password jika diisi
@@ -141,10 +132,10 @@ class User extends CI_Controller {
         $is_ajax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || $this->input->is_ajax_request();
         if ($is_ajax) {
             echo json_encode([
-                'status' => $this->session->flashdata('success') ? 'success' : 'error',
-                'message' => $this->session->flashdata('success') ?: $this->session->flashdata('error'),
+                'status'        => $this->session->flashdata('success') ? 'success' : 'error',
+                'message'       => $this->session->flashdata('success') ?: $this->session->flashdata('error'),
                 'profile_image' => $update_data['profile_image'] ?? null,
-                'full_name' => $full_name
+                'full_name'     => $full_name
             ]);
             return;
         }

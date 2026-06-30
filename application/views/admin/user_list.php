@@ -112,11 +112,14 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="avatar-circle">
                                         <?php 
-                                        $has_profile = !empty($u['profile_image']) && $u['profile_image'] != 'default_user.png';
+                                        $pi = $u['profile_image'] ?? '';
+                                        $has_profile = !empty($pi) && $pi !== 'default_user.png';
                                         ?>
                                         <span class="avatar-text <?= $has_profile ? 'd-none' : '' ?>"><?= strtoupper(substr($u['full_name'], 0, 1)) ?></span>
-                                        <?php if($has_profile): ?>
-                                            <img src="<?= base_url('uploads/profile/'.$u['profile_image']) ?>" alt="" onerror="this.classList.add('d-none'); this.previousElementSibling.classList.remove('d-none');">
+                                        <?php if($has_profile):
+                                            $img_src = (strncmp($pi, 'data:', 5) === 0 || strncmp($pi, 'http', 4) === 0) ? $pi : base_url('uploads/profile/'.$pi);
+                                        ?>
+                                            <img src="<?= htmlspecialchars($img_src) ?>" alt="" onerror="this.classList.add('d-none'); this.previousElementSibling.classList.remove('d-none');">
                                         <?php endif; ?>
                                     </div>
                                     <div>

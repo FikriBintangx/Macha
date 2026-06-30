@@ -392,10 +392,12 @@
                     <div class="profile-header d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom:1px solid rgba(255,255,255,0.15);">
                         <div class="position-relative p-avatar-wrap">
                             <?php 
-                            $has_profile = !empty($user['profile_image']) && $user['profile_image'] != 'default_user.png';
+                            $pi = $user['profile_image'] ?? '';
+                            $has_profile = !empty($pi) && $pi !== 'default_user.png';
+                            $img_src = $has_profile ? (strncmp($pi, 'data:', 5) === 0 || strncmp($pi, 'http', 4) === 0 ? $pi : base_url('uploads/profile/'.$pi)) : '';
                             ?>
                             <div class="uh-avatar <?= $has_profile ? 'd-none' : '' ?>" style="width:80px; height:80px; border-radius:20px; font-size:2rem; background:linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)); color:#fff; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center;" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
-                            <img src="<?= $has_profile ? base_url('uploads/profile/'.$user['profile_image']) : '' ?>" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="<?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
+                            <img src="<?= htmlspecialchars($img_src) ?>" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="<?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
                             <label for="profileInput" class="p-avatar-edit" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
                             <label for="profileInput" class="p-avatar-edit" id="avatarEditLabel" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
                                 <i class="fa-solid fa-camera" style="font-size:11px"></i>
