@@ -111,10 +111,12 @@
                             <td data-label="USER">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="avatar-circle">
-                                        <?php if($u['profile_image'] && $u['profile_image'] != 'default_user.png'): ?>
-                                            <img src="<?= base_url('uploads/profile/'.$u['profile_image']) ?>" alt="">
-                                        <?php else: ?>
-                                            <?= strtoupper(substr($u['full_name'], 0, 1)) ?>
+                                        <?php 
+                                        $has_profile = !empty($u['profile_image']) && $u['profile_image'] != 'default_user.png';
+                                        ?>
+                                        <span class="avatar-text <?= $has_profile ? 'd-none' : '' ?>"><?= strtoupper(substr($u['full_name'], 0, 1)) ?></span>
+                                        <?php if($has_profile): ?>
+                                            <img src="<?= base_url('uploads/profile/'.$u['profile_image']) ?>" alt="" onerror="this.classList.add('d-none'); this.previousElementSibling.classList.remove('d-none');">
                                         <?php endif; ?>
                                     </div>
                                     <div>

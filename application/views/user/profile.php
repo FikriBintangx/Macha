@@ -175,12 +175,11 @@
         <div class="profile-card">
             <div class="profile-header">
                 <div class="p-avatar-wrap">
-                    <?php if(!empty($user['profile_image']) && $user['profile_image'] != 'default_user.png'): ?>
-                        <img src="<?= base_url('uploads/profile/'.$user['profile_image']) ?>" class="p-avatar" id="avatarPreview">
-                    <?php else: ?>
-                        <div class="p-avatar" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
-                        <img src="" class="p-avatar d-none" id="avatarPreview">
-                    <?php endif; ?>
+                    <?php 
+                    $has_profile = !empty($user['profile_image']) && $user['profile_image'] != 'default_user.png';
+                    ?>
+                    <div class="p-avatar <?= $has_profile ? 'd-none' : '' ?>" id="avatarInitial" style="display:flex; align-items:center; justify-content:center;"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
+                    <img src="<?= $has_profile ? base_url('uploads/profile/'.$user['profile_image']) : '' ?>" class="p-avatar <?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
                     <label for="profileInput" class="p-avatar-edit">
                         <i class="fa-solid fa-camera"></i>
                     </label>
