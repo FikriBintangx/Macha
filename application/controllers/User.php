@@ -43,15 +43,15 @@ class User extends CI_Controller {
         $needed = [
             'phone'         => 'VARCHAR(20) NULL AFTER full_name',
             'address'       => 'TEXT NULL AFTER phone',
-            'profile_image' => "TEXT NULL AFTER address"
+            'profile_image' => "MEDIUMTEXT NULL AFTER address"
         ];
         foreach ($needed as $col => $def) {
             if (!in_array($col, $fields)) {
                 $this->db->query("ALTER TABLE users ADD $col $def");
             }
         }
-        // Widen profile_image to TEXT so it can hold base64 data URIs
-        $this->db->query("ALTER TABLE users MODIFY COLUMN profile_image TEXT NULL");
+        // Widen profile_image to MEDIUMTEXT so it can hold base64 data URIs up to 16MB
+        $this->db->query("ALTER TABLE users MODIFY COLUMN profile_image MEDIUMTEXT NULL");
     }
 
     // Dashboard User (Riwayat Pesanan)
@@ -93,7 +93,9 @@ class User extends CI_Controller {
         //    Tidak perlu menulis ke disk sama sekali, kompatibel dengan Vercel.
         if (!empty($_FILES['image']['tmp_name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $allowed_mime = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-            $mime = mime_content_type($_FILES['image']['tmp_name']);
+            $mime = function_exists('mime_content_type') 
+                ? mime_content_type($_FILES['image']['tmp_name']) 
+                : (!empty($_FILES['image']['type']) ? $_FILES['image']['type'] : 'image/jpeg');
 
             if (!in_array($mime, $allowed_mime)) {
                 $this->session->set_flashdata('error', 'Tipe file tidak didukung. Gunakan JPG, PNG, atau WEBP.');
@@ -113,7 +115,6 @@ class User extends CI_Controller {
             $data_uri = 'data:' . $mime . ';base64,' . $b64;
 
             $update_data['profile_image'] = $data_uri;
-            $this->session->set_userdata('profile_image', $data_uri);
         }
 
         // 2. Update password jika diisi

@@ -398,7 +398,6 @@
                             ?>
                             <div class="uh-avatar <?= $has_profile ? 'd-none' : '' ?>" style="width:80px; height:80px; border-radius:20px; font-size:2rem; background:linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)); color:#fff; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center;" id="avatarInitial"><?= strtoupper(substr($user['full_name'] ?? 'M', 0, 1)) ?></div>
                             <img src="<?= htmlspecialchars($img_src) ?>" style="width:80px; height:80px; border-radius:20px; object-fit:cover; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.1);" class="<?= $has_profile ? '' : 'd-none' ?>" id="avatarPreview" onerror="this.classList.add('d-none'); document.getElementById('avatarInitial').classList.remove('d-none');">
-                            <label for="profileInput" class="p-avatar-edit" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
                             <label for="profileInput" class="p-avatar-edit" id="avatarEditLabel" style="position:absolute; bottom:-5px; right:-5px; width:28px; height:28px; background:#fff; border-radius:50%; display:none; align-items:center; justify-content:center; color:var(--green-main); box-shadow:0 4px 8px rgba(0,0,0,0.15); cursor:pointer; border:2px solid #fff; transition:.2s;">
                                 <i class="fa-solid fa-camera" style="font-size:11px"></i>
                             </label>
@@ -811,7 +810,9 @@
                             
                             // Update avatars if changed
                             if (data.profile_image) {
-                                const newAvatarUrl = '<?= base_url("uploads/profile/") ?>' + data.profile_image;
+                                const newAvatarUrl = (data.profile_image.startsWith('data:') || data.profile_image.startsWith('http')) 
+                                    ? data.profile_image 
+                                    : '<?= base_url("uploads/profile/") ?>' + data.profile_image;
                                 const heroAvatar = document.querySelector('.uh-avatar img, img.uh-avatar');
                                 const previewAvatar = document.getElementById('avatarPreview');
                                 const initialAvatar = document.getElementById('avatarInitial');
