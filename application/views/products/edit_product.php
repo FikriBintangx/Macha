@@ -150,15 +150,13 @@
                         </div>
 
                         <div class="col-md-8">
-                            <?php if(array_key_exists('sku', $product) && $product['sku']): ?>
                             <div class="mb-3">
                                 <label class="form-label fw-bold small">SKU / Kode Produk</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 text-muted small">#</span>
-                                    <input type="text" name="sku" class="form-control bg-light" value="<?= $product['sku'] ?>">
+                                    <input type="text" name="sku" class="form-control bg-light" value="<?= !empty($product['sku']) ? $product['sku'] : '(Akan dibuat otomatis)' ?>" readonly>
                                 </div>
                             </div>
-                            <?php endif; ?>
 
                             <div class="mb-3">
                                 <label class="form-label fw-bold small">Nama Produk</label>

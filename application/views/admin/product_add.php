@@ -24,7 +24,7 @@
                                     
                                     <div class="mb-4">
                                         <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">SKU / KODE PRODUK</label>
-                                        <input type="text" name="sku" class="form-control rounded-3 py-2 border-light-subtle" placeholder="Contoh: MC-001">
+                                        <input type="text" name="sku" class="form-control rounded-3 py-2 border-light-subtle bg-light" value="<?= $auto_sku ?>" readonly>
                                     </div>
 
                                     <div class="mb-4">

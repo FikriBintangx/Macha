@@ -23,6 +23,15 @@ class Product extends CI_Controller {
         $this->load->helper('url');
     }
 
+    private function _generate_unique_sku() {
+        do {
+            // ponytail: generates 6-character random hex SKU like MC-3A9B2F
+            $sku = 'MC-' . strtoupper(bin2hex(random_bytes(3)));
+            $query = $this->db->get_where('products', ['sku' => $sku]);
+        } while ($query->num_rows() > 0);
+        return $sku;
+    }
+
     /**
      * Menampilkan daftar produk
      */
@@ -40,10 +49,12 @@ class Product extends CI_Controller {
      */
     public function add() {
         $categories = $this->db->get('categories')->result_array();
+        $auto_sku = $this->_generate_unique_sku();
 
         $data = [
             'title'      => 'Tambah Produk Baru',
             'categories' => $categories,
+            'auto_sku'   => $auto_sku,
             'content'    => 'admin/product_add'
         ];
         $this->load->view('layout/wrapper', $data);
@@ -92,8 +103,18 @@ class Product extends CI_Controller {
             } 
         } 
 
+        $sku = $post['sku'] ?? '';
+        if (empty($sku)) {
+            $sku = $this->_generate_unique_sku();
+        } else {
+            $check = $this->db->get_where('products', ['sku' => $sku])->num_rows();
+            if ($check > 0) {
+                $sku = $this->_generate_unique_sku();
+            }
+        }
+
         $data = [ 
-            'sku'         => $post['sku'],
+            'sku'         => $sku,
             'category_id' => $post['category_id'],
             'name'        => $post['name'], 
             'description' => $post['description'] ?? '', 
@@ -155,7 +176,11 @@ class Product extends CI_Controller {
             return;
         }
 
+        $current_product = $this->M_product->get_by_id($id);
+        $sku = !empty($current_product['sku']) ? $current_product['sku'] : $this->_generate_unique_sku();
+
         $data = [
+            'sku'             => $sku,
             'category_id'     => $post['category_id'],
             'name'            => $post['name'],
             'description'     => $post['description'] ?? '',

@@ -1111,7 +1111,7 @@ if (isset($CI->db)) {
                 <li class="nav-item">
                     <a href="<?= site_url('report') ?>"
                         class="nav-link <?= ($this->uri->segment(1) == 'report' && $this->uri->segment(2) == '') ? 'active' : '' ?>">
-                        <i class="bi bi-person-badge-fill"></i> Analisa
+                        <i class="bi bi-person-badge-fill"></i> Laporan User
                     </a>
                 </li>
 
