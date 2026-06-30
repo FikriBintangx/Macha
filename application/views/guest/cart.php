@@ -329,9 +329,6 @@
                                 <div class="item-name"><?= htmlspecialchars($item['name']) ?></div>
                                 <div class="item-price">Rp <?= number_format($item['price'],0,',','.') ?> / item</div>
                                 
-                                <div id="pref-display-<?= $id ?>" class="mt-2 text-success fw-bold" style="font-size: 0.75rem;">
-                                    <?= !empty($item['preferences']) ? '<i class="fa-solid fa-sparkles me-1"></i>' . $item['preferences'] : '' ?>
-                                </div>
 
                                 <div class="qty-control">
                                     <a href="<?= base_url('shop/decrease_cart/'.$id) ?>" class="qty-btn" onclick="document.getElementById('pageOverlay').classList.add('show')"><i class="fa-solid fa-minus"></i></a>
@@ -344,23 +341,6 @@
                             </div>
                         </div>
 
-                        <!-- Preferences Selection -->
-                        <div class="pref-wrap">
-                            <?php 
-                            $curr_prefs = isset($item['preferences']) ? explode(', ', $item['preferences']) : [];
-                            $opts = [
-                                ['Less Ice', 'snowflake'], ['Extra Ice', 'cube'], ['No Ice', 'ban'],
-                                ['Less Sugar', 'cubes-stacked'], ['Extra Sugar', 'plus'], ['No Sugar', 'droplet-slash'],
-                                ['Extra Creamy', 'cloud'], ['Less Creamy', 'water'], ['Hot Only', 'mug-hot'], ['Pisah Es', 'box-open']
-                            ];
-                            foreach($opts as $o): 
-                                $active = in_array($o[0], $curr_prefs);
-                            ?>
-                                <div class="pref-pill <?= $active ? 'active' : '' ?>" onclick="togglePref(this, '<?= $o[0] ?>', '<?= $id ?>')">
-                                    <i class="fa-solid fa-<?= $o[1] ?> me-1"></i> <?= $o[0] ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -440,29 +420,6 @@
                 opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power4.out"
             });
 
-            // Toggle Preference AJAX
-            window.togglePref = function(el, pref, itemId) {
-                el.classList.toggle('active');
-                
-                const formData = new FormData();
-                formData.append('id', itemId);
-                formData.append('preference', pref);
-                
-                fetch('<?= base_url("shop/update_item_preference") ?>', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === 'success') {
-                        const display = document.getElementById('pref-display-' + itemId);
-                        display.innerHTML = data.preferences ? '<i class="fa-solid fa-sparkles me-1"></i>' + data.preferences : '';
-                        
-                        // Feedback animation
-                        gsap.fromTo(el, { scale: 0.95 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
-                    }
-                });
-            };
 
             function showToast(msg, type) {
                 if (typeof window.showDynamicIslandNotif === 'function') {

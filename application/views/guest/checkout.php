@@ -756,23 +756,6 @@
 
                             <div class="col-12 mt-4">
                                 <label class="form-label">Catatan Tambahan (Lainnya)</label>
-                                <div class="note-options" id="noteRecs">
-                                    <label class="note-check-label" onclick="toggleNote(this, 'Less Ice')">
-                                        <i class="fa-solid fa-snowflake"></i> Less Ice
-                                    </label>
-                                    <label class="note-check-label" onclick="toggleNote(this, 'Less Sugar')">
-                                        <i class="fa-solid fa-cubes-stacked"></i> Less Sugar
-                                    </label>
-                                    <label class="note-check-label" onclick="toggleNote(this, 'No Ice')">
-                                        <i class="fa-solid fa-ban"></i> No Ice
-                                    </label>
-                                    <label class="note-check-label" onclick="toggleNote(this, 'Extra Creamy')">
-                                        <i class="fa-solid fa-cloud"></i> Extra Creamy
-                                    </label>
-                                    <label class="note-check-label" onclick="toggleNote(this, 'Pisah Es')">
-                                        <i class="fa-solid fa-box-open"></i> Pisah Es
-                                    </label>
-                                </div>
                                 <textarea name="notes" id="notesField" class="form-control" rows="2"
                                     placeholder="Contoh: Titip di depan gerbang ya.."></textarea>
                             </div>
@@ -1015,21 +998,6 @@
             document.getElementById('urgencyTimer').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
             sec--;
         }, 1000);
-        function toggleNote(el, text) {
-            const field = document.getElementById('notesField');
-            el.classList.toggle('active');
-
-            let currentNotes = field.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
-
-            if (el.classList.contains('active')) {
-                if (!currentNotes.includes(text)) currentNotes.push(text);
-            } else {
-                currentNotes = currentNotes.filter(s => s !== text);
-            }
-
-            field.value = currentNotes.join(', ');
-            field.classList.add('valid'); // Trigger visual success
-        }
     </script>
 </body>
 

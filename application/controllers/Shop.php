@@ -558,32 +558,6 @@ class Shop extends CI_Controller
         $this->load->view('guest/nota', $data);
     }
 
-    public function update_item_preference()
-    {
-        $id = $this->input->post('id');
-        $pref = $this->input->post('preference');
-        $cart = $this->session->userdata('cart') ?: [];
-
-        if (isset($cart[$id])) {
-            $current_prefs = !empty($cart[$id]['preferences']) ? explode(', ', $cart[$id]['preferences']) : [];
-            
-            if (($key = array_search($pref, $current_prefs)) !== false) {
-                unset($current_prefs[$key]);
-            } else {
-                $current_prefs[] = $pref;
-            }
-            
-            $cart[$id]['preferences'] = implode(', ', $current_prefs);
-            $this->session->set_userdata('cart', $cart);
-            
-            echo json_encode([
-                'status' => 'success',
-                'preferences' => $cart[$id]['preferences']
-            ]);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Item not found']);
-        }
-    }
 
     public function get_product_details($id)
     {
