@@ -412,11 +412,11 @@ $config['encryption_key'] = 'macha_umkm_secret_key_123';
 |
 */
 $is_vercel = (getenv('VERCEL') !== false || isset($_SERVER['VERCEL']) || !is_writable(APPPATH));
-$config['sess_driver'] = $is_vercel ? 'database' : 'files';
+$config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = $is_vercel ? 'ci_sessions' : APPPATH . 'cache';
+$config['sess_save_path'] = $is_vercel ? sys_get_temp_dir() : APPPATH . 'cache';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 86400; // Increased to 24 hours to prevent session regeneration race conditions
 $config['sess_regenerate_destroy'] = FALSE;
